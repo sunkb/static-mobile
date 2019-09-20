@@ -1,0 +1,28 @@
+// .page-enter-active, .page-leave-active {
+//   transition: opacity 2s;
+// }
+// .page-enter, .page-leave-active {
+//   opacity: 0;
+// }
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  font-family: PingFang SC;
+  // font-family: PingFangSC-Regular, HYQiHei-FES, "Helvetica Neue", Helvetica, STHeiTi, Arial, sans-serif;
+  font-weight: 400;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+//字体
+// @font-face {
+//   font-family: 'JSaoEr';
+//   src: url('~assets/font/JSaoEr.eot'); /* IE9 Compat Modes */
+//   src: url('~assets/font/JSaoEr.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+//        url('~assets/font/JSaoEr.woff2') format('woff2'), /* Super Modern Browsers */
+//        url('~assets/font/JSaoEr.woff') format('woff'), /* Pretty Modern Browsers */
+//        url('~assets/font/JSaoEr.ttf')  format('truetype'), /* Safari, Android, iOS */
+//        url('~assets/font/JSaoEr.svg#svgFontName') format('svg'); /* Legacy iOS */
+// }
+
