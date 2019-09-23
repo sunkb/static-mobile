@@ -14,10 +14,10 @@
   </div>
 </template>
 <script>
-import axios from "../../../assets/js/axios";
+import axios from "~/utils/axios";
 import popupShare from "~/components/popup_share.vue";
 import dialog from "~/components/dialog.vue";
-import gettime from "~/assets/js/timeFormat";
+import gettime from "~/utils/timeFormat";
 export default {
   data() {
     return {

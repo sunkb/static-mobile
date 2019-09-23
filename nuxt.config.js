@@ -63,7 +63,8 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    { src: '~plugins/baidu.js', ssr: false }
+    { src: '~plugins/baidu.js', ssr: false },
+    { src: '~plugins/pullto.js', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -74,7 +75,7 @@ export default {
    */
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
   ],
   axios: {
     prefix: '/api',

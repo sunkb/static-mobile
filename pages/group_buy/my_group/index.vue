@@ -32,8 +32,8 @@
 import popupShare from '~/components/popup_share.vue'
 import popupShareWechat from '~/components/popup_share_wechat.vue'
 import axios from '~/utils/axios'
-import { WxShareConfig } from '~/assets/js/wxConfig'
-import gettime from '~/assets/js/timeFormat'
+import { WxShareConfig } from '~/utils/wxConfig'
+import gettime from '~/utils/timeFormat'
 
 export default {
   head () {

@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-import axios from '~/assets/js/axios'
+import axios from '~/utils/axios'
 
 export default {
   data(){

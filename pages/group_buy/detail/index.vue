@@ -131,7 +131,7 @@ import popupDownloadApp from "~/components/group_buy/popup_download_app.vue";
 import popupShareWechat from "~/components/popup_share_wechat.vue";
 import dialog from "~/components/dialog.vue";
 import axios from '~/utils/axios'
-import { WxShareConfig } from "~/assets/js/wxConfig";
+import { WxShareConfig } from "~/utils/wxConfig";
 import { appShare, groupbuy_downloadApp, getQueryString,init} from "../group_buy";
 import eventEmitter from '~/utils/event-center'
 
