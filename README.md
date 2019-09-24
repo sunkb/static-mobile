@@ -20,8 +20,8 @@ $ npm run generate
 ```
 
 # 测试环境下部署
-api-master服务器下面
-程序仓库放在/root/static-web/目录下
+测试服务器下面
+程序仓库放在/teen 同级目录下
 1. 执行git操作切换分支拉取最新代码
-2. 执行复制文件夹命令复制static-web下的dist文件夹到abc360项目
-cp -Rf /root/static-web/dist/* /root/abc360.com/static/web
+2. 执行复制文件夹命令复制static-mobile下的dist文件夹到teen项目的static-web/mobile下面
+\cp -Rf /root/static-mobile/dist/* /root/teen/static-web/mobile/
