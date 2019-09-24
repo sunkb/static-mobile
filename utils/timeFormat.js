@@ -117,7 +117,19 @@ function typeIsObj(t){
  return Object.prototype.toString.call(t) == '[object Object]' ?  true : false
 }
 
+/**
+ * 时间戳转化正常的时间格式
+ */
 
+function formatDate(now) {
+  const myDate = new Date(now * 1000);
+  const year = myDate.getFullYear();
+  let month = myDate.getMonth() + 1;
+  let myday = myDate.getDate();
+  month = month < 10 ? `0${month}` : month;
+  myday = myday < 10 ? `0${myday}` : myday;
+  return `${year}.${month}.${myday}`;
+}
 
 export default {
 gettime:gettime,//obj
@@ -128,5 +140,6 @@ gettime:gettime,//obj
   five: five,//6月6日
   six:six,//10:10:10;
   severn:severn,
-  changeTimeLength:changeTimeLength
+  changeTimeLength:changeTimeLength,
+  formatDate:formatDate
 };
