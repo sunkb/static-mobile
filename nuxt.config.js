@@ -5,7 +5,7 @@ export default {
     host: '0.0.0.0', // default: localhost
   },
   router:{
-    base: process.env.NODE_ENV === 'production'?'/static/web/':''
+    base: process.env.NODE_ENV === 'production'?'/static-web/mobile/':''
   },
   mode: 'Universal',
   /*
