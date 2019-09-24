@@ -20,6 +20,7 @@
     "http-proxy-middleware": "^0.19.1",
     "nuxt": "^2.0.0",
     "postcss-px2rem": "^0.3.0",
+    "qiniu-js": "^2.5.4",
     "qs": "^6.7.0",
     "vue-axios": "^2.1.4",
     "vue-ba": "^1.2.5",
