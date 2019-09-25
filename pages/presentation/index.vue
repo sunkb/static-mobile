@@ -2,11 +2,15 @@
   <div>
     <div>{{ uploadPercent }}</div>
     <input type="file" accept="video/*" ref="fileUpload" @change="fileUploadChange"/>
+    <video-player :options="{ controls: true, aspectRatio: '16:9',
+      sources: [{ src: 'http://qn-video.abc360.com/40bc5e48-ca2d-48c8-9ff8-7a80e8a7ecdf.mp4', type: 'video/mp4' }]
+    }" ></video-player>
   </div>
 </template>
 
 <script>
 import FileUploader, { FILE_TYPE } from '~/utils/upload.js'
+import { Player } from '~/components/presentation'
 
 export default {
   name: 'Presentation',
@@ -14,6 +18,9 @@ export default {
     return {
       title: "演讲比赛"
     }
+  },
+  components: {
+    'video-player': Player
   },
   data() {
     return {
