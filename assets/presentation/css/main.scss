@@ -1,0 +1,49 @@
+$p-color-0: #16C8D2;
+
+.top-step-bar {
+  margin-top: 4vw;
+  height: 25vw;
+}
+
+.page-content {
+  padding: 0 4vw;
+}
+h1 {
+  font-size: 4vw;
+  font-weight: bold;
+  color: #333333;
+}
+
+h2 {
+  font-size: 3.7vw;
+  color: #333333;
+}
+
+h3 {
+  font-size: 3.4vw;
+  color: #B2B2B2;
+}
+
+.submit {
+  text-align: center;
+
+  &-text {
+    margin: 6vw 0 3vw;
+    color: #B2B2B2;
+    font-size: 3.2vw;
+  }
+
+  &-btn {
+    display: inline-block;
+    width: 86.67vw;
+    line-height: 13.3vw;
+    text-align: center;
+    font-size: 4.53vw;
+    color: #fff;
+    background: #B2B2B2;
+  }
+
+  .accent {
+    background: $p-color-0;
+  }
+}

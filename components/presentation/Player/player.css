@@ -2,4 +2,24 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+  border: none;
+  font-size: .75rem;
+  line-height: 1.5rem;
+}
+
+.vjs-volume-panel {
+  display: none !important;
+}
+.vjs-picture-in-picture-control {
+  display: none !important;
+}
+
+.video-js .vjs-control-bar {
+  height: 1rem;
+}
+.vjs-control {
+  font-size: .3rem !important;
 }

@@ -2,7 +2,10 @@
   <div>
     <div>{{ uploadPercent }}</div>
     <input type="file" accept="video/*" ref="fileUpload" @change="fileUploadChange"/>
-    <video-player :options="{ controls: true, aspectRatio: '16:9',
+    <video-player :options="{ 
+      controls: true, 
+      aspectRatio: '16:9',
+      poster: 'https://qn-static.landi.com/uploadtoolc64639d85d1b028a645b35a27acfe218.png',
       sources: [{ src: 'http://qn-video.abc360.com/40bc5e48-ca2d-48c8-9ff8-7a80e8a7ecdf.mp4', type: 'video/mp4' }]
     }" ></video-player>
   </div>
