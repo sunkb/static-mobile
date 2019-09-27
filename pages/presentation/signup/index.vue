@@ -46,19 +46,21 @@
           </select>
         </div>
       </div>
-      <div class="submit">
-        <div class="submit-text">请确认信息属实, 一旦提交后不可再修改</div>
-        <div :class="['submit-btn', dataNotEmpty ? 'accent' : '']" @click="formSubmit">提交报名信息</div>
-      </div>
+      <submit-area 
+        hint="请确认信息属实, 一旦提交后不可再修改" 
+        btnText="提交报名信息"
+        :isClickable="dataNotEmpty"
+        @submit="formSubmit"
+      ></submit-area>
     </div>
     <toast ref="toast"></toast>
-    <poster-modal v-model="showPosterModal"></poster-modal>
+    <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0"></poster-modal>
   </div>
 </template>
 
 <script>
-import { StepBar, PosterModal } from '~/components/presentation'
-import { STEPS, API, REGION_DATA, SIGNUP_DATA_RULE } from './consts'
+import { StepBar, PosterModal, SubmitArea } from '~/components/presentation'
+import { STEPS, API, REGION_DATA, SIGNUP_DATA_RULE, STROGE } from './consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 
@@ -72,7 +74,8 @@ export default {
   components: {
     'step-bar': StepBar,
     'toast': Toast,
-    'poster-modal': PosterModal
+    'poster-modal': PosterModal,
+    'submit-area': SubmitArea
   },
   data() {
     return {
@@ -135,8 +138,12 @@ export default {
       }
 
       // TODO: 提交数据
-
+      localStorage.setItem(STROGE.LANDI_LEVEL, this.signupData.landiLevel)
+      localStorage.setItem(STROGE.STU_ENG_NAME, this.signupData.engName)
       this.$router.push({ name: 'presentation-signup-step2' })
+    },
+    gotoRegister() {
+      // TODO: 注册页面
     }
   },
   mounted() {
@@ -149,8 +156,6 @@ export default {
 @import '~/assets/presentation/css/main.scss';
 
 .signupform {
-  margin-top: 3vw;
-
   &:last-child {
     border-bottom: 1px solid #E6E6E6;
   }

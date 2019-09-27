@@ -5,13 +5,15 @@
         <div class="content-close">
           <img class="content-close-img" @click="close" :src="require('~/assets/presentation/img/close.png')"/>
         </div>
-        <img class="content-poster" @click="gotoLink" :src="require('~/assets/presentation/img/poster-signup-index.png')"/>
+        <img class="content-poster" v-if="poster == 0" @click="gotoLink" :src="require('~/assets/presentation/img/poster-signup-index.png')"/>
+        <img class="content-poster" v-if="poster == 1" @click="gotoLink" :src="require('~/assets/presentation/img/submit-success.png')"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'PosterModal',
   model: {
@@ -23,9 +25,9 @@ export default {
       type: Boolean,
       default: false
     },
-    link: {
-      type: String,
-      default: ''
+    poster: {
+      type: Number,
+      default: 0
     }
   },
   methods: {
@@ -33,7 +35,7 @@ export default {
       this.$emit('changeShow', false)
     },
     gotoLink() {
-      window.location = this.link
+      this.$emit('click')
     }
   }
 }

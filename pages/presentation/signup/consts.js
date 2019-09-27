@@ -37,9 +37,64 @@ const SIGNUP_DATA_RULE = {
   }
 }
 
+const TOPICS = [
+  {
+    video: {
+      src: 'http://qn-video.abc360.com/40bc5e48-ca2d-48c8-9ff8-7a80e8a7ecdf.mp4',
+      poster: 'https://qn-static.landi.com/uploadtoolc64639d85d1b028a645b35a27acfe218.png'
+    },
+    text: {
+      eng: 'We can\'t just leave environmental protection to our government eventttttttttt',
+      chn: '环境保护不仅仅是政府的事情，我们在日常生活中能为保护环境做什么呢？'
+    }
+  },
+  {
+    video: {
+      src: 'http://qn-video.abc360.com/40bc5e48-ca2d-48c8-9ff8-7a80e8a7ecdf.mp4',
+      poster: 'https://qn-static.landi.com/uploadtoolc64639d85d1b028a645b35a27acfe218.png'
+    },
+    text: {
+      eng: 'How do you spend your holiday?',
+      chn: '你的假期是怎样度过的呢？'
+    }
+  }
+]
+
+const VIDEO_STATUS_TYPE = {
+  ADD: { 
+    type: 'add',
+    hint: '点击上传视频',
+    actionIcon: true
+  },
+  UPLOADING: {
+    type: 'uploading',
+    progress: 0
+  },
+  ERROR: {
+    type: 'error',
+    hint: '文件不符合条件',
+    actionIcon: true
+  },
+  UPLOADED: {
+    type: 'uploaded',
+    hint: '上传成功, 点击重新上传',
+    actionIcon: true
+  }
+}
+
+const STROGE = {
+  LANDI_LEVEL: 'prt_landi_level',
+  TOPIC: 'prt_topic',
+  VIDEO_SRC: 'prt_video_src',
+  STU_ENG_NAME: 'prt_stu_eng_name'
+}
+
 export {
   STEPS,
   API,
   REGION_DATA,
-  SIGNUP_DATA_RULE
+  SIGNUP_DATA_RULE,
+  TOPICS,
+  VIDEO_STATUS_TYPE,
+  STROGE
 }

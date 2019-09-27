@@ -1,9 +1,9 @@
-import Player from './Player/Player'
 import StepBar from './StepBar'
 import PosterModal from './PosterModal'
+import SubmitArea from './SubmitArea'
 
 export {
-  Player,
   StepBar,
-  PosterModal
+  PosterModal,
+  SubmitArea
 }
