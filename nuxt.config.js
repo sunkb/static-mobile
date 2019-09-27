@@ -85,7 +85,7 @@ export default {
     '/api': {
       // target:'http://192.168.125.209:9000/', //kimi
       // target: 'http://192.168.2.198/develop',
-      target:'http://api-master.abc360.cn',
+      target:' http://www.test.com',
       // target: 'http://www.abc360.local',
       pathRewrite: {
         '^/api' : ''
