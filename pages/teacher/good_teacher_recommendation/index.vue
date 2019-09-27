@@ -302,15 +302,19 @@ export default {
     //tab切换
     tabChange(index) {
       this.tabIndex = index;
+      this.commentList=[];
+      this.currentPage=1;
+      this.getTeacherScoreFn();
+      
     },
     //获取老师标签
     async getTag() {
       const param = getQueryString("token")
-      const res = await apiGoodTeacher.teacherIntroX({
+      const res = await apiGoodTeacher.getTeacherLabelX({
         token: param
       });
       if (res.status) {
-        this.tagList = res;
+        this.tagList = res.data;
       }
     },
     //获取老师评分
@@ -351,7 +355,6 @@ export default {
     },
     //加载更多
     loadmore(loaded) {
-      alert(1);
       const vm = this;
       if (vm.pages <= vm.currentPage) {
         return loaded("done");
