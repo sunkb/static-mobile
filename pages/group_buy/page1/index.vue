@@ -2,7 +2,7 @@
   <div class="container">
     <span @click="funShowDialog">1111</span>
     <h1>{{ value }}</h1>
-    <h1>{{include()}}</h1>
+    <!-- <h1>{{include()}}</h1> -->
     <button style="width:200px;height:100px" @click="funLogOut">登出</button>
     <div v-for="(item,index) in resData" @click="goPage2(index)">{{item.name}}</div>
     <popup-share v-if="showPopup" @closePopup="closePopup"></popup-share>

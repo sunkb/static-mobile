@@ -1,4 +1,4 @@
-import axios from '../../utils/axios'
+//import axios from '~/utils/axios'
 import eventEmitter from '../../utils/event-center'
 import {platform} from '../../utils/platform'
 

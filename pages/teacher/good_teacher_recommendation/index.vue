@@ -74,14 +74,14 @@
                   {{teacherIntro}}
                   <p class="shade pa" v-if="ellsStatus"></p>
                 </div>
-                <div style="height:30px;" v-if="teacherMsg.info.intro.length>100">
+                <div style="height:30px;" v-if="teacherMsg&&teacherMsg.info.intro.length>100">
                   <p class="word_hide rt" @click="showFn">{{showBtn}}</p>
                 </div>
               </div>
             </div>
           </div>
           <!-- 教学特点 -->
-          <div class="introduction" v-if="tagList.length > 0">
+          <div class="introduction" v-if="tagList&&tagList.length > 0">
             <h6 class="title teach_tag">教学特点</h6>
             <div class="content" style="text-indent: 0">
               <div v-for="(item,index) in tagList" :key="index" class="item-wrap">
@@ -109,7 +109,7 @@
             </div>
           </div>
           <!-- 授课能力 -->
-          <div class="introduction" v-if="imgsrc||skillList.length>0||experList.length>0">
+          <div class="introduction" v-if="skillList&&imgsrc||skillList.length>0||experList.length>0">
             <h6 class="title teach_able">授课能力</h6>
             <div class="content" style="text-indent: 0">
               <div class="qua_wrap" v-if="imgsrc">
@@ -151,7 +151,7 @@
             </div>
           </div>
           <!-- 评分 -->
-          <div class="comment" v-if="!!commentList.length" style="padding:">
+          <div class="comment" v-if="commentList&&commentList.length" style="padding:">
             <h6 class="title score_icon cf">
               评分
               <span class="total rt">(共有{{total}}个评价)</span>
@@ -181,12 +181,13 @@
         <!-- 外教信息 -->
         <div class="centerInfo" v-if="tabIndex===2">
           <!-- 自我介绍 -->
-          <div class="introduction">
+          <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
             <h6 class="title video_icon">自我介绍</h6>
             <div class="content" style="text-indent: 0">
               <video
-                v-if="teacherMsg.info.video"
+                v-if="teacherMsg&&teacherMsg.info.video"
                 controls
+                poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
                 preload="auto"
                 class="video-style"
                 :src="`${teacherMsg.info.video}`"
@@ -194,11 +195,17 @@
             </div>
           </div>
           <!-- 上课风采 -->
-          <div class="introduction" v-if='videoList.length>0'>
+          <div class="introduction" v-if="videoList&&videoList.length>0">
             <h6 class="title video_icon">上课风采</h6>
             <div class="content" style="text-indent: 0">
               <div v-for="(item,index) in videoList" :key="index" class="videoItem">
-                <video v-if="item" controls preload="auto" :src="item" />
+                <video
+                  v-if="item"
+                  controls
+                  preload="auto"
+                  :src="item"
+                  poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
+                />
               </div>
             </div>
           </div>
@@ -238,7 +245,7 @@ export default {
       total: 0,
       //size: parseInt((document.body.clientWidth / 375), 10) * 20 || 20,
       tagList: [],
-      teacherIntro:'',
+      teacherIntro: ""
     };
   },
   created() {
@@ -254,24 +261,28 @@ export default {
         token: param
       });
       if (res) {
-        if(res.info&&res.info.intro){
+        if (res.info && res.info.intro) {
           res.info.intro = res.info.intro.replace(/<br \/>/g, "");
-          res.info.intro_translation = res.info.intro_translation.replace(/<br\/>/g, "");
+          res.info.intro_translation = res.info.intro_translation.replace(
+            /<br\/>/g,
+            ""
+          );
           this.teacherIntro = res.info.intro;
         }
         let infoData = res;
         this.teacherMsg = res;
-        
-        if(res.info&&res.info.recommendation){
+
+        if (res.info && res.info.recommendation) {
           this.videoList = res.info.recommendation.videos;
         }
         if (infoData.info.weekdays) {
           this.weekdays = infoData.info.weekdays;
         }
         if (
-          infoData.info.qualifications &&
-          infoData.info.qualifications.education
+          infoData.info.qualifications.education.audit!=undefined&&
+          infoData.info.qualifications.education.audit.files[0].path!=undefined
         ) {
+          alert(1)
           this.imgsrc =
             infoData.info.qualifications.education.audit.files[0].path;
         }
@@ -302,14 +313,13 @@ export default {
     //tab切换
     tabChange(index) {
       this.tabIndex = index;
-      this.commentList=[];
-      this.currentPage=1;
+      this.commentList = [];
+      this.currentPage = 1;
       this.getTeacherScoreFn();
-      
     },
     //获取老师标签
     async getTag() {
-      const param = getQueryString("token")
+      const param = getQueryString("token");
       const res = await apiGoodTeacher.getTeacherLabelX({
         token: param
       });
@@ -319,7 +329,7 @@ export default {
     },
     //获取老师评分
     async getTeacherScore() {
-      const param = getQueryString("token")
+      const param = getQueryString("token");
       const res = await apiGoodTeacher.ajaxGetAppraiseX({
         token: param,
         page: this.currentPage
@@ -329,9 +339,13 @@ export default {
     //获取老师评分
     getTeacherScoreFn() {
       this.getTeacherScore().then(res => {
-        this.pages = res.data.pages;
-        this.commentList.push(...res.data.data);
-        this.total = res.data.total;
+        if (res.status) {
+          this.pages = res.data.pages;
+          if(this.commentList.length>0){
+            this.commentList.push(...res.data.data);
+            this.total = res.data.total;
+          }
+        }
       });
     },
     // 文字收起展开
