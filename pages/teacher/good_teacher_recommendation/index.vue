@@ -25,7 +25,7 @@
               <div class="row row-country">
                 <span class="country BrithDay"></span>
                 <span class="age" style="margin-right:40px;">{{teacherMsg.info.age}}岁</span>
-                <span class="country Accent accent_icon"></span>
+                <span class="country Accent accent_icon" v-if="teacherMsg.info.accent!=0"></span>
                 <span class="accent" v-if="teacherMsg.info.accent">{{teacherMsg.info.accent}}</span>
                 <p
                   v-if="teacherMsg.info&&teacherMsg.info.recommendation"
@@ -37,27 +37,59 @@
         <!-- tab切换 -->
         <div class="tabWrap">
           <p class="borderRight" @click="tabChange(1)" :class="{'active':tabIndex===1}">
-            外教信息 
+            教师风采
             <span class="heng"></span>
           </p>
           <p @click="tabChange(2)" :class="{'active':tabIndex===2}">
-            教师风采
+            外教信息 
             <span class="heng"></span>
           </p>
         </div>
         <!-- 教师风采 -->
         <div class="centerInfo" v-if="tabIndex===1">
+          <!-- 自我介绍 -->
+          <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
+            <h6 class="title video_icon">自我介绍</h6>
+            <div class="content" style="text-indent: 0">
+              <video
+                v-if="teacherMsg&&teacherMsg.info.video"
+                controls
+                poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
+                preload="auto"
+                class="video-style"
+                :src="`${teacherMsg.info.video}`"
+              />
+            </div>
+          </div>
+          <!-- 上课风采 -->
+          <div class="introduction" v-if="videoList&&videoList.length>0">
+            <h6 class="title video_icon">上课风采</h6>
+            <div class="content" style="text-indent: 0">
+              <div v-for="(item,index) in videoList" :key="index" class="videoItem">
+                <video
+                  v-if="item"
+                  preload="auto"
+                  :src="item"
+                  controls
+                  poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 外教信息 -->
+        <div class="centerInfo" v-if="tabIndex===2">
           <!-- 上课时间 -->
           <!-- <div class="introduction" v-if="weekdays.length > 0">
-        <h6 class="title">开课时间</h6>
-        <div class="content" style="text-indent: 0">
-          <p>
-            <span v-for="(item,index) in weekdays" :key="index">
-              {{item}}
-              <span v-if="index+1!=weekdays.length">/</span>
-            </span>
-          </p>
-        </div>
+            <h6 class="title">开课时间</h6>
+            <div class="content" style="text-indent: 0">
+              <p>
+                <span v-for="(item,index) in weekdays" :key="index">
+                  {{item}}
+                  <span v-if="index+1!=weekdays.length">/</span>
+                </span>
+              </p>
+            </div>
           </div>-->
           <div class="introduction" v-if="teacherMsg.info.intro!=''">
             <h6 class="title intro_icon">
@@ -177,38 +209,6 @@
           </div>
           <!-- 底部 -->
           <p class="bottomStatus" v-if="loadmoreStatus">{{stateText}}</p>
-        </div>
-        <!-- 外教信息 -->
-        <div class="centerInfo" v-if="tabIndex===2">
-          <!-- 自我介绍 -->
-          <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
-            <h6 class="title video_icon">自我介绍</h6>
-            <div class="content" style="text-indent: 0">
-              <video
-                v-if="teacherMsg&&teacherMsg.info.video"
-                controls
-                poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
-                preload="auto"
-                class="video-style"
-                :src="`${teacherMsg.info.video}`"
-              />
-            </div>
-          </div>
-          <!-- 上课风采 -->
-          <div class="introduction" v-if="videoList&&videoList.length>0">
-            <h6 class="title video_icon">上课风采</h6>
-            <div class="content" style="text-indent: 0">
-              <div v-for="(item,index) in videoList" :key="index" class="videoItem">
-                <video
-                  v-if="item"
-                  preload="auto"
-                  :src="item"
-                  controls
-                  poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
-                />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </pull-to>
@@ -683,7 +683,6 @@ export default {
       .pro {
         width: 160px;
         height: 160px;
-        border-radius: 16px;
         background: #f3f3f3;
         img {
           width: 116px;
@@ -705,7 +704,6 @@ export default {
         .img_wrap {
           height: 160px;
           width: 160px;
-          border-radius: 16px;
           background: #f3f3f3;
           img {
             width: 116px;
