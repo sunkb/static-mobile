@@ -704,8 +704,8 @@ export default {
         display: inline-block;
         margin-right: 60px;
         .img_wrap {
-          height: 130px;
-          width: 160px;
+          height: 160px;
+          width: 130px;
           background: #f3f3f3;
           img {
             width: 130px;
@@ -713,6 +713,7 @@ export default {
           }
         }
         .skill_name {
+          width:100%;
           text-align: center;
           padding-top: 6px;
         }
