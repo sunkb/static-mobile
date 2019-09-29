@@ -160,7 +160,7 @@
                       <img class="qua_img" :src="value.path" alt />
                     </a>
                   </div>
-                  <p class="skill_name">{{item.name}}</p>
+                  <p class="skill_name wordBreak">{{item.name}}</p>
                 </div>
               </div>
               <div v-if="experList.length>0">
@@ -428,6 +428,10 @@ export default {
 .scroll-container {
   background: #f7f7f7;
 }
+.wordBreak{
+  word-wrap: break-word;
+  word-break: break-all;
+}
 .teacher-center {
   .bottomStatus {
     border-top: 1px solid #eeeeee;
@@ -680,13 +684,12 @@ export default {
     }
     .qua_wrap {
       .pro {
-        width: 160px;
+        width: 130px;
         height: 160px;
         background: #f3f3f3;
         img {
-          width: 116px;
-          height: 162px;
-          margin: 0 24px;
+          width: 100%;
+          height: 100%;
         }
       }
     }
@@ -696,18 +699,17 @@ export default {
       word-break: break-all;
       margin-bottom: 25px;
       .pro {
-        width: 160px;
+        width: 130px;
         height: 204px;
         display: inline-block;
-        margin-right: 50px;
+        margin-right: 60px;
         .img_wrap {
-          height: 160px;
+          height: 130px;
           width: 160px;
           background: #f3f3f3;
           img {
-            width: 116px;
+            width: 130px;
             height: 162px;
-            margin: 0 24px;
           }
         }
         .skill_name {
