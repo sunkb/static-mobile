@@ -1,6 +1,6 @@
 <template>
   <div style="height:100vh;width:100%;">
-    <pull-to :bottom-load-method="loadmore" @bottom-state-change="stateChange">
+    <pull-to :bottom-load-method="loadmore">
       <div class="teacher-center" v-if="teacherMsg">
         <!-- 个人信息 -->
         <div class="info_wrap">
@@ -92,7 +92,7 @@
             </div>
           </div>-->
           <div class="introduction" v-if="teacherMsg.info.intro!=''">
-            <h6 class="title intro_icon">
+            <h6 class="title intro_icon ells">
               自我介绍
               <span class="transform" @click="tranformFn">{{tranformText}}</span>
             </h6>
@@ -160,7 +160,7 @@
                       <img class="qua_img" :src="value.path" alt />
                     </a>
                   </div>
-                  <p class="skill_name wordBreak">{{item.name}}</p>
+                  <p class="skill_name ells">{{item.name}}</p>
                 </div>
               </div>
               <div v-if="experList.length>0">
@@ -208,7 +208,7 @@
             </div>
           </div>
           <!-- 底部 -->
-          <p class="bottomStatus" v-if="loadmoreStatus">{{stateText}}</p>
+          <p class="bottomStatus" v-if="loadmoreStatus&&tabIndex==2">{{stateText}}</p>
         </div>
       </div>
     </pull-to>
@@ -396,18 +396,6 @@ export default {
       });
     },
     //拉到底部的状态改变
-    stateChange(state) {
-      // if (state === "pull" || state === "trigger") {
-      //   this.stateText = "查看更多";
-      //   this.loadmoreStatus = true;
-      // } else if (state === "loading") {
-      //   this.stateText = "查看更多";
-      //   this.loadmoreStatus = true;
-      // } else if (state === "loaded-done") {
-      //   this.stateText = "查看更多";
-      //   this.loadmoreStatus = true;
-      // }
-    }
   },
   components: {
     abcRate
@@ -428,9 +416,10 @@ export default {
 .scroll-container {
   background: #f7f7f7;
 }
-.wordBreak{
-  word-wrap: break-word;
-  word-break: break-all;
+.ells{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 .teacher-center {
   .bottomStatus {
@@ -451,13 +440,11 @@ export default {
   .rt {
     float: right;
   }
-  .videoItem:nth-child(2n+1){
-      margin-right: 24px;
-    }
   .videoItem {
     display: inline-block;
-    width: 330px;
+    width: 335px;
     height: 300px;
+    margin-right: 10px;
     video {
       width: 100%;
       height: 100%;
