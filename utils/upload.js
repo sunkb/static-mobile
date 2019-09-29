@@ -27,7 +27,7 @@ export default class FileUploader {
     // this.domain = res.data.data.domain
     // this.token = res.data.data.uptoken
     this.domain = 'http://qn-video.abc360.com/'
-    this.token = 'Bl9oeQfJyIIivU7q24veVhydurPTib1lcHneu68K:yWIP_KA2O1kP77LYKt62YtkIWSc=:eyJzY29wZSI6ImFiYzM2MC12aWRlb3MiLCJkZWFkbGluZSI6MTU2OTU3NDkyMCwidXBIb3N0cyI6WyJodHRwOlwvXC91cC5xaW5pdS5jb20iLCJodHRwOlwvXC91cGxvYWQucWluaXUuY29tIiwiLUggdXAucWluaXUuY29tIGh0dHA6XC9cLzE4My4xMzEuNy4zIl19'
+    this.token = 'Bl9oeQfJyIIivU7q24veVhydurPTib1lcHneu68K:hw7XzfJiqztuccqyqdeTXPSfL2w=:eyJzY29wZSI6ImFiYzM2MC12aWRlb3MiLCJkZWFkbGluZSI6MTU2OTc1MzEyOSwidXBIb3N0cyI6WyJodHRwOlwvXC91cC5xaW5pdS5jb20iLCJodHRwOlwvXC91cGxvYWQucWluaXUuY29tIiwiLUggdXAucWluaXUuY29tIGh0dHA6XC9cLzE4My4xMzEuNy4zIl19'
   }
 
   upload(file, type, next, error, complete) {

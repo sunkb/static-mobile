@@ -14,7 +14,7 @@
         <div class="rule-select" @click="selectRule">
           <img v-if="ruleSelected" class="rule-select-img" :src="require('~/assets/presentation/img/rule-select.png')"/>
         </div>
-        <h3>我已阅读并同意《视频授权用户协议书》</h3>
+        <h3 @click="gotoRulePage">我已阅读并同意《视频授权用户协议书》</h3>
       </div>
     </div>
     <submit-area 
@@ -63,6 +63,9 @@ export default {
     },
     gotoStep5() {
       this.$router.push({ name: 'presentation-signup-step5' })
+    },
+    gotoRulePage() {
+      this.$router.push({ name: "presentation-rule" })
     }
   },
   mounted() {
@@ -93,7 +96,7 @@ export default {
     margin-right: 3vw;
     width: 5.3vw;
     height: 5.3vw;
-    border: 1px solid #E6E6E6;
+    border: .2vw solid #E6E6E6;
 
     &-img {
       width: inherit;

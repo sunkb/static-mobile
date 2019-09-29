@@ -61,11 +61,39 @@ const TOPICS = [
   }
 ]
 
+const LANDI_LEVEL = [
+  { name: 'PRE E', type: 0 },
+  { name: 'E1-E2', type: 1 },
+  { name: 'E3即以上', type: 2 }
+]
+
+const RANK_LIST = [
+  { name: 'Nina', like: 2330, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Saeah', like: 1330, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Alina', like: 330, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Liz', like: 200, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Luke', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Dandi', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Pengy', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Zoe', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Loft', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Tina', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Carol', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+]
+
 const VIDEO_STATUS_TYPE = {
   ADD: { 
     type: 'add',
-    hint: '点击上传视频',
-    actionIcon: true
+    hint: '宝爸/宝妈们, 快来上传宝贝的视频',
   },
   UPLOADING: {
     type: 'uploading',
@@ -73,13 +101,11 @@ const VIDEO_STATUS_TYPE = {
   },
   ERROR: {
     type: 'error',
-    hint: '文件不符合条件',
-    actionIcon: true
+    hint: '视频上传失败, 上传的文件不符合条件'
   },
   UPLOADED: {
     type: 'uploaded',
-    hint: '上传成功, 点击重新上传',
-    actionIcon: true
+    hint: '上传成功, 点击重新上传'
   }
 }
 
@@ -97,5 +123,7 @@ export {
   SIGNUP_DATA_RULE,
   TOPICS,
   VIDEO_STATUS_TYPE,
-  STROGE
+  STROGE,
+  LANDI_LEVEL,
+  RANK_LIST
 }
