@@ -29,7 +29,7 @@
 
 <script>
 import { StepBar, SubmitArea, PosterModal } from '~/components/presentation'
-import { STEPS, STROGE } from '../consts'
+import { STEPS, STROGE } from '~/pages/presentation/consts'
 
 export default {
   name: 'Signup',

@@ -33,7 +33,7 @@
 
 <script>
 import { StepBar, SubmitArea } from '~/components/presentation'
-import { STEPS, TOPICS, STROGE } from '../consts'
+import { STEPS, TOPICS, STROGE } from '~/pages/presentation/consts'
 
 export default {
   name: 'Signup',

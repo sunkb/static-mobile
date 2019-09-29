@@ -1,5 +1,6 @@
 <template>
   <div>
+    
   </div>
 </template>
 
@@ -9,7 +10,7 @@ export default {
   name: 'Presentation',
   head() {
     return {
-      title: "活动"
+      title: "2019 兰迪英语才艺展示 第一届"
     }
   },
   components: {

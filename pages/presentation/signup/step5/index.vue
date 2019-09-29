@@ -36,7 +36,7 @@
 <script>
 import { StepBar } from '~/components/presentation'
 import Toast from '~/components/Toast'
-import { STEPS, STROGE, TOPICS } from '../consts'
+import { STEPS, STROGE, TOPICS } from '~/pages/presentation/consts'
 
 export default {
   name: 'Signup',

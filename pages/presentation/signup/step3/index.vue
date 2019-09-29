@@ -49,7 +49,7 @@
 
 <script>
 import { StepBar, SubmitArea } from '~/components/presentation'
-import { STEPS, TOPICS, VIDEO_STATUS_TYPE, STROGE } from '../consts'
+import { STEPS, TOPICS, VIDEO_STATUS_TYPE, STROGE } from '~/pages/presentation/consts'
 import FileUploader, { FILE_TYPE } from '~/utils/upload.js'
 import Toast from '~/components/Toast'
 

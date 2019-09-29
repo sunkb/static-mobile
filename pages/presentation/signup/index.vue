@@ -60,7 +60,7 @@
 
 <script>
 import { StepBar, PosterModal, SubmitArea } from '~/components/presentation'
-import { STEPS, API, REGION_DATA, SIGNUP_DATA_RULE, STROGE } from './consts'
+import { STEPS, API, REGION_DATA, SIGNUP_DATA_RULE, STROGE } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 

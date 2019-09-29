@@ -3,7 +3,8 @@ import REGION_DATA from './region_data'
 const STEPS = ['报名信息', '选择题目', '上传视频', '确认提交', '我的作品']
 
 const API = {
-  
+  // TODO: url
+  STU_SHARE_DATA: ''
 }
 
 const SIGNUP_DATA_RULE = {
@@ -44,7 +45,7 @@ const TOPICS = [
       poster: 'https://qn-static.landi.com/uploadtoolc64639d85d1b028a645b35a27acfe218.png'
     },
     text: {
-      eng: 'We can\'t just leave environmental protection to our government eventttttttttt',
+      eng: 'We can\'t just leave environmental protection to our govern ment every bady.',
       chn: '环境保护不仅仅是政府的事情，我们在日常生活中能为保护环境做什么呢？'
     }
   },
