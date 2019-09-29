@@ -17,23 +17,28 @@
         <h3 v-if="topic" class="topic-text-chn">{{ topic.text.chn }}</h3>
       </div>
       <div class="video">
-        <div class="video-upload">
-          <div v-if="videoStatus.actionIcon" class="video-upload-action">
-            <label for="video-upload-input">
-              <img v-if="videoStatus.type == 'add'" class="video-upload-action-img" :src="require('~/assets/presentation/img/upload-add.png')"/>
-              <img v-if="videoStatus.type == 'uploaded'" class="video-upload-action-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
-            </label>
-            <input id="video-upload-input" type="file" accept="video/*" ref="videoUploadInput" @change="videoUpload" style="display: none"/>
-            <img v-if="videoStatus.type == 'error'" class="video-upload-action-img" :src="require('~/assets/presentation/img/upload-error.png')"/>
-          </div>
-          <div v-if="videoStatus.hint" class="video-upload-hint"><h3>{{ videoStatus.hint }}</h3></div>
+        <div class="video-hint" v-if="videoStatus.type != 'uploaded'">
+          <img v-if="videoStatus.type == 'add'" class="video-hint-hintimg" :src="require('~/assets/presentation/img/wait-upload.png')"/>
+          <img v-if="videoStatus.type == 'error'" class="video-hint-hintimg" :src="require('~/assets/presentation/img/upload-error.png')"/>
+          <div v-if="videoStatus.hint" class="video-hint-hint">{{ videoStatus.hint }}</div>
           <div v-if="videoStatus.type == 'uploading'">
-            <div class="video-upload-progress">
-              <div class="video-upload-progress-bg"></div>
-              <div class="video-upload-progress-fg" :style="{ width: `${videoStatus.progress}%` }"></div>
+            <div class="video-hint-progress">
+              <div class="video-hint-progress-bg"></div>
+              <div class="video-hint-progress-fg" :style="{ width: `${videoStatus.progress}%` }"></div>
             </div>
             <h3>正在上传 {{ videoStatus.progress }}%</h3>
           </div>
+        </div>
+        <div class="video-uploaded" v-if="videoStatus.type == 'uploaded'">
+          <video controls class="video-uploaded-video">
+            <source :src="videoSrc"/>
+          </video>
+        </div>
+        <div class="video-upload" v-if="videoStatus.type != 'uploading'">
+          <label class="video-upload-action" for="video-upload-input">
+            <img class="video-upload-action-img" :src="require('~/assets/presentation/img/upload-add.png')"/>
+          </label>
+          <input id="video-upload-input" type="file" accept="video/*" ref="videoUploadInput" @change="videoUpload" style="display: none"/>
         </div>
       </div>
     </div>
@@ -179,10 +184,11 @@ export default {
   margin-top: 3vw;
   display: flex;
   justify-content: center;
+  position: relative;
 
   $video-content-width: 85.3vw;
 
-  &-upload {
+  &-hint {
     width: 85.3vw;
     height: 48vw;
     display: flex;
@@ -190,13 +196,18 @@ export default {
     justify-content: center;
     align-items: center;
     background: #FAFAFA;
-    border: 1px dashed #E6E6E6;
+    border: .2vw dashed #E6E6E6;
 
-    &-action {
-      &-img {
-        width: 9.3vw;
-        height: 9.3vw;
-      }
+    &-hint {
+      width: 26vw;
+      color: #B2B2B2;
+      font-size: 3.2vw;
+      margin-top: 2vw;
+    }
+
+    &-hintimg {
+      width: 8vw;
+      height: 8vw;
     }
 
     &-progress {
@@ -229,6 +240,28 @@ export default {
   &-uploaded {
     &-video {
       width: $video-content-width;
+    }
+  }
+
+  &-upload {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(50%);
+
+    &-action {
+      width: 12vw;
+      height: 12vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      border-radius: 6vw;
+      box-shadow: 0 0 5vw -3vw #666666;
+
+      &-img {
+        width: 8.6vw;
+        height: 8.6vw;
+      }
     }
   }
 }

@@ -44,6 +44,7 @@
     <p>3.对因不可抗力或政府行为导致本活动提前终止，主办方免予承担责任；主办方的前述处理措施所依据的数据及信息（包括但不限于账号操作记录、上传内容等），均以活动后台记录为准；</p>
     <h1></h1>
     <p>主办方杭州旦悦科技有限公司，兰迪少儿英语对本活动享有最终解释权</p>
+    <div class="back" @click="goBack">返回</div>
   </div>
 </template>
 
@@ -54,6 +55,11 @@ export default {
     return {
       title: '活动规则'
     }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
+    }
   }
 }
 </script>
@@ -63,5 +69,19 @@ export default {
 
 #rule {
   padding: 3vw 5vw;
+}
+
+.back {
+  position: fixed;
+  top: 5vw;
+  right: 0;
+  padding: 3vw 4vw;
+  font-size: 3.5vw;
+  font-weight: bold;
+  color: #fff;
+  background: $p-color-0;
+  box-shadow: 0 0 3vw -2vw black;
+  border-top-left-radius: 30%;
+  border-bottom-left-radius: 30%;
 }
 </style>

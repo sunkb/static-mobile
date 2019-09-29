@@ -18,21 +18,20 @@
           <span class="signupform-item-label required">兰迪级别</span>
           <select class="signupform-item-select" v-model="signupData.landiLevel" @blur="formBlur">
             <option value="">请选择级别</option>
-            <!-- TODO: 级别应该来自请求数据 -->
-            <option v-for="(item) in landiLevels" :key="item" :value="item">{{item}}</option>
+            <option v-for="(item, index) in landiLevels" :key="index" :value="item.type">{{item.name}}</option>
           </select>
         </div>
         <div class="signupform-item">
           <span class="signupform-item-label required">家长手机号</span>
           <input class="signupform-item-input" v-model="signupData.phone" placeholder="请填写家长手机号" @blur="formBlur"/>
         </div>
-        <div class="signupform-item">
+        <!-- <div class="signupform-item">
           <span class="signupform-item-label required">验证码</span>
           <input class="signupform-item-input" v-model="signupData.validateCode" placeholder="请填写短信验证码" @blur="formBlur"/>
           <span @click="validatePhone" :class="['signupform-item-vcode', validateCodeTimeout > 0 ? 'signupform-item-vcode-timeout' : '']">
             {{ validateCodeTimeout > 0 ? `${validateCodeTimeout}s重新发送` : '获取验证码' }}
           </span>
-        </div>
+        </div> -->
         <div class="signupform-item">
           <span class="signupform-item-label required">地址</span>
           <!-- TODO: 城市数据应该来自请求数据 -->
@@ -60,7 +59,7 @@
 
 <script>
 import { StepBar, PosterModal, SubmitArea } from '~/components/presentation'
-import { STEPS, API, REGION_DATA, SIGNUP_DATA_RULE, STROGE } from '~/pages/presentation/consts'
+import { STEPS, API, REGION_DATA, SIGNUP_DATA_RULE, STROGE, LANDI_LEVEL } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 
@@ -85,13 +84,13 @@ export default {
         engName: '',
         landiLevel: '',
         phone: '',
-        validateCode: '',
+        // validateCode: '',
         province: '0',
         city: '0'
       },
       validateCodeTimeout: 0,
       dataNotEmpty: false,
-      landiLevels: ['PREE', 'E1-E2', 'E3'],
+      landiLevels: [],
       regionData: REGION_DATA,
       errorMessage: '',
       showPosterModal: false
@@ -147,7 +146,8 @@ export default {
     }
   },
   mounted() {
-    
+    // TODO: 获取 landi_level
+    this.landiLevels = LANDI_LEVEL
   }
 }
 </script>
@@ -157,11 +157,11 @@ export default {
 
 .signupform {
   &:last-child {
-    border-bottom: 1px solid #E6E6E6;
+    border-bottom: .2vw solid #E6E6E6;
   }
 
   &-item {
-    border-top: 1px solid #E6E6E6;
+    border-top: .2vw solid #E6E6E6;
     padding: 3vw 0;
     white-space: nowrap;
 
