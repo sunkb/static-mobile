@@ -654,8 +654,7 @@ export default {
     color: #52b746;
   }
   .video-style {
-    width: 690px;
-    height: 400px;
+    width: 100%;
   }
   background: #f7f7f7;
   .centerInfo {
