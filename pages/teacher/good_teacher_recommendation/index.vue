@@ -29,7 +29,7 @@
                 <span
                   class="accent"
                   v-if="teacherMsg.info.accent"
-                >{{teacherMsg.info.accent == 1? '美音' : '英音'}}</span>
+                >{{teacherMsg.info.accent}}</span>
                 <p
                   v-if="teacherMsg.info&&teacherMsg.info.recommendation"
                 >{{teacherMsg.info.recommendation.highlights}}</p>
@@ -151,7 +151,7 @@
             </div>
           </div>
           <!-- 评分 -->
-          <div class="comment" v-if="commentList&&commentList.length" style="padding:">
+          <div class="comment" v-if="commentList&&commentList.length>0" >
             <h6 class="title score_icon cf">
               评分
               <span class="total rt">(共有{{total}}个评价)</span>
@@ -271,7 +271,14 @@ export default {
         }
         let infoData = res;
         this.teacherMsg = res;
-
+        //accent=1(美音); 2:英音 3:标准音
+        if(this.teacherMsg.info.accent==1){
+          this.teacherMsg.info.accent='美音'
+        }else if(this.teacherMsg.info.accent==2){
+          this.teacherMsg.info.accent='英音'
+        }else if(this.teacherMsg.info.accent==3){
+          this.teacherMsg.info.accent='标准音'
+        }
         if (res.info && res.info.recommendation) {
           this.videoList = res.info.recommendation.videos;
         }
@@ -279,10 +286,10 @@ export default {
           this.weekdays = infoData.info.weekdays;
         }
         if (
+          infoData.info.qualifications.education&&
           infoData.info.qualifications.education.audit!=undefined&&
           infoData.info.qualifications.education.audit.files[0].path!=undefined
         ) {
-          alert(1)
           this.imgsrc =
             infoData.info.qualifications.education.audit.files[0].path;
         }
@@ -321,7 +328,8 @@ export default {
     async getTag() {
       const param = getQueryString("token");
       const res = await apiGoodTeacher.getTeacherLabelX({
-        token: param
+        token: param,
+        limit:100
       });
       if (res.status) {
         this.tagList = res.data;
@@ -341,7 +349,7 @@ export default {
       this.getTeacherScore().then(res => {
         if (res.status) {
           this.pages = res.data.pages;
-          if(this.commentList.length>0){
+          if(res.data.data){
             this.commentList.push(...res.data.data);
             this.total = res.data.total;
           }
@@ -599,7 +607,7 @@ export default {
       }
     }
     .accent {
-      width: 60px;
+      width: 100px;
       line-height: 34px;
       text-align: center;
       font-size: 24px;
