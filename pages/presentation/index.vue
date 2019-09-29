@@ -2,8 +2,8 @@
   <div id="presentation">
     <!-- <img class="bg" /> -->
     <div class="topaction">
-      <div class="topaction-rank">点赞排行</div>
-      <div class="topaction-rule">活动规则</div>
+      <div class="topaction-rank" @click="gotoPage({ name: 'presentation-rank' })">点赞排行</div>
+      <div class="topaction-rule" @click="gotoPage({ name: 'presentation-rule' })">活动规则</div>
     </div>
     <div class="content">
       <h1 style="color: #B2B2B2;">参赛作品样板</h1>
@@ -37,7 +37,9 @@ export default {
     }
   },
   methods: {
-
+    gotoPage(page) {
+      this.$router.push(page)
+    }
   },
   mounted() {
     this.themeColor = '#F0552D'

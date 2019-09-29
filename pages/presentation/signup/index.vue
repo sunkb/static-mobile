@@ -25,13 +25,13 @@
           <span class="signupform-item-label required">家长手机号</span>
           <input class="signupform-item-input" v-model="signupData.phone" placeholder="请填写家长手机号" @blur="formBlur"/>
         </div>
-        <div class="signupform-item">
+        <!-- <div class="signupform-item">
           <span class="signupform-item-label required">验证码</span>
           <input class="signupform-item-input" v-model="signupData.validateCode" placeholder="请填写短信验证码" @blur="formBlur"/>
           <span @click="validatePhone" :class="['signupform-item-vcode', validateCodeTimeout > 0 ? 'signupform-item-vcode-timeout' : '']">
             {{ validateCodeTimeout > 0 ? `${validateCodeTimeout}s重新发送` : '获取验证码' }}
           </span>
-        </div>
+        </div> -->
         <div class="signupform-item">
           <span class="signupform-item-label required">地址</span>
           <!-- TODO: 城市数据应该来自请求数据 -->
@@ -84,7 +84,7 @@ export default {
         engName: '',
         landiLevel: '',
         phone: '',
-        validateCode: '',
+        // validateCode: '',
         province: '0',
         city: '0'
       },
