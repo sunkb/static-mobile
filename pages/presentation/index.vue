@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {Login} from '~/utils/core/login'
 
 export default {
   name: 'Presentation',
@@ -21,6 +22,10 @@ export default {
   },
   methods: {
 
+  },
+  created() {
+    const login = new Login();
+    login.autoLogin();
   }
 }
 </script>
