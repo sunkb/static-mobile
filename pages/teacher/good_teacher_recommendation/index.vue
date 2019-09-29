@@ -26,10 +26,7 @@
                 <span class="country BrithDay"></span>
                 <span class="age" style="margin-right:40px;">{{teacherMsg.info.age}}岁</span>
                 <span class="country Accent accent_icon"></span>
-                <span
-                  class="accent"
-                  v-if="teacherMsg.info.accent"
-                >{{teacherMsg.info.accent}}</span>
+                <span class="accent" v-if="teacherMsg.info.accent">{{teacherMsg.info.accent}}</span>
                 <p
                   v-if="teacherMsg.info&&teacherMsg.info.recommendation"
                 >{{teacherMsg.info.recommendation.highlights}}</p>
@@ -40,11 +37,11 @@
         <!-- tab切换 -->
         <div class="tabWrap">
           <p class="borderRight" @click="tabChange(1)" :class="{'active':tabIndex===1}">
-            教师风采
+            外教信息 
             <span class="heng"></span>
           </p>
           <p @click="tabChange(2)" :class="{'active':tabIndex===2}">
-            外教信息
+            教师风采
             <span class="heng"></span>
           </p>
         </div>
@@ -109,7 +106,10 @@
             </div>
           </div>
           <!-- 授课能力 -->
-          <div class="introduction" v-if="skillList&&imgsrc||skillList.length>0||experList.length>0">
+          <div
+            class="introduction"
+            v-if="skillList&&imgsrc||skillList.length>0||experList.length>0"
+          >
             <h6 class="title teach_able">授课能力</h6>
             <div class="content" style="text-indent: 0">
               <div class="qua_wrap" v-if="imgsrc">
@@ -151,7 +151,7 @@
             </div>
           </div>
           <!-- 评分 -->
-          <div class="comment" v-if="commentList&&commentList.length>0" >
+          <div class="comment" v-if="commentList&&commentList.length>0">
             <h6 class="title score_icon cf">
               评分
               <span class="total rt">(共有{{total}}个评价)</span>
@@ -201,9 +201,9 @@
               <div v-for="(item,index) in videoList" :key="index" class="videoItem">
                 <video
                   v-if="item"
-                  controls
                   preload="auto"
                   :src="item"
+                  controls
                   poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
                 />
               </div>
@@ -223,7 +223,7 @@ export default {
   data() {
     return {
       tranformText: "翻译",
-      loadmoreStatus: false,
+      loadmoreStatus: true,
       stateText: "查看更多",
       videoList: [], //上课视频列表
       tabIndex: 1, //tab切换
@@ -272,12 +272,12 @@ export default {
         let infoData = res;
         this.teacherMsg = res;
         //accent=1(美音); 2:英音 3:标准音
-        if(this.teacherMsg.info.accent==1){
-          this.teacherMsg.info.accent='美音'
-        }else if(this.teacherMsg.info.accent==2){
-          this.teacherMsg.info.accent='英音'
-        }else if(this.teacherMsg.info.accent==3){
-          this.teacherMsg.info.accent='标准音'
+        if (this.teacherMsg.info.accent == 1) {
+          this.teacherMsg.info.accent = "美音";
+        } else if (this.teacherMsg.info.accent == 2) {
+          this.teacherMsg.info.accent = "英音";
+        } else if (this.teacherMsg.info.accent == 3) {
+          this.teacherMsg.info.accent = "标准音";
         }
         if (res.info && res.info.recommendation) {
           this.videoList = res.info.recommendation.videos;
@@ -286,9 +286,10 @@ export default {
           this.weekdays = infoData.info.weekdays;
         }
         if (
-          infoData.info.qualifications.education&&
-          infoData.info.qualifications.education.audit!=undefined&&
-          infoData.info.qualifications.education.audit.files[0].path!=undefined
+          infoData.info.qualifications.education &&
+          infoData.info.qualifications.education.audit != undefined &&
+          infoData.info.qualifications.education.audit.files[0].path !=
+            undefined
         ) {
           this.imgsrc =
             infoData.info.qualifications.education.audit.files[0].path;
@@ -329,7 +330,7 @@ export default {
       const param = getQueryString("token");
       const res = await apiGoodTeacher.getTeacherLabelX({
         token: param,
-        limit:100
+        limit: 5
       });
       if (res.status) {
         this.tagList = res.data;
@@ -349,9 +350,12 @@ export default {
       this.getTeacherScore().then(res => {
         if (res.status) {
           this.pages = res.data.pages;
-          if(res.data.data){
+          if (res.data.data) {
             this.commentList.push(...res.data.data);
             this.total = res.data.total;
+          }
+          if (res.data.pages <= 0) {
+            this.loadmoreStatus = false;
           }
         }
       });
@@ -379,6 +383,7 @@ export default {
     loadmore(loaded) {
       const vm = this;
       if (vm.pages <= vm.currentPage) {
+        this.stateText = "没有更多了";
         return loaded("done");
       }
       vm.currentPage += 1;
@@ -392,16 +397,16 @@ export default {
     },
     //拉到底部的状态改变
     stateChange(state) {
-      if (state === "pull" || state === "trigger") {
-        this.stateText = "查看更多";
-        this.loadmoreStatus = false;
-      } else if (state === "loading") {
-        this.stateText = "查看更多";
-        this.loadmoreStatus = true;
-      } else if (state === "loaded-done") {
-        this.stateText = "查看更多";
-        this.loadmoreStatus = false;
-      }
+      // if (state === "pull" || state === "trigger") {
+      //   this.stateText = "查看更多";
+      //   this.loadmoreStatus = true;
+      // } else if (state === "loading") {
+      //   this.stateText = "查看更多";
+      //   this.loadmoreStatus = true;
+      // } else if (state === "loaded-done") {
+      //   this.stateText = "查看更多";
+      //   this.loadmoreStatus = true;
+      // }
     }
   },
   components: {
@@ -442,11 +447,13 @@ export default {
   .rt {
     float: right;
   }
+  .videoItem:nth-child(2n+1){
+      margin-right: 24px;
+    }
   .videoItem {
     display: inline-block;
-    width: 222px;
-    height: 226px;
-    margin-right: 6px;
+    width: 330px;
+    height: 300px;
     video {
       width: 100%;
       height: 100%;
@@ -774,7 +781,7 @@ export default {
       padding: 0 30px;
       margin-bottom: 2px;
       .title {
-        padding-top: 30px;
+        padding-top: 50px;
         &:before {
           position: absolute;
           left: 0;
