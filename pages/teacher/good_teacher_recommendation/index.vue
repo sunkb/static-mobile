@@ -354,7 +354,7 @@ export default {
             this.commentList.push(...res.data.data);
             this.total = res.data.total;
           }
-          if (res.data.pages <= 0) {
+          if(res.data.total<=5){
             this.loadmoreStatus = false;
           }
         }
