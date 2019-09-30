@@ -65,9 +65,9 @@
           <div class="introduction" v-if="videoList&&videoList.length>0">
             <h6 class="title video_icon">上课风采</h6>
             <div class="content" style="text-indent: 0">
-              <div v-for="(item,index) in videoList" :key="index" @click ='playFn("video"+index)' class="videoItem">
+              <div v-for="(item,index) in videoList" :key="index" class="videoItem">
                 <video
-                  :id="`video${index}`"
+                  controls
                   :key="index" 
                   v-if="item"
                   preload="auto"
@@ -255,11 +255,6 @@ export default {
     this.getTeacherScoreFn();
   },
   methods: {
-    //视频播放
-    playFn(name){
-      let teacherVideo = document.getElementById(name)
-      teacherVideo.play();
-    },
     // 获取老师个人信息
     async getTeacherInfo() {
       const param = getQueryString("token");
@@ -520,7 +515,7 @@ export default {
         border-radius: 100%;
         position:absolute;
         right:-0px;
-        top:8px;
+        top:2px;
       }
       .icon-girl {
         background: url(~assets/good_teacher/images/women.png);
@@ -686,13 +681,13 @@ export default {
       height: 100%;
     }
     .mt20{
-      margin-top:20px;
+      margin-top:40px;
     }
     .qua_title {
       margin-bottom: 20px;
     }
     .qua_wrap {
-      padding-bottom: 20px;
+      padding-bottom: 40px;
       border-bottom: 1px solid #eee;
       .pro {
         width: 130px;
@@ -709,7 +704,7 @@ export default {
       word-wrap: break-word;
       word-break: break-all;
       margin-bottom: 25px;
-      padding-bottom: 14px;
+      padding-bottom: 30px;
       border-bottom: 1px solid #eee;
       .pro:last-child{
         margin-right: 0px;
