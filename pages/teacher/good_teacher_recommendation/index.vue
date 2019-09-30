@@ -24,7 +24,7 @@
               </div>
               <div class="row row-country">
                 <span class="country BrithDay"></span>
-                <span class="age" style="margin-right:40px;">{{teacherMsg.info.age}}岁</span>
+                <span class="age">{{teacherMsg.info.age}}岁</span>
                 <span class="country Accent accent_icon" v-if="teacherMsg.info.accent!=0"></span>
                 <span class="accent" v-if="teacherMsg.info.accent">{{teacherMsg.info.accent}}</span>
                 <p
@@ -65,12 +65,13 @@
           <div class="introduction" v-if="videoList&&videoList.length>0">
             <h6 class="title video_icon">上课风采</h6>
             <div class="content" style="text-indent: 0">
-              <div v-for="(item,index) in videoList" :key="index" class="videoItem">
+              <div v-for="(item,index) in videoList" :key="index" @click ='playFn("video"+index)' class="videoItem">
                 <video
+                  :id="`video${index}`"
+                  :key="index" 
                   v-if="item"
                   preload="auto"
                   :src="item"
-                  controls
                   poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
                 />
               </div>
@@ -153,7 +154,7 @@
                 </div>
               </div>
               <div class="skill_list clear" v-if="skillList.length>0">
-                <p class="qua_title" style="margin-top:20px;">任职资格</p>
+                <p class="qua_title mt20">任职资格</p>
                 <div class="pro" v-for="(item,index) in skillList" :key="index">
                   <div class="img_wrap" v-for="(value,key) in item.files" :key="key">
                     <a :href="value.path" target="_blank">
@@ -254,6 +255,11 @@ export default {
     this.getTeacherScoreFn();
   },
   methods: {
+    //视频播放
+    playFn(name){
+      let teacherVideo = document.getElementById(name)
+      teacherVideo.play();
+    },
     // 获取老师个人信息
     async getTeacherInfo() {
       const param = getQueryString("token");
@@ -423,11 +429,10 @@ export default {
 }
 .teacher-center {
   .bottomStatus {
-    border-top: 1px solid #eeeeee;
     width: 100%;
-    height: 100px;
+    height: 114px;
     text-align: center;
-    line-height: 100px;
+    line-height: 114px;
     font-size: 24px;
     color: #ffd750;
     background: #fff;
@@ -443,11 +448,12 @@ export default {
   .videoItem {
     display: inline-block;
     width: 335px;
-    height: 300px;
+    height: 180px;
     margin-right: 10px;
+    margin-bottom:10px;
     video {
-      width: 100%;
-      height: 100%;
+      width: 335px;
+      height: 180px;
     }
   }
   .tabWrap {
@@ -456,6 +462,8 @@ export default {
     align-items: center;
     height: 80px;
     width: 100%;
+    background:#fff;
+    margin-bottom:20px;
     p {
       font-size: 28px;
       color: #999999;
@@ -496,6 +504,9 @@ export default {
       background: url(~assets/good_teacher/images/birth.png);
       background-size: cover;
     }
+    .age{
+      margin-right:28px;
+    }
     .teacher-item {
       padding: 30px;
       display: flex;
@@ -507,6 +518,9 @@ export default {
         width: 36px;
         height: 36px;
         border-radius: 100%;
+        position:absolute;
+        right:-0px;
+        top:8px;
       }
       .icon-girl {
         background: url(~assets/good_teacher/images/women.png);
@@ -548,6 +562,8 @@ export default {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            position: relative;
+            padding-right:50px;
           }
         }
         .row-country {
@@ -628,6 +644,9 @@ export default {
     margin: 0 1.5% 36px;
     line-height: 40px;
   }
+  .item-wrap:nth-child(5){
+    margin-bottom: 0;
+  }
   .orange_round {
     border: 2px solid #ff6515;
     color: #ff6515;
@@ -655,7 +674,7 @@ export default {
       line-height: 36px;
     }
     .word_hide {
-      color: #1cb7c6;
+      color: #999;
       text-align: right;
       width: 260px;
       text-align: right;
@@ -666,10 +685,15 @@ export default {
       width: 100%;
       height: 100%;
     }
+    .mt20{
+      margin-top:20px;
+    }
     .qua_title {
       margin-bottom: 20px;
     }
     .qua_wrap {
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
       .pro {
         width: 130px;
         height: 160px;
@@ -685,11 +709,16 @@ export default {
       word-wrap: break-word;
       word-break: break-all;
       margin-bottom: 25px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #eee;
+      .pro:last-child{
+        margin-right: 0px;
+      }
       .pro {
         width: 130px;
         height: 204px;
         display: inline-block;
-        margin-right: 60px;
+        margin-right: 52px;
         .img_wrap {
           height: 160px;
           width: 130px;
@@ -721,6 +750,7 @@ export default {
       padding-left: 20px;
       line-height: 32px;
       padding-left: 40px;
+      font-weight: 600;
     }
     .title:before {
       position: absolute;
@@ -750,8 +780,7 @@ export default {
         center center/cover;
     }
     .introduction {
-      padding: 30px;
-      padding-top: 50px;
+      padding: 50px 30px;
       background: #fff;
       margin-bottom: 20px;
       .content {
@@ -766,7 +795,6 @@ export default {
     .comment {
       background: #fff;
       padding: 0 30px;
-      margin-bottom: 2px;
       .title {
         padding-top: 50px;
         &:before {
@@ -799,19 +827,21 @@ export default {
       }
       .content {
         margin: 0 -30px;
+        padding:0 30px;
         .item {
           display: flex;
-          padding: 30px 30px 40px 30px;
-          // border-bottom: 2px solid #ccc;
+          padding: 30px 0px 40px 0px;
+          border-bottom: 1px solid #eee;
           img {
             width: 80px;
             height: 80px;
             margin-right: 20px;
+            border-radius: 100%;
           }
           .item-detail {
             flex: 1;
             .name {
-              color: #11b7c7;
+              color: #333;
               font-size: 28px;
             }
             .time {
@@ -827,9 +857,6 @@ export default {
               margin-top: 20px;
             }
           }
-        }
-        .item:last-child {
-          border-bottom: 0;
         }
       }
     }
