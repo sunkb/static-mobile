@@ -18,7 +18,7 @@ module.exports = {
     NODE_ENV: 'test',
     ENV_API: 'http://release6.landi.com/', //测试服务器地址
     BASE_URL: 'http://release6.landi.com/static-web/mobile',
-    APP_ID: 'wxfcc48a994f9a1a32'
+    APP_ID: 'wx9632cb5f0990954d'
   },
   pro: {
     PUBLIC_PATH: 'https://www.landi.com/static-web/mobile/',
