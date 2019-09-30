@@ -12,8 +12,8 @@ export class Login {
     autoLogin() {
         //不是开发环境
         if(process.env.NODE_ENV !== 'development'){
-            if (!getIsWxClient()) {
-                //wxAutoLogin();
+            if (getIsWxClient()) {
+                wxAutoLogin();
             }
         }
     }

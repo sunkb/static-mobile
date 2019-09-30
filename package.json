@@ -11,6 +11,7 @@
     "generate:local": "cross-env MODE=local nuxt generate",
     "generate:test": "cross-env MODE=test nuxt generate",
     "generate:test198": "cross-env MODE=test198 nuxt generate",
+    "generate:release6": "cross-env MODE=release6 nuxt generate",
     "generate:production": "cross-env MODE=pro nuxt generate",
     "server": "live-server ./dist --port=8081"
   },

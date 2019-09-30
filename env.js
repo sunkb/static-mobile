@@ -20,6 +20,13 @@ module.exports = {
     BASE_URL: 'https://192.168.2.198/develop/static/web',
     APP_ID: 'wxfcc48a994f9a1a32'
   },
+  release6: {
+    PUBLIC_PATH: 'http://release6.landi.com/static-web/mobile/',
+    NODE_ENV: 'test',
+    ENV_API: 'http://release6.landi.com/', //测试服务器地址
+    BASE_URL: 'http://release6.landi.com/static-web/mobile',
+    APP_ID: 'wxfcc48a994f9a1a32'
+  },
   pro: {
     PUBLIC_PATH: 'https://www.abc360.com/static/web/',
     NODE_ENV: 'production',
