@@ -6,9 +6,9 @@
         <div class="headbar-content-text">在比赛中，小朋友们的精彩表现，让我们为选手们送上祝福的掌声，期待他们在未来取得更多成就</div>
       </div>
     </div>
-    <div class="level">
+    <div class="level" :style="{ position: innerScroll ? 'fixed' : 'static' }">
       <div v-for="(item, index) in landiLevels" :key="index" @click="listUpdate(index)" class="level-item">
-        <div class="level-item-content">{{ item.name }}</div>
+        <div :class="['level-item-content', landiLevelIndex == index ? 'accent' : '' ]" >{{ item.name }}</div>
         <div v-if="landiLevelIndex == index" class="level-item-selector"></div>
       </div>
     </div>
@@ -16,7 +16,12 @@
       <!-- TODO: key 修改成唯一的 -->
       <div v-for="(item, index) in rankList" :key="index" class="rank-item">
         <div class="rank-item-left">
-          <div class="rank-item-rank">{{ index <= 2 ? index + 1 : `${index}`.padStart(2, '0') }}</div>
+          <div class="rank-item-rank">
+            <div v-if="index > 2">{{ `${index + 1}`.padStart(2, '0') }}</div>
+            <img v-if="index == 0" :src="require('~/assets/presentation/img/rank-1.png')"/>
+            <img v-if="index == 1" :src="require('~/assets/presentation/img/rank-2.png')"/>
+            <img v-if="index == 2" :src="require('~/assets/presentation/img/rank-3.png')"/>
+          </div>
           <div class="rank-item-avatar">
             <img class="rank-item-avatar-img" :src="item.avatar"/>
           </div>
@@ -45,19 +50,29 @@ export default {
     return {
       landiLevels: [],
       landiLevelIndex: 0,
-      rankList: []
+      rankList: [],
+      innerScroll: false
     }
   },
   methods: {
     async listUpdate(levelIndex) {
       this.landiLevelIndex = levelIndex
       //TODO: update
+    },
+    handleScroll() {
+      if (window.scrollY >= window.innerWidth * 0.467) {
+        this.innerScroll = true
+      } else {
+        this.innerScroll = false
+      }
     }
   },
   mounted() {
     // TODO: 获取level, 获取ranklist
     this.landiLevels = LANDI_LEVEL
     this.rankList = RANK_LIST
+
+    window.addEventListener('scroll', this.handleScroll)
   }
 }
 </script>
@@ -71,7 +86,10 @@ $level-height: 12vw;
 .headbar {
   height: $headbar-height;
   width: 100vw;
-  background: $b-color;
+  background: 
+    url('~assets/presentation/img/rank-head-bg1.png') 100% 400% / 35% no-repeat,
+    url('~assets/presentation/img/rank-head-bg.png') 0 0 / cover;
+  background-color: #3b7ada;
   color: #fff;
   position: relative;
 
@@ -98,7 +116,8 @@ $level-height: 12vw;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background: #A3BECC;
+  background: #3781D6;
+  top: 0;
 
   &-item {
     position: relative;
@@ -111,22 +130,26 @@ $level-height: 12vw;
       line-height: 12vw;
     }
 
+    .accent {
+      font-weight: bold;
+    }
+
     &-selector {
       position: absolute;
       left: 50%;
-      bottom: 0;
+      bottom: -.2vw;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 1.5vw solid transparent;
-      border-right: 1.5vw solid transparent;
+      border-left: 2vw solid transparent;
+      border-right: 2vw solid transparent;
       border-bottom: 2vw solid #fff;
     }
   }
 }
 
 .rank {
-  height: calc(100vh - #{$level-height} - #{$headbar-height});
+  // height: calc(100vh - #{$level-height} - #{$headbar-height});
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   padding: 0 4vw;
@@ -151,20 +174,29 @@ $level-height: 12vw;
     &-rank {
       width: 8vw;
       text-align: center;
-      font-size: 4vw;
+      font-size: 3.6vw;
       color: #B2B2B2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 8vw;
+        height: 8vw;
+      }
     }
     &-avatar {
       width: 13vw;
       height: 13vw;
       border-radius: 50%;
+      overflow: hidden;
 
       &-img {
         width: inherit;
       }
     }
     &-name {
-      width: 50vw;
+      width: 45vw;
       padding-left: 2vw;
       text-align: left;
       font-size: 4vw;

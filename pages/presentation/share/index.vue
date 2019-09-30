@@ -1,9 +1,7 @@
 <template>
   <div>
-    <div class="bg">
-      <!-- TODO: 背景图 -->
-      <!-- <img class="bg-img"  /> -->
-    </div>
+    <!-- TODO: 背景图 -->
+    <!-- <img class="bg"  /> -->
     <div class="content">
       <video controls class="content-video">
         <source :src="stuData.videoSrc"/>
@@ -13,21 +11,23 @@
       <div class="content-action">
         <div class="content-action-author">作者: {{ stuData.name }}</div>
         <div class="content-action-actions">
-          <div class="content-action-actions-share"></div>
-          <div class="content-action-actions-like"></div>
+          <div class="content-action-actions-btn" style="background: #FFD750"><img :src="require('~/assets/presentation/img/share.png')" class="share"/></div>
+          <div class="content-action-actions-btn" :style="{ background: liked ? '#F0552D' : '#E6E6E6' }" @click="clickLike"><img :src="require('~/assets/presentation/img/like.png')" class="like"/></div>
           <div class="content-action-actions-text">{{ stuData.like }}人点赞</div>
         </div>
       </div>
     </div>
     <div class="action">
+      <div class="action-text">
+        <span @click="gotoRegister" class="action-text-accent">免费领取</span>
+        <span>兰迪试听课</span>
+      </div>
       <div class="action-content" :style="{ background: themeColor }">
         <div class="action-content-text">去首页看看</div>
         <div class="action-content-deco0"></div>
         <div class="action-content-deco1"></div>
       </div>
     </div>
-    <!-- TODO: 修改海报图片 -->
-    <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0"></poster-modal>
   </div>
 </template>
 
@@ -59,7 +59,7 @@ export default {
         eng: '',
         chn: ''
       },
-      showPosterModal: false
+      liked: false
     }
   },
   methods: {
@@ -74,8 +74,11 @@ export default {
       this.topic = TOPICS[this.stuData.topic].text
     },
     gotoRegister() {
-      // TODO: 领取页面
-      // window.location = ''
+      window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
+    },
+    clickLike() {
+      // TODO: 点赞和取消点赞
+      this.liked = !this.liked
     }
   },
   async mounted() {
@@ -92,16 +95,10 @@ export default {
 @import '~/assets/presentation/css/main.scss';
 
 .bg {
-  background: #fff;
   width: 100vw;
-  height: 100vw;
   position: absolute;
   top: 0;
   left: 0;
-
-  &-img {
-    width: inherit;
-  }
 }
 
 .content {
@@ -130,6 +127,7 @@ export default {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 3vw;
 
     &-author {
@@ -140,10 +138,30 @@ export default {
     &-actions {
       display: flex;
       align-items: center;
+      justify-content: space-evenly;
+      width: 40vw;
 
       &-text {
         color: #B2B2B2;
         font-size: 3.2vw;
+      }
+
+      &-btn {
+        width: 8vw;
+        height: 8vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+
+      .share {
+        width: 5vw;
+        height: 5vw;
+      }
+      .like {
+        width: 4.7vw;
+        height: 4.6vw;
       }
     }
   }
@@ -155,12 +173,22 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   width: 86.6vw;
-  height: 13.3vw;
+
+  &-text {
+    text-align: center;
+    font-size: 3.2vw;
+    color: #B2B2B2;
+    margin-bottom: 3vw;
+
+    &-accent {
+      color: $p-color-0;
+    }
+  }
 
   &-content {
     text-align: center;
     width: 100%;
-    height: 100%;
+    height: 13.3vw;
     position: relative;
     line-height: 13.3vw;
     border-radius: 7vw;

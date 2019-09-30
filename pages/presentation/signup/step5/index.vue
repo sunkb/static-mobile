@@ -74,6 +74,7 @@ export default {
     // TODO: 获取是否能够重新上传
     this.stuEngName = localStorage.getItem(STROGE.STU_ENG_NAME) || ''
     this.topic = TOPICS[localStorage.getItem(STROGE.TOPIC) || 0]
+    // TODO: 获取视频
     this.videoSrc = localStorage.getItem(STROGE.VIDEO_SRC) || ''
     // TODO: 修改分享链接
   }

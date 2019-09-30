@@ -112,6 +112,9 @@ $topic-item-width: 64vw;
   display: flex;
   white-space: nowrap;
   overflow-x: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   
   &-item {
     display: inline-block;
@@ -139,7 +142,7 @@ $topic-item-width: 64vw;
     &-selector {
       position: absolute;
       top: 2.5vw;
-      left: 2.5vw;
+      right: 2.5vw;
       width: 7vw;
       height: 7vw;
       border-radius: 50%;

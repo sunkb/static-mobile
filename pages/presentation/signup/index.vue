@@ -100,19 +100,19 @@ export default {
     validatePhone() {
       // TODO: 验证是否是用户, 然后 sendValidateCode(), 不是就 this.showPosterModal = true
     },
-    sendValidateCode() {
-      if (this.validateCodeTimeout > 0) { return }
+    // sendValidateCode() {
+    //   if (this.validateCodeTimeout > 0) { return }
 
-      // TODO: 获取验证码
+    //   // TODO: 获取验证码
 
-      this.validateCodeTimeout = 60
-      const vinterval = setInterval(() => {
-        this.validateCodeTimeout--
-        if (this.validateCodeTimeout <= 0) {
-          clearInterval(vinterval)
-        }
-      }, 1000)
-    },
+    //   this.validateCodeTimeout = 60
+    //   const vinterval = setInterval(() => {
+    //     this.validateCodeTimeout--
+    //     if (this.validateCodeTimeout <= 0) {
+    //       clearInterval(vinterval)
+    //     }
+    //   }, 1000)
+    // },
     provinceSelectChange() {
       this.signupData.city = '0'
     },

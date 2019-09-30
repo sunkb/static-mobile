@@ -86,13 +86,11 @@ export default {
   },
   methods: {
     nextStep() {
-      // TODO: 下一页获取视频信息的条件
       if (this.videoUploaded) {
         this.$router.push({ name: 'presentation-signup-step4' })
       }
     },
     gotoStep2() {
-      // TODO: 保存现在的状态
       this.$router.push({ name: 'presentation-signup-step2' })
     },
     async videoUpload() {
@@ -118,7 +116,6 @@ export default {
       this.$refs['toast'].showToast(res.message)
     },
     fileUploadComplete(res) {
-      // TODO: 视频没有海报
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
       this.videoSrc = `${this.videoSrc}/${res.key}`
       localStorage.setItem(STROGE.VIDEO_SRC, this.videoSrc)
@@ -130,7 +127,6 @@ export default {
     this.topic = TOPICS[localStorage.getItem(STROGE.TOPIC) || 0]
     this.videoStatus = VIDEO_STATUS_TYPE.ADD
 
-    // TODO: 确定获取视频状态的条件
     const _videoSrc = localStorage.getItem(STROGE.VIDEO_SRC)
     if (_videoSrc) {
       this.videoSrc = _videoSrc

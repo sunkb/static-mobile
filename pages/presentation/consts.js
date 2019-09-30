@@ -68,7 +68,7 @@ const LANDI_LEVEL = [
 ]
 
 const RANK_LIST = [
-  { name: 'Nina', like: 2330, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+  { name: 'Nina', like: 2330, avatar: 'https://www.abc360.com/Public/abc360mp/img/p3.png' },
   { name: 'Saeah', like: 1330, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
   { name: 'Alina', like: 330, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
   { name: 'Liz', like: 200, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
@@ -88,6 +88,10 @@ const RANK_LIST = [
   { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
   { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
   { name: 'Roma', like: 100, avatar: 'https://qn-static.landi.com/uploadtoolec4589c658440d583bbfdbf6b88608fd.jpg' },
+]
+
+const INDEX_STEPS = [
+  '提交报名信息', '选择参赛题目', '上传参赛视频', '确认提交参赛', '分享好友点赞'
 ]
 
 const VIDEO_STATUS_TYPE = {
@@ -125,5 +129,6 @@ export {
   VIDEO_STATUS_TYPE,
   STROGE,
   LANDI_LEVEL,
-  RANK_LIST
+  RANK_LIST,
+  INDEX_STEPS
 }
