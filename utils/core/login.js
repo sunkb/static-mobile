@@ -51,14 +51,13 @@ function wxAutoLogin() {
         }
 
         //调用后台接口登录
-        const url = 'xxxxxxx';
+        const url = 'Mobile/StudentActivity/login';
         const params = {
             code,
         }
-        axios.post(url,code).then(res=>{
-
+        axios.get(url,{params}).then(res=>{
+            console.log('code登录',res)
         })
-
     }
 }
 
