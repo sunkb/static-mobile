@@ -99,7 +99,7 @@ export default {
   align-items: center;
 
   &-hint {
-    margin-left: 3vw;
+    margin-left: 22.5px;
     &::before {
       content: '*';
       color: #F0552D;
@@ -107,7 +107,7 @@ export default {
   }
 }
 
-$topic-item-width: 64vw;
+$topic-item-width: 480px;
 .topic {
   display: flex;
   white-space: nowrap;
@@ -118,7 +118,7 @@ $topic-item-width: 64vw;
   
   &-item {
     display: inline-block;
-    margin-right: 5vw;
+    margin-right: 37.5px;
     box-sizing: content-box;
     position: relative;
 
@@ -141,20 +141,20 @@ $topic-item-width: 64vw;
 
     &-selector {
       position: absolute;
-      top: 2.5vw;
-      right: 2.5vw;
-      width: 7vw;
-      height: 7vw;
+      top: 18.75px;
+      right: 18.75px;
+      width: 52.5px;
+      height: 52.5px;
       border-radius: 50%;
       background: #fff;
-      box-shadow: 0 0 2vw -0.7vw #666666;
+      box-shadow: 0 0 15px -5.25px #666666;
       display: flex;
       justify-content: center;
       align-items: center;
 
       &-img {
-        width: 5.5vw;
-        height: 5.5vw;
+        width: 41.25px;
+        height: 41.25px;
       }
     }
   }

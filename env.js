@@ -3,7 +3,7 @@ module.exports = {
     PUBLIC_PATH: '_nuxt',
     NODE_ENV: 'development',
     ENV_API: '/api/', //本地地址
-    BASE_URL: 'http://192.168.29.188',
+    BASE_URL: 'http://www.test.com',
     APP_ID: 'wxfcc48a994f9a1a32'
   },
   test: {

@@ -157,20 +157,20 @@ export default {
 
 .signupform {
   &:last-child {
-    border-bottom: .2vw solid #E6E6E6;
+    border-bottom: 1.5px solid #E6E6E6;
   }
 
   &-item {
-    border-top: .2vw solid #E6E6E6;
-    padding: 3vw 0;
+    border-top: 1.5px solid #E6E6E6;
+    padding: 22.5px 0;
     white-space: nowrap;
 
     &-label {
       display: inline-block;
       color: #333333;
-      font-size: 3.7vw;
-      width: 20.4vw;
-      margin-right: 4.93vw;
+      font-size: 27.75px;
+      width: 153px;
+      margin-right: 37px;
     }
     .required {
       &::after {
@@ -180,17 +180,17 @@ export default {
     }
 
     &-input {
-      font-size: 3.7vw;
+      font-size: 28px;
       outline: none;
       color: #333333;
-      width: 40vw;
+      width: 300px;
       &::placeholder {
         color: #B2B2B2;
       }
     }
 
     &-select {
-      font-size: 3.7vw;
+      font-size: 28px;
       outline: none;
       color: #333333;
       appearance: none;
@@ -199,10 +199,10 @@ export default {
     &-vcode {
       display: inline-block;
       background: #F0552D;
-      font-size: 3.2vw;
+      font-size: 24px;
       color: #fff;
-      line-height: 9vw;
-      width: 22.67vw;
+      line-height: 67.5px;
+      width: 170px;
       text-align: center;
     }
 

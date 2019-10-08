@@ -37,22 +37,22 @@ export default {
   text-align: center;
   width: 100%;
   position: fixed;
-  bottom: 5vw;
+  bottom: 37.5px;
   left: 0;
 
   &-text {
-    margin: 3vw 0;
+    margin: 22.5px 0;
     color: #B2B2B2;
-    font-size: 3.2vw;
-    padding: 0 6vw;
+    font-size: 24px;
+    padding: 0 45px;
   }
 
   &-btn {
     display: inline-block;
-    width: 86.67vw;
-    line-height: 13.3vw;
+    width: 650px;
+    line-height: 100px;
     text-align: center;
-    font-size: 4.53vw;
+    font-size: 34px;
     color: #fff;
     background: #B2B2B2;
   }

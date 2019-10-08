@@ -13,7 +13,7 @@
     </div>
     <div>
       <div class="input-title">密码</div>
-      <input class="login-input" placeholder="请输入密码" type="number" v-model="password" />
+      <input class="login-input" placeholder="请输入密码" type="password" v-model="password" />
     </div>
     <div class="btn-login" @click="loginSubmit">登录</div>
   </div>

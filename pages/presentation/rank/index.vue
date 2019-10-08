@@ -80,14 +80,14 @@ export default {
 <style lang="scss" scoped>
 @import '~/assets/presentation/css/main.scss';
 
-$headbar-height: 46.7vw;
-$level-height: 12vw;
+$headbar-height: 350.25px;
+$level-height: 90px;
 
 .headbar {
   height: $headbar-height;
   width: 100vw;
   background: 
-    url('~assets/presentation/img/rank-head-bg1.png') 100% 400% / 35% no-repeat,
+    url('~assets/presentation/img/rank-head-bg1.png') 61vw 4vw / 38vw no-repeat,
     url('~assets/presentation/img/rank-head-bg.png') 0 0 / cover;
   background-color: #3b7ada;
   color: #fff;
@@ -96,16 +96,16 @@ $level-height: 12vw;
   &-content {
     position: absolute;
     top: 50%;
-    left: 4vw;
+    left: 30px;
     transform: translate(0, -50%);
 
     &-title {
-      font-size: 5.3vw;
+      font-size: 40px;
       font-weight: bold;
-      margin-bottom: 2vw;
+      margin-bottom: 15px;
     }
     &-text {
-      width: 57.3vw;
+      width: 430px;
     }
   }
 }
@@ -121,13 +121,13 @@ $level-height: 12vw;
 
   &-item {
     position: relative;
-    width: 17vw;
+    width: 127.5px;
     text-align: center;
 
     &-content {
       color: #fff;
-      font-size: 4vw;
-      line-height: 12vw;
+      font-size: 30px;
+      line-height: 90px;
     }
 
     .accent {
@@ -137,13 +137,13 @@ $level-height: 12vw;
     &-selector {
       position: absolute;
       left: 50%;
-      bottom: -.2vw;
+      bottom: -1.5px;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 2vw solid transparent;
-      border-right: 2vw solid transparent;
-      border-bottom: 2vw solid #fff;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 15px solid #fff;
     }
   }
 }
@@ -152,7 +152,7 @@ $level-height: 12vw;
   // height: calc(100vh - #{$level-height} - #{$headbar-height});
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  padding: 0 4vw;
+  padding: 0 30px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -161,33 +161,33 @@ $level-height: 12vw;
   &-item {
     display: flex;
     justify-content: space-between;
-    padding: 2.5vw 0;
+    padding: 18.75px 0;
     box-sizing: content-box;
-    border-bottom: .2vw solid #EBEBEB;
+    border-bottom: 1.5px solid #EBEBEB;
 
     &-left {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 75vw;
+      width: 562.5px;
     }
     &-rank {
-      width: 8vw;
+      width: 60px;
       text-align: center;
-      font-size: 3.6vw;
+      font-size: 27px;
       color: #B2B2B2;
       display: flex;
       align-items: center;
       justify-content: center;
 
       img {
-        width: 8vw;
-        height: 8vw;
+        width: 60px;
+        height: 60px;
       }
     }
     &-avatar {
-      width: 13vw;
-      height: 13vw;
+      width: 97.5px;
+      height: 97.5px;
       border-radius: 50%;
       overflow: hidden;
 
@@ -196,10 +196,10 @@ $level-height: 12vw;
       }
     }
     &-name {
-      width: 45vw;
-      padding-left: 2vw;
+      width: 337.5px;
+      padding-left: 15px;
       text-align: left;
-      font-size: 4vw;
+      font-size: 30px;
       color: #333333;
     }
     &-like {
@@ -210,11 +210,11 @@ $level-height: 12vw;
 
       &-num {
         color: #F0552D;
-        font-size: 4.2vw;
+        font-size: 31.5px;
       }
       &-text {
         color: #B2B2B2;
-        font-size: 2.9vw;
+        font-size: 22px;
       }
     }
   }

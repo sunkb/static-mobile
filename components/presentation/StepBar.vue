@@ -45,9 +45,9 @@ export default {
 <style lang="scss" scoped>
 @import '~/assets/presentation/css/main.scss';
 
-$circle-size: 6.67vw;
-$circle-content-size: 5.06vw;
-$height: 12vw;
+$circle-size: 52px;
+$circle-content-size: 40px;
+$height: 90px;
 
 #stepbar {
   position: relative;
@@ -68,7 +68,7 @@ $height: 12vw;
   width: $circle-size;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 0 1.5vw -0.7vw #666666;
+  box-shadow: 0 0 11.25px -5.25px #666666;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,7 +87,7 @@ $height: 12vw;
     background: #E6E6E6;
     border-radius: 50%;
     font-family: STYuanti-SC-Regular;
-    font-size: 2.93vw;
+    font-size: 22px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,7 +101,7 @@ $height: 12vw;
 .step {
   &-item {
     color: #B2B2B2;
-    font-size: 2.9vw;
+    font-size: 22px;
     font-weight: 400;
   }
 
@@ -123,13 +123,13 @@ $height: 12vw;
     top: 50%;
     left: 0;
     transform: translate(0, -50%);
-    height: 0.8vw;
-    border-radius: 0.4vw;
+    height: 6px;
+    border-radius: 3px;
   }
 
   &-empty {
     width: 100%;
-    box-shadow: inset 0 0.2vw .3vw -.25vw #666666;
+    box-shadow: inset 0 1.5px 2.25px -1.875px #666666;
   }
 
   &-fill {

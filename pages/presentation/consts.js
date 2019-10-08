@@ -62,9 +62,9 @@ const TOPICS = [
 ]
 
 const LANDI_LEVEL = [
-  { name: 'PRE E', type: 0 },
-  { name: 'E1-E2', type: 1 },
-  { name: 'E3即以上', type: 2 }
+  { name: 'PRE E', type: 1 },
+  { name: 'E1-E2', type: 2 },
+  { name: 'E3-E7', type: 3 }
 ]
 
 const RANK_LIST = [

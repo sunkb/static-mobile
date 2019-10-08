@@ -73,20 +73,20 @@ export default {
 @import '~/assets/presentation/css/main.scss';
 
 #rule {
-  padding: 3vw 5vw;
+  padding: 22.5px 37.5px;
 }
 
 .back {
   position: fixed;
-  top: 5vw;
+  top: 37.5px;
   right: 0;
-  padding: 3vw 4vw;
-  font-size: 3.5vw;
+  padding: 22.5px 30px;
+  font-size: 26px;
   font-weight: bold;
   color: #fff;
   background: $p-color-0;
-  box-shadow: 0 0 3vw -2vw black;
-  border-top-left-radius: 30%;
-  border-bottom-left-radius: 30%;
+  box-shadow: 0 0 22.5px -15px black;
+  border-top-left-radius: 40%;
+  border-bottom-left-radius: 40%;
 }
 </style>

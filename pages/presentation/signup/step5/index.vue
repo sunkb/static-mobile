@@ -3,7 +3,7 @@
     <div class="top-step-bar">
       <step-bar :steps="steps" :progress="100"></step-bar>
     </div>
-    <div class="page-content">
+    <div class="page-content" v-if="mywork">
       <div class="title">
         <h1>我的作品</h1>
         <div class="title-action" @click="gotoStep3" v-if="canReUpload">
@@ -11,14 +11,14 @@
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
         </div>
       </div>
-      <h2>报名学生: {{ stuEngName }}</h2>
+      <h2>报名学生: {{ mywork.en_name }}</h2>
       <div class="topic-text">
-        <h2 v-if="topic" class="topic-text-eng">{{ topic.text.eng }}</h2>
-        <h3 v-if="topic" class="topic-text-chn">{{ topic.text.chn }}</h3>
+        <h2 class="topic-text-eng">{{ mywork.topic.en_topic_name }}</h2>
+        <h3 class="topic-text-chn">{{ mywoek.topic.cn_topic_name }}</h3>
       </div>
       <div class="video">
-        <video controls v-if="videoSrc && videoSrc != ''" class="video-content">
-          <source :src="videoSrc"/>
+        <video controls class="video-content">
+          <source :src="mywork.video_url"/>
         </video>
       </div>
     </div>
@@ -37,6 +37,7 @@
 import { StepBar } from '~/components/presentation'
 import Toast from '~/components/Toast'
 import { STEPS, STROGE, TOPICS } from '~/pages/presentation/consts'
+import axios from '~/utils/axios'
 
 export default {
   name: 'Signup',
@@ -53,10 +54,9 @@ export default {
     return {
       steps: STEPS,
       stuEngName: '',
-      topic: null,
-      videoSrc: '',
       canReUpload: true,
-      showShareHelp: false
+      showShareHelp: false,
+      mywork: null
     }
   },
   methods: {
@@ -70,13 +70,38 @@ export default {
       this.showShareHelp = true
     }
   },
-  mounted() {
-    // TODO: 获取是否能够重新上传
-    this.stuEngName = localStorage.getItem(STROGE.STU_ENG_NAME) || ''
-    this.topic = TOPICS[localStorage.getItem(STROGE.TOPIC) || 0]
-    // TODO: 获取视频
-    this.videoSrc = localStorage.getItem(STROGE.VIDEO_SRC) || ''
+  async mounted() {
     // TODO: 修改分享链接
+
+    const mywork = await axios.get('/Mobile/StudentActivity/myWork?activity_id=1')
+    if (mywork.status) {
+      if (!mywork.data.id) {
+        this.$refs['toast'].showToast('无作品资料')
+        return
+      }
+
+      const workID = mywork.data.id
+      const combinationID = mywork.data.combination_id
+      const topicID = mywork.data.topic_id
+      this.mywork.video_url = mywork.data.video_url
+
+      const data0 = await axios.get('/Mobile/StudentActivityDetail/detail?activity_id=1')
+      if (!data0.status) {
+        this.$refs['toast'].showToast('获取活动信息失败')
+        return
+      } 
+      this.canReUpload = new Date() < new Date(Number(`${data0.data.reupload_time}000`))
+      this.mywork.topic = data0.combinations[combinationID].topics[topicID]
+
+      const data1 = await axios.get(`/Mobile/StudentActivityDetail/work?activity_id=1&url=${window.location.href}&work_id=${workID}`)
+      if (!data1.status) {
+        this.$refs['toast'].showToast('获取作品信息失败')
+        return
+      } 
+      this.mywork.en_name = data1.data.en_name
+    } else {
+      this.$refs['toast'].showToast(mywork.info)
+    }
   }
 }
 </script>
@@ -85,8 +110,8 @@ export default {
 @import '~/assets/presentation/css/main.scss';
 
 .topic-text {
-  margin-top: -1vw;
-  width: 90vw;
+  margin-top: -7.5px;
+  width: 675px;
   
   &-eng {
     font-weight: bold;
@@ -103,12 +128,12 @@ export default {
 }
 
 .video {
-  margin-top: 3vw;
+  margin-top: 22.5px;
   display: flex;
   justify-content: center;
 
   &-content {
-    width: 85vw;
+    width: 638px;
   }
 }
 
@@ -116,7 +141,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 3vw;
+  padding-right: 22.5px;
 
   &-action {
     h3 {
@@ -125,7 +150,7 @@ export default {
     }
 
     &-img {
-      width: 1.33vw;
+      width: 10px;
     }
   }
 }
@@ -136,12 +161,12 @@ export default {
   width: 100%;
   position: fixed;
   left: 0;
-  bottom: 5vw;
+  bottom: 37.5px;
 
   &-btn {
-    width: 42.6vw;
-    line-height: 13.3vw;
-    font-size: 4.53vw;
+    width: 320px;
+    line-height: 100px;
+    font-size: 34px;
     font-family: MicrosoftYaHeiLight;
     color: #fff;
     text-align: center;
@@ -165,9 +190,9 @@ export default {
   background: rgba($color: #000000, $alpha: 0.6);
 
   &-img {
-    width: 72vw;
+    width: 540px;
     position: fixed;
-    left: 18vw;
+    left: 135px;
     top: 0;
   }
 }

@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <!-- TODO: 背景图 -->
-    <!-- <img class="bg"  /> -->
+  <div id="share">
+    <div class="bg"></div>
     <div class="content">
       <video controls class="content-video">
         <source :src="stuData.videoSrc"/>
@@ -87,6 +86,14 @@ export default {
 
     //TODO: 获取主题色
     this.themeColor = '#F0552D'
+
+    // const res = await axios.get('/Mobile/StudentActivityDetail/detail?activity_id=1')
+    // if (res.status) { 
+    //   this.resData = res.data
+    //   document.title = this.resData.name
+    // } else {
+    //   this.$refs['toast'].showToast(res.info)
+    // }
   }
 }
 </script>
@@ -94,15 +101,23 @@ export default {
 <style lang="scss" scoped>
 @import '~/assets/presentation/css/main.scss';
 
-.bg {
+#share {
   width: 100vw;
-  position: absolute;
+  height: 100vh;
+  background: #EBEBEB;
+}
+
+.bg {
+  position: fixed;
   top: 0;
   left: 0;
+  width: 100vw;
+  background: #EBEBEB;
+  height: 800px;
 }
 
 .content {
-  width: 92vw;
+  width: 690px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -111,16 +126,18 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5vw 3vw;
-  box-shadow: 0 0 3vw -1.5vw #999999;
+  padding: 37.5px 22.5px;
+  box-shadow: 0 0 22.5px -11.25px #999999;
+  background: #fff;
+  z-index: 999;
 
   &-video {
-    width: 85.2vw;
+    width: 639px;
   }
 
   &-topic-eng {
     color: #333333;
-    margin-top: 3vw;
+    margin-top: 22.5px;
   }
 
   &-action {
@@ -128,27 +145,27 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 3vw;
+    margin-top: 22.5px;
 
     &-author {
       color: #333333;
-      font-size: 3.46vw;
+      font-size: 26px;
     }
 
     &-actions {
       display: flex;
       align-items: center;
       justify-content: space-evenly;
-      width: 40vw;
+      width: 300px;
 
       &-text {
         color: #B2B2B2;
-        font-size: 3.2vw;
+        font-size: 24px;
       }
 
       &-btn {
-        width: 8vw;
-        height: 8vw;
+        width: 60px;
+        height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -156,29 +173,31 @@ export default {
       }
 
       .share {
-        width: 5vw;
-        height: 5vw;
+        width: 37.5px;
+        height: 37.5px;
       }
       .like {
-        width: 4.7vw;
-        height: 4.6vw;
+        width: 35.25px;
+        height: 34.5px;
       }
     }
   }
 }
 
 .action {
+  background: #fff;
+  width: 100vw;
   position: absolute;
-  bottom: 5vw;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 86.6vw;
+  bottom: 0;
+  left: 0;
+  padding: 300px 0 37.5px;
+  text-align: center;
 
   &-text {
     text-align: center;
-    font-size: 3.2vw;
+    font-size: 24px;
     color: #B2B2B2;
-    margin-bottom: 3vw;
+    margin-bottom: 22.5px;
 
     &-accent {
       color: $p-color-0;
@@ -186,35 +205,35 @@ export default {
   }
 
   &-content {
+    display: inline-block;
     text-align: center;
-    width: 100%;
-    height: 13.3vw;
+    width: 650px;
     position: relative;
-    line-height: 13.3vw;
-    border-radius: 7vw;
+    line-height: 100px;
+    border-radius: 50px;
 
     &-text {
-      font-size: 4.5vw;
+      font-size: 33.75px;
       color: #fff;
     }
 
     &-deco0 {
       position: absolute;
-      top: 1.5vw;
-      left: 7vw;
-      width: 1.6vw;
-      height: 1.6vw;
+      top: 11.25px;
+      left: 52.5px;
+      width: 12px;
+      height: 12px;
       background: rgba($color: #fff, $alpha: 0.4);
-      border-radius: 0.8vw;
+      border-radius: 6px;
     }
     &-deco1 {
       position: absolute;
-      top: 1.5vw;
-      left: 10vw;
-      width: 13.3vw;
-      height: 1.6vw;
+      top: 11.25px;
+      left: 75px;
+      width: 100px;
+      height: 12px;
       background: rgba($color: #fff, $alpha: 0.4);
-      border-radius: 0.8vw;
+      border-radius: 6px;
     }
   }
 }

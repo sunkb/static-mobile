@@ -61,15 +61,15 @@ export default {
   height: inherit;
 
   &-poster {
-    width: 74.6vw;
+    width: 560px;
   }
 
   &-close {
     width: 60%;
     text-align: right;
-    margin-bottom: -1vw;
+    margin-bottom: -8px;
     &-img {
-      width: 6.67vw;
+      width: 50px;
     }
   }
 }

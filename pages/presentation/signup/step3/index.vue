@@ -143,7 +143,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 3vw;
+  padding-right: 22.5px;
 
   &-action {
     h3 {
@@ -152,14 +152,14 @@ export default {
     }
 
     &-img {
-      width: 1.33vw;
+      width: 10px;
     }
   }
 }
 
 .topic-text {
-  margin-top: -1vw;
-  width: 90vw;
+  margin-top: -7.5px;
+  width: 675px;
   
   &-eng {
     font-weight: bold;
@@ -177,40 +177,40 @@ export default {
 
 .video {
   text-align: center;
-  margin-top: 3vw;
+  margin-top: 22.5px;
   display: flex;
   justify-content: center;
   position: relative;
 
-  $video-content-width: 85.3vw;
+  $video-content-width: 640px;
 
   &-hint {
-    width: 85.3vw;
-    height: 48vw;
+    width: 640px;
+    height: 360px;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
     background: #FAFAFA;
-    border: .2vw dashed #E6E6E6;
+    border: 1.5px dashed #E6E6E6;
 
     &-hint {
-      width: 26vw;
+      width: 195px;
       color: #B2B2B2;
-      font-size: 3.2vw;
-      margin-top: 2vw;
+      font-size: 24px;
+      margin-top: 15px;
     }
 
     &-hintimg {
-      width: 8vw;
-      height: 8vw;
+      width: 60px;
+      height: 60px;
     }
 
     &-progress {
       position: relative;
-      width: 46.7vw;
-      height: 1.33vw;
-      margin-bottom: 3vw;
+      width: 350px;
+      height: 10px;
+      margin-bottom: 22.5px;
 
       &-bg {
         position: absolute;
@@ -219,7 +219,7 @@ export default {
         width: 100%;
         height: 100%;
         background: #E6E6E6;
-        border-radius: 1vw;
+        border-radius: 7.5px;
       }
 
       &-fg {
@@ -228,7 +228,7 @@ export default {
         left: 0;
         height: 100%;
         background: $p-color-0;
-        border-radius: 1vw;
+        border-radius: 7.5px;
       }
     }
   }
@@ -245,18 +245,18 @@ export default {
     transform: translateY(50%);
 
     &-action {
-      width: 12vw;
-      height: 12vw;
+      width: 90px;
+      height: 90px;
       display: flex;
       justify-content: center;
       align-items: center;
       background: #fff;
-      border-radius: 6vw;
-      box-shadow: 0 0 5vw -3vw #666666;
+      border-radius: 45px;
+      box-shadow: 0 0 37.5px -22.5px #666666;
 
       &-img {
-        width: 8.6vw;
-        height: 8.6vw;
+        width: 64.5px;
+        height: 64.5px;
       }
     }
   }

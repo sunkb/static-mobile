@@ -23,7 +23,7 @@
       :isClickable="ruleSelected"
       @submit="submit"
     ></submit-area>
-    <poster-modal v-model="showPosterModal" @click="gotoStep5" :poster="1"></poster-modal>
+    <poster-modal v-model="showPosterModal" @click="gotoStep5" :poster="1" @changeShow="gotoStep5"></poster-modal>
   </div>
 </template>
 
@@ -65,7 +65,7 @@ export default {
       this.$router.push({ name: 'presentation-signup-step5' })
     },
     gotoRulePage() {
-      this.$router.push({ name: "presentation-rule" })
+      this.$router.push({ name: "presentation-protocol" })
     }
   },
   mounted() {
@@ -78,25 +78,25 @@ export default {
 @import '~/assets/presentation/css/main.scss';
 
 .video {
-  margin-top: 3vw;
+  margin-top: 22.5px;
   display: flex;
   justify-content: center;
 
   &-content {
-    width: 85vw;
+    width: 637.5px;
   }
 }
 
 .rule {
   display: flex;
   align-items: center;
-  margin: 3vw 3vw;
+  margin: 22.5px 22.5px;
 
   &-select {
-    margin-right: 3vw;
-    width: 5.3vw;
-    height: 5.3vw;
-    border: .2vw solid #E6E6E6;
+    margin-right: 22.5px;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid #E6E6E6;
 
     &-img {
       width: inherit;
