@@ -1,6 +1,6 @@
 <template>
   <div style="height:100vh;width:100%;">
-    <pull-to :bottom-load-method="loadmore" @bottom-state-change="stateChange">
+    <pull-to :bottom-load-method="loadmore">
       <div class="teacher-center" v-if="teacherMsg">
         <!-- 个人信息 -->
         <div class="info_wrap">
@@ -25,12 +25,11 @@
               <div class="row row-country">
                 <span class="country BrithDay"></span>
                 <span class="age" style="margin-right:40px;">{{teacherMsg.info.age}}岁</span>
-                <span class="country Accent accent_icon"></span>
-                <span
-                  class="accent"
-                  v-if="teacherMsg.info.accent"
-                >{{teacherMsg.info.accent == 1? '美音' : '英音'}}</span>
-                <p>剑桥大学才子，金融心理双硕士学位</p>
+                <span class="country Accent accent_icon" v-if="teacherMsg.info.accent!=0"></span>
+                <span class="accent" v-if="teacherMsg.info.accent">{{teacherMsg.info.accent}}</span>
+                <p
+                  v-if="teacherMsg.info&&teacherMsg.info.recommendation"
+                >{{teacherMsg.info.recommendation.highlights}}</p>
               </div>
             </div>
           </div>
@@ -42,26 +41,58 @@
             <span class="heng"></span>
           </p>
           <p @click="tabChange(2)" :class="{'active':tabIndex===2}">
-            外教信息
+            外教信息 
             <span class="heng"></span>
           </p>
         </div>
         <!-- 教师风采 -->
         <div class="centerInfo" v-if="tabIndex===1">
+          <!-- 自我介绍 -->
+          <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
+            <h6 class="title video_icon">自我介绍</h6>
+            <div class="content" style="text-indent: 0">
+              <video
+                v-if="teacherMsg&&teacherMsg.info.video"
+                controls
+                poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
+                preload="auto"
+                class="video-style"
+                :src="`${teacherMsg.info.video}`"
+              />
+            </div>
+          </div>
+          <!-- 上课风采 -->
+          <div class="introduction" v-if="videoList&&videoList.length>0">
+            <h6 class="title video_icon">上课风采</h6>
+            <div class="content" style="text-indent: 0">
+              <div v-for="(item,index) in videoList" :key="index" class="videoItem">
+                <video
+                  v-if="item"
+                  preload="auto"
+                  :src="item"
+                  controls
+                  poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 外教信息 -->
+        <div class="centerInfo" v-if="tabIndex===2">
           <!-- 上课时间 -->
           <!-- <div class="introduction" v-if="weekdays.length > 0">
-        <h6 class="title">开课时间</h6>
-        <div class="content" style="text-indent: 0">
-          <p>
-            <span v-for="(item,index) in weekdays" :key="index">
-              {{item}}
-              <span v-if="index+1!=weekdays.length">/</span>
-            </span>
-          </p>
-        </div>
+            <h6 class="title">开课时间</h6>
+            <div class="content" style="text-indent: 0">
+              <p>
+                <span v-for="(item,index) in weekdays" :key="index">
+                  {{item}}
+                  <span v-if="index+1!=weekdays.length">/</span>
+                </span>
+              </p>
+            </div>
           </div>-->
-          <div class="introduction" v-if="teacherMsg.info.video != ''||teacherMsg.info.intro!=''">
-            <h6 class="title intro_icon">
+          <div class="introduction" v-if="teacherMsg.info.intro!=''">
+            <h6 class="title intro_icon ells">
               自我介绍
               <span class="transform" @click="tranformFn">{{tranformText}}</span>
             </h6>
@@ -69,17 +100,17 @@
             <div class="content" style="text-indent: 0">
               <div v-if="teacherMsg.info.intro">
                 <div :class="{'ells3':ellsStatus}" class="pr">
-                  {{teacherMsg.info.intro}}
+                  {{teacherIntro}}
                   <p class="shade pa" v-if="ellsStatus"></p>
                 </div>
-                <div style="height:30px;" v-if="teacherMsg.info.intro.length>100">
+                <div style="height:30px;" v-if="teacherMsg&&teacherMsg.info.intro.length>100">
                   <p class="word_hide rt" @click="showFn">{{showBtn}}</p>
                 </div>
               </div>
             </div>
           </div>
           <!-- 教学特点 -->
-          <div class="introduction" v-if="tagList.length > 0">
+          <div class="introduction" v-if="tagList&&tagList.length > 0">
             <h6 class="title teach_tag">教学特点</h6>
             <div class="content" style="text-indent: 0">
               <div v-for="(item,index) in tagList" :key="index" class="item-wrap">
@@ -107,7 +138,10 @@
             </div>
           </div>
           <!-- 授课能力 -->
-          <div class="introduction" v-if="imgsrc||skillList.length>0||experList.length>0">
+          <div
+            class="introduction"
+            v-if="skillList&&imgsrc||skillList.length>0||experList.length>0"
+          >
             <h6 class="title teach_able">授课能力</h6>
             <div class="content" style="text-indent: 0">
               <div class="qua_wrap" v-if="imgsrc">
@@ -126,7 +160,7 @@
                       <img class="qua_img" :src="value.path" alt />
                     </a>
                   </div>
-                  <p class="skill_name">{{item.name}}</p>
+                  <p class="skill_name ells">{{item.name}}</p>
                 </div>
               </div>
               <div v-if="experList.length>0">
@@ -149,7 +183,7 @@
             </div>
           </div>
           <!-- 评分 -->
-          <div class="comment" v-if="!!commentList.length" style="padding:">
+          <div class="comment" v-if="commentList&&commentList.length>0">
             <h6 class="title score_icon cf">
               评分
               <span class="total rt">(共有{{total}}个评价)</span>
@@ -174,39 +208,15 @@
             </div>
           </div>
           <!-- 底部 -->
-          <p class="bottomStatus" v-if="loadmoreStatus">{{stateText}}</p>
-        </div>
-        <!-- 外教信息 -->
-        <div class="centerInfo" v-if="tabIndex===2">
-          <!-- 自我介绍 -->
-          <div class="introduction">
-            <h6 class="title video_icon">自我介绍</h6>
-            <div class="content" style="text-indent: 0">
-              <video
-                v-if="teacherMsg.info.video"
-                controls
-                preload="auto"
-                class="video-style"
-                :src="`${teacherMsg.info.video}`"
-              />
-            </div>
-          </div>
-          <!-- 上课风采 -->
-          <div class="introduction">
-            <h6 class="title video_icon">上课风采</h6>
-            <div class="content" style="text-indent: 0">
-              <div v-for="(item,index) in videoList" :key="index" class="videoItem">
-                <video v-if="item" controls preload="auto" :src="item" />
-              </div>
-            </div>
-          </div>
+          <p class="bottomStatus" v-if="loadmoreStatus&&tabIndex==2">{{stateText}}</p>
         </div>
       </div>
     </pull-to>
   </div>
 </template>
 <script>
-import axios from "~/utils/axios";
+import apiGoodTeacher from "~/api/goodTeacher";
+import { getQueryString } from "~/utils/goodTeacher";
 import abcRate from "~/components/cell_rate/index.vue";
 
 export default {
@@ -215,13 +225,7 @@ export default {
       tranformText: "翻译",
       loadmoreStatus: true,
       stateText: "查看更多",
-      videoList: [
-        "https://qn-static.landi.com/uploadtooldce54b8d73a84999299bfbd56a4ef0b9.mp4",
-        "https://qn-static.landi.com/uploadtooldce54b8d73a84999299bfbd56a4ef0b9.mp4",
-        "https://qn-static.landi.com/uploadtooldce54b8d73a84999299bfbd56a4ef0b9.mp4",
-        "https://qn-static.landi.com/uploadtooldce54b8d73a84999299bfbd56a4ef0b9.mp4",
-        "https://qn-static.landi.com/uploadtooldce54b8d73a84999299bfbd56a4ef0b9.mp4"
-      ], //上课视频列表
+      videoList: [], //上课视频列表
       tabIndex: 1, //tab切换
       ellsStatus: true, // 文字展开收起
       weekdays: [], // 上课时间
@@ -240,247 +244,121 @@ export default {
       commentList: [],
       total: 0,
       //size: parseInt((document.body.clientWidth / 375), 10) * 20 || 20,
-      tagList: []
+      tagList: [],
+      teacherIntro: ""
     };
   },
   created() {
-    // const vm = this;
-    // vm.tid = this.$route.query.tid;
-    this.getInfo();
     this.getTag();
+    this.getTeacherInfo();
+    this.getTeacherScoreFn();
   },
   methods: {
+    // 获取老师个人信息
+    async getTeacherInfo() {
+      const param = getQueryString("token");
+      const res = await apiGoodTeacher.teacherIntroX({
+        token: param
+      });
+      if (res) {
+        if (res.info && res.info.intro) {
+          res.info.intro = res.info.intro.replace(/<br \/>/g, "");
+          res.info.intro_translation = res.info.intro_translation.replace(
+            /<br\/>/g,
+            ""
+          );
+          this.teacherIntro = res.info.intro;
+        }
+        let infoData = res;
+        this.teacherMsg = res;
+        //accent=1(美音); 2:英音 3:标准音
+        if (this.teacherMsg.info.accent == 1) {
+          this.teacherMsg.info.accent = "美音";
+        } else if (this.teacherMsg.info.accent == 2) {
+          this.teacherMsg.info.accent = "英音";
+        } else if (this.teacherMsg.info.accent == 3) {
+          this.teacherMsg.info.accent = "标准音";
+        }
+        if (res.info && res.info.recommendation) {
+          this.videoList = res.info.recommendation.videos;
+        }
+        if (infoData.info.weekdays) {
+          this.weekdays = infoData.info.weekdays;
+        }
+        if (
+          infoData.info.qualifications.education &&
+          infoData.info.qualifications.education.audit != undefined &&
+          infoData.info.qualifications.education.audit.files[0].path !=
+            undefined
+        ) {
+          this.imgsrc =
+            infoData.info.qualifications.education.audit.files[0].path;
+        }
+        if (
+          infoData.info.qualifications &&
+          infoData.info.qualifications.certification
+        ) {
+          this.skillList = infoData.info.qualifications.certification;
+        }
+        if (
+          infoData.info.qualifications &&
+          infoData.info.qualifications.experience
+        ) {
+          this.experList = infoData.info.qualifications.experience;
+        }
+      }
+    },
     //翻译
     tranformFn() {
-      console.log(this.tranformText === "翻译");
-      if (this.tranformText === "查看原文") {
-        this.tranformText = "翻译";
-        this.teacherMsg.info.intro = "hhhhhh";
-      } else{
+      if (this.tranformText === "翻译") {
         this.tranformText = "查看原文";
+        this.teacherIntro = this.teacherMsg.info.intro_translation;
+      } else {
+        this.teacherIntro = this.teacherMsg.info.intro;
+        this.tranformText = "翻译";
       }
     },
     //tab切换
     tabChange(index) {
       this.tabIndex = index;
+      this.commentList = [];
+      this.currentPage = 1;
+      this.getTeacherScoreFn();
     },
     //获取老师标签
-    getTag() {
-      this.tagList = [
-        { name: "有耐心" },
-        { name: "有亲和力" },
-        { name: "教具丰富" },
-        { name: "互动性很好哦" },
-        { name: "纠正口音" },
-        { name: "幽默风趣" }
-      ];
-      this.total = 10;
-      this.commentList = [
-        {
-          avatar:
-            "https://qn-static.landi.com/uploadtoolf7602a9bbe98d0d2b4530375cde51b6a.jpg",
-          nickname: "Chocolate",
-          date: "2019/07/24 16:45",
-          star: "4.9"
-        },
-        {
-          avatar:
-            "https://qn-static.landi.com/uploadtoolf7602a9bbe98d0d2b4530375cde51b6a.jpg",
-          nickname: "Chocolate",
-          date: "2019/07/24 16:45",
-          star: "4.6"
-        },
-        {
-          avatar:
-            "https://qn-static.landi.com/uploadtoolf7602a9bbe98d0d2b4530375cde51b6a.jpg",
-          nickname: "Chocolate",
-          date: "2019/07/24 16:45",
-          star: "4"
-        },
-        {
-          avatar:
-            "https://qn-static.landi.com/uploadtoolf7602a9bbe98d0d2b4530375cde51b6a.jpg",
-          nickname: "Chocolate",
-          date: "2019/07/24 16:45",
-          star: "4"
-        },
-        {
-          avatar:
-            "https://qn-static.landi.com/uploadtoolf7602a9bbe98d0d2b4530375cde51b6a.jpg",
-          nickname: "Chocolate",
-          date: "2019/07/24 16:45",
-          star: "4.5"
-        },
-        {
-          avatar:
-            "https://qn-static.landi.com/uploadtoolf7602a9bbe98d0d2b4530375cde51b6a.jpg",
-          nickname: "Chocolate",
-          date: "2019/07/24 16:45",
-          star: "4.5"
-        },
-        {
-          avatar:
-            "https://qn-static.landi.com/uploadtoolf7602a9bbe98d0d2b4530375cde51b6a.jpg",
-          nickname: "Chocolate",
-          date: "2019/07/24 16:45",
-          star: "4.5"
-        }
-      ];
-      // api.bind.getCommentList(vm.tid, vm.currentPage).then((d) => {
-      //   vm.pages = d.data.pages;
-      //   vm.total = d.data.total;
-      //   vm.commentList.push(...d.data.data);
-      // });
-      // api.bind.getTeacherLabel(vm.tid).then((d) => {
-      //   this.tagList = d.data ? d.data : [];
-      // });
+    async getTag() {
+      const param = getQueryString("token");
+      const res = await apiGoodTeacher.getTeacherLabelX({
+        token: param,
+        limit: 5
+      });
+      if (res.status) {
+        this.tagList = res.data;
+      }
     },
-    // 获取老师个人信息
-    getInfo() {
-      let d = {
-        info: {
-          nation_id: 2,
-          nation: "American",
-          nickname: "Myhill",
-          star: 4.6,
-          gender: "1",
-          intro: `Hello! Welcome to Landi English! <br />
-            Do your children like learning and laughing? Then they will love me! <br />
-            My name is Teacher Carol, and I'm from Canada. <br />
-            Parents think that my lessons are interactive, easy to follow, and I give my students lots of speaking opportunities.<br />
-            I've studied Communication for six years and I have a Masters degree from the University of Ottawa. <br />
-            I also have my TESOL certificate. I've been teaching children for seven years, and I home school my four children. <br />
-            I am lively and funny, and I love to find fun ways to teach English and help children have excellent pronunciation.<br />
-            Your child will learn English quickly, and their favourite part will be how much they laughed!<br />
-            See you soon!`,
-          avatar: "https://qn-face.abc360.com/teacheravatar1554409243",
-          video:
-            "https://qn-static.landi.com/uploadtooldce54b8d73a84999299bfbd56a4ef0b9.mp4",
-          age: 49,
-          accent: 1,
-          weekdays: ["周一", "周二", "周三", "周四"],
-          qualifications: {
-            education: {
-              id: 3,
-              tid: 111930,
-              level: 4,
-              college: "MIT",
-              major: "finace",
-              qualification_id: 70,
-              create_time: "2019-08-13 13:30:49",
-              update_time: "2019-08-13 13:30:49",
-              is_del: 0,
-              audit: {
-                id: 70,
-                tid: 111930,
-                status: 2,
-                type: 11,
-                show_status: 1,
-                reason: "7788",
-                operate_uid: 3076,
-                create_time: 1565674248,
-                update_time: 1565849387,
-                files: [
-                  {
-                    id: 80,
-                    qualification_id: 70,
-                    path: "https://www.baidu.com"
-                  }
-                ]
-              }
-            },
-            certification: [
-              {
-                type: 2,
-                name: "TESOL",
-                files: [
-                  {
-                    id: 117,
-                    qualification_id: 109,
-                    path: "http://baidu.com/head.gif"
-                  }
-                ]
-              },
-              {
-                type: 1,
-                name: "TEFL",
-                files: [
-                  {
-                    id: 116,
-                    qualification_id: 108,
-                    path: "http://baidu.com"
-                  }
-                ]
-              }
-            ],
-            experience: [
-              {
-                id: 4462,
-                tid: 111930,
-                organization: "QKids",
-                job: "ESL Teacher",
-                begin_time: 1565749094,
-                end_time: 1565749094,
-                description: "abcd",
-                qualification_id: 112
-              },
-              {
-                id: 4463,
-                tid: 111930,
-                organization: "QKids",
-                job: "ESL Teacher",
-                begin_time: 1565749094,
-                end_time: 1565749094,
-                description: "bbbb",
-                qualification_id: 112
-              }
-            ]
+    //获取老师评分
+    async getTeacherScore() {
+      const param = getQueryString("token");
+      const res = await apiGoodTeacher.ajaxGetAppraiseX({
+        token: param,
+        page: this.currentPage
+      });
+      return res;
+    },
+    //获取老师评分
+    getTeacherScoreFn() {
+      this.getTeacherScore().then(res => {
+        if (res.status) {
+          this.pages = res.data.pages;
+          if (res.data.data) {
+            this.commentList.push(...res.data.data);
+            this.total = res.data.total;
           }
-        },
-        tid: "111930"
-      };
-      let infoData = d;
-      this.teacherMsg = d;
-      if (infoData.info.weekdays) {
-        this.weekdays = infoData.info.weekdays;
-      }
-      if (
-        infoData.info.qualifications &&
-        infoData.info.qualifications.education
-      ) {
-        this.imgsrc =
-          infoData.info.qualifications.education.audit.files[0].path;
-      }
-      if (
-        infoData.info.qualifications &&
-        infoData.info.qualifications.certification
-      ) {
-        this.skillList = infoData.info.qualifications.certification;
-      }
-      if (
-        infoData.info.qualifications &&
-        infoData.info.qualifications.experience
-      ) {
-        this.experList = infoData.info.qualifications.experience;
-      }
-
-      // api.bind.getTeacherInfo(tid).then((d) => {
-      //   d.info.intro = d.info.intro.replace(/<br \/>/g, '');
-      //   const infoData = d;
-      //   this.teacherMsg = d;
-      //   if (infoData.info.weekdays) {
-      //     this.weekdays = infoData.info.weekdays;
-      //   }
-      //   if (infoData.info.qualifications && infoData.info.qualifications.education) {
-      //     this.imgsrc = infoData.info.qualifications.education.audit.files[0].path;
-      //   }
-      //   if (infoData.info.qualifications && infoData.info.qualifications.certification) {
-      //     this.skillList = infoData.info.qualifications.certification;
-      //   }
-      //   if (infoData.info.qualifications && infoData.info.qualifications.experience) {
-      //     this.experList = infoData.info.qualifications.experience;
-      //   }
-      // });
+          if(res.data.total<=5){
+            this.loadmoreStatus = false;
+          }
+        }
+      });
     },
     // 文字收起展开
     showFn() {
@@ -491,6 +369,7 @@ export default {
         this.showBtn = "收起";
       }
     },
+    //时间戳转化
     formatDate(now) {
       const myDate = new Date(now * 1000);
       const year = myDate.getFullYear();
@@ -502,29 +381,21 @@ export default {
     },
     //加载更多
     loadmore(loaded) {
-      alert(1);
       const vm = this;
-      if (vm.pages <= vm.currentPage) return loaded("done");
+      if (vm.pages <= vm.currentPage) {
+        this.stateText = "没有更多了";
+        return loaded("done");
+      }
       vm.currentPage += 1;
-      api.bind.getCommentList(vm.tid, vm.currentPage).then(d => {
-        vm.pages = d.data.pages;
-        vm.commentList.push(...d.data.data);
-        loaded("done");
+      this.getTeacherScore().then(res => {
+        if (res.status) {
+          vm.pages = res.data.pages;
+          vm.commentList.push(...res.data.data);
+          loaded("done");
+        }
       });
     },
     //拉到底部的状态改变
-    stateChange(state) {
-      if (state === "pull" || state === "trigger") {
-        this.stateText = "查看更多";
-        this.loadmoreStatus = true;
-      } else if (state === "loading") {
-        this.stateText = "查看更多";
-        this.loadmoreStatus = true;
-      } else if (state === "loaded-done") {
-        this.stateText = "查看更多";
-        this.loadmoreStatus = true;
-      }
-    }
   },
   components: {
     abcRate
@@ -545,6 +416,11 @@ export default {
 .scroll-container {
   background: #f7f7f7;
 }
+.ells{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
 .teacher-center {
   .bottomStatus {
     border-top: 1px solid #eeeeee;
@@ -558,7 +434,7 @@ export default {
   }
   .transform {
     float: right;
-    font-size: 24px;
+    font-size: 28px;
     color: #ffc915;
   }
   .rt {
@@ -566,9 +442,9 @@ export default {
   }
   .videoItem {
     display: inline-block;
-    width: 222px;
-    height: 226px;
-    margin-right: 6px;
+    width: 335px;
+    height: 300px;
+    margin-right: 10px;
     video {
       width: 100%;
       height: 100%;
@@ -729,7 +605,7 @@ export default {
       }
     }
     .accent {
-      width: 60px;
+      width: 100px;
       line-height: 34px;
       text-align: center;
       font-size: 24px;
@@ -769,8 +645,7 @@ export default {
     color: #52b746;
   }
   .video-style {
-    width: 690px;
-    height: 400px;
+    width: 100%;
   }
   background: #f7f7f7;
   .centerInfo {
@@ -796,14 +671,12 @@ export default {
     }
     .qua_wrap {
       .pro {
-        width: 160px;
+        width: 130px;
         height: 160px;
-        border-radius: 16px;
         background: #f3f3f3;
         img {
-          width: 116px;
-          height: 162px;
-          margin: 0 24px;
+          width: 100%;
+          height: 100%;
         }
       }
     }
@@ -813,22 +686,21 @@ export default {
       word-break: break-all;
       margin-bottom: 25px;
       .pro {
-        width: 160px;
+        width: 130px;
         height: 204px;
         display: inline-block;
-        margin-right: 50px;
+        margin-right: 60px;
         .img_wrap {
           height: 160px;
-          width: 160px;
-          border-radius: 16px;
+          width: 130px;
           background: #f3f3f3;
           img {
-            width: 116px;
+            width: 130px;
             height: 162px;
-            margin: 0 24px;
           }
         }
         .skill_name {
+          width:100%;
           text-align: center;
           padding-top: 6px;
         }
@@ -896,7 +768,7 @@ export default {
       padding: 0 30px;
       margin-bottom: 2px;
       .title {
-        padding-top: 30px;
+        padding-top: 50px;
         &:before {
           position: absolute;
           left: 0;

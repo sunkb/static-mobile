@@ -2,10 +2,10 @@ const env = require('./env')
 export default {
   server: {
     port: 3000, // default: 3000
-    host: '0.0.0.0', // default: localhost
+    host: 'localhost', // default: localhost
   },
   router:{
-    base: process.env.NODE_ENV === 'production'?'/static/web/':''
+    base: process.env.NODE_ENV === 'production'?'/static-web/mobile/':''
   },
   mode: 'Universal',
   /*
@@ -42,6 +42,11 @@ export default {
     },
     {
       src: 'https://cdn.jsdelivr.net/npm/eruda',
+      type: 'text/javascript',
+      charset: 'utf-8'
+    },
+    {
+      src: 'https://www.landi.com/Public/Teen/Web/MarketSignIn/js/tools-gt.js',
       type: 'text/javascript',
       charset: 'utf-8'
     }]
@@ -85,7 +90,7 @@ export default {
     '/api': {
       // target:'http://192.168.125.209:9000/', //kimi
       // target: 'http://192.168.2.198/develop',
-      target:'http://api-master.abc360.cn',
+      target:' http://www.test.com',
       // target: 'http://www.abc360.local',
       pathRewrite: {
         '^/api' : ''

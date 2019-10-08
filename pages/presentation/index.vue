@@ -58,6 +58,7 @@
 
 <script>
 import { LANDI_LEVEL, TOPICS, INDEX_STEPS } from '~/pages/presentation/consts'
+import {Login} from '~/utils/core/login'
 
 export default {
   name: 'Presentation',
@@ -85,6 +86,10 @@ export default {
       // TODO: 刷新数据
       this.levelSelectIndex = index
     }
+  },
+  created() {
+    const login = new Login();
+    login.autoLogin();
   },
   mounted() {
     // TODO: 数据

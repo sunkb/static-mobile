@@ -7,24 +7,24 @@ module.exports = {
     APP_ID: 'wxfcc48a994f9a1a32'
   },
   test: {
-    PUBLIC_PATH: 'http://api-master.abc360.cn/static/web/',
+    PUBLIC_PATH: 'http://release2.landi.com/static-web/mobile/',
     NODE_ENV: 'test',
-    ENV_API: 'http://api-master.abc360.cn/', //测试服务器地址
-    BASE_URL: 'http://api-master.abc360.cn/static/web',
+    ENV_API: 'http://release2.landi.com/', //测试服务器地址
+    BASE_URL: 'http://release2.landi.com/static-web/mobile',
     APP_ID: 'wxfcc48a994f9a1a32'
   },
-  test198: {
-    PUBLIC_PATH: 'https://192.168.2.198/develop/static/web/',
+  release6: {
+    PUBLIC_PATH: 'http://release6.landi.com/static-web/mobile/',
     NODE_ENV: 'test',
-    ENV_API: 'https://192.168.2.198/develop/', //测试服务器地址
-    BASE_URL: 'https://192.168.2.198/develop/static/web',
-    APP_ID: 'wxfcc48a994f9a1a32'
+    ENV_API: 'http://release6.landi.com/', //测试服务器地址
+    BASE_URL: 'http://release6.landi.com/static-web/mobile',
+    APP_ID: 'wx9632cb5f0990954d'
   },
   pro: {
-    PUBLIC_PATH: 'https://www.abc360.com/static/web/',
+    PUBLIC_PATH: 'https://www.landi.com/static-web/mobile/',
     NODE_ENV: 'production',
-    ENV_API: 'https://www.abc360.com/', // 正式服务器地址
-    BASE_URL: 'https://www.abc360.com/static/web',
+    ENV_API: 'https://www.landi.com/', // 正式服务器地址
+    BASE_URL: 'https://www.landi.com/static-web/mobile',
     APP_ID: 'wxc82e75af73bfbc8f'
   }
 }
