@@ -44,6 +44,11 @@ export default {
       src: 'https://cdn.jsdelivr.net/npm/eruda',
       type: 'text/javascript',
       charset: 'utf-8'
+    },
+    {
+      src: 'https://www.landi.com/Public/Teen/Web/MarketSignIn/js/tools-gt.js',
+      type: 'text/javascript',
+      charset: 'utf-8'
     }]
   },
   /*
