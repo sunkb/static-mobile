@@ -24,6 +24,7 @@
     "vue-axios": "^2.1.4",
     "vue-ba": "^1.2.5",
     "vue-pull-to": "^0.1.8",
+    "vue-video-player": "^5.0.2",
     "weixin-js-sdk": "^1.4.0-test"
   },
   "devDependencies": {
