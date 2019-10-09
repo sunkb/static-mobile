@@ -78,8 +78,8 @@ export default {
       const { activity_id, code, work_id, like } = this.$route.query
       const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}`
       const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}&code=${code}`)
-      if (!work.status) {
-        this.$refs['toast'].showToast(work.info)
+      if (!res.status) {
+        this.$refs['toast'].showToast(res.info)
         return
       }
       const work = res.data.work;
