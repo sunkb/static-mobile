@@ -101,7 +101,6 @@ export default {
         this.$refs['toast'].showToast(detail.info)
         return
       }
-      console.log(detail.data)
       this.themeColor = detail.data.button_color
       this.shareStyle.background = `url(${detail.data.background_pic_url}) 0 0 no-repeat / contain`
     },
@@ -120,6 +119,9 @@ export default {
         }
       }
       await this.initData()
+    },
+    gotoRegister() {
+      window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
     }
   },
   async mounted() {
