@@ -1,20 +1,20 @@
 <template>
   <div id="rank">
-    <div class="headbar">
+    <div class="headbar" ref="headbar">
       <div class="headbar-content">
         <div class="headbar-content-title">点赞排行榜</div>
         <div class="headbar-content-text">在比赛中，小朋友们的精彩表现，让我们为选手们送上祝福的掌声，期待他们在未来取得更多成就</div>
       </div>
     </div>
     <div class="level" :style="{ position: innerScroll ? 'fixed' : 'static' }">
-      <div v-for="(item, index) in landiLevels" :key="index" @click="listUpdate(index)" class="level-item">
+      <div v-for="(item, index) in landiLevels" :key="item.id" @click="listUpdate(index)" class="level-item">
         <div :class="['level-item-content', landiLevelIndex == index ? 'accent' : '' ]" >{{ item.name }}</div>
         <div v-if="landiLevelIndex == index" class="level-item-selector"></div>
       </div>
     </div>
     <div class="rank">
       <!-- TODO: key 修改成唯一的 -->
-      <div v-for="(item, index) in rankList" :key="index" class="rank-item">
+      <div v-for="(item, index) in rankList" :key="item.sid" class="rank-item">
         <div class="rank-item-left">
           <div class="rank-item-rank">
             <div v-if="index > 2">{{ `${index + 1}`.padStart(2, '0') }}</div>
@@ -25,19 +25,22 @@
           <div class="rank-item-avatar">
             <img class="rank-item-avatar-img" :src="item.avatar"/>
           </div>
-          <div class="rank-item-name">{{ item.name }}</div>
+          <div class="rank-item-name">{{ item.en_name }}</div>
         </div>
         <div class="rank-item-like">
-          <div class="rank-item-like-num">{{ item.like }}</div>
+          <div class="rank-item-like-num">{{ item.zan }}</div>
           <div class="rank-item-like-text">点赞数</div>
         </div>
       </div>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script>
-import { LANDI_LEVEL, RANK_LIST } from '~/pages/presentation/consts'
+import { API } from '~/pages/presentation/consts'
+import axios from '~/utils/axios'
+import Toast from '~/components/Toast'
 
 export default {
   name: 'Rank',
@@ -46,33 +49,48 @@ export default {
       title: '点赞排行榜'
     }
   },
+  components: {
+    'toast': Toast
+  },
   data() {
     return {
       landiLevels: [],
       landiLevelIndex: 0,
       rankList: [],
-      innerScroll: false
+      innerScroll: false,
+      headbarBottom: 0
     }
   },
   methods: {
-    async listUpdate(levelIndex) {
+    listUpdate(levelIndex) {
       this.landiLevelIndex = levelIndex
-      //TODO: update
+      this.rankList = this.landiLevels[levelIndex].students
     },
     handleScroll() {
-      if (window.scrollY >= window.innerWidth * 0.467) {
+      if (window.scrollY >= this.headbarBottom) {
         this.innerScroll = true
       } else {
         this.innerScroll = false
       }
     }
   },
-  mounted() {
-    // TODO: 获取level, 获取ranklist
-    this.landiLevels = LANDI_LEVEL
-    this.rankList = RANK_LIST
-
+  async mounted() {
+    this.headbarBottom = this.$refs.headbar.getBoundingClientRect().bottom
     window.addEventListener('scroll', this.handleScroll)
+
+    this.$refs['toast'].showLoadingToast()
+    const activityID = this.$route.query.activity_id || 1
+    const data0 = await axios.get(`${API.RANK}?activity_id=${activityID}`)
+    if (!data0.status) {
+      this.$refs['toast'].hideLoadingToast()
+      this.$refs['toast'].showToast(data0.info)
+      return
+    }
+    document.title = data0.data.activity_name
+    this.landiLevels = data0.data.combinations
+    this.listUpdate(0)
+
+    this.$refs['toast'].hideLoadingToast()
   }
 }
 </script>

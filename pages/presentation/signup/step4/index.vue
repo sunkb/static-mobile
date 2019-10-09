@@ -18,18 +18,21 @@
       </div>
     </div>
     <submit-area 
-      hint="确认提交之后，72小时内可以按照步骤重新上传，重新上传后原作品将自动覆盖，详见活动规则" 
+      hint="确认提交之后，活动结束前可重新上传,届时原作品将自动覆盖、点赞数清零，详见活动规则" 
       btnText="确认提交"
       :isClickable="ruleSelected"
       @submit="submit"
     ></submit-area>
+    <toast ref="toast"></toast>
     <poster-modal v-model="showPosterModal" @click="gotoStep5" :poster="1" @changeShow="gotoStep5"></poster-modal>
   </div>
 </template>
 
 <script>
 import { StepBar, SubmitArea, PosterModal } from '~/components/presentation'
-import { STEPS, STROGE } from '~/pages/presentation/consts'
+import { STEPS, STROGE, API } from '~/pages/presentation/consts'
+import axios from '~/utils/axios'
+import Toast from '~/components/Toast'
 
 export default {
   name: 'Signup',
@@ -41,35 +44,54 @@ export default {
   components: {
     'step-bar': StepBar,
     'submit-area': SubmitArea,
-    'poster-modal': PosterModal
+    'poster-modal': PosterModal,
+    'toast': Toast
   },
   data() {
     return {
       steps: STEPS,
       videoSrc: '',
       ruleSelected: false,
-      showPosterModal: false
+      showPosterModal: false,
+      formData: null
     }
   },
   methods: {
     selectRule() {
       this.ruleSelected = !this.ruleSelected
     },
-    submit() {
+    async submit() {
       if (this.ruleSelected) {
-        // TODO: 提交信息
-        this.showPosterModal = true
+        const data = {
+          activity_id: this.$route.query.activity_id,
+          combination_id: this.formData.landiLevel.id,
+          topic_id: this.formData.topicID,
+          video_url: this.formData.videoKey,
+          address: this.formData.address
+        }
+        if (this.formData.workID) {
+          data.id = this.formData.workID
+        }
+        const res = await axios.post(API.SUBMIT_WORK, data)
+        if (res.status) {
+          this.showPosterModal = true
+        } else {
+          this.$refs['toast'].showToast(res.info)
+        }
       }
     },
     gotoStep5() {
-      this.$router.push({ name: 'presentation-signup-step5' })
+      this.$router.push({ name: 'presentation-signup-step5', query: this.$route.query })
     },
     gotoRulePage() {
-      this.$router.push({ name: "presentation-protocol" })
+      this.$router.push({ name: "presentation-protocol", query: this.$route.query })
     }
   },
   mounted() {
-    this.videoSrc = localStorage.getItem(STROGE.VIDEO_SRC) || ''
+    const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))
+    this.videoSrc = formData.videoSrc
+
+    this.formData = formData
   }
 }
 </script>

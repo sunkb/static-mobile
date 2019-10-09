@@ -6,40 +6,28 @@
     <div class="page-content">
       <h1>报名信息</h1>
       <div class="signupform">
-        <div class="signupform-item">
+        <!-- <div class="signupform-item">
           <span class="signupform-item-label required">孩子中文名</span>
           <input class="signupform-item-input" v-model="signupData.chnName" placeholder="请填写中文名" @blur="formBlur"/>
         </div>
         <div class="signupform-item">
           <span class="signupform-item-label required">孩子英文名</span>
           <input class="signupform-item-input" v-model="signupData.engName" placeholder="请填写英文名" @blur="formBlur"/>
-        </div>
+        </div> -->
         <div class="signupform-item">
           <span class="signupform-item-label required">兰迪级别</span>
           <select class="signupform-item-select" v-model="signupData.landiLevel" @blur="formBlur">
             <option value="">请选择级别</option>
-            <option v-for="(item, index) in landiLevels" :key="index" :value="item.type">{{item.name}}</option>
+            <option v-for="(item) in landiLevels" :key="item.id" :value="item.id">{{item.name}}</option>
           </select>
         </div>
         <div class="signupform-item">
-          <span class="signupform-item-label required">家长手机号</span>
-          <input class="signupform-item-input" v-model="signupData.phone" placeholder="请填写家长手机号" @blur="formBlur"/>
-        </div>
-        <!-- <div class="signupform-item">
-          <span class="signupform-item-label required">验证码</span>
-          <input class="signupform-item-input" v-model="signupData.validateCode" placeholder="请填写短信验证码" @blur="formBlur"/>
-          <span @click="validatePhone" :class="['signupform-item-vcode', validateCodeTimeout > 0 ? 'signupform-item-vcode-timeout' : '']">
-            {{ validateCodeTimeout > 0 ? `${validateCodeTimeout}s重新发送` : '获取验证码' }}
-          </span>
-        </div> -->
-        <div class="signupform-item">
           <span class="signupform-item-label required">地址</span>
-          <!-- TODO: 城市数据应该来自请求数据 -->
-          <select class="signupform-item-select" v-model="signupData.province" @change="provinceSelectChange" @blur="formBlur">
+          <select class="signupform-item-select" v-model="signupData.province" @change="provinceSelectChange" @blur="formBlur" ref="province">
             <option value="0">请选择所在省份</option>
             <option v-for="(item) in regionData['province']" :key="item.id" :value="item.id">{{ item.name }}</option>
           </select>
-          <select class="signupform-item-select" v-model="signupData.city" @blur="formBlur">
+          <select class="signupform-item-select" v-model="signupData.city" @blur="formBlur" ref="city">
             <option value="0">城市</option>
             <option v-for="(item) in regionData['city'][signupData.province]" :key="item.id" :value="item.id">{{ item.name }}</option>
           </select>
@@ -53,13 +41,12 @@
       ></submit-area>
     </div>
     <toast ref="toast"></toast>
-    <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0"></poster-modal>
   </div>
 </template>
 
 <script>
 import { StepBar, PosterModal, SubmitArea } from '~/components/presentation'
-import { STEPS, API, REGION_DATA, SIGNUP_DATA_RULE, STROGE, LANDI_LEVEL } from '~/pages/presentation/consts'
+import { STEPS, API, REGION_DATA, SIGNUP_DATA_RULE, STROGE } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 
@@ -80,11 +67,9 @@ export default {
     return {
       steps: STEPS,
       signupData: {
-        chnName: '',
-        engName: '',
+        // chnName: '',
+        // engName: '',
         landiLevel: '',
-        phone: '',
-        // validateCode: '',
         province: '0',
         city: '0'
       },
@@ -92,27 +77,10 @@ export default {
       dataNotEmpty: false,
       landiLevels: [],
       regionData: REGION_DATA,
-      errorMessage: '',
-      showPosterModal: false
+      errorMessage: ''
     }
   },
   methods: {
-    validatePhone() {
-      // TODO: 验证是否是用户, 然后 sendValidateCode(), 不是就 this.showPosterModal = true
-    },
-    // sendValidateCode() {
-    //   if (this.validateCodeTimeout > 0) { return }
-
-    //   // TODO: 获取验证码
-
-    //   this.validateCodeTimeout = 60
-    //   const vinterval = setInterval(() => {
-    //     this.validateCodeTimeout--
-    //     if (this.validateCodeTimeout <= 0) {
-    //       clearInterval(vinterval)
-    //     }
-    //   }, 1000)
-    // },
     provinceSelectChange() {
       this.signupData.city = '0'
     },
@@ -136,18 +104,48 @@ export default {
         }
       }
 
-      // TODO: 提交数据
-      localStorage.setItem(STROGE.LANDI_LEVEL, this.signupData.landiLevel)
-      localStorage.setItem(STROGE.STU_ENG_NAME, this.signupData.engName)
-      this.$router.push({ name: 'presentation-signup-step2' })
+      let _landiLevel = {}
+      let _topic = {}
+      for (let item of this.landiLevels) {
+        if (item.id == this.signupData.landiLevel) {
+          _landiLevel = item
+        }
+      }
+      const _province = this.$refs['province']
+      const _city = this.$refs['city']
+      localStorage.setItem(STROGE.FORM_DATA, JSON.stringify({
+        landiLevel: _landiLevel,
+        address: `${_province.options[_province.selectedIndex].text}/${_city.options[_city.selectedIndex].text}#${this.signupData.province}/${this.signupData.city}`
+      }))
+      this.$router.push({ name: 'presentation-signup-step2', query: this.$route.query })
     },
-    gotoRegister() {
-      // TODO: 注册页面
-    }
+
   },
-  mounted() {
-    // TODO: 获取 landi_level
-    this.landiLevels = LANDI_LEVEL
+  async mounted() {
+    this.$refs['toast'].showLoadingToast()
+    const activityID = this.$route.query.activity_id || 1
+    const data0 = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)
+    if (!data0.status) {
+      this.$refs['toast'].hideLoadingToast()
+      this.$refs['toast'].showToast(data0.info)
+      return
+    }
+    this.landiLevels = data0.data.combinations
+
+    const data1 = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
+    if (!data1.status) {
+      this.$refs['toast'].hideLoadingToast()
+      this.$refs['toast'].showToast(data1.info)
+      return
+    } else {
+      if (data1.id) {
+        this.signupData.landiLevel = data1.data.combination_id
+        const address = (data1.data.address.split('#')[1]).split('/')
+        this.signupData.province = address[0]
+        this.signupData.city = address[1]
+      }
+    }
+    this.$refs['toast'].hideLoadingToast()
   }
 }
 </script>
@@ -156,14 +154,15 @@ export default {
 @import '~/assets/presentation/css/main.scss';
 
 .signupform {
-  &:last-child {
-    border-bottom: 1.5px solid #E6E6E6;
-  }
 
   &-item {
     border-top: 1.5px solid #E6E6E6;
-    padding: 22.5px 0;
+    padding: 30px 0;
     white-space: nowrap;
+
+    &:last-child {
+      border-bottom: 1.5px solid #E6E6E6;
+    }
 
     &-label {
       display: inline-block;

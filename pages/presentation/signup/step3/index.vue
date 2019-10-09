@@ -13,8 +13,8 @@
       </div>
       <h2>当前级别: {{ landiLevel }}</h2>
       <div class="topic-text">
-        <h2 v-if="topic" class="topic-text-eng">{{ topic.text.eng }}</h2>
-        <h3 v-if="topic" class="topic-text-chn">{{ topic.text.chn }}</h3>
+        <h2 v-if="topic" class="topic-text-eng">{{ topic.en_topic_name }}</h2>
+        <h3 v-if="topic" class="topic-text-chn">{{ topic.cn_topic_name }}</h3>
       </div>
       <div class="video">
         <div class="video-hint" v-if="videoStatus.type != 'uploaded'">
@@ -54,9 +54,10 @@
 
 <script>
 import { StepBar, SubmitArea } from '~/components/presentation'
-import { STEPS, TOPICS, VIDEO_STATUS_TYPE, STROGE } from '~/pages/presentation/consts'
+import { STEPS, VIDEO_STATUS_TYPE, STROGE, API } from '~/pages/presentation/consts'
 import FileUploader, { FILE_TYPE } from '~/utils/upload.js'
 import Toast from '~/components/Toast'
+import axios from '~/utils/axios'
 
 export default {
   name: 'Signup',
@@ -76,7 +77,8 @@ export default {
       landiLevel: '',
       topic: null,
       videoStatus: {},
-      videoSrc: ''
+      videoSrc: '',
+      formData: null
     }
   },
   computed: {
@@ -87,11 +89,11 @@ export default {
   methods: {
     nextStep() {
       if (this.videoUploaded) {
-        this.$router.push({ name: 'presentation-signup-step4' })
+        this.$router.push({ name: 'presentation-signup-step4', query: this.$route.query })
       }
     },
     gotoStep2() {
-      this.$router.push({ name: 'presentation-signup-step2' })
+      this.$router.push({ name: 'presentation-signup-step2', query: this.$route.query })
     },
     async videoUpload() {
       this.$refs['toast'].showLoadingToast()
@@ -117,20 +119,66 @@ export default {
     },
     fileUploadComplete(res) {
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
-      this.videoSrc = `${this.videoSrc}/${res.key}`
-      localStorage.setItem(STROGE.VIDEO_SRC, this.videoSrc)
+      this.videoSrc = `${this.videoSrc}${res.key}`
+      this.formData.videoSrc = this.videoSrc
+      this.formData.videoKey = res.key
+      localStorage.setItem(STROGE.FORM_DATA, JSON.stringify(this.formData))
       this.$refs['toast'].showToast('上传成功')
+    },
+    initDataFromStroge() {
+      const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))
+      this.landiLevel = formData.landiLevel.name
+      for (let item of formData.landiLevel.topics) {
+        if (item.id == formData.topicID) {
+          this.topic = item
+        }
+      }
+      if (formData.videoSrc) {
+        this.videoSrc = formData.videoSrc
+        this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
+      } else {
+        this.videoStatus = VIDEO_STATUS_TYPE.ADD
+      }
+      
+      this.formData = formData
+    },
+    async initDataFromAPI() {
+      this.$refs['toast'].showLoadingToast()
+      const activityID = this.$route.query.activity_id || 1
+      const data0 = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
+      this.$refs['toast'].hideLoadingToast()
+      if (!data0.status) {
+        return {}
+      } else {
+        if (data0.data.id) {
+          this.landiLevel = data0.data.combination_name
+          this.topic = {
+            cn_topic_name: data0.data.cn_topic_name,
+            en_topic_name: data0.data.en_topic_name,
+          }
+          this.videoSrc = data0.data.video_url
+          this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
+
+          const video = data0.data.video_url.split('/')
+          const videoKey = video[video.length - 1]
+          this.formData = {
+            landiLevel: { id: data0.data.combination_id },
+            topicID: data0.data.topic_id,
+            videoKey: videoKey,
+            workID: data0.data.id,
+            address: data0.data.address
+          }
+          return { id: data0.data.id }
+        } else {
+          return {}
+        }
+      }
     }
   },
-  mounted() {
-    this.landiLevel = localStorage.getItem(STROGE.LANDI_LEVEL) || ''
-    this.topic = TOPICS[localStorage.getItem(STROGE.TOPIC) || 0]
-    this.videoStatus = VIDEO_STATUS_TYPE.ADD
-
-    const _videoSrc = localStorage.getItem(STROGE.VIDEO_SRC)
-    if (_videoSrc) {
-      this.videoSrc = _videoSrc
-      this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
+  async mounted() {
+    const fromAPI = await this.initDataFromAPI()
+    if (!fromAPI.id) {
+      this.initDataFromStroge()
     }
   }
 }

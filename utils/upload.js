@@ -1,7 +1,6 @@
 import axios from '~/utils/axios'
 import * as qiniu from 'qiniu-js'
 
-const TOKEN_HOST = 'http://eplus.test.com/'
 const TYPE = {
   'video': {
     mimeType: [
@@ -22,12 +21,11 @@ const FILE_TYPE = {
 
 export default class FileUploader {
   async init() {
-    // TODO: 获取 TOKEN
-    // const res = await axios.get(`${TOKEN_HOST}teacher/Qiniu/getUpTokenVideos`)
-    // this.domain = res.data.data.domain
-    // this.token = res.data.data.uptoken
-    this.domain = 'http://qn-video.abc360.com/'
-    this.token = 'Bl9oeQfJyIIivU7q24veVhydurPTib1lcHneu68K:g06bTrlxbabXyBquledJD4ldbtE=:eyJzY29wZSI6ImFiYzM2MC12aWRlb3MiLCJkZWFkbGluZSI6MTU3MDUxNTYwNywidXBIb3N0cyI6WyJodHRwOlwvXC91cC5xaW5pdS5jb20iLCJodHRwOlwvXC91cGxvYWQucWluaXUuY29tIiwiLUggdXAucWluaXUuY29tIGh0dHA6XC9cLzE4My4xMzEuNy4zIl19'
+    const res = await axios.get(`/Mobile/StudentActivity/token`)
+    if (res.status) {
+      this.domain = res.data.domain
+      this.token = res.data.uptoken
+    }
   }
 
   upload(file, type, next, error, complete) {

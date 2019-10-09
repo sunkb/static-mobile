@@ -3,8 +3,11 @@ import REGION_DATA from './region_data'
 const STEPS = ['报名信息', '选择题目', '上传视频', '确认提交', '我的作品']
 
 const API = {
-  // TODO: url
-  STU_SHARE_DATA: ''
+  STU_SHARE_DATA: '',
+  ACTIVITY_DETAIL: '/Mobile/StudentActivityDetail/detail',
+  MY_WORK: '/Mobile/StudentActivity/myWork',
+  SUBMIT_WORK: '/Mobile/StudentActivity/submitWork',
+  RANK: '/Mobile/StudentActivity/rank'
 }
 
 const SIGNUP_DATA_RULE = {
@@ -105,7 +108,7 @@ const VIDEO_STATUS_TYPE = {
   },
   ERROR: {
     type: 'error',
-    hint: '视频上传失败, 上传的文件不符合条件'
+    hint: '上传的文件不符合条件,尝试重新上传,也可直接将作品以邮件形式发送至 bisai@rochi.com'
   },
   UPLOADED: {
     type: 'uploaded',
@@ -117,7 +120,8 @@ const STROGE = {
   LANDI_LEVEL: 'prt_landi_level',
   TOPIC: 'prt_topic',
   VIDEO_SRC: 'prt_video_src',
-  STU_ENG_NAME: 'prt_stu_eng_name'
+  STU_ENG_NAME: 'prt_stu_eng_name',
+  FORM_DATA: 'prt_form_data'
 }
 
 export {

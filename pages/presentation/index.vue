@@ -2,14 +2,14 @@
   <div id="presentation" :style="presentationStyle">
     <div v-if="resData">
       <div class="topaction">
-        <div class="topaction-rank" @click="gotoPage({ name: 'presentation-rank' })">
+        <div class="topaction-rank" @click="gotoPage('presentation-rank')">
           <span v-if="haveWork">点赞排行</span>
         </div>
-        <div class="topaction-rule" @click="gotoPage({ name: 'presentation-rule' })">活动规则</div>
+        <div class="topaction-rule" @click="gotoPage('presentation-rule')">活动规则</div>
       </div>
       <div class="content card">
         <h3>报名参赛，分享更多宝贝高光时刻</h3>
-        <div class="action" @click="mainAction">
+        <div class="action" @click="mainAction" ref="centerAction">
           <div class="action-content" :style="{ background: resData.button_color }">
             <div class="action-content-text">{{ haveWork ? '查看我的作品' : '我要报名参赛' }}</div>
             <div class="action-content-deco0"></div>
@@ -62,16 +62,27 @@
           <div class="step-item-deco"></div>
         </div>
       </div>
+      <div class="float-action" v-show="showFloatAction">
+        <div class="action" @click="mainAction">
+          <div class="action-content" :style="{ background: resData.button_color }">
+            <div class="action-content-text">{{ haveWork ? '查看我的作品' : '我要报名参赛' }}</div>
+            <div class="action-content-deco0"></div>
+            <div class="action-content-deco1"></div>
+          </div>
+        </div>
+      </div>
     </div>
     <toast ref="toast"></toast>
+    <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0" @changeShow="gotoRegister"></poster-modal>
   </div>
 </template>
 
 <script>
-import { INDEX_STEPS } from '~/pages/presentation/consts'
+import { INDEX_STEPS, API } from '~/pages/presentation/consts'
 import {Login} from '~/utils/core/login'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
+import { PosterModal } from '~/components/presentation'
 
 export default {
   name: 'Presentation',
@@ -81,6 +92,7 @@ export default {
     }
   },
   components: {
+    'poster-modal': PosterModal,
     'toast': Toast
   },
   data() {
@@ -89,12 +101,16 @@ export default {
       steps: [],
       resData: null,
       haveWork: false,
-      presentationStyle: { }
+      showFloatAction: false,
+      centerActionBottom: 0,
+      presentationStyle: { },
+      isClassing: false,
+      showPosterModal: false
     }
   },
   methods: {
-    gotoPage(page) {
-      this.$router.push(page)
+    gotoPage(name) {
+      this.$router.push({ name, query: this.$route.query })
     },
     selectLevel(index) {
       this.levelSelectIndex = index
@@ -104,18 +120,28 @@ export default {
         this.$refs['toast'].showToast('活动已结束')
         return 
       }
-      if (!this.resData.status) {
-        this.$refs['toast'].showToast('活动已关闭')
-        return 
-      }
-      this.gotoPage({ name: 'presentation-signup' })
+      this.gotoPage('presentation-signup')
     },
     mainAction() {
-      if (haveWork) {
-        this.gotoPage({ name: 'presentation-signup-step5' })
+      if (this.haveWork) {
+        this.gotoPage('presentation-signup-step5')
       } else {
-        this.signup()
+        if (this.isClassing) {
+          this.signup()
+        } else {
+          this.showPosterModal = true
+        }
       }
+    },
+    handleScroll() {
+      if (window.scrollY > this.centerActionBottom) {
+        this.showFloatAction = true
+      } else {
+        this.showFloatAction = false
+      }
+    },
+    gotoRegister() {
+      window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
     }
   },
   created() {
@@ -124,8 +150,8 @@ export default {
   },
   async mounted() {
     this.steps = INDEX_STEPS
-
-    const res = await axios.get('/Mobile/StudentActivityDetail/detail?activity_id=1')
+    const activityID = this.$route.query.activity_id || 1
+    const res = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)
     if (res.status) { 
       this.resData = res.data
       document.title = this.resData.name
@@ -133,12 +159,18 @@ export default {
     } else {
       this.$refs['toast'].showToast(res.info)
     }
-    const mywork = await axios.get('/Mobile/StudentActivity/myWork?activity_id=1')
+    const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
     if (mywork.status) {
-      if (mywork.data.id) { this.showRank = true }
+      if (mywork.data.id) {
+        this.haveWork = true 
+      }
+      this.isClassing = mywork.data.is_classing
     } else {
       this.$refs['toast'].showToast(mywork.info)
     }
+
+    this.centerActionBottom = this.$refs.centerAction.getBoundingClientRect().bottom
+    window.addEventListener('scroll', this.handleScroll)
   }
 }
 </script>
@@ -164,7 +196,6 @@ export default {
   left: 50%;
   transform: translate(-50%, 0);
   background: #fff;
-  border-radius: 10px;
 }
 
 .topaction {
@@ -180,17 +211,24 @@ export default {
     border-bottom-right-radius: 30px;
     box-shadow: 0 0 30px -22.5px #666666;
     background: #fff;
-
+    
     span {
-      padding: 15px 22.5px;
+      display: inline-block;
+      width: 144px;
+      line-height: 64px;
+      text-align: center;
+      padding-right: 10px;
     }
   }
   &-rule {
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
     box-shadow: 0 0 30px -22.5px #666666;
-    padding: 15px 22.5px;
     background: #fff;
+    width: 144px;
+    line-height: 64px;
+    text-align: center;
+    padding-left: 10px;
   }
 }
 
@@ -260,7 +298,7 @@ export default {
 .action {
   margin: 22.5px 0;
   display: inline-block;
-  width: 600px;
+  width: 610px;
   height: 100px;
 
   &-content {
@@ -310,7 +348,7 @@ export default {
   }
   &-decohr {
     width: 120px;
-    border-bottom: 1.5px solid #EBEBEB;
+    border-bottom: 2px solid #E6E6E6;
   }
 }
 
@@ -320,7 +358,7 @@ export default {
 }
 
 .step {
-  margin: 37.5px 0;
+  margin: 37.5px 0 173.5px;
   text-align: center;
 
   &-item {
@@ -348,5 +386,16 @@ export default {
       transform: translateX(-50%)
     }
   }
+}
+
+.float-action {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  width: 100vw;
+  height: 140px;
+  box-shadow: 0 -2px 6px 0 #CCCCCC;
+  text-align: center;
 }
 </style>

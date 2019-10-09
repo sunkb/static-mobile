@@ -1,6 +1,9 @@
 <template>
   <div id="share">
-    <div class="bg"></div>
+    <div class="topaction">
+      <div></div>
+      <div class="topaction-rank" @click="gotoPage({ name: 'presentation-rank' })">点赞排行</div>
+    </div>
     <div class="content">
       <video controls class="content-video">
         <source :src="stuData.videoSrc"/>
@@ -78,7 +81,10 @@ export default {
     clickLike() {
       // TODO: 点赞和取消点赞
       this.liked = !this.liked
-    }
+    },
+    gotoPage(page) {
+      this.$router.push(page)
+    },
   },
   async mounted() {
     await this.getStuData()
@@ -104,24 +110,14 @@ export default {
 #share {
   width: 100vw;
   height: 100vh;
-  background: #EBEBEB;
-}
-
-.bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  background: #EBEBEB;
-  height: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .content {
   width: 690px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -187,10 +183,7 @@ export default {
 .action {
   background: #fff;
   width: 100vw;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 300px 0 37.5px;
+  padding: 37.5px 0;
   text-align: center;
 
   &-text {
@@ -238,4 +231,23 @@ export default {
   }
 }
 
+.topaction {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  color: #333333;
+  font-size: 26px;
+  margin-top: 60px;
+
+  &-rank {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    box-shadow: 0 0 30px -22.5px #666666;
+    background: #fff;
+    width: 144px;
+    line-height: 64px;
+    text-align: center;
+    padding-left: 10px;
+  }
+}
 </style>

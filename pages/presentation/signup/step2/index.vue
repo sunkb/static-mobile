@@ -6,19 +6,25 @@
     <div class="page-content">
       <h1>选择题目</h1>
       <div class="level">
-        <h2>当前级别: {{ landiLevel }}</h2>
+        <h2>当前级别: {{ landiLevel.name }}</h2>
         <h3 class="level-hint">左右滑屏可以切换样板和主题</h3>
       </div>
       <div class="topic">
-        <div class="topic-item" v-for="(item, index) in topics" :key="index">
-          <video controls class="topic-item-video" :poster="item.video.poster">
-            <source :src="item.video.src"/>
+        <div class="topic-item" v-for="(item) in topics" :key="item.id">
+          <video v-if="item.videos.length > 0" controls class="topic-item-video" :poster="item.videos[0].pic_url">
+            <source :src="item.videos[0].url"/>
           </video>
-          <div class="topic-item-selector" @click="selectTopic(index)">
-            <img v-if="topicSelectIndex == index" class="topic-item-selector-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
+          <video v-if="item.audios.length > 0 && item.videos.length == 0" controls class="topic-item-video" :poster="item.audios[0].pic_url">
+            <source :src="item.audios[0].url"/>
+          </video>
+          <div class="topic-item-video" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0">
+            <img class="topic-item-video-pic" :src="item.pics[0]"/>
           </div>
-          <h3 class="topic-item-eng topic-item-text">{{ item.text.eng }}</h3>
-          <h3 class="topic-item-chn topic-item-text">{{ item.text.chn }}</h3>
+          <div class="topic-item-selector" @click="selectTopic(item.id)">
+            <img v-if="topicSelectID == item.id" class="topic-item-selector-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
+          </div>
+          <h3 class="topic-item-eng topic-item-text">{{ item.en_topic_name }}</h3>
+          <h3 class="topic-item-chn topic-item-text">{{ item.cn_topic_name }}</h3>
         </div>
       </div>
       <submit-area 
@@ -28,12 +34,15 @@
         @submit="submit"
       ></submit-area>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script>
 import { StepBar, SubmitArea } from '~/components/presentation'
-import { STEPS, TOPICS, STROGE } from '~/pages/presentation/consts'
+import { STEPS, STROGE, API } from '~/pages/presentation/consts'
+import Toast from '~/components/Toast'
+import axios from '~/utils/axios'
 
 export default {
   name: 'Signup',
@@ -44,49 +53,53 @@ export default {
   },
   components: {
     'step-bar': StepBar,
-    'submit-area': SubmitArea
+    'submit-area': SubmitArea,
+    'toast': Toast
   },
   data() {
     return {
       steps: STEPS,
       landiLevel: '',
       topics: [],
-      topicSelectIndex: -1,
-      lastTopicSelectIndex: null
+      topicSelectID: -1,
+      lastTopicSelectID: null,
+      formData: null
     }
   },
   computed: {
     topicSelected() {
-      return this.topicSelectIndex >= 0
+      return this.topicSelectID >= 0
     }
   },
   methods: {
-    async getTopics() {
-      // TODO: 通过接口数据获取题目
-      this.topics = TOPICS
-    },
     submit() {
-      // TODO: 提交信息
       if (this.topicSelected) {
-        if (this.lastTopicSelectIndex != this.topicSelectIndex) {
-          localStorage.removeItem(STROGE.VIDEO_SRC)
+        if (this.lastTopicSelectID != this.topicSelectID) {
+          delete this.formData.videoSrc
+          delete this.formData.videoKey
         }
-        localStorage.setItem(STROGE.TOPIC, this.topicSelectIndex)
-        this.$router.push({ name: 'presentation-signup-step3' })
+        this.formData.topicID = this.topicSelectID
+        localStorage.setItem(STROGE.FORM_DATA, JSON.stringify(this.formData))
+        this.$router.push({ name: 'presentation-signup-step3', query: this.$route.query })
       }
     },
-    selectTopic(index) {
-      this.topicSelectIndex = index
+    selectTopic(id) {
+      this.topicSelectID = id
     }
   },
   async mounted() {
-    this.landiLevel = localStorage.getItem(STROGE.LANDI_LEVEL) || ''
-    await this.getTopics()
-    const _topic = localStorage.getItem(STROGE.TOPIC)
-    if (_topic) {
-      this.topicSelectIndex = _topic
-      this.lastTopicSelectIndex = _topic
+    this.$refs['toast'].showLoadingToast()
+    const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))
+    const activityID = this.$route.query.activity_id || 1
+    this.landiLevel = formData.landiLevel
+    this.topics = formData.landiLevel.topics
+
+    if (formData.topicID) {
+      this.topicSelectID = this.lastTopicSelectID = formData.topicID
     }
+
+    this.formData = formData
+    this.$refs['toast'].hideLoadingToast()
   }
 }
 </script>
@@ -124,6 +137,10 @@ $topic-item-width: 480px;
 
     &-video {
       width: $topic-item-width;
+
+      &-pic {
+        width: inherit;
+      }
     }
 
     &-eng {

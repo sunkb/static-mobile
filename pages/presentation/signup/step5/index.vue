@@ -6,7 +6,7 @@
     <div class="page-content" v-if="mywork">
       <div class="title">
         <h1>我的作品</h1>
-        <div class="title-action" @click="gotoStep3" v-if="canReUpload">
+        <div class="title-action" @click="reUpload" v-if="canReUpload">
           <h3>重新上传</h3>
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
         </div>
@@ -14,7 +14,7 @@
       <h2>报名学生: {{ mywork.en_name }}</h2>
       <div class="topic-text">
         <h2 class="topic-text-eng">{{ mywork.topic.en_topic_name }}</h2>
-        <h3 class="topic-text-chn">{{ mywoek.topic.cn_topic_name }}</h3>
+        <h3 class="topic-text-chn">{{ mywork.topic.cn_topic_name }}</h3>
       </div>
       <div class="video">
         <video controls class="video-content">
@@ -60,11 +60,11 @@ export default {
     }
   },
   methods: {
-    gotoStep3() {
-      this.$router.push({ name: 'presentation-signup-step3' })
+    reUpload() {
+      this.$router.push({ name: 'presentation-signup-step3', query: this.$route.query })
     },
     gotoIndex() {
-      this.$router.push({ name: 'presentation' })
+      this.$router.push({ name: 'presentation', query: this.$route.query })
     },
     shareToFrends() {
       this.showShareHelp = true
@@ -74,34 +74,21 @@ export default {
     // TODO: 修改分享链接
 
     const mywork = await axios.get('/Mobile/StudentActivity/myWork?activity_id=1')
-    if (mywork.status) {
-      if (!mywork.data.id) {
-        this.$refs['toast'].showToast('无作品资料')
-        return
-      }
-
-      const workID = mywork.data.id
-      const combinationID = mywork.data.combination_id
-      const topicID = mywork.data.topic_id
-      this.mywork.video_url = mywork.data.video_url
-
-      const data0 = await axios.get('/Mobile/StudentActivityDetail/detail?activity_id=1')
-      if (!data0.status) {
-        this.$refs['toast'].showToast('获取活动信息失败')
-        return
-      } 
-      this.canReUpload = new Date() < new Date(Number(`${data0.data.reupload_time}000`))
-      this.mywork.topic = data0.combinations[combinationID].topics[topicID]
-
-      const data1 = await axios.get(`/Mobile/StudentActivityDetail/work?activity_id=1&url=${window.location.href}&work_id=${workID}`)
-      if (!data1.status) {
-        this.$refs['toast'].showToast('获取作品信息失败')
-        return
-      } 
-      this.mywork.en_name = data1.data.en_name
-    } else {
+    if (!mywork.status) {
       this.$refs['toast'].showToast(mywork.info)
+      return
+    } else {
+      if (!mywork.data.id) { return }
     }
+    this.mywork = {
+      video_url: mywork.data.video_url,
+      topic: {
+        cn_topic_name: mywork.data.cn_topic_name,
+        en_topic_name: mywork.data.en_topic_name,
+      },
+      en_name: mywork.data.en_name
+    }
+    this.canReUpload = mywork.data.is_reupload
   }
 }
 </script>
