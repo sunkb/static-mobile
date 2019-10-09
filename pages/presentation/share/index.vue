@@ -77,23 +77,23 @@ export default {
     async initData() {
       const { activity_id, code, work_id, like } = this.$route.query
       const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}`
-      const work = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}&code=${code}`)
+      const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}&code=${code}`)
       if (!work.status) {
         this.$refs['toast'].showToast(work.info)
         return
       }
-
-      document.title = work.data.activity_name
+      const work = res.data.work;
+      document.title = work.activity_name
       this.topic = {
-        cn_topic_name: work.data.cn_topic_name,
-        en_topic_name: work.data.en_topic_name,
+        cn_topic_name: work.cn_topic_name,
+        en_topic_name: work.en_topic_name,
       }
       this.stuData = {
-        videoSrc: work.data.video_url,
-        like: work.data.zan,
-        name: work.data.en_name
+        videoSrc: work.video_url,
+        like: work.zan,
+        name: work.en_name
       }
-      this.liked = work.data.is_zan
+      this.liked = work.is_zan
 
       const detail = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activity_id}`)
       if (!detail.status) {

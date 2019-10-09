@@ -76,6 +76,7 @@ export default {
     const activityID = this.$route.query.activity_id || 1
     const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
     if (!mywork.status) {
+      this.$refs['toast'].hideLoadingToast()
       this.$refs['toast'].showToast(mywork.info)
       return
     } else {
@@ -93,6 +94,7 @@ export default {
 
     const wxConfig = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(window.location.href)}&work_id=${mywork.data.id}`)
     if (!wxConfig.status) {
+      this.$refs['toast'].hideLoadingToast()
       this.$refs['toast'].showToast(wxConfig.info)
       return
     }
