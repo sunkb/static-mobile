@@ -1,0 +1,53 @@
+function fullscreen(elem) {
+    let prefix = 'webkit';
+    if (elem[prefix + 'EnterFullScreen']) {
+        return prefix + 'EnterFullScreen';
+    } else if (elem[prefix + 'RequestFullScreen']) {
+        return prefix + 'RequestFullScreen';
+    };
+    return false;
+}
+function isIPad() {
+    var ua = navigator.userAgent.toLowerCase();
+    if (ua.match(/iPad/i) == "ipad") {
+        return true;
+    } else {
+        return false;
+    }
+}
+function exitScreen(elem) {
+    if (elem.webkitExitFullScreen || elem.exitFullScreen) {
+        elem.webkitExitFullScreen && elem.webkitExitFullScreen();
+        elem.exitFullScreen && elem.exitFullScreen();
+    }
+}
+//仅支持ipad
+export const videoPlayerEvent = (v) => {
+    let video = v,
+        doc = document;
+    //监听video已经开始播放时全屏显示
+    video.requestFullscreen();
+    video.play();
+    if (isIPad()) {
+        video.addEventListener('play', () => {
+            var fullscreenvideo = fullscreen(video);
+            video[fullscreenvideo]();
+        });
+        //退出全屏暂停视频
+        video.addEventListener("webkitfullscreenchange", function (e) {
+            if (!doc.webkitIsFullScreen) {
+                video.pause();
+            };
+        }, false);
+        video.addEventListener("fullscreenchange ", function (e) {
+            if (!doc.webkitIsFullScreen) {
+                video.pause();
+            };
+        }, false);
+        //播放完毕，退出全屏
+        video.addEventListener('ended', function () {
+            this.webkitExitFullScreen();
+        }, false);
+    }
+
+}

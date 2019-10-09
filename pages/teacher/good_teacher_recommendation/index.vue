@@ -50,47 +50,32 @@
           <!-- 自我介绍 -->
           <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
             <h6 class="title video_icon">自我介绍</h6>
-            <div class="content" style="text-indent: 0">
-              <!-- <video-player
-                class="video-player vjs-custom-skin"
-                v-if="teacherMsg&&teacherMsg.info.video"
-                ref="videoPlayer"
-                :playsinline="true"
-                :options="teacherMsg.info.video"
-              ></video-player> -->
+            <div class="content videoCon" style="text-indent: 0" @click='playFn("videoPlay1")'>
               <video
-                v-if="teacherMsg&&teacherMsg.info.video"
-                controls
-                poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
-                preload="auto"
-                class="video-style videoCon"
-                :src="`${teacherMsg.info.video}`"
-              />
+              id='videoPlay1'
+              v-if="teacherMsg&&teacherMsg.info.video"
+              controls
+              poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
+              preload="auto"
+              :src="`${teacherMsg.info.video}`"
+            />
             </div>
+            
           </div>
           <!-- 上课风采 -->
           <div class="introduction" v-if="videoList&&videoList.length>0">
             <h6 class="title video_icon">上课风采</h6>
             <div class="content" style="text-indent: 0">
-              <div v-for="(item,index) in videoList" :key="index" class="videoItem">
+              <div v-for="(item,index) in videoList" :key="index" class="videoItem" @click="playFn(`video${index}`)">
                 <video
                   ref="videoplay"
                   :id="`video${index}`"
-                  class="videoCon"
                   controls
                   :key="index"
                   v-if="item"
                   preload="auto"
                   :src="item"
-                  poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
                 />
-                <!-- <video-player
-                  class="video-player vjs-custom-skin"
-                  v-if="item"
-                  ref="videoPlayer"
-                  :playsinline="true"
-                  :options="item"
-                ></video-player> -->
               </div>
             </div>
           </div>
@@ -235,6 +220,7 @@
 <script>
 import apiGoodTeacher from "~/api/goodTeacher";
 import { getQueryString } from "~/utils/goodTeacher";
+import { videoPlayerEvent } from '~/utils/videoPlay';
 import abcRate from "~/components/cell_rate/index.vue";
 
 export default {
@@ -271,6 +257,10 @@ export default {
     this.getTeacherScoreFn();
   },
   methods: {
+    playFn(name){
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
+    },
     // 获取老师个人信息
     async getTeacherInfo() {
       const param = getQueryString("token");
@@ -296,73 +286,7 @@ export default {
         } else if (this.teacherMsg.info.accent == 3) {
           this.teacherMsg.info.accent = "标准音";
         }
-        //自我介绍视频
-        // if (this.teacherMsg.info.video) {
-        //   let videoObj = {
-        //     autoplay: false, //如果true,浏览器准备好时开始回放。
-        //     muted: false, // 默认情况下将会消除任何音频。
-        //     loop: false, // 导致视频一结束就重新开始。
-        //     preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-        //     language: "zh-CN",
-        //     aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-        //     fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-        //     sources: [
-        //       {
-        //         type: "video/mp4", //这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
-        //         src: "" //url地址
-        //       }
-        //     ],
-        //     poster:
-        //       "https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png", //你的封面地址
-        //     notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
-        //     controlBar: {
-        //       timeDivider: true,
-        //       durationDisplay: true,
-        //       remainingTimeDisplay: false,
-        //       fullscreenToggle: true //全屏按钮
-        //     }
-        //   };
-        //   videoObj.sources[0].src = this.teacherMsg.info.video;
-        //   this.teacherMsg.info.video = videoObj;
-        // }
-        //上课视频
         this.videoList = this.teacherMsg.info.recommendation.videos;
-        // if (this.teacherMsg.info && this.teacherMsg.info.recommendation) {
-        //   let videoArr = [];
-        //   videoArr = this.teacherMsg.info.recommendation.videos;
-        //   if (videoArr && videoArr.length > 0) {
-        //     videoArr.map((item, index) => {
-        //       if(index===1){
-        //         let videoObj = {
-        //         autoplay: false, //如果true,浏览器准备好时开始回放。
-        //         muted: false, // 默认情况下将会消除任何音频。
-        //         loop: false, // 导致视频一结束就重新开始。
-        //         preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-        //         language: "zh-CN",
-        //         aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-        //         fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-        //         sources: [
-        //           {
-        //             type: "video/mp4", //这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
-        //             src: "" //url地址
-        //           }
-        //         ],
-        //         poster:
-        //           "https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png", //你的封面地址
-        //         notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
-        //         controlBar: {
-        //           timeDivider: true,
-        //           durationDisplay: true,
-        //           remainingTimeDisplay: false,
-        //           fullscreenToggle: true //全屏按钮
-        //         }
-        //       };   
-        //       videoObj.sources[0].src = item;
-        //       this.videoList.push(videoObj);
-        //       }
-        //     });
-        //   }
-        // }
         if (infoData.info.weekdays) {
           this.weekdays = infoData.info.weekdays;
         }
@@ -519,17 +443,26 @@ export default {
   .rt {
     float: right;
   }
+  video{
+    opacity: 0;
+    height:0;
+    width:0;
+  }
+  .videoCon{
+    width:100%;
+    height:400px;
+    background:url('https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png') center;
+    background-size: cover;
+  }
   .videoItem {
     cursor: pointer;
     display: inline-block;
-    width: 682px;
-    height: 400px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    video{
-      width: 682px;
-      height: 400px;
-    }
+    width: 330px;
+    height: 330px;
+    margin-right: 14px;
+    margin-bottom: 20px;
+    background:url('https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png') center;
+    background-size: cover;
   }
   .tabWrap {
     display: flex;
@@ -619,8 +552,7 @@ export default {
       .avatar.smallImg {
         width: 134px;
         height: 134px;
-        border: 100%;
-        border: 1px solid #fff;
+        border: 2px solid #fff;
       }
       .info {
         flex: 1;
@@ -833,12 +765,8 @@ export default {
       position: absolute;
       left: 0;
       content: "";
-      width: 30px;
-      height: 30px;
-      border-radius: 100%;
-      -webkit-background-clip: padding-box;
-      background-clip: padding-box;
-      border: 1px solid #fff;
+      width: 32px;
+      height: 32px;
     }
     .teach_able {
       padding-bottom: 40px;
