@@ -114,7 +114,7 @@ export default {
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
-    const { code } = this.$route.query
+    const { code, like } = this.$route.query
     if (code == null) {
       getWXCode(window.location.href)
       return
