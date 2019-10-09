@@ -270,9 +270,6 @@ export default {
     this.getTeacherInfo();
     this.getTeacherScoreFn();
   },
-  mounted() {
-    this.playFn();
-  },
   methods: {
     // 获取老师个人信息
     async getTeacherInfo() {
@@ -476,36 +473,6 @@ export default {
         }
       });
     },
-    //判断安卓手机
-    isiOS() {
-      var u = navigator.userAgent;
-      let isiOS = !!u.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-      if (!isiOS) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    //安卓手机播放结束的广告
-    playFn() {
-      this.$nextTick(function() {
-        let videoList = document.getElementById("video0");
-        return false;
-        if (videoList.length > 0) {
-          videoList.addEventListener(
-            "ended",
-            function() {
-              videoContext.play();
-              setTimeout(() => {
-                videoContext.pause();
-                alert(1);
-              }, 100);
-            },
-            false
-          );
-        }
-      });
-    }
   },
   components: {
     abcRate
@@ -556,10 +523,6 @@ export default {
     height: 400px;
     margin-right: 10px;
     margin-bottom: 10px;
-    video {
-      width: 335px;
-      height: 180px;
-    }
   }
   .tabWrap {
     display: flex;

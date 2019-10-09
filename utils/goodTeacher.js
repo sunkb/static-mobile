@@ -32,31 +32,3 @@ function exitScreen(elem) {
         elem.exitFullScreen && elem.exitFullScreen();
     }
 }
-//仅支持ipad
-export const videoPlayerEvent = (v) => {
-    let video = v,
-        doc = document;
-    //监听video已经开始播放时全屏显示
-    // video.addEventListener('play', () => {
-    //     var fullscreenvideo = fullscreen(video);
-    //     video[fullscreenvideo]();
-    // });
-    //退出全屏暂停视频
-    // video.addEventListener("webkitfullscreenchange", function (e) {
-    //     if (!doc.webkitIsFullScreen) {
-    //         video.pause();
-    //     };
-    // }, false);
-    // video.addEventListener("fullscreenchange ", function (e) {
-    //     if (!doc.webkitIsFullScreen) {
-    //         video.pause();
-    //     };
-    // }, false);
-    //播放完毕，退出全屏
-    video.addEventListener('ended', function () {
-        videoContext.play();
-        setTimeout(() => {
-            videoContext.pause();
-        }, 100)
-    }, false);
-}

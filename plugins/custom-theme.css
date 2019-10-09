@@ -131,11 +131,6 @@
 .vjs-custom-skin > .video-js .vjs-menu-button-popup.vjs-volume-menu-button-vertical .vjs-menu {
   left: 0;
 }
-
-.vjs-custom-skin > .video-js .vjs-control-bar .vjs-resolution-button .vjs-menu {
-   /*order: 4;*/
-}
-
  /*排序顺序*/
 .vjs-custom-skin > .video-js .vjs-control-bar .vjs-play-control {
   order: 0;
@@ -179,17 +174,21 @@
   order: 6;
 }
 .vjs-icon-placeholder{
-font-size: 36px;
+font-size: 1.8em;
 }
 .vjs-current-time-display{
-  font-size: 30px;
+  font-size: 1.4em;
   line-height: 100px;
   margin-left:10px;
 }
 .vjs-duration-display{
-  font-size: 30px;
+  font-size: 1.4em;
   line-height: 100px;
 }
 .vjs-poster{
   background: #fff;
+}
+.vjs-button > .vjs-icon-placeholder:before {
+  font-size: 1.8em;
+  line-height: 2;
 }
