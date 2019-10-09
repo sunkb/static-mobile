@@ -326,9 +326,9 @@ export default {
           this.teacherMsg.info.video = videoObj;
         }
         //上课视频
-        if (res.info && res.info.recommendation) {
+        if (this.teacherMsg.info && this.teacherMsg.info.recommendation) {
           let videoArr = [];
-          videoArr = res.info.recommendation.videos;
+          videoArr = this.teacherMsg.info.recommendation.videos;
           if (videoArr && videoArr.length > 0) {
             videoArr.map((item, index) => {
               if(index===1){
@@ -355,12 +355,10 @@ export default {
                   remainingTimeDisplay: false,
                   fullscreenToggle: true //全屏按钮
                 }
-              };
-                 
+              };   
               videoObj.sources[0].src = item;
               this.videoList.push(videoObj);
               }
-           
             });
           }
         }
