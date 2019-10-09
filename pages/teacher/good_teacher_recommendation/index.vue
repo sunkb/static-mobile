@@ -51,7 +51,7 @@
           <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
             <h6 class="title video_icon">自我介绍</h6>
             <div class="content videoCon" style="text-indent: 0" @click='playFn("videoPlay1")'>
-              <div class='palyBtn'>></div>
+              <!-- <div class='palyBtn'>></div> -->
               <video
               id='videoPlay1'
               v-if="teacherMsg&&teacherMsg.info.video"
@@ -68,7 +68,7 @@
             <h6 class="title video_icon">上课风采</h6>
             <div class="content" style="text-indent: 0">
               <div v-for="(item,index) in videoList" :key="index" class="videoItem" @click="playFn(`video${index}`)">
-                <div class='palyBtn'>></div>
+                <!-- <div class='palyBtn'>></div> -->
                 <video
                   ref="videoplay"
                   :id="`video${index}`"
@@ -446,8 +446,9 @@ export default {
     float: right;
   }
   video{
-    position: relative;
-    z-index: -1;
+    // position: relative;
+    // z-index: -1;
+    opacity: 0;
     height:0;
     width:0;
   }

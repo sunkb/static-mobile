@@ -29,27 +29,27 @@ export const videoPlayerEvent = (v) => {
     // if (/Android|webOS|iPhone|iPad|BlackBerry|iPod/i.test(navigator.userAgent)) {
         // 移动端操作
         video.play();
-        // if (isIPad()) {
-        //     video.addEventListener('play', () => {
-        //         var fullscreenvideo = fullscreen(video);
-        //         video[fullscreenvideo]();
-        //     });
-        //     //退出全屏暂停视频
-        //     video.addEventListener("webkitfullscreenchange", function (e) {
-        //         if (!doc.webkitIsFullScreen) {
-        //             video.pause();
-        //         };
-        //     }, false);
-        //     video.addEventListener("fullscreenchange ", function (e) {
-        //         if (!doc.webkitIsFullScreen) {
-        //             video.pause();
-        //         };
-        //     }, false);
-        //     //播放完毕，退出全屏
-        //     video.addEventListener('ended', function () {
-        //         this.webkitExitFullScreen();
-        //     }, false);
-        // }
+        if (isIPad()) {
+            video.addEventListener('play', () => {
+                var fullscreenvideo = fullscreen(video);
+                video[fullscreenvideo]();
+            });
+            //退出全屏暂停视频
+            video.addEventListener("webkitfullscreenchange", function (e) {
+                if (!doc.webkitIsFullScreen) {
+                    video.pause();
+                };
+            }, false);
+            video.addEventListener("fullscreenchange ", function (e) {
+                if (!doc.webkitIsFullScreen) {
+                    video.pause();
+                };
+            }, false);
+            //播放完毕，退出全屏
+            video.addEventListener('ended', function () {
+                this.webkitExitFullScreen();
+            }, false);
+        }
         
     // } else {
     //     video.requestFullscreen();
