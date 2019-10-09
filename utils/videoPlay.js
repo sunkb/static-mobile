@@ -26,7 +26,7 @@ export const videoPlayerEvent = (v) => {
     let video = v,
         doc = document;
     //监听video已经开始播放时全屏显示
-    video.requestFullscreen();
+    //video.requestFullscreen();
     video.play();
     if (isIPad()) {
         video.addEventListener('play', () => {
