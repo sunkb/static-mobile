@@ -103,6 +103,7 @@ export default {
   margin-top: 22.5px;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   &-content {
     width: 637.5px;

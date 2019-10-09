@@ -35,8 +35,8 @@
 
 <script>
 import axios from '~/utils/axios'
-import { API, TOPICS } from '~/pages/presentation/consts'
-import { PosterModal } from '~/components/presentation'
+import { API } from '~/pages/presentation/consts'
+import { getWXCode } from '~/pages/presentation/wx'
 
 export default {
   name: 'Share',
@@ -44,9 +44,6 @@ export default {
     return {
       title: '才艺视频'
     }
-  },
-  components: {
-    'poster-modal': PosterModal
   },
   data() {
     return {
@@ -75,9 +72,6 @@ export default {
       }
       this.topic = TOPICS[this.stuData.topic].text
     },
-    gotoRegister() {
-      window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
-    },
     clickLike() {
       // TODO: 点赞和取消点赞
       this.liked = !this.liked
@@ -88,18 +82,17 @@ export default {
   },
   async mounted() {
     await this.getStuData()
-    document.title = this.stuData.name + '的才艺视频'
 
     //TODO: 获取主题色
     this.themeColor = '#F0552D'
 
-    // const res = await axios.get('/Mobile/StudentActivityDetail/detail?activity_id=1')
-    // if (res.status) { 
-    //   this.resData = res.data
-    //   document.title = this.resData.name
-    // } else {
-    //   this.$refs['toast'].showToast(res.info)
-    // }
+    const { activity_id, code, work_id } = this.$route.query
+    if (code == null) {
+      getWXCode(window.location.href)
+    }
+    //const work = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${window.location.href}&work_id=${work_id}%code=${code}`)
+
+    document.title = work.data.activity_name
   }
 }
 </script>

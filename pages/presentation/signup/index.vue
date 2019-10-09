@@ -138,7 +138,7 @@ export default {
       this.$refs['toast'].showToast(data1.info)
       return
     } else {
-      if (data1.id) {
+      if (data1.data.id) {
         this.signupData.landiLevel = data1.data.combination_id
         const address = (data1.data.address.split('#')[1]).split('/')
         this.signupData.province = address[0]

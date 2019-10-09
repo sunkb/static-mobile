@@ -36,8 +36,9 @@
 <script>
 import { StepBar } from '~/components/presentation'
 import Toast from '~/components/Toast'
-import { STEPS, STROGE, TOPICS } from '~/pages/presentation/consts'
+import { STEPS, STROGE, TOPICS, API } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
+import { initWX } from '~/pages/presentation/wx'
 
 export default {
   name: 'Signup',
@@ -71,9 +72,9 @@ export default {
     }
   },
   async mounted() {
-    // TODO: 修改分享链接
-
-    const mywork = await axios.get('/Mobile/StudentActivity/myWork?activity_id=1')
+    this.$refs['toast'].showLoadingToast()
+    const activityID = this.$route.query.activity_id || 1
+    const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
     if (!mywork.status) {
       this.$refs['toast'].showToast(mywork.info)
       return
@@ -89,6 +90,32 @@ export default {
       en_name: mywork.data.en_name
     }
     this.canReUpload = mywork.data.is_reupload
+
+    const wxConfig = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(window.location.href)}&work_id=${mywork.data.id}`)
+    if (!wxConfig.status) {
+      this.$refs['toast'].showToast(wxConfig.info)
+      return
+    }
+    initWX({
+      appId: wxConfig.data.appId,
+      timestamp: wxConfig.data.timestamp,
+      nonceStr: wxConfig.data.nonceStr,
+      signature: wxConfig.data.signature,
+    }).ready(() => {
+      wx.updateAppMessageShareData({ 
+        title: wxConfig.data.share_title,
+        desc: wxConfig.data.share_desc,
+        link: wxConfig.data.share_link,
+        imgUrl: wxConfig.data.share_img_url,
+      })
+      wx.updateTimelineShareData({ 
+        title: wxConfig.data.share_title,
+        link: wxConfig.data.share_link,
+        imgUrl: wxConfig.data.share_img_url,
+      })
+    })
+
+    this.$refs['toast'].hideLoadingToast()
   }
 }
 </script>
@@ -118,6 +145,7 @@ export default {
   margin-top: 22.5px;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   &-content {
     width: 638px;
