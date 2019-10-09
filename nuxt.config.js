@@ -65,7 +65,6 @@ export default {
   plugins: [
     { src: '~plugins/baidu.js', ssr: false },
     { src: '~plugins/pullto.js', ssr: false },
-    { src: '~plugins/videoplay.js', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
