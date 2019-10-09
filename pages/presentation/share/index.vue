@@ -2,7 +2,7 @@
   <div id="share">
     <div class="topaction">
       <div></div>
-      <div class="topaction-rank" @click="gotoPage({ name: 'presentation-rank' })">点赞排行</div>
+      <div class="topaction-rank" @click="gotoPage('presentation-rank')">点赞排行</div>
     </div>
     <div class="content">
       <video controls class="content-video">
@@ -62,49 +62,70 @@ export default {
         cn_topic_name: '',
         en_topic_name: ''
       },
-      liked: false,
-      work_id: null
+      liked: false
     }
   },
   methods: {
     clickLike() {
-      if (!this.liked) {
-
+      const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}&like=${!this.liked}`
+      window.location = url
+    },
+    gotoPage(name) {
+      this.$router.push({ name, query: this.$route.query })
+    },
+    async initData() {
+      const { activity_id, code, work_id, like } = this.$route.query
+      const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}`
+      const work = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}%code=${code}`)
+      if (!work.status) {
+        this.$refs['toast'].showToast(work.info)
+        return
       }
 
-      this.liked = !this.liked
+      document.title = work.data.activity_name
+      this.themeColor = work.data.button_color
+      this.topic = {
+        cn_topic_name: work.data.cn_topic_name,
+        en_topic_name: work.data.en_topic_name,
+      }
+      this.stuData = {
+        videoSrc: work.data.video_url,
+        like: work.data.zan,
+        name: work.data.en_name
+      }
+      this.liked = work.data.is_zan
     },
-    gotoPage(page) {
-      this.$router.push(page)
-    },
+    async initLike() {
+      const { activity_id, code, work_id, like } = this.$route.query
+      let res = null
+      if (like) {
+        res = await axios.get(`${API.LIKE}?code=${code}&work_id=${work_id}`)
+        if (!res.status) {
+          this.$refs['toast'].showToast(res.info)
+        }
+      } else {
+        res = await axios.get(`${API.UNLIKE}?code=${code}&work_id=${work_id}`)
+        if (!res.status) {
+          this.$refs['toast'].showToast(res.info)
+        }
+      }
+      await this.initData()
+    }
   },
   async mounted() {
-    const { activity_id, code, work_id } = this.$route.query
-    this.work_id = work_id
-    console.log(code)
+    this.$refs['toast'].showLoadingToast()
+    const { code } = this.$route.query
     if (code == null) {
       getWXCode(window.location.href)
       return
     }
-    const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}`
-    const work = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}%code=${code}`)
-    if (!work.status) {
-      this.$refs['toast'].showToast(work.info)
-      return
-    }
 
-    document.title = work.data.activity_name
-    this.themeColor = work.data.button_color
-    this.topic = {
-      cn_topic_name: work.data.cn_topic_name,
-      en_topic_name: work.data.en_topic_name,
+    if (like) {
+      await this.initLike()
+    } else {
+      await this.initData()
     }
-    this.stuData = {
-      videoSrc: work.data.video_url,
-      like: work.data.zan,
-      name: work.data.en_name
-    }
-    this.liked = work.data.is_zan
+    this.$refs['toast'].hideLoadingToast()
   }
 }
 </script>
