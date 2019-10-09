@@ -8,8 +8,8 @@
       <video controls class="content-video">
         <source :src="stuData.videoSrc"/>
       </video>
-      <h3 class="content-topic-eng">{{ topic.eng }}</h3>
-      <h3 class="content-topic-chn">{{ topic.chn }}</h3>
+      <h3 class="content-topic-eng">{{ topic.en_topic_name }}</h3>
+      <h3 class="content-topic-chn">{{ topic.cn_topic_name }}</h3>
       <div class="content-action">
         <div class="content-action-author">作者: {{ stuData.name }}</div>
         <div class="content-action-actions">
@@ -30,6 +30,7 @@
         <div class="action-content-deco1"></div>
       </div>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
@@ -37,6 +38,7 @@
 import axios from '~/utils/axios'
 import { API } from '~/pages/presentation/consts'
 import { getWXCode } from '~/pages/presentation/wx'
+import Toast from '~/components/Toast'
 
 export default {
   name: 'Share',
@@ -45,35 +47,31 @@ export default {
       title: '才艺视频'
     }
   },
+  components: {
+    'toast': Toast
+  },
   data() {
     return {
       stuData: {
         videoSrc: '',
         like: 0,
-        name: '',
-        topic: 0
+        name: ''
       },
-      themeColor: '#F0552D',
+      themeColor: '#fff',
       topic: {
-        eng: '',
-        chn: ''
+        cn_topic_name: '',
+        en_topic_name: ''
       },
-      liked: false
+      liked: false,
+      work_id: null
     }
   },
   methods: {
-    async getStuData() {
-      // TODO: 获取数据
-      this.stuData = {
-        videoSrc: 'http://qn-video.abc360.com/40bc5e48-ca2d-48c8-9ff8-7a80e8a7ecdf.mp4',
-        like: 2329,
-        name: 'Jimmy',
-        topic: 0
-      }
-      this.topic = TOPICS[this.stuData.topic].text
-    },
     clickLike() {
-      // TODO: 点赞和取消点赞
+      if (!this.liked) {
+
+      }
+
       this.liked = !this.liked
     },
     gotoPage(page) {
@@ -81,18 +79,32 @@ export default {
     },
   },
   async mounted() {
-    await this.getStuData()
-
-    //TODO: 获取主题色
-    this.themeColor = '#F0552D'
-
     const { activity_id, code, work_id } = this.$route.query
+    this.work_id = work_id
+    console.log(code)
     if (code == null) {
       getWXCode(window.location.href)
+      return
     }
-    //const work = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${window.location.href}&work_id=${work_id}%code=${code}`)
+    const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}`
+    const work = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}%code=${code}`)
+    if (!work.status) {
+      this.$refs['toast'].showToast(work.info)
+      return
+    }
 
     document.title = work.data.activity_name
+    this.themeColor = work.data.button_color
+    this.topic = {
+      cn_topic_name: work.data.cn_topic_name,
+      en_topic_name: work.data.en_topic_name,
+    }
+    this.stuData = {
+      videoSrc: work.data.video_url,
+      like: work.data.zan,
+      name: work.data.en_name
+    }
+    this.liked = work.data.is_zan
   }
 }
 </script>

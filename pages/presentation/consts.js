@@ -9,7 +9,9 @@ const API = {
   SUBMIT_WORK: '/Mobile/StudentActivity/submitWork',
   RANK: '/Mobile/StudentActivity/rank',
   WX_SHARE: '/Mobile/StudentActivityDetail/share',
-  WORK: '/Mobile/StudentActivityDetail/work'
+  WORK: '/Mobile/StudentActivityDetail/work',
+  LIKE: '/Mobile/StudentActivityDetail/zan',
+  UNLIKE: '/Mobile/StudentActivityDetail/unZan'
 }
 
 const SIGNUP_DATA_RULE = {
