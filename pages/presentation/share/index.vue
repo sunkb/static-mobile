@@ -68,6 +68,7 @@ export default {
   },
   methods: {
     clickLike() {
+      const { activity_id, code, work_id } = this.$route.query
       const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}&like=${!this.liked}`
       window.location = url
     },
