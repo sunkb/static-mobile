@@ -398,10 +398,13 @@ export default {
     },
     //tab切换
     tabChange(index) {
+      alert(1)
       this.tabIndex = index;
-      this.commentList = [];
-      this.currentPage = 1;
-      this.getTeacherScoreFn();
+      return false;
+      debugger;
+      //this.commentList = [];
+      //this.currentPage = 1;
+      //this.getTeacherScoreFn();
     },
     //获取老师标签
     async getTag() {
