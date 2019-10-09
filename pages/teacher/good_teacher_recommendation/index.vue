@@ -51,14 +51,21 @@
           <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
             <h6 class="title video_icon">自我介绍</h6>
             <div class="content" style="text-indent: 0">
-              <video
+              <video-player
+                class="video-player vjs-custom-skin"
+                v-if="teacherMsg&&teacherMsg.info.video"
+                ref="videoPlayer"
+                :playsinline="true"
+                :options="teacherMsg.info.video"
+              ></video-player>
+              <!-- <video
                 v-if="teacherMsg&&teacherMsg.info.video"
                 controls
                 poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
                 preload="auto"
                 class="video-style videoCon"
                 :src="`${teacherMsg.info.video}`"
-              />
+              />-->
             </div>
           </div>
           <!-- 上课风采 -->
@@ -76,12 +83,14 @@
                   preload="auto"
                   :src="item"
                   poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
-                /> -->
-                <video-player  class="video-player vjs-custom-skin"
-                ref="videoPlayer" 
-                :playsinline="true" 
-                :options="playerOptions"
-              ></video-player>
+                />-->
+                <video-player
+                  class="video-player vjs-custom-skin"
+                  v-if="item"
+                  ref="videoPlayer"
+                  :playsinline="true"
+                  :options="item"
+                ></video-player>
               </div>
             </div>
           </div>
@@ -231,29 +240,6 @@ import abcRate from "~/components/cell_rate/index.vue";
 export default {
   data() {
     return {
-      playerOptions : {
-      //playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
-      autoplay: false, //如果true,浏览器准备好时开始回放。
-      muted: false, // 默认情况下将会消除任何音频。
-      loop: false, // 导致视频一结束就重新开始。
-      preload: 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-      language: 'zh-CN',
-      aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-      fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-      sources: [{
-        type: "video/mp4",//这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
-        src: "https://qn-video.abc360.com/63028b9f-1885-40fb-b121-c44293d3bf9f.mp4" //url地址
-      }],
-      poster: "../../static/images/test.jpg", //你的封面地址
-      // width: document.documentElement.clientWidth, //播放器宽度
-      notSupportedMessage: '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
-      controlBar: {
-        timeDivider: true,
-        durationDisplay: true,
-        remainingTimeDisplay: false,
-        fullscreenToggle: true  //全屏按钮
-      }
-      },
       tranformText: "翻译",
       loadmoreStatus: true,
       stateText: "查看更多",
@@ -275,7 +261,6 @@ export default {
       pages: 1,
       commentList: [],
       total: 0,
-      //size: parseInt((document.body.clientWidth / 375), 10) * 20 || 20,
       tagList: [],
       teacherIntro: ""
     };
@@ -295,105 +280,6 @@ export default {
       const res = await apiGoodTeacher.teacherIntroX({
         token: param
       });
-  // let data = {
-      //     "info":{
-      //         "nation_id":2,
-      //         "nation":"American",
-      //         "nickname":"Myhill",
-      //         "star":0,
-      //         "gender":"1",
-      //         "intro":"Hello! Welcome to Landi English! <br />",
-      //         "avatar":"https://qn-face.abc360.com/teacheravatar1554409243",
-      //         "video":"",
-      //         "age":49,
-      //         "accent":1,
-      //         "weekdays":[
-      //             "周一",
-      //             "周二",
-      //             "周三",
-      //             "周四"
-      //         ],
-      //         "qualifications":{
-      //             "education":{
-      //                 "id":3,
-      //                 "tid":111930,
-      //                 "level":4,
-      //                 "college":"MIT",
-      //                 "major":"finace",
-      //                 "qualification_id":70,
-      //                 "create_time":"2019-08-13 13:30:49",
-      //                 "update_time":"2019-08-13 13:30:49",
-      //                 "is_del":0,
-      //                 "audit":{
-      //                     "id":70,
-      //                     "tid":111930,
-      //                     "status":2,
-      //                     "type":11,
-      //                     "show_status":1,
-      //                     "reason":"7788",
-      //                     "operate_uid":3076,
-      //                     "create_time":1565674248,
-      //                     "update_time":1565849387,
-      //                     "files":[
-      //                         {
-      //                             "id":80,
-      //                             "qualification_id":70,
-      //                             "path":"https://www.baidu.com"
-      //                         }
-      //                     ]
-      //                 }
-      //             },
-      //             "certification":[
-      //                 {
-      //                     "type":2,
-      //                     "name":"TESOL",
-      //                     "files":[
-      //                         {
-      //                             "id":117,
-      //                             "qualification_id":109,
-      //                             "path":"http://baidu.com/head.gif"
-      //                         }
-      //                     ]
-      //                 },
-      //                 {
-      //                     "type":1,
-      //                     "name":"TEFL",
-      //                     "files":[
-      //                         {
-      //                             "id":116,
-      //                             "qualification_id":108,
-      //                             "path":"http://baidu.com"
-      //                         }
-      //                     ]
-      //                 }
-      //             ],
-      //             "experience":[
-      //                 {
-      //                     "id":4462,
-      //                     "tid":111930,
-      //                     "organization":"QKids",
-      //                     "job":"ESL Teacher",
-      //                     "begin_time":1565749094,
-      //                     "end_time":1565749094,
-      //                     "description":"abcd",
-      //                     "qualification_id":112
-      //                 },
-      //                 {
-      //                     "id":4463,
-      //                     "tid":111930,
-      //                     "organization":"QKids",
-      //                     "job":"ESL Teacher",
-      //                     "begin_time":1565749094,
-      //                     "end_time":1565749094,
-      //                     "description":"bbbb",
-      //                     "qualification_id":112
-      //                 }
-      //             ]
-      //         }
-      //     },
-      // }
-
-
       if (res) {
         if (res.info && res.info.intro) {
           res.info.intro = res.info.intro.replace(/<br \/>/g, "");
@@ -413,8 +299,69 @@ export default {
         } else if (this.teacherMsg.info.accent == 3) {
           this.teacherMsg.info.accent = "标准音";
         }
+        //自我介绍视频
+        if (this.teacherMsg.info.video) {
+          let videoObj = {
+            autoplay: false, //如果true,浏览器准备好时开始回放。
+            muted: false, // 默认情况下将会消除任何音频。
+            loop: false, // 导致视频一结束就重新开始。
+            preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+            language: "zh-CN",
+            aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+            fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+            sources: [
+              {
+                type: "video/mp4", //这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
+                src: "" //url地址
+              }
+            ],
+            poster:
+              "https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png", //你的封面地址
+            notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
+            controlBar: {
+              timeDivider: true,
+              durationDisplay: true,
+              remainingTimeDisplay: false,
+              fullscreenToggle: true //全屏按钮
+            }
+          };
+          videoObj.sources[0].src = this.teacherMsg.info.video;
+          this.teacherMsg.info.video = videoObj;
+        }
+        //上课视频
         if (res.info && res.info.recommendation) {
-          this.videoList = res.info.recommendation.videos;
+          let videoArr = [];
+          videoArr = res.info.recommendation.videos;
+          if (videoArr && videoArr.length > 0) {
+            videoArr.map((item, index) => {
+              let videoObj = {
+                autoplay: false, //如果true,浏览器准备好时开始回放。
+                muted: false, // 默认情况下将会消除任何音频。
+                loop: false, // 导致视频一结束就重新开始。
+                preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+                language: "zh-CN",
+                aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+                fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+                sources: [
+                  {
+                    type: "video/mp4", //这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
+                    src: "" //url地址
+                  }
+                ],
+                poster:
+                  "https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png", //你的封面地址
+                notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
+                controlBar: {
+                  timeDivider: true,
+                  durationDisplay: true,
+                  remainingTimeDisplay: false,
+                  fullscreenToggle: true //全屏按钮
+                }
+              };
+              videoObj.sources[0].src = item;
+              this.videoList.push(videoObj);
+            });
+          }
         }
         if (infoData.info.weekdays) {
           this.weekdays = infoData.info.weekdays;
@@ -543,20 +490,20 @@ export default {
     playFn() {
       this.$nextTick(function() {
         let videoList = document.getElementById("video0");
-        return false
-        if(videoList.length>0){
+        return false;
+        if (videoList.length > 0) {
           videoList.addEventListener(
-          "ended",
-          function() {
-            videoContext.play();
-            setTimeout(() => {
-              videoContext.pause();
-              alert(1);
-            }, 100);
-          },
-          false
-        );
-        } 
+            "ended",
+            function() {
+              videoContext.play();
+              setTimeout(() => {
+                videoContext.pause();
+                alert(1);
+              }, 100);
+            },
+            false
+          );
+        }
       });
     }
   },
@@ -605,7 +552,7 @@ export default {
   .videoItem {
     cursor: pointer;
     display: inline-block;
-    width: 100%;
+    width: 682px;
     height: 400px;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -847,7 +794,7 @@ export default {
       margin-top: 40px;
     }
     .qua_title {
-      color:#333333;
+      color: #333333;
       font-size: 28px;
       line-height: 28px;
       margin-bottom: 20px;
@@ -869,7 +816,7 @@ export default {
       min-height: 200px;
       word-wrap: break-word;
       word-break: break-all;
-      margin-bottom: 25px;
+      margin-bottom: 40px;
       padding-bottom: 30px;
       border-bottom: 1px solid #eee;
       .pro:last-child {
@@ -923,12 +870,13 @@ export default {
       background-clip: padding-box;
       border: 1px solid #fff;
     }
-    .teach_able{
+    .teach_able {
       padding-bottom: 40px;
       border-bottom: 1px solid #eee;
     }
-    .intro_icon{
-      height:32px;
+    .intro_icon {
+      height: 36px;
+      line-height: 36px;
     }
     .teach_able:before {
       background: url(~assets/good_teacher/images/teach_able.png) no-repeat
