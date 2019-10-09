@@ -26,28 +26,34 @@ export const videoPlayerEvent = (v) => {
     let video = v,
         doc = document;
     //监听video已经开始播放时全屏显示
-    //video.requestFullscreen();
-    video.play();
-    if (isIPad()) {
-        video.addEventListener('play', () => {
-            var fullscreenvideo = fullscreen(video);
-            video[fullscreenvideo]();
-        });
-        //退出全屏暂停视频
-        video.addEventListener("webkitfullscreenchange", function (e) {
-            if (!doc.webkitIsFullScreen) {
-                video.pause();
-            };
-        }, false);
-        video.addEventListener("fullscreenchange ", function (e) {
-            if (!doc.webkitIsFullScreen) {
-                video.pause();
-            };
-        }, false);
-        //播放完毕，退出全屏
-        video.addEventListener('ended', function () {
-            this.webkitExitFullScreen();
-        }, false);
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+        // 移动端操作
+        video.play();
+        if (isIPad()) {
+            video.addEventListener('play', () => {
+                var fullscreenvideo = fullscreen(video);
+                video[fullscreenvideo]();
+            });
+            //退出全屏暂停视频
+            video.addEventListener("webkitfullscreenchange", function (e) {
+                if (!doc.webkitIsFullScreen) {
+                    video.pause();
+                };
+            }, false);
+            video.addEventListener("fullscreenchange ", function (e) {
+                if (!doc.webkitIsFullScreen) {
+                    video.pause();
+                };
+            }, false);
+            //播放完毕，退出全屏
+            video.addEventListener('ended', function () {
+                this.webkitExitFullScreen();
+            }, false);
+        }
+        
+    } else {
+        video.requestFullscreen();
+        video.play();
+        // PC端操作
     }
-
 }

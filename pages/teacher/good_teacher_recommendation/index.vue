@@ -51,6 +51,7 @@
           <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
             <h6 class="title video_icon">自我介绍</h6>
             <div class="content videoCon" style="text-indent: 0" @click='playFn("videoPlay1")'>
+              <div class='palyBtn'>></div>
               <video
               id='videoPlay1'
               v-if="teacherMsg&&teacherMsg.info.video"
@@ -67,6 +68,7 @@
             <h6 class="title video_icon">上课风采</h6>
             <div class="content" style="text-indent: 0">
               <div v-for="(item,index) in videoList" :key="index" class="videoItem" @click="playFn(`video${index}`)">
+                <div class='palyBtn'>></div>
                 <video
                   ref="videoplay"
                   :id="`video${index}`"
@@ -444,17 +446,34 @@ export default {
     float: right;
   }
   video{
-    opacity: 0;
     height:0;
     width:0;
   }
+  .palyBtn{
+    text-align: center;
+    line-height: 100px;
+    position: absolute;
+    width:100px;
+    height:100px;
+    border-radius: 100%;
+    border:1px solid #000;
+    top:50%;
+    left:50%;
+    margin-left: -50px;
+    margin-top:-50px;
+    background:rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 32px;
+  }
   .videoCon{
+    position: relative;
     width:100%;
-    height:400px;
+    height:500px;
     background:url('https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png') center;
     background-size: cover;
   }
   .videoItem {
+    position: relative;
     cursor: pointer;
     display: inline-block;
     width: 330px;
