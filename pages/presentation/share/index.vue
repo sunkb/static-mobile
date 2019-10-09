@@ -5,7 +5,7 @@
       <div class="topaction-rank" @click="gotoPage('presentation-rank')">点赞排行</div>
     </div>
     <div class="content">
-      <video controls class="content-video">
+      <video controls class="content-video" v-if="stuData.videoSrc">
         <source :src="stuData.videoSrc"/>
       </video>
       <h3 class="content-topic-eng">{{ topic.en_topic_name }}</h3>
@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       stuData: {
-        videoSrc: '',
+        videoSrc: null,
         like: 0,
         name: ''
       },
