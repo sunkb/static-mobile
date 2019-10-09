@@ -1,5 +1,5 @@
 <template>
-  <div id="share">
+  <div id="share" :style="shareStyle">
     <div class="topaction">
       <div></div>
       <div class="topaction-rank" @click="gotoPage('presentation-rank')">点赞排行</div>
@@ -62,7 +62,8 @@ export default {
         cn_topic_name: '',
         en_topic_name: ''
       },
-      liked: false
+      liked: false,
+      shareStyle: {}
     }
   },
   methods: {
@@ -83,7 +84,6 @@ export default {
       }
 
       document.title = work.data.activity_name
-      this.themeColor = work.data.button_color
       this.topic = {
         cn_topic_name: work.data.cn_topic_name,
         en_topic_name: work.data.en_topic_name,
@@ -94,6 +94,14 @@ export default {
         name: work.data.en_name
       }
       this.liked = work.data.is_zan
+
+      const detail = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activity_id}`)
+      if (!detail.status) {
+        this.$refs['toast'].showToast(detail.info)
+        return
+      }
+      this.themeColor = detail.data.button_color
+      this.shareStyle.background = `url(${detail.data.background_pic_url}) 0 0 no-repeat / contain`
     },
     async initLike() {
       const { activity_id, code, work_id, like } = this.$route.query
