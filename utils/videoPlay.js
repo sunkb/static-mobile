@@ -26,7 +26,7 @@ export const videoPlayerEvent = (v) => {
     let video = v,
         doc = document;
     //监听video已经开始播放时全屏显示
-    if (/Android|webOS|iPhone|iPad|BlackBerry|iPod/i.test(navigator.userAgent)) {
+    // if (/Android|webOS|iPhone|iPad|BlackBerry|iPod/i.test(navigator.userAgent)) {
         // 移动端操作
         video.play();
         if (isIPad()) {
@@ -51,29 +51,29 @@ export const videoPlayerEvent = (v) => {
             }, false);
         }
         
-    } else {
-        video.requestFullscreen();
-        video.play();
+    // } else {
+    //     video.requestFullscreen();
+    //     video.play();
 
-        video.addEventListener('play', () => {
-            var fullscreenvideo = fullscreen(video);
-            video[fullscreenvideo]();
-        });
-        //退出全屏暂停视频
-        video.addEventListener("webkitfullscreenchange", function (e) {
-            if (!doc.webkitIsFullScreen) {
-                video.pause();
-            };
-        }, false);
-        video.addEventListener("fullscreenchange ", function (e) {
-            if (!doc.webkitIsFullScreen) {
-                video.pause();
-            };
-        }, false);
-        //播放完毕，退出全屏
-        video.addEventListener('ended', function () {
-            this.webkitExitFullScreen();
-        }, false);
-        // PC端操作
-    }
+    //     video.addEventListener('play', () => {
+    //         var fullscreenvideo = fullscreen(video);
+    //         video[fullscreenvideo]();
+    //     });
+    //     //退出全屏暂停视频
+    //     video.addEventListener("webkitfullscreenchange", function (e) {
+    //         if (!doc.webkitIsFullScreen) {
+    //             video.pause();
+    //         };
+    //     }, false);
+    //     video.addEventListener("fullscreenchange ", function (e) {
+    //         if (!doc.webkitIsFullScreen) {
+    //             video.pause();
+    //         };
+    //     }, false);
+    //     //播放完毕，退出全屏
+    //     video.addEventListener('ended', function () {
+    //         this.webkitExitFullScreen();
+    //     }, false);
+    //     // PC端操作
+    // }
 }
