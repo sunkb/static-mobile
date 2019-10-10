@@ -94,7 +94,7 @@ export default {
     }
     this.canReUpload = mywork.data.is_reupload
 
-    const url = `${window.location.origin}${window.location.pathname}`
+    const url = `${process.env.BASE_URL}presentation/share`
     const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(url)}&work_id=${mywork.data.id}`)
     if (!res.status) {
       this.$refs['toast'].hideLoadingToast()
@@ -114,12 +114,12 @@ export default {
       wx.updateAppMessageShareData({ 
         title: wx_data.share_title,
         desc: wx_data.share_desc,
-        link: `${process.env.BASE_URL}presentation/share?acitvity_id=${activityID}&work_id=${mywork.data.id}`,
+        link: wx_data.share_link,
         imgUrl: wx_data.share_img_url,
       })
       wx.updateTimelineShareData({ 
         title: wx_data.share_title,
-        link: `${process.env.BASE_URL}presentation/share?acitvity_id=${activityID}&work_id=${mywork.data.id}`,
+        link: wx_data.share_link,
         imgUrl: wx_data.share_img_url,
       })
       wx.error(function(res){
