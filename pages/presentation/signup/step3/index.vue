@@ -144,7 +144,7 @@ export default {
     },
     async initDataFromAPI() {
       this.$refs['toast'].showLoadingToast()
-      const activityID = this.$route.query.activity_id || 1
+      const activityID = this.$route.query.activity_id
       const data0 = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
       this.$refs['toast'].hideLoadingToast()
       if (!data0.status) {

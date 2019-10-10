@@ -90,7 +90,7 @@ export default {
   async mounted() {
     this.$refs['toast'].showLoadingToast()
     const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))
-    const activityID = this.$route.query.activity_id || 1
+    const activityID = this.$route.query.activity_id
     this.landiLevel = formData.landiLevel
     this.topics = formData.landiLevel.topics
 

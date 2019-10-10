@@ -150,7 +150,7 @@ export default {
   },
   async mounted() {
     this.steps = INDEX_STEPS
-    const activityID = this.$route.query.activity_id || 1
+    const activityID = this.$route.query.activity_id
     const res = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)
     if (res.status) { 
       this.resData = res.data

@@ -73,7 +73,7 @@ export default {
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
-    const activityID = this.$route.query.activity_id || 1
+    const activityID = this.$route.query.activity_id
     const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
     if (!mywork.status) {
       this.$refs['toast'].hideLoadingToast()
@@ -92,6 +92,7 @@ export default {
     }
     this.canReUpload = mywork.data.is_reupload
 
+    const url = `${window.location.origin}${window.location.pathname}?activity_id=${activityID}`
     const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(window.location.href)}&work_id=${mywork.data.id}`)
     if (!res.status) {
       this.$refs['toast'].hideLoadingToast()
