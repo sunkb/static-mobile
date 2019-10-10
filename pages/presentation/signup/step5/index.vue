@@ -100,13 +100,14 @@ export default {
     }
     const wxConfig = res.data.wx_config;
     const wx_data = res.data.wx_data;
-    initWX({
+    const wx = initWX({
       appId: wxConfig.appId,
       timestamp: wxConfig.timestamp,
       nonceStr: wxConfig.nonceStr,
       signature: wxConfig.signature,
-    }).ready((wx) => {
-      console.log(wx);
+    });
+    
+    wx.ready(() => {
       wx.updateAppMessageShareData({ 
         title: wx_data.share_title,
         desc: wx_data.share_desc,
