@@ -38,7 +38,7 @@
 <script>
 import axios from '~/utils/axios'
 import { API } from '~/pages/presentation/consts'
-import { getWXCode } from '~/pages/presentation/wx'
+import { getWXCode, initWX } from '~/pages/presentation/wx'
 import Toast from '~/components/Toast'
 
 export default {
@@ -116,23 +116,33 @@ export default {
       }
       this.themeColor = detail.data.button_color
       this.shareStyle.background = `url(${detail.data.background_pic_url}) 0 0 no-repeat / contain`
+
+      //分享修改
+      const wxConfig = res.data.wx_config;
+      const wx_data = res.data.wx_data;
+      const wx = initWX({
+        appId: wxConfig.appId,
+        timestamp: wxConfig.timestamp,
+        nonceStr: wxConfig.nonceStr,
+        signature: wxConfig.signature,
+      });
+      wx.ready(() => {
+        wx.updateAppMessageShareData({ 
+          title: wx_data.share_title,
+          desc: wx_data.share_desc,
+          link: wx_data.share_link,
+          imgUrl: wx_data.share_img_url,
+        })
+        wx.updateTimelineShareData({ 
+          title: wx_data.share_title,
+          link: wx_data.share_link,
+          imgUrl: wx_data.share_img_url,
+        })
+        wx.error(function(res){
+          console.log(res);
+        });
+      })
     },
-    // async initLike() {
-    //   const { activity_id, code, work_id, like } = this.$route.query
-    //   let res = null
-    //   if (like) {
-    //     res = await axios.get(`${API.LIKE}?code=${code}&work_id=${work_id}`)
-    //     if (!res.status) {
-    //       this.$refs['toast'].showToast(res.info)
-    //     }
-    //   } else {
-    //     res = await axios.get(`${API.UNLIKE}?code=${code}&work_id=${work_id}`)
-    //     if (!res.status) {
-    //       this.$refs['toast'].showToast(res.info)
-    //     }
-    //   }
-    //   await this.initData()
-    // },
     gotoRegister() {
       window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
     },

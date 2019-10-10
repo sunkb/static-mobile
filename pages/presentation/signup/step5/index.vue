@@ -109,17 +109,11 @@ export default {
     });
     
     wx.ready(() => {
-      // wx.updateAppMessageShareData({ 
-      //   title: wx_data.share_title,
-      //   desc: wx_data.share_desc,
-      //   link: wx_data.share_link,
-      //   imgUrl: wx_data.share_img_url,
-      // })
       wx.updateAppMessageShareData({ 
-        title: '我的米',
+        title: wx_data.share_title,
         desc: wx_data.share_desc,
         link: wx_data.share_link,
-        imgUrl:'http://qn-static.landi.com/uploadtoole8f6168bff27164dad317c533885c51e.png',
+        imgUrl: wx_data.share_img_url,
       })
       wx.updateTimelineShareData({ 
         title: wx_data.share_title,
