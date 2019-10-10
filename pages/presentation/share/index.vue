@@ -154,13 +154,9 @@ export default {
 
     if(code){
       await this.getOpenid()
+      await this.initData();
     }
 
-    // if (like) {
-    //   await this.initLike()
-    // } else {
-    //   await this.initData()
-    // }
     this.$refs['toast'].hideLoadingToast()
   }
 }
