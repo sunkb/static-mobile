@@ -14,7 +14,8 @@
         <div class="content-action-author">作者: {{ stuData.name }}</div>
         <div class="content-action-actions">
           <div class="content-action-actions-btn" style="background: #FFD750"><img :src="require('~/assets/presentation/img/share.png')" class="share"/></div>
-          <div class="content-action-actions-btn" :style="{ background: liked ? '#F0552D' : '#E6E6E6' }" @click="clickLike"><img :src="require('~/assets/presentation/img/like.png')" class="like"/></div>
+          <div class="content-action-actions-btn" :style="{ background: liked ? '#F0552D' : '#E6E6E6' }" @click="clickLike">
+            <img :src="require('~/assets/presentation/img/like.png')" class="like"/></div>
           <div class="content-action-actions-text">{{ stuData.like }}人点赞</div>
         </div>
       </div>
@@ -52,7 +53,6 @@ export default {
   },
   data() {
     return {
-      wxOpenid:'',
       stuData: {
         videoSrc: null,
         like: 0,
@@ -69,12 +69,19 @@ export default {
   },
   methods: {
     async clickLike() {
-      const openid = this.wxOpenid;
+      const liked = this.liked;
       const { activity_id, work_id } = this.$route.query
-      // const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}&like=${!this.liked}`
-      // window.location = url
-      const res = await axios.get(`${API.LIKE}?openid=${openid}&work_id=${work_id}`)
-      if (!res.status) {
+
+      let res;
+      if(!liked){
+        res = await axios.get(`${API.LIKE}?work_id=${work_id}`)
+      }else{
+        res = await axios.get(`${API.UNLIKE}?&work_id=${work_id}`)
+      }
+
+      if (res.status) {
+        await this.initData();
+      }else{
         this.$refs['toast'].showToast(res.info)
       }
     },
@@ -110,39 +117,36 @@ export default {
       this.themeColor = detail.data.button_color
       this.shareStyle.background = `url(${detail.data.background_pic_url}) 0 0 no-repeat / contain`
     },
-    async initLike() {
-      const { activity_id, code, work_id, like } = this.$route.query
-      let res = null
-      if (like) {
-        res = await axios.get(`${API.LIKE}?code=${code}&work_id=${work_id}`)
-        if (!res.status) {
-          this.$refs['toast'].showToast(res.info)
-        }
-      } else {
-        res = await axios.get(`${API.UNLIKE}?code=${code}&work_id=${work_id}`)
-        if (!res.status) {
-          this.$refs['toast'].showToast(res.info)
-        }
-      }
-      await this.initData()
-    },
+    // async initLike() {
+    //   const { activity_id, code, work_id, like } = this.$route.query
+    //   let res = null
+    //   if (like) {
+    //     res = await axios.get(`${API.LIKE}?code=${code}&work_id=${work_id}`)
+    //     if (!res.status) {
+    //       this.$refs['toast'].showToast(res.info)
+    //     }
+    //   } else {
+    //     res = await axios.get(`${API.UNLIKE}?code=${code}&work_id=${work_id}`)
+    //     if (!res.status) {
+    //       this.$refs['toast'].showToast(res.info)
+    //     }
+    //   }
+    //   await this.initData()
+    // },
     gotoRegister() {
       window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
     },
     async getOpenid(){
-      const { code, like } = this.$route.query
+      const { code } = this.$route.query
       const res = await axios.get(`${API.GET_OPENID}?code=${code}`)
-      if(res.status){
-        const openid = res.data.openid;
-        this.wxOpenid = openid;
-      }else{
+      if(!res.status){
         this.$refs['toast'].showToast(res.info)
       }
     }
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
-    const { code, like } = this.$route.query
+    const { code } = this.$route.query
     if (code == null) {
       getWXCode(window.location.href)
       return
