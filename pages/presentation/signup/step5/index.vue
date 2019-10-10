@@ -98,7 +98,7 @@ export default {
       this.$refs['toast'].showToast(wxConfig.info)
       return
     }
-    const wxConfig = res.data.wxConfig;
+    const wxConfig = res.data.wx_config;
     const wx_data = res.data.wx_data;
     initWX({
       appId: wxConfig.appId,
