@@ -50,13 +50,20 @@
           <!-- 自我介绍 -->
           <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
             <h6 class="title video_icon">自我介绍</h6>
-            <div class="content videoCon" style="text-indent: 0" @click='playFn("videoPlay1")'>
+            <div class="content videoCon" style="text-indent: 0" @click='playFn("videoPlay1")' v-if="teacherMsg&&teacherMsg.info.video">
               <div class='palyBtn'>></div>
               <video
+              style="opacity:0;"
               id='videoPlay1'
-              v-if="teacherMsg&&teacherMsg.info.video"
+              v-if='isMobile()'
               controls
-              poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
+              preload="auto"
+              :src="`${teacherMsg.info.video}`"
+            />
+            <video
+              v-else
+              id='videoPlay1'
+              controls
               preload="auto"
               :src="`${teacherMsg.info.video}`"
             />
@@ -70,11 +77,19 @@
               <div v-for="(item,index) in videoList" :key="index" class="videoItem" @click="playFn(`video${index}`)">
                 <div class='palyBtn'>></div>
                 <video
-                  ref="videoplay"
+                  style="opacity:0;"
+                  v-if='isMobile()'
                   :id="`video${index}`"
                   controls
                   :key="index"
-                  v-if="item"
+                  preload="auto"
+                  :src="item"
+                />
+                <video
+                  v-else
+                  :id="`video${index}`"
+                  controls
+                  :key="index"
                   preload="auto"
                   :src="item"
                 />
@@ -259,6 +274,13 @@ export default {
     this.getTeacherScoreFn();
   },
   methods: {
+    isMobile(){
+      if (/Android|webOS|iPhone|iPad|BlackBerry|iPod/i.test(navigator.userAgent)) {
+        return true;
+      }else{
+        return false;
+      }
+    },
     playFn(name){
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
@@ -446,9 +468,9 @@ export default {
     float: right;
   }
   video{
-    // position: relative;
-    // z-index: -1;
-    opacity: 0;
+    //position: relative;
+    //z-index: -1;
+    // opacity: 0;
     height:0;
     width:0;
   }

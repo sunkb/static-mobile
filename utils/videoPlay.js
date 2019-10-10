@@ -52,6 +52,8 @@ export const videoPlayerEvent = (v) => {
         }
         
     } else {
+        // PC端操作
+        //video.style.cssText ='opacity:1'
         video.requestFullscreen();
         video.play();
 
@@ -74,6 +76,5 @@ export const videoPlayerEvent = (v) => {
         video.addEventListener('ended', function () {
             this.webkitExitFullScreen();
         }, false);
-        // PC端操作
     }
 }
