@@ -106,6 +106,7 @@ export default {
       nonceStr: wxConfig.nonceStr,
       signature: wxConfig.signature,
     }).ready((wx) => {
+      console.log(wx);
       wx.updateAppMessageShareData({ 
         title: wx_data.share_title,
         desc: wx_data.share_desc,
@@ -117,6 +118,9 @@ export default {
         link: wx_data.share_link,
         imgUrl: wx_data.share_img_url,
       })
+      wx.error(function(res){
+        console.log(res);
+      });
     })
 
     this.$refs['toast'].hideLoadingToast()
