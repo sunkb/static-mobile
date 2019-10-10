@@ -118,7 +118,7 @@ export default {
         title: '我的米',
         desc: wx_data.share_desc,
         link: wx_data.share_link,
-        imgUrl:'https://qn-static.landi.com/uploadtoole8f6168bff27164dad317c533885c51e.png',
+        imgUrl:'http://qn-static.landi.com/uploadtoole8f6168bff27164dad317c533885c51e.png',
       })
       wx.updateTimelineShareData({ 
         title: wx_data.share_title,
