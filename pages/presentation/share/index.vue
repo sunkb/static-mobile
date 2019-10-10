@@ -130,6 +130,7 @@ export default {
       window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
     },
     async getOpenid(){
+      const { code, like } = this.$route.query
       const res = await axios.get(`${API.GET_OPENID}?code=${code}`)
       if(res.status){
         const openid = res.data.openid;
