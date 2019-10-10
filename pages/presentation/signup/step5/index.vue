@@ -73,7 +73,7 @@ export default {
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
-    const activityID = this.$route.query.activity_id
+    const activityID = this.$route.query.activity_id || 1
     const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
     if (!mywork.status) {
       this.$refs['toast'].hideLoadingToast()
