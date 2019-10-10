@@ -41,9 +41,11 @@
 import { API } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
+import PrtMixin from '~/pages/presentation/mixin'
 
 export default {
   name: 'Rank',
+  mixins: [PrtMixin],
   head() {
     return {
       title: '点赞排行榜'
@@ -72,12 +74,7 @@ export default {
       } else {
         this.innerScroll = false
       }
-    },
-    gotoPage(name) {
-      const _query = this.$route.query
-      delete _query.code
-      this.$router.push({ name, query: _query })
-    },
+    }
   },
   async mounted() {
     this.headbarBottom = this.$refs.headbar.getBoundingClientRect().bottom

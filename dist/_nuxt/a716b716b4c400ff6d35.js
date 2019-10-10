@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[19],{194:function(e,o,t){"use strict";t.r(o);o.default={methods:{gotoPage:function(e){var o=this.$route.query;delete o.code,this.$router.push({name:e,query:o})}}}}}]);

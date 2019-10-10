@@ -49,9 +49,11 @@ import { StepBar, PosterModal, SubmitArea } from '~/components/presentation'
 import { STEPS, API, REGION_DATA, SIGNUP_DATA_RULE, STROGE } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
+import PrtMixin from '~/pages/presentation/mixin'
 
 export default {
   name: 'Signup',
+  mixins: [PrtMixin],
   head() {
     return {
       title: '报名信息'
@@ -118,12 +120,7 @@ export default {
         address: `${_province.options[_province.selectedIndex].text}/${_city.options[_city.selectedIndex].text}#${this.signupData.province}/${this.signupData.city}`
       }))
       this.gotoPage('presentation-signup-step2')
-    },
-    gotoPage(name) {
-      const _query = this.$route.query
-      delete _query.code
-      this.$router.push({ name, query: _query })
-    },
+    }
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()

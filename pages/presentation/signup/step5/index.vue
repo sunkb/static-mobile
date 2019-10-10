@@ -39,9 +39,11 @@ import Toast from '~/components/Toast'
 import { STEPS, STROGE, TOPICS, API } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import { initWX } from '~/pages/presentation/wx'
+import PrtMixin from '~/pages/presentation/mixin'
 
 export default {
   name: 'Signup',
+  mixins: [PrtMixin],
   head() {
     return {
       title: '我的作品'
@@ -69,12 +71,7 @@ export default {
     },
     shareToFrends() {
       this.showShareHelp = true
-    },
-    gotoPage(name) {
-      const _query = this.$route.query
-      delete _query.code
-      this.$router.push({ name, query: _query })
-    },
+    }
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()

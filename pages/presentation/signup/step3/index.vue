@@ -58,9 +58,11 @@ import { STEPS, VIDEO_STATUS_TYPE, STROGE, API } from '~/pages/presentation/cons
 import FileUploader, { FILE_TYPE } from '~/utils/upload.js'
 import Toast from '~/components/Toast'
 import axios from '~/utils/axios'
+import PrtMixin from '~/pages/presentation/mixin'
 
 export default {
   name: 'Signup',
+  mixins: [PrtMixin],
   head() {
     return {
       title: '上传视频'
@@ -94,11 +96,6 @@ export default {
     },
     gotoStep2() {
       this.gotoPage('presentation-signup-step2')
-    },
-    gotoPage(name) {
-      const _query = this.$route.query
-      delete _query.code
-      this.$router.push({ name, query: _query })
     },
     async videoUpload() {
       this.$refs['toast'].showLoadingToast()

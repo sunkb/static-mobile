@@ -33,9 +33,11 @@ import { StepBar, SubmitArea, PosterModal } from '~/components/presentation'
 import { STEPS, STROGE, API } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
+import PrtMixin from '~/pages/presentation/mixin'
 
 export default {
   name: 'Signup',
+  mixins: [PrtMixin],
   head() {
     return {
       title: '确认提交'
@@ -85,12 +87,7 @@ export default {
     },
     gotoRulePage() {
       this.gotoPage('presentation-protocol')
-    },
-    gotoPage(name) {
-      const _query = this.$route.query
-      delete _query.code
-      this.$router.push({ name, query: _query })
-    },
+    }
   },
   mounted() {
     const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))

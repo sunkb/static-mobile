@@ -43,9 +43,11 @@ import { StepBar, SubmitArea } from '~/components/presentation'
 import { STEPS, STROGE, API } from '~/pages/presentation/consts'
 import Toast from '~/components/Toast'
 import axios from '~/utils/axios'
+import PrtMixin from '~/pages/presentation/mixin'
 
 export default {
   name: 'Signup',
+  mixins: [PrtMixin],
   head() {
     return {
       title: '选择题目'
@@ -85,11 +87,6 @@ export default {
     },
     selectTopic(id) {
       this.topicSelectID = id
-    },
-    gotoPage(name) {
-      const _query = this.$route.query
-      delete _query.code
-      this.$router.push({ name, query: _query })
     },
   },
   async mounted() {

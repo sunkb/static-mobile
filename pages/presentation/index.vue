@@ -83,9 +83,11 @@ import {Login} from '~/utils/core/login'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 import { PosterModal } from '~/components/presentation'
+import PrtMixin from '~/pages/presentation/mixin'
 
 export default {
   name: 'Presentation',
+  mixins: [PrtMixin],
   head() {
     return {
       title: "兰迪英语"
@@ -109,11 +111,6 @@ export default {
     }
   },
   methods: {
-    gotoPage(name) {
-      const _query = this.$route.query
-      delete _query.code
-      this.$router.push({ name, query: _query })
-    },
     selectLevel(index) {
       this.levelSelectIndex = index
     },

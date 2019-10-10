@@ -40,9 +40,11 @@ import axios from '~/utils/axios'
 import { API } from '~/pages/presentation/consts'
 import { getWXCode, initWX } from '~/pages/presentation/wx'
 import Toast from '~/components/Toast'
+import PrtMixin from '~/pages/presentation/mixin'
 
 export default {
   name: 'Share',
+  mixins: [PrtMixin],
   head() {
     return {
       title: '才艺视频'
@@ -84,11 +86,6 @@ export default {
       }else{
         this.$refs['toast'].showToast(res.info)
       }
-    },
-    gotoPage(name) {
-      const _query = this.$route.query
-      delete _query.code
-      this.$router.push({ name, query: _query })
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
