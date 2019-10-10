@@ -50,6 +50,7 @@ export default {
   width: 100vw;
   height: 100vh;
   background: rgba($color: #000000, $alpha: 0.6);
+  z-index: 999;
 }
 
 .content {

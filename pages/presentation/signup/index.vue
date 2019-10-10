@@ -16,7 +16,7 @@
         </div> -->
         <div class="signupform-item">
           <span class="signupform-item-label required">兰迪级别</span>
-          <select class="signupform-item-select" v-model="signupData.landiLevel" @blur="formBlur">
+          <select class="signupform-item-select" v-model="signupData.landiLevel" @blur="formBlur" @change="formBlur">
             <option value="">请选择级别</option>
             <option v-for="(item) in landiLevels" :key="item.id" :value="item.id">{{item.name}}</option>
           </select>
@@ -27,7 +27,7 @@
             <option value="0">请选择所在省份</option>
             <option v-for="(item) in regionData['province']" :key="item.id" :value="item.id">{{ item.name }}</option>
           </select>
-          <select class="signupform-item-select" v-model="signupData.city" @blur="formBlur" ref="city">
+          <select class="signupform-item-select" v-model="signupData.city" @blur="formBlur" ref="city" @change="formBlur">
             <option value="0">城市</option>
             <option v-for="(item) in regionData['city'][signupData.province]" :key="item.id" :value="item.id">{{ item.name }}</option>
           </select>

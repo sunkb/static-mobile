@@ -311,6 +311,7 @@ export default {
       background: #fff;
       border-radius: 45px;
       box-shadow: 0 0 37.5px -22.5px #666666;
+      z-index: 999;
 
       &-img {
         width: 64.5px;
