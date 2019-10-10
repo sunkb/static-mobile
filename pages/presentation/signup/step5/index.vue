@@ -92,28 +92,30 @@ export default {
     }
     this.canReUpload = mywork.data.is_reupload
 
-    const wxConfig = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(window.location.href)}&work_id=${mywork.data.id}`)
-    if (!wxConfig.status) {
+    const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(window.location.href)}&work_id=${mywork.data.id}`)
+    if (!res.status) {
       this.$refs['toast'].hideLoadingToast()
       this.$refs['toast'].showToast(wxConfig.info)
       return
     }
+    const wxConfig = res.data.wxConfig;
+    const wx_data = res.data.wx_data;
     initWX({
-      appId: wxConfig.data.appId,
-      timestamp: wxConfig.data.timestamp,
-      nonceStr: wxConfig.data.nonceStr,
-      signature: wxConfig.data.signature,
-    }).ready(() => {
+      appId: wxConfig.appId,
+      timestamp: wxConfig.timestamp,
+      nonceStr: wxConfig.nonceStr,
+      signature: wxConfig.signature,
+    }).ready((wx) => {
       wx.updateAppMessageShareData({ 
-        title: wxConfig.data.share_title,
-        desc: wxConfig.data.share_desc,
-        link: wxConfig.data.share_link,
-        imgUrl: wxConfig.data.share_img_url,
+        title: wx_data.share_title,
+        desc: wx_data.share_desc,
+        link: wx_data.share_link,
+        imgUrl: wx_data.share_img_url,
       })
       wx.updateTimelineShareData({ 
-        title: wxConfig.data.share_title,
-        link: wxConfig.data.share_link,
-        imgUrl: wxConfig.data.share_img_url,
+        title: wx_data.share_title,
+        link: wx_data.share_link,
+        imgUrl: wx_data.share_img_url,
       })
     })
 
