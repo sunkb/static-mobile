@@ -93,7 +93,7 @@ export default {
     this.canReUpload = mywork.data.is_reupload
 
     const url = `${window.location.origin}${window.location.pathname}?activity_id=${activityID}`
-    const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(window.location.href)}&work_id=${mywork.data.id}`)
+    const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(url)}&work_id=${mywork.data.id}`)
     if (!res.status) {
       this.$refs['toast'].hideLoadingToast()
       this.$refs['toast'].showToast(res.info)
