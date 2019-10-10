@@ -75,6 +75,8 @@ export default {
 #rule {
   padding: 22.5px 37.5px;
   background: #fff;
+  width: 100vw;
+  height: 100vh;
 }
 
 .back {

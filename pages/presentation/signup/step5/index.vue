@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #fff;">
+  <div id="step5">
     <div class="top-step-bar">
       <step-bar :steps="steps" :progress="100"></step-bar>
     </div>
@@ -134,6 +134,12 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/presentation/css/main.scss';
+
+#step5 {
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+}
 
 .topic-text {
   margin-top: -7.5px;

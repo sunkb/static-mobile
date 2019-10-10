@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #fff;">
+  <div id="step3">
     <div class="top-step-bar">
       <step-bar :steps="steps" :progress="50"></step-bar>
     </div>
@@ -188,6 +188,12 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/presentation/css/main.scss';
+
+#step3 {
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+}
 
 .title {
   display: flex;

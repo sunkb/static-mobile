@@ -156,6 +156,8 @@ export default {
 
 #signup {
   background: #fff;
+  width: 100vw;
+  height: 100vh;
 }
 
 .signupform {
