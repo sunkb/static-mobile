@@ -125,7 +125,7 @@ export default {
     mainAction() {
       if (this.haveWork) {
         // this.gotoPage('presentation-signup-step5')
-        this.$router.push({ name: 'presentation-signup-step5' })
+        this.$router.push({ name: 'presentation-signup-step5', query: { activity_id: this.$route.query.activity_id } })
       } else {
         if (this.isClassing) {
           this.signup()
