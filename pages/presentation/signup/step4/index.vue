@@ -117,6 +117,7 @@ export default {
     width: 637.5px;
     max-height: 420px;
     overflow: hidden;
+    z-index: 1;
   }
 }
 

@@ -294,6 +294,7 @@ export default {
       width: $video-content-width;
       max-height: 420px;
       overflow: hidden;
+      z-index: 1;
     }
   }
 
