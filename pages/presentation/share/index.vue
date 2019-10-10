@@ -52,6 +52,7 @@ export default {
   },
   data() {
     return {
+      wxOpenid:'',
       stuData: {
         videoSrc: null,
         like: 0,
@@ -67,10 +68,15 @@ export default {
     }
   },
   methods: {
-    clickLike() {
-      const { activity_id, code, work_id } = this.$route.query
-      const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}&like=${!this.liked}`
-      window.location = url
+    async clickLike() {
+      const openid = this.wxOpenid;
+      const { activity_id, work_id } = this.$route.query
+      // const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}&like=${!this.liked}`
+      // window.location = url
+      const res = await axios.get(`${API.LIKE}?openid=${openid}&work_id=${work_id}`)
+      if (!res.status) {
+        this.$refs['toast'].showToast(res.info)
+      }
     },
     gotoPage(name) {
       this.$router.push({ name, query: this.$route.query })
@@ -122,6 +128,15 @@ export default {
     },
     gotoRegister() {
       window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
+    },
+    async getOpenid(){
+      const res = await axios.get(`${API.GET_OPENID}?code=${code}`)
+      if(res.status){
+        const openid = res.data.openid;
+        this.wxOpenid = openid;
+      }else{
+        this.$refs['toast'].showToast(res.info)
+      }
     }
   },
   async mounted() {
@@ -132,11 +147,15 @@ export default {
       return
     }
 
-    if (like) {
-      await this.initLike()
-    } else {
-      await this.initData()
+    if(code){
+      await this.getOpenid()
     }
+
+    // if (like) {
+    //   await this.initLike()
+    // } else {
+    //   await this.initData()
+    // }
     this.$refs['toast'].hideLoadingToast()
   }
 }

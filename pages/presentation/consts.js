@@ -11,7 +11,8 @@ const API = {
   WX_SHARE: '/Mobile/StudentActivityDetail/share',
   WORK: '/Mobile/StudentActivityDetail/work',
   LIKE: '/Mobile/StudentActivityDetail/zan',
-  UNLIKE: '/Mobile/StudentActivityDetail/unZan'
+  UNLIKE: '/Mobile/StudentActivityDetail/unZan',
+  GET_OPENID: '/Mobile/StudentActivityDetail/getOpenid'
 }
 
 const SIGNUP_DATA_RULE = {
