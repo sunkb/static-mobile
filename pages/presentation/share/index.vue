@@ -89,7 +89,7 @@ export default {
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
-      const url = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}`
+      const url = `${window.location.origin}${window.location.pathname}`
       const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${encodeURIComponent(url)}&work_id=${work_id}`)
       if (!res.status) {
         this.$refs['toast'].showToast(res.info)
@@ -129,12 +129,12 @@ export default {
         wx.updateAppMessageShareData({ 
           title: wx_data.share_title,
           desc: wx_data.share_desc,
-          link: wx_data.share_link,
+          link: `${process.env.BASE_URL}presentation/share?acitvity_id=${activity_id}&work_id=${work_id}`,
           imgUrl: wx_data.share_img_url,
         })
         wx.updateTimelineShareData({ 
           title: wx_data.share_title,
-          link: wx_data.share_link,
+          link: `${process.env.BASE_URL}presentation/share?acitvity_id=${activity_id}&work_id=${work_id}`,
           imgUrl: wx_data.share_img_url,
         })
         wx.error(function(res){
