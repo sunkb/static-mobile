@@ -117,9 +117,13 @@ export default {
         landiLevel: _landiLevel,
         address: `${_province.options[_province.selectedIndex].text}/${_city.options[_city.selectedIndex].text}#${this.signupData.province}/${this.signupData.city}`
       }))
-      this.$router.push({ name: 'presentation-signup-step2', query: this.$route.query })
+      this.gotoPage('presentation-signup-step2')
     },
-
+    gotoPage(name) {
+      const _query = this.$route.query
+      delete _query.code
+      this.$router.push({ name, query: _query })
+    },
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()

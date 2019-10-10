@@ -62,14 +62,19 @@ export default {
   },
   methods: {
     reUpload() {
-      this.$router.push({ name: 'presentation-signup-step3', query: this.$route.query })
+      this.gotoPage('presentation-signup-step3')
     },
     gotoIndex() {
-      this.$router.push({ name: 'presentation', query: this.$route.query })
+      this.gotoPage('presentation')
     },
     shareToFrends() {
       this.showShareHelp = true
-    }
+    },
+    gotoPage(name) {
+      const _query = this.$route.query
+      delete _query.code
+      this.$router.push({ name, query: _query })
+    },
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()

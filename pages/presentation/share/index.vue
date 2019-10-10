@@ -86,7 +86,9 @@ export default {
       }
     },
     gotoPage(name) {
-      this.$router.push({ name, query: this.$route.query })
+      const _query = this.$route.query
+      delete _query.code
+      this.$router.push({ name, query: _query })
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query

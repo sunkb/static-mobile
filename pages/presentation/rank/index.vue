@@ -72,7 +72,12 @@ export default {
       } else {
         this.innerScroll = false
       }
-    }
+    },
+    gotoPage(name) {
+      const _query = this.$route.query
+      delete _query.code
+      this.$router.push({ name, query: _query })
+    },
   },
   async mounted() {
     this.headbarBottom = this.$refs.headbar.getBoundingClientRect().bottom

@@ -110,7 +110,9 @@ export default {
   },
   methods: {
     gotoPage(name) {
-      this.$router.push({ name, query: this.$route.query })
+      const _query = this.$route.query
+      delete _query.code
+      this.$router.push({ name, query: _query })
     },
     selectLevel(index) {
       this.levelSelectIndex = index
@@ -124,8 +126,7 @@ export default {
     },
     mainAction() {
       if (this.haveWork) {
-        // this.gotoPage('presentation-signup-step5')
-        this.$router.push({ name: 'presentation-signup-step5', query: { activity_id: this.$route.query.activity_id } })
+        this.gotoPage('presentation-signup-step5')
       } else {
         if (this.isClassing) {
           this.signup()

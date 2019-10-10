@@ -81,11 +81,16 @@ export default {
       }
     },
     gotoStep5() {
-      this.$router.push({ name: 'presentation-signup-step5', query: this.$route.query })
+      this.gotoPage('presentation-signup-step5')
     },
     gotoRulePage() {
-      this.$router.push({ name: "presentation-protocol", query: this.$route.query })
-    }
+      this.gotoPage('presentation-protocol')
+    },
+    gotoPage(name) {
+      const _query = this.$route.query
+      delete _query.code
+      this.$router.push({ name, query: _query })
+    },
   },
   mounted() {
     const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))

@@ -89,11 +89,16 @@ export default {
   methods: {
     nextStep() {
       if (this.videoUploaded) {
-        this.$router.push({ name: 'presentation-signup-step4', query: this.$route.query })
+        this.gotoPage('presentation-signup-step4')
       }
     },
     gotoStep2() {
-      this.$router.push({ name: 'presentation-signup-step2', query: this.$route.query })
+      this.gotoPage('presentation-signup-step2')
+    },
+    gotoPage(name) {
+      const _query = this.$route.query
+      delete _query.code
+      this.$router.push({ name, query: _query })
     },
     async videoUpload() {
       this.$refs['toast'].showLoadingToast()

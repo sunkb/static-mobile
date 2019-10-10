@@ -80,12 +80,17 @@ export default {
         }
         this.formData.topicID = this.topicSelectID
         localStorage.setItem(STROGE.FORM_DATA, JSON.stringify(this.formData))
-        this.$router.push({ name: 'presentation-signup-step3', query: this.$route.query })
+        this.gotoPage('presentation-signup-step3')
       }
     },
     selectTopic(id) {
       this.topicSelectID = id
-    }
+    },
+    gotoPage(name) {
+      const _query = this.$route.query
+      delete _query.code
+      this.$router.push({ name, query: _query })
+    },
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
