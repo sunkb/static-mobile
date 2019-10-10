@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="video-uploaded" v-if="videoStatus.type == 'uploaded'">
-          <video controls class="video-uploaded-video">
+          <video controls class="video-uploaded-video" x5-video-player-type='h5'>
             <source :src="videoSrc"/>
           </video>
         </div>
@@ -294,7 +294,6 @@ export default {
       width: $video-content-width;
       max-height: 420px;
       overflow: hidden;
-      z-index: 1;
     }
   }
 

@@ -6,7 +6,7 @@
     <div class="page-content">
       <h1>确认提交</h1>
       <div class="video">
-        <video controls v-if="videoSrc && videoSrc != ''" class="video-content">
+        <video controls v-if="videoSrc && videoSrc != ''" class="video-content" x5-video-player-type='h5'>
           <source :src="videoSrc"/>
         </video>
       </div>
@@ -117,7 +117,6 @@ export default {
     width: 637.5px;
     max-height: 420px;
     overflow: hidden;
-    z-index: 1;
   }
 }
 
