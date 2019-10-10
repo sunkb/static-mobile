@@ -181,6 +181,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  background: #fff;
 }
 
 .content {
@@ -196,6 +197,8 @@ export default {
 
   &-video {
     width: 639px;
+    max-height: 420px;
+    overflow: hidden;
   }
 
   &-topic-eng {

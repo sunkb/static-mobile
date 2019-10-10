@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="signup">
     <div class="top-step-bar">
       <step-bar :steps="steps" :progress="10"></step-bar>
     </div>
@@ -153,6 +153,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/presentation/css/main.scss';
+
+#signup {
+  background: #fff;
+}
 
 .signupform {
 

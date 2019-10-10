@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: #fff;">
     <div class="top-step-bar">
       <step-bar :steps="steps" :progress="70"></step-bar>
     </div>
@@ -109,6 +109,8 @@ export default {
 
   &-content {
     width: 637.5px;
+    max-height: 420px;
+    overflow: hidden;
   }
 }
 

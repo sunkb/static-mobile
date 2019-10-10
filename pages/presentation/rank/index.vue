@@ -103,6 +103,10 @@ export default {
 $headbar-height: 350.25px;
 $level-height: 90px;
 
+#rank {
+  background: #fff;
+}
+
 .headbar {
   height: $headbar-height;
   width: 100vw;

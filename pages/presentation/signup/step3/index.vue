@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: #fff;">
     <div class="top-step-bar">
       <step-bar :steps="steps" :progress="50"></step-bar>
     </div>
@@ -286,6 +286,8 @@ export default {
   &-uploaded {
     &-video {
       width: $video-content-width;
+      max-height: 420px;
+      overflow: hidden;
     }
   }
 

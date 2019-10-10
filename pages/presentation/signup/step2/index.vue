@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: #fff;">
     <div class="top-step-bar">
       <step-bar :steps="steps" :progress="30"></step-bar>
     </div>
@@ -139,6 +139,8 @@ $topic-item-width: 480px;
 
     &-video {
       width: $topic-item-width;
+      max-height: 300px;
+      overflow: hidden;
 
       &-pic {
         width: inherit;
