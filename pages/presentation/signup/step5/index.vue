@@ -95,7 +95,7 @@ export default {
     const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(window.location.href)}&work_id=${mywork.data.id}`)
     if (!res.status) {
       this.$refs['toast'].hideLoadingToast()
-      this.$refs['toast'].showToast(wxConfig.info)
+      this.$refs['toast'].showToast(res.info)
       return
     }
     const wxConfig = res.data.wx_config;

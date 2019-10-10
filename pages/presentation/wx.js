@@ -5,7 +5,7 @@ if (process.client) {
 function initWX(config) {
   wx.config({
     ...config,
-    debug: true,
+    debug: false,
     jsApiList: [
       'updateAppMessageShareData',
       'updateTimelineShareData'
