@@ -24,7 +24,7 @@
               </div>
               <div class="row row-country">
                 <span class="country BrithDay"></span>
-                <span class="age" style="margin-right:40px;">{{teacherMsg.info.age}}岁</span>
+                <span class="age">{{teacherMsg.info.age}}岁</span>
                 <span class="country Accent accent_icon" v-if="teacherMsg.info.accent!=0"></span>
                 <span class="accent" v-if="teacherMsg.info.accent">{{teacherMsg.info.accent}}</span>
                 <p
@@ -41,7 +41,7 @@
             <span class="heng"></span>
           </p>
           <p @click="tabChange(2)" :class="{'active':tabIndex===2}">
-            外教信息 
+            外教信息
             <span class="heng"></span>
           </p>
         </div>
@@ -50,28 +50,48 @@
           <!-- 自我介绍 -->
           <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
             <h6 class="title video_icon">自我介绍</h6>
-            <div class="content" style="text-indent: 0">
+            <div class="content videoCon" style="text-indent: 0" @click='playFn("videoPlay1")' v-if="teacherMsg&&teacherMsg.info.video">
+              <div class='palyBtn'>></div>
               <video
-                v-if="teacherMsg&&teacherMsg.info.video"
-                controls
-                poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
-                preload="auto"
-                class="video-style"
-                :src="`${teacherMsg.info.video}`"
-              />
+              style="opacity:0;"
+              id='videoPlay1'
+              v-if='isMobile()'
+              controls
+              preload="auto"
+              :src="`${teacherMsg.info.video}`"
+            />
+            <video
+              v-else
+              id='videoPlay1'
+              controls
+              preload="auto"
+              :src="`${teacherMsg.info.video}`"
+            />
             </div>
+            
           </div>
           <!-- 上课风采 -->
           <div class="introduction" v-if="videoList&&videoList.length>0">
             <h6 class="title video_icon">上课风采</h6>
             <div class="content" style="text-indent: 0">
-              <div v-for="(item,index) in videoList" :key="index" class="videoItem">
+              <div v-for="(item,index) in videoList" :key="index" class="videoItem" @click="playFn(`video${index}`)">
+                <div class='palyBtn'>></div>
                 <video
-                  v-if="item"
+                  style="opacity:0;"
+                  v-if='isMobile()'
+                  :id="`video${index}`"
+                  controls
+                  :key="index"
                   preload="auto"
                   :src="item"
+                />
+                <video
+                  v-else
+                  :id="`video${index}`"
                   controls
-                  poster="https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png"
+                  :key="index"
+                  preload="auto"
+                  :src="item"
                 />
               </div>
             </div>
@@ -153,7 +173,7 @@
                 </div>
               </div>
               <div class="skill_list clear" v-if="skillList.length>0">
-                <p class="qua_title" style="margin-top:20px;">任职资格</p>
+                <p class="qua_title mt20">任职资格</p>
                 <div class="pro" v-for="(item,index) in skillList" :key="index">
                   <div class="img_wrap" v-for="(value,key) in item.files" :key="key">
                     <a :href="value.path" target="_blank">
@@ -164,7 +184,7 @@
                 </div>
               </div>
               <div v-if="experList.length>0">
-                <p class="qua_title" style="margin-top:20px;margin-bottom:4px;">教学经验</p>
+                <p class="qua_title">教学经验</p>
                 <div class="exper_list" v-for="(item,index) in experList" :key="index">
                   <p>
                     时间:
@@ -217,6 +237,7 @@
 <script>
 import apiGoodTeacher from "~/api/goodTeacher";
 import { getQueryString } from "~/utils/goodTeacher";
+import { videoPlayerEvent } from '~/utils/videoPlay';
 import abcRate from "~/components/cell_rate/index.vue";
 
 export default {
@@ -243,7 +264,6 @@ export default {
       pages: 1,
       commentList: [],
       total: 0,
-      //size: parseInt((document.body.clientWidth / 375), 10) * 20 || 20,
       tagList: [],
       teacherIntro: ""
     };
@@ -254,6 +274,17 @@ export default {
     this.getTeacherScoreFn();
   },
   methods: {
+    isMobile(){
+      if (/Android|webOS|iPhone|iPad|BlackBerry|iPod/i.test(navigator.userAgent)) {
+        return true;
+      }else{
+        return false;
+      }
+    },
+    playFn(name){
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
+    },
     // 获取老师个人信息
     async getTeacherInfo() {
       const param = getQueryString("token");
@@ -279,9 +310,7 @@ export default {
         } else if (this.teacherMsg.info.accent == 3) {
           this.teacherMsg.info.accent = "标准音";
         }
-        if (res.info && res.info.recommendation) {
-          this.videoList = res.info.recommendation.videos;
-        }
+        this.videoList = this.teacherMsg.info.recommendation.videos;
         if (infoData.info.weekdays) {
           this.weekdays = infoData.info.weekdays;
         }
@@ -319,7 +348,7 @@ export default {
       }
     },
     //tab切换
-    tabChange(index) {
+    tabChange(index) { 
       this.tabIndex = index;
       this.commentList = [];
       this.currentPage = 1;
@@ -354,7 +383,7 @@ export default {
             this.commentList.push(...res.data.data);
             this.total = res.data.total;
           }
-          if(res.data.total<=5){
+          if (res.data.total <= 5) {
             this.loadmoreStatus = false;
           }
         }
@@ -395,7 +424,6 @@ export default {
         }
       });
     },
-    //拉到底部的状态改变
   },
   components: {
     abcRate
@@ -416,18 +444,17 @@ export default {
 .scroll-container {
   background: #f7f7f7;
 }
-.ells{
+.ells {
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 .teacher-center {
   .bottomStatus {
-    border-top: 1px solid #eeeeee;
     width: 100%;
-    height: 100px;
+    height: 114px;
     text-align: center;
-    line-height: 100px;
+    line-height: 114px;
     font-size: 24px;
     color: #ffd750;
     background: #fff;
@@ -440,15 +467,46 @@ export default {
   .rt {
     float: right;
   }
+  video{
+    //position: relative;
+    //z-index: -1;
+    // opacity: 0;
+    height:0;
+    width:0;
+  }
+  .palyBtn{
+    text-align: center;
+    line-height: 100px;
+    position: absolute;
+    width:100px;
+    height:100px;
+    border-radius: 100%;
+    border:1px solid #000;
+    top:50%;
+    left:50%;
+    margin-left: -50px;
+    margin-top:-50px;
+    background:rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 32px;
+  }
+  .videoCon{
+    position: relative;
+    width:100%;
+    height:500px;
+    background:url('https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png') center;
+    background-size: cover;
+  }
   .videoItem {
+    position: relative;
+    cursor: pointer;
     display: inline-block;
-    width: 335px;
-    height: 300px;
-    margin-right: 10px;
-    video {
-      width: 100%;
-      height: 100%;
-    }
+    width: 330px;
+    height: 330px;
+    margin-right: 14px;
+    margin-bottom: 20px;
+    background:url('https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png') center;
+    background-size: cover;
   }
   .tabWrap {
     display: flex;
@@ -456,6 +514,8 @@ export default {
     align-items: center;
     height: 80px;
     width: 100%;
+    background: #fff;
+    margin-bottom: 20px;
     p {
       font-size: 28px;
       color: #999999;
@@ -496,6 +556,9 @@ export default {
       background: url(~assets/good_teacher/images/birth.png);
       background-size: cover;
     }
+    .age {
+      margin-right: 28px;
+    }
     .teacher-item {
       padding: 30px;
       display: flex;
@@ -507,6 +570,9 @@ export default {
         width: 36px;
         height: 36px;
         border-radius: 100%;
+        position: absolute;
+        right: -0px;
+        top: 6px;
       }
       .icon-girl {
         background: url(~assets/good_teacher/images/women.png);
@@ -530,8 +596,7 @@ export default {
       .avatar.smallImg {
         width: 134px;
         height: 134px;
-        border: 100%;
-        border: 1px solid #fff;
+        border: 2px solid #fff;
       }
       .info {
         flex: 1;
@@ -548,6 +613,8 @@ export default {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            position: relative;
+            padding-right: 50px;
           }
         }
         .row-country {
@@ -628,6 +695,9 @@ export default {
     margin: 0 1.5% 36px;
     line-height: 40px;
   }
+  .item-wrap:nth-child(5) {
+    margin-bottom: 0;
+  }
   .orange_round {
     border: 2px solid #ff6515;
     color: #ff6515;
@@ -655,7 +725,7 @@ export default {
       line-height: 36px;
     }
     .word_hide {
-      color: #1cb7c6;
+      color: #999;
       text-align: right;
       width: 260px;
       text-align: right;
@@ -666,10 +736,18 @@ export default {
       width: 100%;
       height: 100%;
     }
+    .mt20 {
+      margin-top: 40px;
+    }
     .qua_title {
+      color: #333333;
+      font-size: 28px;
+      line-height: 28px;
       margin-bottom: 20px;
     }
     .qua_wrap {
+      padding-bottom: 40px;
+      border-bottom: 1px solid #eee;
       .pro {
         width: 130px;
         height: 160px;
@@ -684,12 +762,17 @@ export default {
       min-height: 200px;
       word-wrap: break-word;
       word-break: break-all;
-      margin-bottom: 25px;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #eee;
+      .pro:last-child {
+        margin-right: 0px;
+      }
       .pro {
         width: 130px;
         height: 204px;
         display: inline-block;
-        margin-right: 60px;
+        margin-right: 52px;
         .img_wrap {
           height: 160px;
           width: 130px;
@@ -700,7 +783,7 @@ export default {
           }
         }
         .skill_name {
-          width:100%;
+          width: 100%;
           text-align: center;
           padding-top: 6px;
         }
@@ -718,20 +801,24 @@ export default {
     .title {
       position: relative;
       font-size: 34px;
-      padding-left: 20px;
       line-height: 32px;
       padding-left: 40px;
+      font-weight: 600;
     }
     .title:before {
       position: absolute;
       left: 0;
       content: "";
-      width: 30px;
-      height: 30px;
-      border-radius: 100%;
-      -webkit-background-clip: padding-box;
-      background-clip: padding-box;
-      border: 1px solid #fff;
+      width: 32px;
+      height: 32px;
+    }
+    .teach_able {
+      padding-bottom: 40px;
+      border-bottom: 1px solid #eee;
+    }
+    .intro_icon {
+      height: 36px;
+      line-height: 36px;
     }
     .teach_able:before {
       background: url(~assets/good_teacher/images/teach_able.png) no-repeat
@@ -750,8 +837,7 @@ export default {
         center center/cover;
     }
     .introduction {
-      padding: 30px;
-      padding-top: 50px;
+      padding: 50px 30px;
       background: #fff;
       margin-bottom: 20px;
       .content {
@@ -760,13 +846,12 @@ export default {
         text-indent: 2em;
         word-wrap: break-word;
         word-break: break-all;
-        margin-top: 25px;
+        margin-top: 40px;
       }
     }
     .comment {
       background: #fff;
       padding: 0 30px;
-      margin-bottom: 2px;
       .title {
         padding-top: 50px;
         &:before {
@@ -799,19 +884,21 @@ export default {
       }
       .content {
         margin: 0 -30px;
+        padding: 0 30px;
         .item {
           display: flex;
-          padding: 30px 30px 40px 30px;
-          // border-bottom: 2px solid #ccc;
+          padding: 30px 0px 40px 0px;
+          border-bottom: 1px solid #eee;
           img {
             width: 80px;
             height: 80px;
             margin-right: 20px;
+            border-radius: 100%;
           }
           .item-detail {
             flex: 1;
             .name {
-              color: #11b7c7;
+              color: #333;
               font-size: 28px;
             }
             .time {
@@ -827,9 +914,6 @@ export default {
               margin-top: 20px;
             }
           }
-        }
-        .item:last-child {
-          border-bottom: 0;
         }
       }
     }

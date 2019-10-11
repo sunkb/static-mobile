@@ -63,13 +63,13 @@ export default {
   css: [{
     src: '~assets/group_buy/css/main.scss',
     lang: 'scss'
-  }],
+  },],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
     { src: '~plugins/baidu.js', ssr: false },
-    { src: '~plugins/pullto.js', ssr: false }
+    { src: '~plugins/pullto.js', ssr: false },
   ],
   /*
    ** Nuxt.js dev-modules
