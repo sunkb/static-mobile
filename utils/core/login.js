@@ -43,7 +43,7 @@ function wxAutoLogin() {
             //如果没有code则执行微信跳转获取code
             const urlData = {
                 appid: process.env.APP_ID,
-                redirect_uri: window.location.href,
+                redirect_uri: encodeURIComponent(window.location.href),
                 response_type: "code",
                 scope: "snsapi_base"
             };

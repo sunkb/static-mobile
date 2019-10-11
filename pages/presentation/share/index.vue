@@ -209,7 +209,7 @@ export default {
 
   &-video {
     width: 639px;
-    max-height: 420px;
+    height: 420px;
     overflow: hidden;
   }
 
