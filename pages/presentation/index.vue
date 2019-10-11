@@ -355,6 +355,10 @@ export default {
 .description {
   margin-top: 37.5px;
   padding-bottom: 37.5px;
+
+  p {
+    line-height: 44px;
+  }
 }
 
 .step {
@@ -371,7 +375,7 @@ export default {
       width: 100%;
       line-height: 70px;
       font-size: 28px;
-      border: 1px solid #C0C7CC;
+      border: 1px dashed #C0C7CC;
       border-radius: 37.5px;
       background: #FAFAFA;
       margin-bottom: 22.5px;
