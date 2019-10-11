@@ -154,7 +154,8 @@ export default {
     if (res.status) { 
       this.resData = res.data
       document.title = this.resData.name
-      this.presentationStyle.background = `url(${this.resData.background_pic_url}) 0 0 no-repeat / contain`
+      this.presentationStyle.background = `url(${this.resData.background_pic_url}) 0 0 no-repeat / contain local`
+      this.presentationStyle.backgroundColor = '#fff'
     } else {
       this.$refs['toast'].showToast(res.info)
     }
@@ -179,11 +180,9 @@ export default {
 
 #presentation {
   overflow: auto;
-  background-attachment: local;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
   height: 100vh;
-  background-color: #fff;
 
   &::-webkit-scrollbar {
     display: none;
@@ -235,7 +234,7 @@ export default {
 }
 
 .content {
-  margin-top: 270px;
+  margin-top: 495px;
   text-align: center;
 
   &-level {

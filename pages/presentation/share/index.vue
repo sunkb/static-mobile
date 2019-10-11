@@ -115,6 +115,7 @@ export default {
       document.title = detail.data.name
       this.themeColor = detail.data.button_color
       this.shareStyle.background = `url(${detail.data.background_pic_url}) 0 0 no-repeat / contain`
+      this.shareStyle.backgroundColor = '#fff'
 
       //分享修改
       const resWX = await axios.get(`${API.WX_SHARE}?activity_id=${activity_id}&url=${encodeURIComponent(url)}&work_id=${work_id}`)
@@ -187,7 +188,6 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
 }
 
 .content {

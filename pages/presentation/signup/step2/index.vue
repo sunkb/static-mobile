@@ -11,10 +11,10 @@
       </div>
       <div class="topic">
         <div class="topic-item" v-for="(item) in topics" :key="item.id">
-          <video v-if="item.videos.length > 0" controls class="topic-item-video" :poster="item.videos[0].pic_url">
+          <video v-if="item.videos.length > 0" controls class="topic-item-video" :poster="item.videos[0].pic_url" x5-video-player-type='h5'>
             <source :src="item.videos[0].url"/>
           </video>
-          <video v-if="item.audios.length > 0 && item.videos.length == 0" controls class="topic-item-video" :poster="item.audios[0].pic_url">
+          <video v-if="item.audios.length > 0 && item.videos.length == 0" controls class="topic-item-video" :poster="item.audios[0].pic_url" x5-video-player-type='h5'>
             <source :src="item.audios[0].url"/>
           </video>
           <div class="topic-item-video" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0">
