@@ -182,7 +182,6 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
-  height: 100vh;
 
   &::-webkit-scrollbar {
     display: none;

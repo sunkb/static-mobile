@@ -13,7 +13,7 @@
       <div class="content-action">
         <div class="content-action-author">作者: {{ stuData.name }}</div>
         <div class="content-action-actions">
-          <div class="content-action-actions-btn" style="background: #FFD750"><img :src="require('~/assets/presentation/img/share.png')" class="share"/></div>
+          <div class="content-action-actions-btn" @click="shareToFrends" style="background: #FFD750"><img :src="require('~/assets/presentation/img/share.png')" class="share"/></div>
           <div class="content-action-actions-btn" :style="{ background: liked ? '#F0552D' : '#E6E6E6' }" @click="clickLike">
             <img :src="require('~/assets/presentation/img/like.png')" class="like"/></div>
           <div class="content-action-actions-text">{{ stuData.like }}人点赞</div>
@@ -30,6 +30,9 @@
         <div class="action-content-deco0"></div>
         <div class="action-content-deco1"></div>
       </div>
+    </div>
+    <div class="sharehelp" v-if="showShareHelp" @click="() => { showShareHelp = false }">
+      <img class="sharehelp-img" :src="require('~/assets/presentation/img/share-help.png')" />
     </div>
     <toast ref="toast"></toast>
   </div>
@@ -66,7 +69,8 @@ export default {
         en_topic_name: ''
       },
       liked: false,
-      shareStyle: {}
+      shareStyle: {},
+      showShareHelp: false,
     }
   },
   methods: {
@@ -158,6 +162,9 @@ export default {
       if(!res.status){
         this.$refs['toast'].showToast(res.info)
       }
+    },
+    shareToFrends() {
+      this.showShareHelp = true
     }
   },
   async mounted() {
@@ -200,6 +207,7 @@ export default {
   box-shadow: 0 0 22.5px -11.25px #999999;
   background: #fff;
   z-index: 999;
+  margin-top: 50px;
 
   &-video {
     width: 639px;
@@ -324,6 +332,22 @@ export default {
     line-height: 64px;
     text-align: center;
     padding-left: 10px;
+  }
+}
+
+.sharehelp {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba($color: #000000, $alpha: 0.6);
+
+  &-img {
+    width: 540px;
+    position: fixed;
+    left: 135px;
+    top: 0;
   }
 }
 </style>
