@@ -129,12 +129,12 @@ export default {
         wx.updateAppMessageShareData({ 
           title: wx_data.share_title,
           desc: wx_data.share_desc,
-          link: wx_data.share_link,
+          link: `${process.env.BASE_URL}/presentation/share?acitvity_id=${activity_id}&work_id=${work_id}`,
           imgUrl: wx_data.share_img_url,
         })
         wx.updateTimelineShareData({ 
           title: wx_data.share_title,
-          link: wx_data.share_link,
+          link: `${process.env.BASE_URL}/presentation/share?acitvity_id=${activity_id}&work_id=${work_id}`,
           imgUrl: wx_data.share_img_url,
         })
         wx.error(function(res){
