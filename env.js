@@ -14,10 +14,10 @@ module.exports = {
     APP_ID: 'wxfcc48a994f9a1a32'
   },
   release6: {
-    PUBLIC_PATH: 'http://release6.landi.com/static-web/mobile/',
+    PUBLIC_PATH: 'https://release6.landi.com/static-web/mobile/',
     NODE_ENV: 'test',
-    ENV_API: 'http://release6.landi.com/', //测试服务器地址
-    BASE_URL: 'http://release6.landi.com/static-web/mobile',
+    ENV_API: 'https://release6.landi.com/', //测试服务器地址
+    BASE_URL: 'https://release6.landi.com/static-web/mobile',
     APP_ID: 'wx9632cb5f0990954d'
   },
   pro: {
