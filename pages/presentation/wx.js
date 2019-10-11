@@ -21,7 +21,7 @@ function getWXCode(redirect_uri) {
     response_type: "code",
     scope: "snsapi_base"
   };
-  window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${urlData.appid}&redirect_uri=${urlData.redirect_uri}&response_type=${urlData.response_type}&scope=${urlData.scope}#wechat_redirect`;
+  window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${urlData.appid}&redirect_uri=${urlData.redirect_uri}&response_type=${urlData.response_type}&scope=${urlData.scope}&state=1#wechat_redirect`;
 }
 
 export {
