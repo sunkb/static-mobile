@@ -104,7 +104,7 @@ export default {
         for (let item of detail.data.combinations) {
           if (item.id == formData.landiLevel.id) {
             formData.landiLevel = item
-            return
+            break
           }
         }
         this.landiLevel = formData.landiLevel

@@ -130,6 +130,7 @@ export default {
         nonceStr: wxConfig.nonceStr,
         signature: wxConfig.signature,
       });
+      
       wx.ready(() => {
         wx.updateAppMessageShareData({ 
           title: wx_data.share_title,
@@ -186,7 +187,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
+  background-color: #fff;
 }
 
 .content {

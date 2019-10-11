@@ -183,6 +183,7 @@ export default {
   -webkit-overflow-scrolling: auto;
   width: 100vw;
   height: 100vh;
+  background-color: #fff;
 
   &::-webkit-scrollbar {
     display: none;
