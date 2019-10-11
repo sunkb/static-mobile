@@ -182,6 +182,7 @@ export default {
     if (!fromAPI.id) {
       this.initDataFromStroge()
     }
+    localStorage.setItem(STROGE.FORM_DATA, JSON.stringify(this.formData))
   }
 }
 </script>
