@@ -118,7 +118,7 @@ export default {
       }
       document.title = detail.data.name
       this.themeColor = detail.data.button_color
-      this.shareStyle.background = `url(${detail.data.background_pic_url}) 0 0 no-repeat / contain`
+      this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 no-repeat / contain`
       this.shareStyle.backgroundColor = '#fff'
 
       //分享修改
@@ -206,8 +206,6 @@ export default {
   padding: 37.5px 22.5px;
   box-shadow: 0 0 22.5px -11.25px #999999;
   background: #fff;
-  z-index: 999;
-  margin-top: 50px;
 
   &-video {
     width: 639px;
