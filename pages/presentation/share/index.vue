@@ -25,7 +25,7 @@
         <span @click="gotoRegister" class="action-text-accent">免费领取</span>
         <span>兰迪试听课</span>
       </div>
-      <div class="action-content" :style="{ background: themeColor }">
+      <div class="action-content" :style="{ background: themeColor }" @click="gotoPage('presentation')">
         <div class="action-content-text">去首页看看</div>
         <div class="action-content-deco0"></div>
         <div class="action-content-deco1"></div>
@@ -96,7 +96,6 @@ export default {
         return
       }
       const work = res.data.work;
-      document.title = work.activity_name
       this.topic = {
         cn_topic_name: work.cn_topic_name,
         en_topic_name: work.en_topic_name,
@@ -113,6 +112,7 @@ export default {
         this.$refs['toast'].showToast(detail.info)
         return
       }
+      document.title = detail.data.activity_name
       this.themeColor = detail.data.button_color
       this.shareStyle.background = `url(${detail.data.background_pic_url}) 0 0 no-repeat / contain`
 
