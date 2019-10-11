@@ -181,7 +181,6 @@ export default {
   overflow: auto;
   background-attachment: local;
   -webkit-overflow-scrolling: auto;
-  background: #fff;
   width: 100vw;
   height: 100vh;
 

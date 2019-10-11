@@ -98,6 +98,18 @@ export default {
       this.topics = formData.landiLevel.topics
     } else {
       const detail = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)
+      if (!detail.status) {
+        this.$refs['toast'].showToast(detail.info)
+      } else {
+        for (let item of detail.data.combinations) {
+          if (item.id == formData.landiLevel.id) {
+            formData.landiLevel = item
+            return
+          }
+        }
+        this.landiLevel = formData.landiLevel
+        this.topics = formData.landiLevel.topics
+      }
     }
 
     if (formData.topicID) {
