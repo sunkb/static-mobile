@@ -129,6 +129,10 @@ export default {
     },
     initDataFromStroge() {
       const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))
+      if (!(formData && formData.landiLevel && formData.landiLevel.topics)) {
+        return false
+      }
+
       this.landiLevel = formData.landiLevel.name
       for (let item of formData.landiLevel.topics) {
         if (item.id == formData.topicID) {
@@ -143,6 +147,7 @@ export default {
       }
       
       this.formData = formData
+      return true
     },
     async initDataFromAPI() {
       this.$refs['toast'].showLoadingToast()
@@ -150,7 +155,8 @@ export default {
       const data0 = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
       this.$refs['toast'].hideLoadingToast()
       if (!data0.status) {
-        return {}
+        this.$refs['toast'].showToast(data0.info)
+        return false
       } else {
         if (data0.data.id) {
           this.landiLevel = data0.data.combination_name
@@ -170,17 +176,17 @@ export default {
             workID: data0.data.id,
             address: data0.data.address
           }
-          return { id: data0.data.id }
+          return true
         } else {
-          return {}
+          return false
         }
       }
     }
   },
   async mounted() {
-    const fromAPI = await this.initDataFromAPI()
-    if (!fromAPI.id) {
-      this.initDataFromStroge()
+    const result = this.initDataFromStroge()
+    if (!result) {
+      await this.initDataFromAPI()
     }
     localStorage.setItem(STROGE.FORM_DATA, JSON.stringify(this.formData))
   }
