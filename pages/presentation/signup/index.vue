@@ -146,6 +146,7 @@ export default {
         this.signupData.city = address[1]
       }
     }
+    this.formBlur()
     this.$refs['toast'].hideLoadingToast()
   }
 }
