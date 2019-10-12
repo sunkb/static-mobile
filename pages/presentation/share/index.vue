@@ -5,7 +5,7 @@
       <div class="topaction-rank" @click="gotoPageWithHistory('presentation-rank')">点赞排行</div>
     </div>
     <div class="content">
-      <video controls class="content-video" v-if="stuData.videoSrc">
+      <video controls class="content-video" v-if="stuData.videoSrc" :poster="`${stuData.videoSrc}?vframe/jpg/offset/2/h/960/`">
         <source :src="stuData.videoSrc"/>
       </video>
       <h3 class="content-topic-eng">{{ topic.en_topic_name }}</h3>
