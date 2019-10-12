@@ -89,11 +89,23 @@ export default {
       this.gotoPage('presentation-protocol')
     }
   },
-  mounted() {
+  async mounted() {
+    this.$refs['toast'].showLoadingToast()
     const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))
     this.videoSrc = formData.videoSrc
 
+    const activityID = this.$route.query.activity_id
+    const data0 = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
+    if (!data0.status) {
+      this.$refs['toast'].showToast(data0.info)
+    } else {
+      if (data0.data.id) {
+        formData.workID = data0.data.id
+      }
+    }
+    
     this.formData = formData
+    this.$refs['toast'].hideLoadingToast()
   }
 }
 </script>

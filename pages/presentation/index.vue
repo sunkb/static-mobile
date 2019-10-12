@@ -59,7 +59,7 @@
         </div>
         <div v-for="(item, index) in steps" :key="index" class="step-item">
           <div class="step-item-content">{{ item }}</div>
-          <div class="step-item-deco"></div>
+          <div v-if="index + 1 < steps.length" class="step-item-deco"></div>
         </div>
       </div>
       <div class="float-action" v-show="showFloatAction">
@@ -84,6 +84,7 @@ import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 import { PosterModal } from '~/components/presentation'
 import PrtMixin from '~/pages/presentation/mixin'
+import { videoPlayerEvent } from '~/utils/videoPlay'
 
 export default {
   name: 'Presentation',
