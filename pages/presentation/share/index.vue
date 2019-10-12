@@ -179,6 +179,8 @@ export default {
 
     if(code){
       await this.getOpenid()
+    }
+    if (login) {
       await this.initData();
     }
 
