@@ -96,7 +96,7 @@ export default {
       // const url = encodeURIComponent(window.location.href)
       // const url = encodeURIComponent(sessionStorage.getItem('lastUrl'))
       const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/share/?activity_id=1&work_id=1')
-      const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
+      const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&work_id=${work_id}`)
       if (!res.status) {
         this.$refs['toast'].showToast(res.info)
         return

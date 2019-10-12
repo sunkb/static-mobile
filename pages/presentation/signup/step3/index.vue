@@ -110,7 +110,6 @@ export default {
       this.$refs['toast'].showLoadingToast()
       const fileUploader = new FileUploader()
       await fileUploader.init()
-      this.videoStatus = VIDEO_STATUS_TYPE.UPLOADING
       this.videoSrc = fileUploader.domain
       const uploadReturn = fileUploader.upload(this.$refs['videoUploadInput'].files[0], FILE_TYPE.VIDEO,
         this.fileUploadNext, this.fileUploadError, this.fileUploadComplete
@@ -118,7 +117,9 @@ export default {
       this.$refs['toast'].hideLoadingToast()
       if (uploadReturn.error) {
         this.$refs['toast'].showToast(uploadReturn.error)
+        return
       }
+      this.videoStatus = VIDEO_STATUS_TYPE.UPLOADING
     },
     fileUploadNext(res) {
       this.videoStatus.progress = Math.round(res.total.percent * 100) / 100

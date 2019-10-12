@@ -154,6 +154,10 @@ $level-height: 90px;
       color: #fff;
       font-size: 30px;
       line-height: 90px;
+      max-lines: 1;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
     .accent {
