@@ -84,7 +84,6 @@ import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 import { PosterModal } from '~/components/presentation'
 import PrtMixin from '~/pages/presentation/mixin'
-import { videoPlayerEvent } from '~/utils/videoPlay'
 
 export default {
   name: 'Presentation',

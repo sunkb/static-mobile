@@ -10,28 +10,23 @@
         <h3 class="level-hint">左右滑屏可以切换样板和主题</h3>
       </div>
       <div class="topic">
-        <div class="topic-item" v-for="(item) in topics" :key="item.id">
-          <video v-if="item.videos.length > 0" controls class="topic-item-video" :poster="item.videos[0].pic_url">
-            <source :src="item.videos[0].url"/>
-          </video>
-          <video v-if="item.audios.length > 0 && item.videos.length == 0" controls class="topic-item-video" :poster="item.audios[0].pic_url">
-            <source :src="item.audios[0].url"/>
-          </video>
-          <!-- <video
-            v-if="item.videos.length > 0 || item.audios.length > 0"
+        <div class="topic-item" v-for="(item, index) in topics" :key="item.id">
+          <video
+            v-if="srcType(item) == 'video' || srcType(item) == 'audio'"
             style="opacity:0;"
             :id="`video${index}`"
             controls
             :key="index"
             preload="auto"
-            :src=""
-          /> -->
-          <!-- <div class="topic-item-video">
+            :src="getSrc(item)"
+            class="topic-item-videoplay"
+          />
+          <div class="topic-item-video" @click="playFn(`video${index}`)">
             <div class="topic-item-video-play" v-if="item.videos.length > 0 || item.audios.length > 0"></div>
             <img class="topic-item-video-pic" :src="item.videos[0].pic_url" v-if="item.videos.length > 0"/>
             <img class="topic-item-video-pic" :src="item.audios[0].pic_url" v-if="item.audios.length > 0 && item.videos.length == 0"/>
             <img class="topic-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
-          </div> -->
+          </div>
           <div class="topic-item-selector" @click="selectTopic(item.id)">
             <img v-if="topicSelectID == item.id" class="topic-item-selector-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
           </div>
@@ -56,6 +51,7 @@ import { STEPS, STROGE, API } from '~/pages/presentation/consts'
 import Toast from '~/components/Toast'
 import axios from '~/utils/axios'
 import PrtMixin from '~/pages/presentation/mixin'
+import { videoPlayerEvent } from '~/utils/videoPlay'
 
 export default {
   name: 'Signup',
@@ -99,6 +95,26 @@ export default {
     },
     selectTopic(id) {
       this.topicSelectID = id
+    },
+    srcType(item) {
+      if (item.videos.length > 0) {
+        return 'video'
+      } else if (item.audios.length > 0) {
+        return 'audio'
+      } else {
+        return 'pic'
+      }
+    },
+    getSrc(item) {
+      if (item.videos.length > 0) {
+        return item.videos[0].url
+      } else if (item.audios.length > 0) {
+        return item.audios[0].url
+      }
+    },
+        playFn(name){
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
     },
   },
   async mounted() {
@@ -189,6 +205,14 @@ $topic-item-width: 480px;
         height: 100px;
         background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
       }
+    }
+    &-videoplay {
+      width: $topic-item-width;
+      max-height: 300px;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
     &-eng {
