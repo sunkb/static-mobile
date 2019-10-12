@@ -136,18 +136,15 @@ export default {
         signature: wxConfig.signature,
       });
       
+      const shareObj = { 
+        title: wx_data.share_title,
+        desc: wx_data.share_desc,
+        link: wx_data.share_link,
+        imgUrl: wx_data.share_img_url,
+      }
       wx.ready(() => {
-        wx.updateAppMessageShareData({ 
-          title: wx_data.share_title,
-          desc: wx_data.share_desc,
-          link: wx_data.share_link,
-          imgUrl: wx_data.share_img_url,
-        })
-        wx.updateTimelineShareData({ 
-          title: wx_data.share_title,
-          link: wx_data.share_link,
-          imgUrl: wx_data.share_img_url,
-        })
+        wx.updateAppMessageShareData(shareObj)
+        wx.updateTimelineShareData(shareObj)
         wx.error(function(res){
           console.log(res);
         });

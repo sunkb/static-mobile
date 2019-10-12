@@ -8,7 +8,9 @@ function initWX(config) {
     debug: false,
     jsApiList: [
       'updateAppMessageShareData',
-      'updateTimelineShareData'
+      'updateTimelineShareData',
+      'onMenuShareAppMessage',
+      'onMenuShareTimeline'
     ]
   })
   return wx

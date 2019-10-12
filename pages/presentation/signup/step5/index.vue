@@ -106,7 +106,8 @@ export default {
     }
     this.canReUpload = mywork.data.is_reupload
 
-    const url = window.location.href
+    // const url = window.location.href
+    const url = 'https://release6.landi.com/static-web/mobile/presentation/signup/step5'
     const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(url)}&work_id=${mywork.data.id}`)
     if (!res.status) {
       this.$refs['toast'].hideLoadingToast()
