@@ -84,9 +84,10 @@ Axios.interceptors.response.use(
           redirect_url = funcUrlDel('code');
           redirect_url = funcUrlDel('state');
           redirect_url = encodeURIComponent(redirect_url);
+          console.log('loginUrl',redirect_url);
           const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
           console.log('loginUrl',loginUrl);
-          window.location.href = loginUrl;
+          //window.location.href = loginUrl;
           break;
         case 404:
           error.message = '请求错误,未找到该资源';
