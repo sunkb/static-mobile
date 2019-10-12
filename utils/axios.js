@@ -82,7 +82,9 @@ Axios.interceptors.response.use(
         case 401:
           let redirect_url = window.location.href;
           redirect_url = funcUrlDel('code');
+          console.log('code',redirect_url);
           redirect_url = funcUrlDel('state');
+          console.log('state',redirect_url);
           redirect_url = encodeURIComponent(redirect_url);
           console.log('loginUrl',redirect_url);
           const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
