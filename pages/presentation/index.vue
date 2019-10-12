@@ -180,7 +180,7 @@ export default {
     if (res.status) { 
       this.resData = res.data
       document.title = this.resData.name
-      this.presentationStyle.background = `url(${this.resData.background_pic_url}) no-repeat contain local`
+      this.presentationStyle.background = `url(${this.resData.background_pic_url}) 0 0 / contain local no-repeat`
       this.presentationStyle.backgroundColor = '#fff'
     } else {
       this.$refs['toast'].showToast(res.info)
