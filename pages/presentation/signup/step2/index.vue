@@ -13,7 +13,7 @@
         <div class="topic-item" v-for="(item, index) in topics" :key="item.id">
           <video
             v-if="srcType(item) == 'video' || srcType(item) == 'audio'"
-            style="opacity:0;"
+            style="display: none;"
             :id="`video${index}`"
             controls
             :key="index"
