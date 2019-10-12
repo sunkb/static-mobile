@@ -133,6 +133,8 @@ export default {
     wx.ready(() => {
       wx.updateAppMessageShareData(shareObj)
       wx.updateTimelineShareData(shareObj)
+      wx.onMenuShareAppMessage(shareObj);
+      wx.onMenuShareTimeline(shareObj);
       wx.error(function(res){
         console.log(res);
       });
