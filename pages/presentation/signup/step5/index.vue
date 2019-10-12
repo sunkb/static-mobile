@@ -106,8 +106,9 @@ export default {
     }
     this.canReUpload = mywork.data.is_reupload
 
-    const url = encodeURIComponent(window.location.href)
-    // const url = 'https://release6.landi.com/static-web/mobile/presentation/signup/step5'
+    // const url = encodeURIComponent(window.location.href)
+    
+    const url = 'https://release6.landi.com/static-web/mobile/presentation'
     // const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${url}&work_id=${mywork.data.id}`)
     const res = await axios.post(API.WX_SHARE, {
       activity_id: activityID,

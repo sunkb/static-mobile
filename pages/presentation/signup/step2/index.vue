@@ -35,7 +35,7 @@
         </div>
       </div>
       <submit-area 
-        hint="请勾选主题右下角选择当前参赛题目" 
+        hint="请勾选主题右上角选择当前参赛题目" 
         btnText="上传我的视频"
         :isClickable="topicSelected"
         @submit="submit"
