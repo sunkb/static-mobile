@@ -75,7 +75,7 @@ export default {
       this.gotoPage('presentation-signup-step3')
     },
     gotoIndex() {
-      this.gotoPage('presentation')
+      window.location = `${process.env.ENV_API}presentation/?activity_id=${this.$route.query.activity_id}`
     },
     shareToFrends() {
       this.showShareHelp = true

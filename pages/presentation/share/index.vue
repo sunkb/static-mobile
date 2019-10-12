@@ -25,7 +25,7 @@
         <span @click="gotoRegister" class="action-text-accent">免费领取</span>
         <span>兰迪288元试听课大礼包</span>
       </div>
-      <div class="action-content" :style="{ background: themeColor }" @click="gotoPage('presentation')">
+      <div class="action-content" :style="{ background: themeColor }" @click="gotoIndex">
         <div class="action-content-text">去首页看看</div>
         <div class="action-content-deco0"></div>
         <div class="action-content-deco1"></div>
@@ -93,33 +93,34 @@ export default {
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
-      const url = encodeURIComponent(window.location.href)
-      // const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
-      // if (!res.status) {
-      //   this.$refs['toast'].showToast(res.info)
-      //   return
-      // }
-      // const work = res.data.work;
-      // this.topic = {
-      //   cn_topic_name: work.cn_topic_name,
-      //   en_topic_name: work.en_topic_name,
-      // }
-      // this.stuData = {
-      //   videoSrc: work.video_url,
-      //   like: work.zan,
-      //   name: work.en_name
-      // }
-      // this.liked = work.is_zan
+      // const url = encodeURIComponent(window.location.href)
+      const url = 'https://release6.landi.com/static-web/mobile/presentation/share'
+      const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
+      if (!res.status) {
+        this.$refs['toast'].showToast(res.info)
+        return
+      }
+      const work = res.data.work;
+      this.topic = {
+        cn_topic_name: work.cn_topic_name,
+        en_topic_name: work.en_topic_name,
+      }
+      this.stuData = {
+        videoSrc: work.video_url,
+        like: work.zan,
+        name: work.en_name
+      }
+      this.liked = work.is_zan
 
-      // const detail = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activity_id}`)
-      // if (!detail.status) {
-      //   this.$refs['toast'].showToast(detail.info)
-      //   return
-      // }
-      // document.title = detail.data.name
-      // this.themeColor = detail.data.button_color
-      // this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 / contain no-repeat`
-      // this.shareStyle.backgroundColor = '#fff'
+      const detail = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activity_id}`)
+      if (!detail.status) {
+        this.$refs['toast'].showToast(detail.info)
+        return
+      }
+      document.title = detail.data.name
+      this.themeColor = detail.data.button_color
+      this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 / contain no-repeat`
+      this.shareStyle.backgroundColor = '#fff'
 
       //分享修改
       const resWX = await axios.get(`${API.WX_SHARE}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
@@ -166,21 +167,23 @@ export default {
     },
     shareToFrends() {
       this.showShareHelp = true
+    },
+    gotoIndex() {
+      window.location = `${process.env.ENV_API}presentation/?activity_id=${this.$route.query.activity_id}`
     }
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
-    // const { code } = this.$route.query
-    // if (code == null) {
-    //   getWXCode(window.location.href)
-    //   return
-    // }
+    const { code } = this.$route.query
+    if (code == null) {
+      getWXCode(window.location.href)
+      return
+    }
 
-    // if(code){
-    //   await this.getOpenid()
-    //   await this.initData();
-    // }
-    await this.initData();
+    if(code){
+      await this.getOpenid()
+      await this.initData();
+    }
 
     this.$refs['toast'].hideLoadingToast()
   }
