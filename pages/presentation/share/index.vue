@@ -93,8 +93,8 @@ export default {
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
-      const url = 'https://release6.landi.com/static-web/mobile/presentation'
-      const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
+      const url = window.location.href
+      const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${encodeURIComponent(url)}&work_id=${work_id}`)
       if (!res.status) {
         this.$refs['toast'].showToast(res.info)
         return
@@ -118,7 +118,7 @@ export default {
       }
       document.title = detail.data.name
       this.themeColor = detail.data.button_color
-      this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 no-repeat / contain`
+      this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 / contain no-repeat`
       this.shareStyle.backgroundColor = '#fff'
 
       //分享修改
