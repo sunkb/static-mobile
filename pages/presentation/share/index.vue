@@ -143,17 +143,17 @@ export default {
         link: wx_data.share_link,
         imgUrl: wx_data.share_img_url,
       }
-      // wx.ready(() => {
-      //   wx.updateAppMessageShareData(shareObj)
-      //   wx.updateTimelineShareData(shareObj)
-      //   wx.error(function(res){
-      //     console.log(res);
-      //   });
-      // })
       wx.ready(() => {
-        wx.onMenuShareAppMessage(shareObj);
-        wx.onMenuShareTimeline(shareObj);
-      });
+        wx.updateAppMessageShareData(shareObj)
+        wx.updateTimelineShareData(shareObj)
+        wx.error(function(res){
+          console.log(res);
+        });
+      })
+      // wx.ready(() => {
+      //   wx.onMenuShareAppMessage(shareObj);
+      //   wx.onMenuShareTimeline(shareObj);
+      // });
     },
     gotoRegister() {
       window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
