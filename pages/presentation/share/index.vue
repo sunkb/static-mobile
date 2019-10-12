@@ -162,9 +162,8 @@ export default {
       if(!res.status){
         this.$refs['toast'].showToast(res.info)
       }
-      
 
-      // window.location = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}&login=true`
+      window.location = `https://release6.landi.com/static-web/mobile/presentation/share/?activity_id=1&work_id=1`
     },
     shareToFrends() {
       this.showShareHelp = true
