@@ -162,7 +162,9 @@ export default {
       if(!res.status){
         this.$refs['toast'].showToast(res.info)
       }
-      window.location = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}&login=true`
+      
+
+      // window.location = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}&login=true`
     },
     shareToFrends() {
       this.showShareHelp = true
@@ -170,8 +172,8 @@ export default {
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
-    const { code, login } = this.$route.query
-    if (code == null && login == null) {
+    const { code } = this.$route.query
+    if (code == null) {
       getWXCode(window.location.href)
       return
     }
