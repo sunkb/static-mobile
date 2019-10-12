@@ -137,8 +137,8 @@ export default {
     //   });
     // })
     wx.ready(() => {
-      wxApi.onMenuShareAppMessage(shareObj);
-      wxApi.onMenuShareTimeline(shareObj);
+      wx.onMenuShareAppMessage(shareObj);
+      wx.onMenuShareTimeline(shareObj);
     });
 
     this.$refs['toast'].hideLoadingToast()
