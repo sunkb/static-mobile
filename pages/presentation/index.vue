@@ -2,10 +2,10 @@
   <div id="presentation" :style="presentationStyle">
     <div v-if="resData">
       <div class="topaction">
-        <div class="topaction-rank" @click="gotoPage('presentation-rank')">
+        <div class="topaction-rank" @click="gotoPageWithHistory('presentation-rank')">
           <span v-if="haveWork">点赞排行</span>
         </div>
-        <div class="topaction-rule" @click="gotoPage('presentation-rule')">活动规则</div>
+        <div class="topaction-rule" @click="gotoPageWithHistory('presentation-rule')">活动规则</div>
       </div>
       <div class="content card">
         <h3>报名参赛，分享更多宝贝高光时刻</h3>
@@ -90,6 +90,7 @@ import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 import { PosterModal } from '~/components/presentation'
 import PrtMixin from '~/pages/presentation/mixin'
+import { videoPlayerEvent } from '~/utils/videoPlay'
 
 export default {
   name: 'Presentation',

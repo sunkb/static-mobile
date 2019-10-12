@@ -2,7 +2,7 @@
   <div id="share" :style="shareStyle">
     <div class="topaction">
       <div></div>
-      <div class="topaction-rank" @click="gotoPage('presentation-rank')">点赞排行</div>
+      <div class="topaction-rank" @click="gotoPageWithHistory('presentation-rank')">点赞排行</div>
     </div>
     <div class="content">
       <video controls class="content-video" v-if="stuData.videoSrc">

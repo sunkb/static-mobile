@@ -94,7 +94,7 @@ export default {
       this.gotoPage('presentation-signup-step5')
     },
     gotoRulePage() {
-      this.gotoPage('presentation-protocol')
+      this.gotoPageWithHistory('presentation-protocol')
     },
     playFn(name){
       let video1 = document.getElementById(name)
