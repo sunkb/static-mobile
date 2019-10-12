@@ -94,7 +94,7 @@ export default {
     async initData() {
       const { activity_id, work_id } = this.$route.query
       // const url = window.location.href
-      const url = decodeURIComponent(location.href.split('#')[0])
+      const url = decodeURIComponent(location.href.split('?')[0])
       const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
       if (!res.status) {
         this.$refs['toast'].showToast(res.info)

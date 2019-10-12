@@ -5,7 +5,7 @@ var PrtMixin = {
       delete _query.code
       delete _query.state
       delete _query.work_id
-      this.$router.push({ name, query: _query })
+      this.$router.replace({ name, query: _query })
     }
   }
 }
