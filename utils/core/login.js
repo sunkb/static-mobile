@@ -57,6 +57,8 @@ function wxAutoLogin() {
         }
         axios.get(url,{params}).then(res=>{
             console.log('code登录',res)
+        }).catch(err=>{
+            console.log('错误',err);
         })
     }
 }
