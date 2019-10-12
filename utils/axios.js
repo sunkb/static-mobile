@@ -51,12 +51,14 @@ Axios.interceptors.request.use(
 Axios.interceptors.response.use(
   res => {
     // 状态码为200，接口请求成功
+    console.log('status',res.status);
     if (res.status === 200) {
       return Promise.resolve(res.data);
     } else {
       switch (res.status) {
         case 401:
           const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+window.location.href;
+          console.log('loginUrl',loginUrl);
           window.location.href = loginUrl;
           break;
         default:
