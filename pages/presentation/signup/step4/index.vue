@@ -61,7 +61,7 @@ export default {
     return {
       steps: STEPS,
       videoSrc: '',
-      ruleSelected: false,
+      ruleSelected: true,
       showPosterModal: false,
       formData: null
     }
@@ -139,7 +139,7 @@ export default {
 
   &-content {
     width: 637.5px;
-    height: 420px;
+    height: 360px;
     overflow: hidden;
     position: relative;
     background: #E6E6E6;

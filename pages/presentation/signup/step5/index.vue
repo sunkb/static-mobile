@@ -106,7 +106,8 @@ export default {
     }
     this.canReUpload = mywork.data.is_reupload
 
-    const url = window.location.href
+    // const url = window.location.href
+    const url = 'https://release6.landi.com/static-web/mobile/presentation/signup/step5'
     const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(url)}&work_id=${mywork.data.id}`)
     if (!res.status) {
       this.$refs['toast'].hideLoadingToast()
@@ -179,7 +180,7 @@ export default {
 
   &-content {
     width: 638px;
-    height: 420px;
+    height: 360px;
     overflow: hidden;
     position: relative;
     background: #E6E6E6;
@@ -216,7 +217,8 @@ export default {
 
 .action {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  padding: 0 20px;
   width: 100%;
   position: fixed;
   left: 0;

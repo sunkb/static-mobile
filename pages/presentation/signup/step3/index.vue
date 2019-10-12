@@ -248,6 +248,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin-top: -5px;
   }
 }
 
@@ -312,7 +313,7 @@ export default {
   &-uploaded {
     &-video {
       width: $video-content-width;
-      height: 420px;
+      height: 360px;
       overflow: hidden;
       position: relative;
       background: #E6E6E6;
@@ -331,8 +332,9 @@ export default {
 
   &-upload {
     position: absolute;
+    left: 50%;
     bottom: 0;
-    transform: translateY(50%);
+    transform: translate(-50%, 50%);
 
     &-action {
       width: 90px;

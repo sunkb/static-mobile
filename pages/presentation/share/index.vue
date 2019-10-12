@@ -23,7 +23,7 @@
     <div class="action">
       <div class="action-text">
         <span @click="gotoRegister" class="action-text-accent">免费领取</span>
-        <span>兰迪试听课</span>
+        <span>兰迪288元试听课大礼包</span>
       </div>
       <div class="action-content" :style="{ background: themeColor }" @click="gotoPage('presentation')">
         <div class="action-content-text">去首页看看</div>
@@ -118,7 +118,7 @@ export default {
       }
       document.title = detail.data.name
       this.themeColor = detail.data.button_color
-      this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 no-repeat / contain`
+      this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 / contain no-repeat`
       this.shareStyle.backgroundColor = '#fff'
 
       //分享修改
@@ -136,18 +136,15 @@ export default {
         signature: wxConfig.signature,
       });
       
+      const shareObj = { 
+        title: wx_data.share_title,
+        desc: wx_data.share_desc,
+        link: wx_data.share_link,
+        imgUrl: wx_data.share_img_url,
+      }
       wx.ready(() => {
-        wx.updateAppMessageShareData({ 
-          title: wx_data.share_title,
-          desc: wx_data.share_desc,
-          link: wx_data.share_link,
-          imgUrl: wx_data.share_img_url,
-        })
-        wx.updateTimelineShareData({ 
-          title: wx_data.share_title,
-          link: wx_data.share_link,
-          imgUrl: wx_data.share_img_url,
-        })
+        wx.updateAppMessageShareData(shareObj)
+        wx.updateTimelineShareData(shareObj)
         wx.error(function(res){
           console.log(res);
         });
@@ -233,7 +230,7 @@ export default {
     &-actions {
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
+      justify-content: space-around;
       width: 300px;
 
       &-text {

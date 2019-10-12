@@ -57,7 +57,8 @@ $height: 90px;
 .wrapper {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  padding: 0 40px;
   width: 100%;
   position: absolute;
   top: 0;

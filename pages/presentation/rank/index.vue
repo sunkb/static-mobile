@@ -139,7 +139,7 @@ $level-height: 90px;
   height: $level-height;
   width: 100vw;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   background: #3781D6;
   top: 0;

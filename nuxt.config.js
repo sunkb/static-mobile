@@ -2,7 +2,7 @@ const env = require('./env')
 export default {
   server: {
     port: 3000, // default: 3000
-    host: 'localhost', // default: localhost
+    host: '0.0.0.0', // default: localhost
   },
   router:{
     base: process.env.NODE_ENV === 'production'?'/static-web/mobile/':''
