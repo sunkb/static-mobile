@@ -179,7 +179,7 @@ export default {
 
   &-content {
     width: 638px;
-    height: 420px;
+    height: 360px;
     overflow: hidden;
     position: relative;
     background: #E6E6E6;
