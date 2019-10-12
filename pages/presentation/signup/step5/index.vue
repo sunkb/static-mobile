@@ -106,7 +106,7 @@ export default {
     }
     this.canReUpload = mywork.data.is_reupload
 
-    const url = window.location.href
+    const url = encodeURIComponent(window.location.href)
     console.log(url)
     // const url = decodeURIComponent(document.URL.split('#')[0])
     // const url = decodeURIComponent(location.href.split('#')[0])
