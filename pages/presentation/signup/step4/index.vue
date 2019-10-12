@@ -61,7 +61,7 @@ export default {
     return {
       steps: STEPS,
       videoSrc: '',
-      ruleSelected: false,
+      ruleSelected: true,
       showPosterModal: false,
       formData: null
     }

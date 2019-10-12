@@ -23,19 +23,25 @@
         </div>
         <div class="content-level">
           <div v-for="(item, index) in resData.combinations" :key="item.id" class="content-level-item" @click="selectLevel(index)"
-            :style="levelSelectIndex == index ? { background: resData.button_color, color: '#fff' } : {}">{{ item.name }}</div>
+            :style="levelSelectIndex == index ? { background: resData.button_color, color: '#fff', border: 'none' } : {}">{{ item.name }}</div>
         </div>
         <h3>以下2个演讲主题，任意选择其中之一报名即可</h3>
         <div class="content-video">
-          <div class="content-video-item" v-for="(item) in resData.combinations[levelSelectIndex].topics" :key="item.id">
-            <video v-if="item.videos.length > 0" controls class="content-video-item-video" :poster="item.videos[0].pic_url">
-              <source :src="item.videos[0].url"/>
-            </video>
-            <video v-if="item.audios.length > 0 && item.videos.length == 0" controls class="content-video-item-video" :poster="item.audios[0].pic_url">
-              <source :src="item.audios[0].url"/>
-            </video>
-            <div class="content-video-item-video" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0">
-              <img class="content-video-item-video-pic" :src="item.pics[0]"/>
+          <div class="content-video-item" v-for="(item, index) in resData.combinations[levelSelectIndex].topics" :key="item.id">
+            <video
+              v-if="srcType(item) == 'video' || srcType(item) == 'audio'"
+              style="display: none;"
+              :id="`video${index}`"
+              controls
+              :key="index"
+              preload="auto"
+              :src="getSrc(item)"
+            />
+            <div class="content-video-item-video" @click="playFn(`video${index}`)">
+              <div class="content-video-item-video-play" v-if="item.videos.length > 0 || item.audios.length > 0"></div>
+              <img class="content-video-item-video-pic" :src="item.videos[0].pic_url" v-if="item.videos.length > 0"/>
+              <img class="content-video-item-video-pic" :src="item.audios[0].pic_url" v-if="item.audios.length > 0 && item.videos.length == 0"/>
+              <img class="content-video-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
             </div>
             <h3 class="content-video-item-eng content-video-item-text">{{ item.en_topic_name }}</h3>
             <h3 class="content-video-item-chn content-video-item-text">{{ item.cn_topic_name }}</h3>
@@ -141,6 +147,26 @@ export default {
     },
     gotoRegister() {
       window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
+    },
+    srcType(item) {
+      if (item.videos.length > 0) {
+        return 'video'
+      } else if (item.audios.length > 0) {
+        return 'audio'
+      } else {
+        return 'pic'
+      }
+    },
+    getSrc(item) {
+      if (item.videos.length > 0) {
+        return item.videos[0].url
+      } else if (item.audios.length > 0) {
+        return item.audios[0].url
+      }
+    },
+    playFn(name){
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
     }
   },
   created() {
@@ -241,14 +267,18 @@ export default {
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 22.5px;
+    padding: 0 20px;
 
     &-item {
       width: 150px;
-      line-height: 60px;
+      height: 60px;
       border: 1.5px solid #E6E6E6;
       border-radius: 30px;
       color: #333333;
       font-size: 26px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
@@ -273,9 +303,19 @@ export default {
         width: $topic-item-width;
         height: 280px;
         overflow: hidden;
+        position: relative;
 
         &-pic {
           width: inherit;
+        }
+        &-play {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 100px;
+          height: 100px;
+          background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
         }
       }
 
