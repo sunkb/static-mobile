@@ -51,23 +51,30 @@ Axios.interceptors.request.use(
 Axios.interceptors.response.use(
   res => {
     // 状态码为200，接口请求成功
-    console.log('status',res.status);
     if (res.status === 200) {
       return Promise.resolve(res.data);
     } else {
-      switch (res.status) {
+      return Promise.reject(res);
+    }
+  },
+  error => {
+    if (error.response) {
+      switch (error.response.status) {
         case 401:
           const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+window.location.href;
           console.log('loginUrl',loginUrl);
           window.location.href = loginUrl;
           break;
+        case 404:
+          error.message = '请求错误,未找到该资源';
+          break;
+        case 500:
+          error.message = '服务器端出错';
+          break;
         default:
-          ;
+          error.message = `连接错误${error.response.status}`;
       }
-      return Promise.reject(res);
     }
-  },
-  error => {
     return Promise.reject(error)
   })
 
