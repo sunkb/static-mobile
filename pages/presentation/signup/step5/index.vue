@@ -106,15 +106,10 @@ export default {
     }
     this.canReUpload = mywork.data.is_reupload
 
-    // const url = encodeURIComponent(window.location.href)
+    const url = encodeURIComponent(window.location.href)
     
-    const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/?activity_id=1')
-    // const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${url}&work_id=${mywork.data.id}`)
-    const res = await axios.post(API.WX_SHARE, {
-      activity_id: activityID,
-      url,
-      work_id: mywork.data.id
-    })
+    // const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/?activity_id=1')
+    const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${url}&work_id=${mywork.data.id}`)
     if (!res.status) {
       this.$refs['toast'].hideLoadingToast()
       this.$refs['toast'].showToast(res.info)
