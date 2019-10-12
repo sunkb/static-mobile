@@ -208,6 +208,7 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
+  background: url('https://qn-static.landi.com/uploadtool9b717db53c6093a0ddf75acfdbfe3ff4.png') 0 0 no-repeat / contain local;
 
   &::-webkit-scrollbar {
     display: none;

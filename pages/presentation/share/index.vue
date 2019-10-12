@@ -93,7 +93,7 @@ export default {
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
-      const url = window.location.href
+      const url = 'https://release6.landi.com/static-web/mobile/presentation/'
       const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${encodeURIComponent(url)}&work_id=${work_id}`)
       if (!res.status) {
         this.$refs['toast'].showToast(res.info)
