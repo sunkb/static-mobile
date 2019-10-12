@@ -130,7 +130,8 @@ export default {
     },
     mainAction() {
       if (this.haveWork) {
-        this.gotoPage('presentation-signup-step5')
+        // this.gotoPage('presentation-signup-step5')
+        window.location = `${process.env.BASE_URL}/presentation/signup/step5/?activity_id=${this.$route.query.activity_id}`
       } else {
         if (this.isClassing) {
           this.signup()
