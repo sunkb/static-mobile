@@ -157,11 +157,12 @@ export default {
       window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
     },
     async getOpenid(){
-      const { code } = this.$route.query
+      const { code, activity_id, work_id } = this.$route.query
       const res = await axios.get(`${API.GET_OPENID}?code=${code}`)
       if(!res.status){
         this.$refs['toast'].showToast(res.info)
       }
+      window.location = `${window.location.origin}${window.location.pathname}?activity_id=${activity_id}&work_id=${work_id}&login=true`
     },
     shareToFrends() {
       this.showShareHelp = true
@@ -169,8 +170,8 @@ export default {
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
-    const { code } = this.$route.query
-    if (code == null) {
+    const { code, login } = this.$route.query
+    if (code == null && login == null) {
       getWXCode(window.location.href)
       return
     }
