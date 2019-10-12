@@ -93,35 +93,33 @@ export default {
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
-      // const url = window.location.href
-      const url = decodeURIComponent(location.href.split('#')[0])
-      // const url = `https://release6.landi.com/static-web/mobile/presentation/share`
-      const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
-      if (!res.status) {
-        this.$refs['toast'].showToast(res.info)
-        return
-      }
-      const work = res.data.work;
-      this.topic = {
-        cn_topic_name: work.cn_topic_name,
-        en_topic_name: work.en_topic_name,
-      }
-      this.stuData = {
-        videoSrc: work.video_url,
-        like: work.zan,
-        name: work.en_name
-      }
-      this.liked = work.is_zan
+      const url = encodeURIComponent(location.href.split('#')[0])
+      // const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
+      // if (!res.status) {
+      //   this.$refs['toast'].showToast(res.info)
+      //   return
+      // }
+      // const work = res.data.work;
+      // this.topic = {
+      //   cn_topic_name: work.cn_topic_name,
+      //   en_topic_name: work.en_topic_name,
+      // }
+      // this.stuData = {
+      //   videoSrc: work.video_url,
+      //   like: work.zan,
+      //   name: work.en_name
+      // }
+      // this.liked = work.is_zan
 
-      const detail = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activity_id}`)
-      if (!detail.status) {
-        this.$refs['toast'].showToast(detail.info)
-        return
-      }
-      document.title = detail.data.name
-      this.themeColor = detail.data.button_color
-      this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 / contain no-repeat`
-      this.shareStyle.backgroundColor = '#fff'
+      // const detail = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activity_id}`)
+      // if (!detail.status) {
+      //   this.$refs['toast'].showToast(detail.info)
+      //   return
+      // }
+      // document.title = detail.data.name
+      // this.themeColor = detail.data.button_color
+      // this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 / contain no-repeat`
+      // this.shareStyle.backgroundColor = '#fff'
 
       //分享修改
       const resWX = await axios.get(`${API.WX_SHARE}?activity_id=${activity_id}&url=${encodeURIComponent(url)}&work_id=${work_id}`)
