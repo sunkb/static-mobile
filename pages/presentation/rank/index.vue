@@ -22,8 +22,7 @@
             <img v-if="index == 2" :src="require('~/assets/presentation/img/rank-3.png')"/>
           </div>
           <div class="rank-item-avatar">
-            <!-- <img class="rank-item-avatar-img" :src="item.avatar"/> -->
-            <div class="rank-item-avatar-img" :style="{ background: `url(${item.avatar}) 50% 50% / contain cover` }"></div>
+            <img class="rank-item-avatar-img" :src="item.avatar"/>
           </div>
           <div class="rank-item-name">{{ item.en_name }}</div>
         </div>
@@ -221,6 +220,7 @@ $level-height: 90px;
       &-img {
         width: inherit;
         height: inherit;
+        object-fit: cover;
       }
     }
     &-name {
