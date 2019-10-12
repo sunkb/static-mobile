@@ -86,60 +86,60 @@ export default {
     },
   },
   async mounted() {
-    // this.$refs['toast'].showLoadingToast()
-    // const activityID = this.$route.query.activity_id
-    // const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
-    // if (!mywork.status) {
-    //   this.$refs['toast'].hideLoadingToast()
-    //   this.$refs['toast'].showToast(mywork.info)
-    //   return
-    // } else {
-    //   if (!mywork.data.id) { return }
-    // }
-    // this.mywork = {
-    //   video_url: mywork.data.video_url,
-    //   topic: {
-    //     cn_topic_name: mywork.data.cn_topic_name,
-    //     en_topic_name: mywork.data.en_topic_name,
-    //   },
-    //   en_name: mywork.data.en_name
-    // }
-    // this.canReUpload = mywork.data.is_reupload
+    this.$refs['toast'].showLoadingToast()
+    const activityID = this.$route.query.activity_id
+    const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
+    if (!mywork.status) {
+      this.$refs['toast'].hideLoadingToast()
+      this.$refs['toast'].showToast(mywork.info)
+      return
+    } else {
+      if (!mywork.data.id) { return }
+    }
+    this.mywork = {
+      video_url: mywork.data.video_url,
+      topic: {
+        cn_topic_name: mywork.data.cn_topic_name,
+        en_topic_name: mywork.data.en_topic_name,
+      },
+      en_name: mywork.data.en_name
+    }
+    this.canReUpload = mywork.data.is_reupload
 
-    // const url = window.location.href
-    // const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(url)}&work_id=${mywork.data.id}`)
-    // if (!res.status) {
-    //   this.$refs['toast'].hideLoadingToast()
-    //   this.$refs['toast'].showToast(res.info)
-    //   return
-    // }
-    // const wxConfig = res.data.wx_config;
-    // const wx_data = res.data.wx_data;
-    // const wx = initWX({
-    //   appId: wxConfig.appId,
-    //   timestamp: wxConfig.timestamp,
-    //   nonceStr: wxConfig.nonceStr,
-    //   signature: wxConfig.signature,
-    // });
+    const url = window.location.href
+    const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${encodeURIComponent(url)}&work_id=${mywork.data.id}`)
+    if (!res.status) {
+      this.$refs['toast'].hideLoadingToast()
+      this.$refs['toast'].showToast(res.info)
+      return
+    }
+    const wxConfig = res.data.wx_config;
+    const wx_data = res.data.wx_data;
+    const wx = initWX({
+      appId: wxConfig.appId,
+      timestamp: wxConfig.timestamp,
+      nonceStr: wxConfig.nonceStr,
+      signature: wxConfig.signature,
+    });
     
-    // wx.ready(() => {
-    //   wx.updateAppMessageShareData({ 
-    //     title: wx_data.share_title,
-    //     desc: wx_data.share_desc,
-    //     link: wx_data.share_link,
-    //     imgUrl: wx_data.share_img_url,
-    //   })
-    //   wx.updateTimelineShareData({ 
-    //     title: wx_data.share_title,
-    //     link: wx_data.share_link,
-    //     imgUrl: wx_data.share_img_url,
-    //   })
-    //   wx.error(function(res){
-    //     console.log(res);
-    //   });
-    // })
+    wx.ready(() => {
+      wx.updateAppMessageShareData({ 
+        title: wx_data.share_title,
+        desc: wx_data.share_desc,
+        link: wx_data.share_link,
+        imgUrl: wx_data.share_img_url,
+      })
+      wx.updateTimelineShareData({ 
+        title: wx_data.share_title,
+        link: wx_data.share_link,
+        imgUrl: wx_data.share_img_url,
+      })
+      wx.error(function(res){
+        console.log(res);
+      });
+    })
 
-    // this.$refs['toast'].hideLoadingToast()
+    this.$refs['toast'].hideLoadingToast()
   }
 }
 </script>

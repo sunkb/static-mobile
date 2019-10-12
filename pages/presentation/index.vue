@@ -264,10 +264,10 @@ export default {
 
   &-level {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
     margin-bottom: 22.5px;
-    padding: 0 20px;
+    padding: 0 40px;
 
     &-item {
       width: 150px;

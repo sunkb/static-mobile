@@ -23,7 +23,7 @@
     <div class="action">
       <div class="action-text">
         <span @click="gotoRegister" class="action-text-accent">免费领取</span>
-        <span>兰迪试听课</span>
+        <span>兰迪288元试听课大礼包</span>
       </div>
       <div class="action-content" :style="{ background: themeColor }" @click="gotoPage('presentation')">
         <div class="action-content-text">去首页看看</div>
@@ -233,7 +233,7 @@ export default {
     &-actions {
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
+      justify-content: space-around;
       width: 300px;
 
       &-text {
