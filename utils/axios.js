@@ -16,6 +16,25 @@ import Qs from 'qs';
 
 console.log('process.env.ENV_API',process.env.ENV_API)
 
+function funcUrlDel(name){
+  var loca = window.location;
+  var baseUrl = loca.origin + loca.pathname + "?";
+  var query = loca.search.substr(1);
+  if (query.indexOf(name)>-1) {
+      var obj = {}
+      var arr = query.split("&");
+      for (var i = 0; i < arr.length; i++) {
+          arr[i] = arr[i].split("=");
+          obj[arr[i][0]] = arr[i][1];
+      };
+      delete obj[name];
+      var url = baseUrl + JSON.stringify(obj).replace(/[\"\{\}]/g,"").replace(/\:/g,"=").replace(/\,/g,"&");
+      return url
+  }else{
+      return window.location.href;
+  };
+}
+
 const Axios = axios.create({
   baseURL: process.env.ENV_API,
   // 请求前的数据处理
@@ -61,7 +80,9 @@ Axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          const redirect_url = encodeURIComponent(window.location.href);
+          let redirect_url = encodeURIComponent(window.location.href);
+          redirect_url = funcUrlDel('code');
+          redirect_url = funcUrlDel('state');
           const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
           console.log('loginUrl',loginUrl);
           window.location.href = loginUrl;
