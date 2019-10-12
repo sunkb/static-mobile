@@ -282,7 +282,7 @@ export default {
     }
   }
 
-  $topic-item-width: 500px;
+  $topic-item-width: 480px;
   &-video {
     display: flex;
     white-space: nowrap;
