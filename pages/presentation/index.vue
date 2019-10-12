@@ -175,6 +175,7 @@ export default {
     login.autoLogin();
   },
   async mounted() {
+    console.log(window.location.href)
     this.steps = INDEX_STEPS
     const activityID = this.$route.query.activity_id
     const res = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)

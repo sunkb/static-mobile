@@ -144,6 +144,7 @@ $level-height: 90px;
   align-items: center;
   background: #3781D6;
   top: 0;
+  z-index: 999;
 
   &-item {
     position: relative;
