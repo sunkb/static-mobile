@@ -108,7 +108,7 @@ export default {
 
     // const url = encodeURIComponent(window.location.href)
     
-    const url = 'https://release6.landi.com/static-web/mobile/presentation'
+    const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/?activity_id=1')
     // const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${url}&work_id=${mywork.data.id}`)
     const res = await axios.post(API.WX_SHARE, {
       activity_id: activityID,
