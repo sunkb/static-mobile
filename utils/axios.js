@@ -54,13 +54,18 @@ Axios.interceptors.response.use(
     if (res.status === 200) {
       return Promise.resolve(res.data);
     } else {
+      switch (res.status) {
+        case 401:
+          const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+window.location.href;
+          window.location.href = loginUrl;
+          break;
+        default:
+          ;
+      }
       return Promise.reject(res);
     }
   },
   error => {
-    console.log(error, error.response)
-    // errorHandle(error)
-
     return Promise.reject(error)
   })
 
