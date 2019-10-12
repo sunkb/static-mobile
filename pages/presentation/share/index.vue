@@ -171,7 +171,7 @@ export default {
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
-    const { code } = this.$route.query
+    const { code, login } = this.$route.query
     if (code == null && login == null) {
       getWXCode(window.location.href)
       return
