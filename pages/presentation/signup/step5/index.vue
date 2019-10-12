@@ -17,9 +17,16 @@
         <h3 class="topic-text-chn">{{ mywork.topic.cn_topic_name }}</h3>
       </div>
       <div class="video">
-        <video controls class="video-content">
-          <source :src="mywork.video_url"/>
-        </video>
+        <div class="video-content" @click="playFn('video-upload')">
+          <video
+            style="display: none;"
+            id="video-upload"
+            controls
+            preload="auto"
+            :src="mywork.video_url"
+          />
+          <div class="video-content-play"></div>
+        </div>
       </div>
     </div>
     <div class="action">
@@ -40,6 +47,7 @@ import { STEPS, STROGE, TOPICS, API } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import { initWX } from '~/pages/presentation/wx'
 import PrtMixin from '~/pages/presentation/mixin'
+import { videoPlayerEvent } from '~/utils/videoPlay'
 
 export default {
   name: 'Signup',
@@ -71,7 +79,11 @@ export default {
     },
     shareToFrends() {
       this.showShareHelp = true
-    }
+    },
+    playFn(name){
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
+    },
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
@@ -167,8 +179,20 @@ export default {
 
   &-content {
     width: 638px;
-    max-height: 420px;
+    height: 420px;
     overflow: hidden;
+    position: relative;
+    background: #E6E6E6;
+
+    &-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+    }
   }
 }
 

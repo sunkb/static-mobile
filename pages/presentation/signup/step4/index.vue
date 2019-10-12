@@ -6,7 +6,7 @@
     <div class="page-content">
       <h1>确认提交</h1>
       <div class="video">
-        <div v-if="videoSrc && videoSrc != ''" class="video-content">
+        <div v-if="videoSrc && videoSrc != ''" class="video-content" @click="playFn('video-upload')">
           <video
             style="display: none;"
             id="video-upload"
@@ -41,6 +41,7 @@ import { STEPS, STROGE, API } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 import PrtMixin from '~/pages/presentation/mixin'
+import { videoPlayerEvent } from '~/utils/videoPlay'
 
 export default {
   name: 'Signup',
@@ -94,7 +95,11 @@ export default {
     },
     gotoRulePage() {
       this.gotoPage('presentation-protocol')
-    }
+    },
+    playFn(name){
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
+    },
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
@@ -137,6 +142,7 @@ export default {
     height: 420px;
     overflow: hidden;
     position: relative;
+    background: #E6E6E6;
 
     &-play {
       position: absolute;

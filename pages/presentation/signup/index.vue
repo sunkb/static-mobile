@@ -7,12 +7,12 @@
       <h1>报名信息</h1>
       <div class="signupform">
         <div class="signupform-item">
-          <span class="signupform-item-label required">孩子中文名</span>
-          <input class="signupform-item-input" v-model="signupData.chnName" placeholder="请填写中文名" @blur="formBlur"/>
+          <span class="signupform-item-label">孩子中文名</span>
+          <input class="signupform-item-input" placeholder="请填写中文名" @blur="formBlur"/>
         </div>
         <div class="signupform-item">
-          <span class="signupform-item-label required">孩子英文名</span>
-          <input class="signupform-item-input" v-model="signupData.engName" placeholder="请填写英文名" @blur="formBlur"/>
+          <span class="signupform-item-label">孩子英文名</span>
+          <input class="signupform-item-input" placeholder="请填写英文名" @blur="formBlur"/>
         </div>
         <div class="signupform-item">
           <span class="signupform-item-label required">兰迪级别</span>
@@ -69,8 +69,8 @@ export default {
     return {
       steps: STEPS,
       signupData: {
-        chnName: '',
-        engName: '',
+        // chnName: '',
+        // engName: '',
         landiLevel: '',
         province: '0',
         city: '0'

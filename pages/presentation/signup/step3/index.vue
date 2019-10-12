@@ -315,6 +315,7 @@ export default {
       height: 420px;
       overflow: hidden;
       position: relative;
+      background: #E6E6E6;
 
       &-play {
         position: absolute;
