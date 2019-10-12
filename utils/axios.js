@@ -16,23 +16,22 @@ import Qs from 'qs';
 
 console.log('process.env.ENV_API',process.env.ENV_API)
 
-function funcUrlDel(localurl,name){
-  var loca = localurl;
-  var baseUrl = loca.origin + loca.pathname + "?";
-  var query = loca.search.substr(1);
-  if (query.indexOf(name)>-1) {
-      var obj = {}
-      var arr = query.split("&");
-      for (var i = 0; i < arr.length; i++) {
-          arr[i] = arr[i].split("=");
-          obj[arr[i][0]] = arr[i][1];
-      };
-      delete obj[name];
-      var url = baseUrl + JSON.stringify(obj).replace(/[\"\{\}]/g,"").replace(/\:/g,"=").replace(/\,/g,"&");
-      return url
-  }else{
-      return localurl;
-  };
+function removeParam(key, sourceURL) {
+  var rtn = sourceURL.split("?")[0],
+      param,
+      params_arr = [],
+      queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+  if (queryString !== "") {
+      params_arr = queryString.split("&");
+      for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+          param = params_arr[i].split("=")[0];
+          if (param === key) {
+              params_arr.splice(i, 1);
+          }
+      }
+      rtn = rtn + "?" + params_arr.join("&");
+  }
+  return rtn;
 }
 
 const Axios = axios.create({
@@ -81,9 +80,9 @@ Axios.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           let redirect_url = window.location.href;
-          redirect_url = funcUrlDel(redirect_url,'code');
+          redirect_url = removeParam('code',redirect_url);
           console.log('code',redirect_url);
-          redirect_url = funcUrlDel(redirect_url,'state');
+          redirect_url = removeParam('state',redirect_url);
           console.log('state',redirect_url);
           redirect_url = encodeURIComponent(redirect_url);
           console.log('loginUrl',redirect_url);
