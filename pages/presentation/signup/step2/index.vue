@@ -112,7 +112,7 @@ export default {
         return item.audios[0].url
       }
     },
-        playFn(name){
+    playFn(name){
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
     },

@@ -30,9 +30,17 @@
           </div>
         </div>
         <div class="video-uploaded" v-if="videoStatus.type == 'uploaded'">
-          <video controls class="video-uploaded-video" x5-video-player-type='h5'>
-            <source :src="videoSrc"/>
-          </video>
+          <video
+            style="display: none;"
+            id="video-upload"
+            controls
+            preload="auto"
+            :src="videoSrc"
+            class="video-uploaded-videoplay"
+          />
+          <div class="video-uploaded-video" @click="playFn('video-upload')">
+            <div class="video-uploaded-video-play"></div>
+          </div>
         </div>
         <div class="video-upload" v-if="videoStatus.type != 'uploading'">
           <label class="video-upload-action" for="video-upload-input">
@@ -59,6 +67,7 @@ import FileUploader, { FILE_TYPE } from '~/utils/upload.js'
 import Toast from '~/components/Toast'
 import axios from '~/utils/axios'
 import PrtMixin from '~/pages/presentation/mixin'
+import { videoPlayerEvent } from '~/utils/videoPlay'
 
 export default {
   name: 'Signup',
@@ -181,7 +190,11 @@ export default {
           return false
         }
       }
-    }
+    },
+    playFn(name){
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
+    },
   },
   async mounted() {
     const result = this.initDataFromStroge()
@@ -299,8 +312,19 @@ export default {
   &-uploaded {
     &-video {
       width: $video-content-width;
-      max-height: 420px;
+      height: 420px;
       overflow: hidden;
+      position: relative;
+
+      &-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        height: 100px;
+        background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+      }
     }
   }
 

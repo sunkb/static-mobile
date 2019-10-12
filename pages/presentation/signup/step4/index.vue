@@ -6,9 +6,16 @@
     <div class="page-content">
       <h1>确认提交</h1>
       <div class="video">
-        <video controls v-if="videoSrc && videoSrc != ''" class="video-content" x5-video-player-type='h5'>
-          <source :src="videoSrc"/>
-        </video>
+        <div v-if="videoSrc && videoSrc != ''" class="video-content">
+          <video
+            style="display: none;"
+            id="video-upload"
+            controls
+            preload="auto"
+            :src="videoSrc"
+          />
+          <div class="video-content-play"></div>
+        </div>
       </div>
       <div class="rule">
         <div class="rule-select" @click="selectRule">
@@ -127,8 +134,19 @@ export default {
 
   &-content {
     width: 637.5px;
-    max-height: 420px;
+    height: 420px;
     overflow: hidden;
+    position: relative;
+
+    &-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+    }
   }
 }
 
