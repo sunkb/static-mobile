@@ -126,7 +126,7 @@ export default {
       //分享修改
       const url = window.location.href
       //const resWX = await axios.get(`${API.WX_SHARE}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
-      const resWX = await axios.get(`${API.WX_SHARE1}`, {
+      const resWX = await axios.post(`${API.WX_SHARE1}`, {
         activity_id,
         url,
         work_id
