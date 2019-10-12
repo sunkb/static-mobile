@@ -331,8 +331,9 @@ export default {
 
   &-upload {
     position: absolute;
+    left: 50%;
     bottom: 0;
-    transform: translateY(50%);
+    transform: translate(-50%, 50%);
 
     &-action {
       width: 90px;
