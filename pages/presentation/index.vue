@@ -79,7 +79,7 @@
       </div>
     </div>
     <toast ref="toast"></toast>
-    <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0" @changeShow="gotoRegister"></poster-modal>
+    <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0"></poster-modal>
   </div>
 </template>
 
