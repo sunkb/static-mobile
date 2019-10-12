@@ -16,8 +16,8 @@ import Qs from 'qs';
 
 console.log('process.env.ENV_API',process.env.ENV_API)
 
-function funcUrlDel(name){
-  var loca = window.location;
+function funcUrlDel(localurl,name){
+  var loca = localurl;
   var baseUrl = loca.origin + loca.pathname + "?";
   var query = loca.search.substr(1);
   if (query.indexOf(name)>-1) {
@@ -31,7 +31,7 @@ function funcUrlDel(name){
       var url = baseUrl + JSON.stringify(obj).replace(/[\"\{\}]/g,"").replace(/\:/g,"=").replace(/\,/g,"&");
       return url
   }else{
-      return window.location.href;
+      return localurl;
   };
 }
 
@@ -81,9 +81,9 @@ Axios.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           let redirect_url = window.location.href;
-          redirect_url = funcUrlDel('code');
+          redirect_url = funcUrlDel(redirect_url,'code');
           console.log('code',redirect_url);
-          redirect_url = funcUrlDel('state');
+          redirect_url = funcUrlDel(redirect_url,'state');
           console.log('state',redirect_url);
           redirect_url = encodeURIComponent(redirect_url);
           console.log('loginUrl',redirect_url);
