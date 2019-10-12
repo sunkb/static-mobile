@@ -163,7 +163,7 @@ export default {
         this.$refs['toast'].showToast(res.info)
       }
 
-      window.location = `https://release6.landi.com/static-web/mobile/presentation/share/?activity_id=1&work_id=1`
+      window.location = `https://release6.landi.com/static-web/mobile/presentation/share/?activity_id=1&work_id=1&login=true`
     },
     shareToFrends() {
       this.showShareHelp = true
@@ -172,7 +172,7 @@ export default {
   async mounted() {
     this.$refs['toast'].showLoadingToast()
     const { code } = this.$route.query
-    if (code == null) {
+    if (code == null && login == null) {
       getWXCode(window.location.href)
       return
     }
