@@ -162,8 +162,6 @@ export default {
       if(!res.status){
         this.$refs['toast'].showToast(res.info)
       }
-
-      window.location = `https://release6.landi.com/static-web/mobile/presentation/share/?activity_id=1&work_id=1&login=true`
     },
     shareToFrends() {
       this.showShareHelp = true
@@ -171,7 +169,7 @@ export default {
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
-    const { code, login } = this.$route.query
+    const { code } = this.$route.query
     if (code == null && login == null) {
       getWXCode(window.location.href)
       return
@@ -179,8 +177,6 @@ export default {
 
     if(code){
       await this.getOpenid()
-    }
-    if (login) {
       await this.initData();
     }
 
