@@ -180,7 +180,7 @@ export default {
     if (res.status) { 
       this.resData = res.data
       document.title = this.resData.name
-      this.presentationStyle.background = `url(${this.resData.background_pic_url}) 0 0 no-repeat / contain local`
+      this.presentationStyle.background = `url(${this.resData.background_pic_url}) no-repeat contain local`
       this.presentationStyle.backgroundColor = '#fff'
     } else {
       this.$refs['toast'].showToast(res.info)
@@ -208,7 +208,6 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
-  background: url('https://qn-static.landi.com/uploadtool9b717db53c6093a0ddf75acfdbfe3ff4.png') 0 0 no-repeat / contain local;
 
   &::-webkit-scrollbar {
     display: none;
