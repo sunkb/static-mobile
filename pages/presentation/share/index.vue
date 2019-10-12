@@ -93,7 +93,7 @@ export default {
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
-      const url = encodeURIComponent(location.href.split('#')[0])
+      const url = encodeURIComponent(window.location.href)
       // const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
       // if (!res.status) {
       //   this.$refs['toast'].showToast(res.info)
@@ -122,7 +122,7 @@ export default {
       // this.shareStyle.backgroundColor = '#fff'
 
       //分享修改
-      const resWX = await axios.get(`${API.WX_SHARE}?activity_id=${activity_id}&url=${encodeURIComponent(url)}&work_id=${work_id}`)
+      const resWX = await axios.get(`${API.WX_SHARE}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)
         return
