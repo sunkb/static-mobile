@@ -9,6 +9,7 @@ const API = {
   SUBMIT_WORK: '/Mobile/StudentActivity/submitWork',
   RANK: '/Mobile/StudentActivityDetail/rank',
   WX_SHARE: '/Mobile/StudentActivityDetail/share',
+  WX_SHARE1: '/Mobile/StudentActivityDetail/share1',
   WORK: '/Mobile/StudentActivityDetail/work',
   LIKE: '/Mobile/StudentActivityDetail/zan',
   UNLIKE: '/Mobile/StudentActivityDetail/unZan',

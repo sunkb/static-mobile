@@ -95,7 +95,7 @@ export default {
       const { activity_id, work_id } = this.$route.query
       // const url = encodeURIComponent(window.location.href)
       // const url = encodeURIComponent(sessionStorage.getItem('lastUrl'))
-      const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/share/?activity_id=1&work_id=1')
+      // const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/share/?activity_id=1&work_id=1')
       const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&work_id=${work_id}`)
       if (!res.status) {
         this.$refs['toast'].showToast(res.info)
@@ -124,7 +124,13 @@ export default {
       this.shareStyle.backgroundColor = '#fff'
 
       //分享修改
-      const resWX = await axios.get(`${API.WX_SHARE}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
+      const url = window.location.href
+      //const resWX = await axios.get(`${API.WX_SHARE}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
+      const resWX = await axios.get(`${API.WX_SHARE1}`, {
+        activity_id,
+        url,
+        work_id
+      })
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)
         return
