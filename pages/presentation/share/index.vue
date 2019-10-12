@@ -94,8 +94,8 @@ export default {
     async initData() {
       const { activity_id, work_id } = this.$route.query
       // const url = window.location.href
-      // const url = decodeURIComponent(location.href.split('?')[0])
-      const url = `https://release6.landi.com/static-web/mobile/presentation/share`
+      const url = decodeURIComponent(location.href.split('#')[0])
+      // const url = `https://release6.landi.com/static-web/mobile/presentation/share`
       const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&url=${url}&work_id=${work_id}`)
       if (!res.status) {
         this.$refs['toast'].showToast(res.info)
@@ -172,16 +172,17 @@ export default {
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()
-    const { code } = this.$route.query
-    if (code == null) {
-      getWXCode(window.location.href)
-      return
-    }
+    // const { code } = this.$route.query
+    // if (code == null) {
+    //   getWXCode(window.location.href)
+    //   return
+    // }
 
-    if(code){
-      await this.getOpenid()
-      await this.initData();
-    }
+    // if(code){
+    //   await this.getOpenid()
+    //   await this.initData();
+    // }
+    await this.initData();
 
     this.$refs['toast'].hideLoadingToast()
   }
