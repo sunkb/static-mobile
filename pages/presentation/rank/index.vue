@@ -13,7 +13,6 @@
       </div>
     </div>
     <div class="rank">
-      <!-- TODO: key 修改成唯一的 -->
       <div v-for="(item, index) in rankList" :key="item.sid" class="rank-item">
         <div class="rank-item-left">
           <div class="rank-item-rank">

@@ -51,6 +51,7 @@ $height: 90px;
 
 #stepbar {
   position: relative;
+  width: 100vw;
 }
 
 .wrapper {

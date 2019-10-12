@@ -12,7 +12,7 @@
         </div>
         <div class="signupform-item">
           <span class="signupform-item-label required">孩子英文名</span>
-          <input disabled class="signupform-item-input" v-model="signupData.engName" placeholder="请填写英文名" @blur="formBlur"/>
+          <input class="signupform-item-input" v-model="signupData.engName" placeholder="请填写英文名" @blur="formBlur"/>
         </div>
         <div class="signupform-item">
           <span class="signupform-item-label required">兰迪级别</span>
@@ -144,7 +144,6 @@ export default {
         const address = (data1.data.address.split('#')[1]).split('/')
         this.signupData.province = address[0]
         this.signupData.city = address[1]
-        this.signupData.engName = data1.data.en_name
       }
     }
     this.$refs['toast'].hideLoadingToast()

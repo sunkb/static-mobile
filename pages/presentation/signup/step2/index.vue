@@ -11,15 +11,27 @@
       </div>
       <div class="topic">
         <div class="topic-item" v-for="(item) in topics" :key="item.id">
-          <video v-if="item.videos.length > 0" controls class="topic-item-video" :poster="item.videos[0].pic_url" x5-video-player-type='h5'>
+          <video v-if="item.videos.length > 0" controls class="topic-item-video" :poster="item.videos[0].pic_url">
             <source :src="item.videos[0].url"/>
           </video>
-          <video v-if="item.audios.length > 0 && item.videos.length == 0" controls class="topic-item-video" :poster="item.audios[0].pic_url" x5-video-player-type='h5'>
+          <video v-if="item.audios.length > 0 && item.videos.length == 0" controls class="topic-item-video" :poster="item.audios[0].pic_url">
             <source :src="item.audios[0].url"/>
           </video>
-          <div class="topic-item-video" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0">
-            <img class="topic-item-video-pic" :src="item.pics[0]"/>
-          </div>
+          <!-- <video
+            v-if="item.videos.length > 0 || item.audios.length > 0"
+            style="opacity:0;"
+            :id="`video${index}`"
+            controls
+            :key="index"
+            preload="auto"
+            :src=""
+          /> -->
+          <!-- <div class="topic-item-video">
+            <div class="topic-item-video-play" v-if="item.videos.length > 0 || item.audios.length > 0"></div>
+            <img class="topic-item-video-pic" :src="item.videos[0].pic_url" v-if="item.videos.length > 0"/>
+            <img class="topic-item-video-pic" :src="item.audios[0].pic_url" v-if="item.audios.length > 0 && item.videos.length == 0"/>
+            <img class="topic-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
+          </div> -->
           <div class="topic-item-selector" @click="selectTopic(item.id)">
             <img v-if="topicSelectID == item.id" class="topic-item-selector-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
           </div>
@@ -163,9 +175,19 @@ $topic-item-width: 480px;
       width: $topic-item-width;
       max-height: 300px;
       overflow: hidden;
+      position: relative;
 
       &-pic {
         width: inherit;
+      }
+      &-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        height: 100px;
+        background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
       }
     }
 

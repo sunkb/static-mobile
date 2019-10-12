@@ -7,7 +7,7 @@ const API = {
   ACTIVITY_DETAIL: '/Mobile/StudentActivityDetail/detail',
   MY_WORK: '/Mobile/StudentActivity/myWork',
   SUBMIT_WORK: '/Mobile/StudentActivity/submitWork',
-  RANK: '/Mobile/StudentActivity/rank',
+  RANK: '/Mobile/StudentActivityDetail/rank',
   WX_SHARE: '/Mobile/StudentActivityDetail/share',
   WORK: '/Mobile/StudentActivityDetail/work',
   LIKE: '/Mobile/StudentActivityDetail/zan',
