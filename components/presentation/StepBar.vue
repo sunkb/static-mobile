@@ -131,7 +131,7 @@ $height: 90px;
 
   &-empty {
     width: 100%;
-    box-shadow: inset 0 1.5px 2.25px -1.875px #666666;
+    box-shadow: 0 1.5px 2.25px -1.875px #666666 inset;
   }
 
   &-fill {
