@@ -200,13 +200,14 @@ $level-height: 90px;
     box-sizing: content-box;
     border-bottom: 1px solid #EBEBEB;
     background: #fff;
+    padding: 0 18.75px;
+    box-sizing: content-box;
 
     &-left {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 562.5px;
-      margin: 18.75px 0;
     }
     &-rank {
       width: 60px;
