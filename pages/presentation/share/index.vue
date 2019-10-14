@@ -44,6 +44,7 @@ import { API } from '~/pages/presentation/consts'
 import { getWXCode, initWX } from '~/pages/presentation/wx'
 import Toast from '~/components/Toast'
 import PrtMixin from '~/pages/presentation/mixin'
+import '~/pages/presentation/presentation'
 
 export default {
   name: 'Share',

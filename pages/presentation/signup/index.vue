@@ -50,6 +50,7 @@ import { STEPS, API, REGION_DATA, SIGNUP_DATA_RULE, STROGE } from '~/pages/prese
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 import PrtMixin from '~/pages/presentation/mixin'
+import '~/pages/presentation/presentation'
 
 export default {
   name: 'Signup',

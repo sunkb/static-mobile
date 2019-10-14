@@ -68,6 +68,7 @@ import Toast from '~/components/Toast'
 import axios from '~/utils/axios'
 import PrtMixin from '~/pages/presentation/mixin'
 import { videoPlayerEvent } from '~/utils/videoPlay'
+import '~/pages/presentation/presentation'
 
 export default {
   name: 'Signup',
