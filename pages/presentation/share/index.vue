@@ -14,7 +14,7 @@
           id="video-share"
           controls
           preload="auto"
-          :src="videoSrc"
+          :src="stuData.videoSrc"
         />
         <img class="content-video-img" :src="`${stuData.videoSrc}?vframe/jpg/offset/2/h/960/`"/>
         <div class="content-video-play"></div>
