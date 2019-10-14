@@ -209,8 +209,10 @@ export default {
       font-size: 28px;
       outline: none;
       color: #333333;
-      appearance: none;
       width: 200px;
+      appearance:none;  
+      -moz-appearance:none;  
+      -webkit-appearance:none;
     }
 
     &-vcode {
