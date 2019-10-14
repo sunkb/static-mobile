@@ -209,7 +209,7 @@ $topic-item-width: 480px;
     }
     &-videoplay {
       width: $topic-item-width;
-      height: 280px;
+      height: 360px;
       overflow: hidden;
       position: absolute;
       top: 0;
