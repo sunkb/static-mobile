@@ -25,6 +25,6 @@ module.exports = {
     NODE_ENV: 'production',
     ENV_API: 'https://www.landi.com/', // 正式服务器地址
     BASE_URL: 'https://www.landi.com/static-web/mobile',
-    APP_ID: 'wxc82e75af73bfbc8f'
+    APP_ID: 'wx575385af6b09a6e0'
   }
 }
