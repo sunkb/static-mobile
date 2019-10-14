@@ -190,6 +190,9 @@ export default {
     overflow: hidden;
     position: relative;
     background: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &-play {
       position: absolute;
