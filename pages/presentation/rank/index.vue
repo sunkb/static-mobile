@@ -197,7 +197,6 @@ $level-height: 90px;
   &-item {
     display: flex;
     justify-content: space-between;
-    padding: 18.75px 0;
     box-sizing: content-box;
     border-bottom: 1px solid #EBEBEB;
     background: #fff;
@@ -207,6 +206,7 @@ $level-height: 90px;
       align-items: center;
       justify-content: space-between;
       width: 562.5px;
+      margin: 18.75px 0;
     }
     &-rank {
       width: 60px;
