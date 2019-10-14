@@ -331,11 +331,12 @@ export default {
 
       &-eng {
         color: #333333;
-        padding-bottom: 5px;
+        max-height: 67px;
+        margin-bottom: 6px;
+        box-sizing: content-box;
       }
 
       &-chn {
-        margin-top: -10px;
       }
 
       &-text {
