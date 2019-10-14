@@ -87,12 +87,12 @@ export default {
     async clickLike() {
       const liked = this.liked;
 
-      this.liked = !this.liked
       if (this.liked) {
         this.stuData.like = this.stuData.like - 1 >= 0 ? this.stuData.like - 1 : 0
       } else {
         this.stuData.like++
       }
+      this.liked = !this.liked
 
       let res;
       if(!liked){
