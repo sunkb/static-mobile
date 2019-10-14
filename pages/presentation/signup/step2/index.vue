@@ -27,8 +27,8 @@
             <img class="topic-item-video-pic" :src="item.audios[0].pic_url" v-if="item.audios.length > 0 && item.videos.length == 0"/>
             <img class="topic-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
           </div>
-          <div class="topic-item-selector-wrapper">
-            <div class="topic-item-selector" @click="selectTopic(item.id)">
+          <div class="topic-item-selector-wrapper" @click="selectTopic(item.id)">
+            <div class="topic-item-selector" >
               <img v-if="topicSelectID == item.id" class="topic-item-selector-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
             </div>
           </div>
@@ -239,9 +239,6 @@ $topic-item-width: 480px;
     }
 
     &-selector {
-      position: absolute;
-      top: 19px;
-      right: 19px;
       width: 54px;
       height: 54px;
       border-radius: 50%;
@@ -253,6 +250,9 @@ $topic-item-width: 480px;
 
       &-wrapper {
         padding: 50px;
+        position: absolute;
+        top: 19px;
+        right: 19px;
       }
 
       &-img {
