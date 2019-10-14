@@ -367,7 +367,7 @@ export default {
   justify-content: space-between;
   color: #333333;
   font-size: 26px;
-  margin-top: 60px;
+  padding-top: 60px;
 
   &-rank {
     border-top-left-radius: 30px;
