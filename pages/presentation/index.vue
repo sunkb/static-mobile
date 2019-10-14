@@ -372,7 +372,7 @@ function removeParam(key, sourceURL) {
 
       &-eng {
         color: #333333;
-        max-height: 63px;
+        max-height: 60px;
         box-sizing: content-box;
         border: 1px solid red;
       }
