@@ -55,6 +55,7 @@
       btnText="进入下一步"
       :isClickable="videoUploaded"
       @submit="nextStep"
+      class="submitarea"
     ></submit-area>
     <toast ref="toast"></toast>
   </div>
@@ -359,5 +360,10 @@ export default {
       }
     }
   }
+}
+
+.submitarea {
+  position: static;
+  margin-top: 120px;
 }
 </style>

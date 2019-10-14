@@ -38,6 +38,7 @@
         btnText="提交报名信息"
         :isClickable="dataNotEmpty"
         @submit="formSubmit"
+        class="submitarea"
       ></submit-area>
     </div>
     <toast ref="toast"></toast>
@@ -207,7 +208,8 @@ export default {
       outline: none;
       color: #333333;
       appearance: none;
-      max-width: 200px;
+      width: 200px;
+      opacity: 0;
     }
 
     &-vcode {
@@ -224,5 +226,10 @@ export default {
       background: #B2B2B2;
     }
   }
+}
+
+.submitarea {
+  position: static;
+  margin-top: 120px;
 }
 </style>
