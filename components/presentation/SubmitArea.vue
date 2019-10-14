@@ -37,11 +37,11 @@ export default {
   text-align: center;
   width: 100%;
   position: fixed;
-  bottom: 37.5px;
+  bottom: 44px;
   left: 0;
 
   &-text {
-    margin: 24px 0;
+    margin: 20px 0;
     color: #B2B2B2;
     font-size: 24px;
     padding: 0 45px;

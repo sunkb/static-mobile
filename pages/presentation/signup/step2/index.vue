@@ -248,10 +248,11 @@ $topic-item-width: 480px;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
 
       &-img {
-        width: 41.25px;
-        height: 41.25px;
+        width: 42px;
+        height: 42px;
       }
     }
   }
