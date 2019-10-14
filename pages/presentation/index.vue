@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="description card">
-        <div class="divide-title">
+        <div class="divide-title divide-title-space">
           <div class="divide-decohr"></div>
           <div class="divide-title-text">兰迪简介</div>
           <div class="divide-decohr"></div>
@@ -58,7 +58,7 @@
         <p>以“同伴学习”为教学理念，营造同伴竞争和同伴合作的场景，激发孩子学习英语的主动性，有效提升孩子的语言、思维及社交能力，让更多孩自如对话世界。</p>
       </div>
       <div class="step card">
-        <div class="divide-title">
+        <div class="divide-title divide-title-space">
           <div class="divide-decohr"></div>
           <div class="divide-title-text">活动步骤</div>
           <div class="divide-decohr"></div>
@@ -390,6 +390,10 @@ export default {
     align-items: center;
     width: 100%;
     margin-bottom: 40px;
+
+    &-space {
+      margin-top: 20px;
+    }
 
     &-text {
       margin: 0 37.5px;
