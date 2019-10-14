@@ -114,7 +114,8 @@ export default {
       centerActionBottom: 0,
       presentationStyle: { },
       isClassing: false,
-      showPosterModal: false
+      showPosterModal: false,
+      isLogin:true
     }
   },
   methods: {
@@ -130,6 +131,20 @@ export default {
       this.gotoPage('presentation-signup')
     },
     mainAction() {
+
+      if(!this.isLogin){
+          let redirect_url = window.location.href;
+          redirect_url = removeParam('code',redirect_url);
+          console.log('code',redirect_url);
+          redirect_url = removeParam('state',redirect_url);
+          console.log('state',redirect_url);
+          redirect_url = encodeURIComponent(redirect_url);
+          console.log('loginUrl',redirect_url);
+          const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
+          console.log('loginUrl',loginUrl);
+          window.location.href = loginUrl;
+      }
+
       if (this.haveWork) {
         // this.gotoPage('presentation-signup-step5')
         window.location = `${process.env.BASE_URL}/presentation/signup/step5/?activity_id=${this.$route.query.activity_id}`
@@ -201,6 +216,9 @@ export default {
       }
     } catch (error) {
       console.log(error)
+      if(error.response.status === 401){
+        this.isLogin = false;
+      }
     }
 
 
