@@ -8,7 +8,7 @@
         <div class="topaction-rule" @click="gotoPageWithHistory('presentation-rule')">活动规则</div>
       </div>
       <div class="content card">
-        <h3 style="margin-top: 35px;">报名参赛，分享更多宝贝高光时刻</h3>
+        <h3 class="content-title">报名参赛，分享更多宝贝高光时刻</h3>
         <div class="action" @click="mainAction" ref="centerAction">
           <div class="action-content" :style="{ background: resData.button_color }">
             <div class="action-content-text">{{ haveWork ? '查看我的作品' : '我要报名参赛' }}</div>
@@ -43,8 +43,8 @@
               <img class="content-video-item-video-pic" :src="item.audios[0].pic_url" v-if="item.audios.length > 0 && item.videos.length == 0"/>
               <img class="content-video-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
             </div>
-            <h3 class="content-video-item-eng content-video-item-text" style="margin-top: 20px;">{{ item.en_topic_name }}</h3>
-            <h3 class="content-video-item-chn content-video-item-text" style="font-size: 24px;">{{ item.cn_topic_name }}</h3>
+            <h3 class="content-video-item-eng content-video-item-text">{{ item.en_topic_name }}</h3>
+            <h3 class="content-video-item-chn content-video-item-text">{{ item.cn_topic_name }}</h3>
           </div>
         </div>
       </div>
@@ -465,5 +465,9 @@ export default {
   height: 140px;
   box-shadow: 0 -2px 6px 0 #CCCCCC;
   text-align: center;
+}
+
+.content-title {
+  margin-top: 20px;
 }
 </style>
