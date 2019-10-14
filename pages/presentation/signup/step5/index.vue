@@ -25,6 +25,7 @@
             preload="auto"
             :src="mywork.video_url"
           />
+          <img class="video-content-img" :src="`${mywork.video_url}?vframe/jpg/offset/2/h/960/`"/>
           <div class="video-content-play"></div>
         </div>
       </div>
@@ -198,6 +199,10 @@ export default {
       width: 100px;
       height: 100px;
       background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+    }
+
+    &-img {
+      height: 360px;
     }
   }
 }

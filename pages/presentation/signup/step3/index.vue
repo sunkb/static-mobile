@@ -41,6 +41,7 @@
                 class="video-uploaded-videoplay"
               />
               <div class="video-uploaded-video" @click="playFn('video-upload')">
+                <img class="video-uploaded-video-img" :src="`${videoSrc}?vframe/jpg/offset/2/h/960/`"/>
                 <div class="video-uploaded-video-play"></div>
               </div>
             </div>
@@ -318,6 +319,9 @@ export default {
       overflow: hidden;
       position: relative;
       background: #E6E6E6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       &-play {
         position: absolute;
@@ -327,6 +331,10 @@ export default {
         width: 100px;
         height: 100px;
         background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+      }
+
+      &-img {
+        height: $video-conten-height;
       }
     }
   }
