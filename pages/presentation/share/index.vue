@@ -231,9 +231,9 @@ export default {
   background: #fff;
   margin-top: 46px;
   position: relative;
-  left: 0;
+  left: 50%;
   top: 0;
-  transform: translateX(50%);
+  transform: translateX(-50%);
 
   &-video {
     width: 640px;
