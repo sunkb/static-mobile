@@ -66,15 +66,16 @@
                 v-if="isMobile()"
                 controls
                 controlslist="nodownload"
-                preload="auto"
-                :src="`${teacherMsg.info.video}`"
-              />
+                preload="preload"
+              >
+               <source :src="`${teacherMsg.info.video}`" type="video/mp4" />
+              </video>
               <video
                 v-else
                 id="videoPlay1"
                 controls
                 controlslist="nodownload"
-                preload="auto"
+                preload="preload"
                 :src="`${teacherMsg.info.video}`"
               />
             </div>
@@ -96,18 +97,17 @@
                   v-if="isMobile()"
                   :id="`video${index}`"
                   controls
-                  controlslist="nodownload"
                   :key="index"
-                  preload="auto"
-                  :src="item"
-                />
+                  preload="preload"
+                >
+                <source :src="item" type="video/mp4" />
+               </video>
                 <video
                   v-else
                   :id="`video${index}`"
                   controls
-                  controlslist="nodownload"
                   :key="index"
-                  preload="auto"
+                  preload="preload"
                   :src="item"
                 />
               </div>
@@ -258,15 +258,17 @@ import { videoPlayerEvent } from "~/utils/videoPlay";
 import abcRate from "~/components/cell_rate/index.vue";
 
 export default {
-  head(){
+  head() {
     return {
-      title: '老师个人主页',
-      meta: [{
-        hid: 'viewport',
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1.0'
-      }]
-    }
+      title: "老师个人主页",
+      meta: [
+        {
+          hid: "viewport",
+          name: "viewport",
+          content: "width=device-width, initial-scale=1.0"
+        }
+      ]
+    };
   },
   data() {
     return {
