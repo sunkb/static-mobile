@@ -23,6 +23,20 @@
             </select>
           </div>
           <div class="signupform-item">
+            <span class="signupform-item-label required">省份</span>
+            <select class="signupform-item-select" v-model="signupData.province" @change="provinceSelectChange" @blur="formBlur" ref="province">
+              <option value="0">请选择所在省份</option>
+              <option v-for="(item) in regionData['province']" :key="item.id" :value="item.id">{{ item.name }}</option>
+            </select>
+          </div>
+          <div class="signupform-item">
+            <span class="signupform-item-label required">城市</span>
+            <select class="signupform-item-select" v-model="signupData.city" @blur="formBlur" ref="city" @change="formBlur">
+              <option value="0">请选择所在城市</option>
+              <option v-for="(item) in regionData['city'][signupData.province]" :key="item.id" :value="item.id">{{ item.name }}</option>
+            </select>
+          </div>
+          <!-- <div class="signupform-item">
             <span class="signupform-item-label required">地址</span>
             <select class="signupform-item-select" v-model="signupData.province" @change="provinceSelectChange" @blur="formBlur" ref="province">
               <option value="0">请选择所在省份</option>
@@ -32,7 +46,7 @@
               <option value="0">城市</option>
               <option v-for="(item) in regionData['city'][signupData.province]" :key="item.id" :value="item.id">{{ item.name }}</option>
             </select>
-          </div>
+          </div> -->
         </div>
         <submit-area 
           hint="请确认信息属实, 一旦提交后不可再修改" 
