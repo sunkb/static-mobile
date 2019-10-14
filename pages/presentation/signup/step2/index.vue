@@ -249,10 +249,10 @@ $topic-item-width: 480px;
       align-items: center;
 
       &-wrapper {
-        padding: 50px;
         position: absolute;
-        top: 19px;
-        right: 19px;
+        top: 0;
+        right: 0;
+        padding: 19px;
       }
 
       &-img {
