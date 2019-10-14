@@ -233,10 +233,6 @@ export default {
 
 .content {
   width: 690px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   padding: 37.5px 22.5px;
   box-shadow: 0 0 22.5px -11.25px #999999;
   background: #fff;
