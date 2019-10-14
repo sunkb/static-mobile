@@ -125,7 +125,7 @@ $height: 90px;
     top: 50%;
     left: 0;
     transform: translate(0, -50%);
-    height: 2px;
+    height: 4px;
     border-radius: 4px;
   }
 
