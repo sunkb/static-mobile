@@ -58,7 +58,7 @@
               @click="playFn('videoPlay1')"
               v-if="teacherMsg&&teacherMsg.info.video"
             >
-              <!-- <img :src="`${teacherMsg.info.video}?vframe/jpg/offset/1/h/960/`" alt /> -->
+              <img :src="`${teacherMsg.info.video}?vframe/jpg/offset/1/h/960/`" alt />
               <div class="palyBtn"></div>
               <video
                 style="opacity:0;"
@@ -89,7 +89,7 @@
                 class="videoItem"
                 @click="playFn(`video${index}`)"
               >
-                <!-- <img :src="`${item}?vframe/jpg/offset/1/h/960/`" alt /> -->
+                <img :src="`${item}?vframe/jpg/offset/1/h/960/`" alt />
                 <div class="palyBtn">></div>
                 <video
                   style="opacity:0;"
