@@ -18,7 +18,7 @@
         </div>
         <div class="divide-title">
           <div class="divide-decohr"></div>
-          <h1 style="color: #333333;">参赛作品样板</h1>
+          <div class="divide-title-text">参赛作品样板</div>
           <div class="divide-decohr"></div>
         </div>
         <div class="content-level">
@@ -51,7 +51,7 @@
       <div class="description card">
         <div class="divide-title">
           <div class="divide-decohr"></div>
-          <h1 style="color: #333333;">兰迪简介</h1>
+          <div class="divide-title-text">兰迪简介</div>
           <div class="divide-decohr"></div>
         </div>
         <p>兰迪少儿英语是专注为4-12岁少儿提供优质的英语学习内容与体验的在线外教小班课教育品牌，引进牛津大学出版社原版最新美式英语 Starlight教材，优选“英美加”等英语为母语国家的外教。</p>
@@ -60,7 +60,7 @@
       <div class="step card">
         <div class="divide-title">
           <div class="divide-decohr"></div>
-          <h1 style="color: #333333;">活动步骤</h1>
+          <div class="divide-title-text">活动步骤</div>
           <div class="divide-decohr"></div>
         </div>
         <div v-for="(item, index) in steps" :key="index" class="step-item">
@@ -267,10 +267,9 @@ export default {
 
   &-level {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     margin-bottom: 22.5px;
-    padding: 0 40px;
 
     &-item {
       width: 150px;
@@ -282,6 +281,11 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-right: 20px;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 
@@ -339,7 +343,7 @@ export default {
 }
 
 .action {
-  margin: 22.5px 0;
+  margin: 22.5px 0 60px;
   display: inline-block;
   width: 610px;
   height: 100px;
@@ -355,6 +359,7 @@ export default {
     &-text {
       font-size: 34px;
       color: #fff;
+      font-weight: bold;
     }
 
     &-deco0 {
@@ -384,14 +389,19 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin-bottom: 40px;
 
-    h1 {
+    &-text {
       margin: 0 37.5px;
+      font-size: 28px;
+      color: #333333;
+      font-weight: bold;
+      font-family: MicrosoftYaHei-Bold;
     }
   }
   &-decohr {
     width: 120px;
-    border-bottom: 2px solid #E6E6E6;
+    border-bottom: 1px solid #E6E6E6;
   }
 }
 

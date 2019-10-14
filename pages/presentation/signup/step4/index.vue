@@ -4,7 +4,7 @@
       <step-bar :steps="steps" :progress="70"></step-bar>
     </div>
     <div class="page-content">
-      <h1>确认提交</h1>
+      <h1 class="title-content-space">确认提交</h1>
       <div class="video">
         <div v-if="videoSrc && videoSrc != ''" class="video-content" @click="playFn('video-upload')">
           <video

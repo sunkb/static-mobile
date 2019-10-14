@@ -128,9 +128,15 @@ $level-height: 90px;
       font-size: 40px;
       font-weight: bold;
       margin-bottom: 15px;
+      font-family: MicrosoftYaHei-Bold;
     }
     &-text {
       width: 430px;
+      font-family: MicrosoftYaHei;
+      font-size: 26px;
+      color: #FFFFFF;
+      letter-spacing: 0;
+      line-height: 41px;
     }
   }
 }
@@ -193,7 +199,7 @@ $level-height: 90px;
     justify-content: space-between;
     padding: 18.75px 0;
     box-sizing: content-box;
-    border-bottom: 1.5px solid #EBEBEB;
+    border-bottom: 1px solid #EBEBEB;
 
     &-left {
       display: flex;
@@ -231,8 +237,9 @@ $level-height: 90px;
       width: 337.5px;
       padding-left: 15px;
       text-align: left;
-      font-size: 30px;
+      font-size: 32px;
       color: #333333;
+      font-family: MicrosoftYaHei;
     }
     &-like {
       display: flex;

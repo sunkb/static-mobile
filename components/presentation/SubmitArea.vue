@@ -41,7 +41,7 @@ export default {
   left: 0;
 
   &-text {
-    margin: 22.5px 0;
+    margin: 24px 0;
     color: #B2B2B2;
     font-size: 24px;
     padding: 0 45px;

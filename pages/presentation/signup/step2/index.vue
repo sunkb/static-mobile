@@ -4,7 +4,7 @@
       <step-bar :steps="steps" :progress="30"></step-bar>
     </div>
     <div class="page-content">
-      <h1>选择题目</h1>
+      <h1 class="title-content-space">选择题目</h1>
       <div class="level">
         <h2>当前级别: {{ landiLevel.name }}</h2>
         <h3 class="level-hint">左右滑屏可以切换样板和主题</h3>

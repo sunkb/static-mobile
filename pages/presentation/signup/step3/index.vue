@@ -5,7 +5,7 @@
     </div>
     <div class="page-content">
       <div class="title">
-        <h1>上传视频</h1>
+        <h1 class="title-content-space">上传视频</h1>
         <div class="title-action" @click="gotoStep2">
           <h3>查看题目</h3>
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
