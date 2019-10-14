@@ -13,7 +13,7 @@
       </div>
       <div>
         <div>
-          <h2>当前级别: {{ landiLevel }}</h2>
+          <h2 class="level2text">当前级别: {{ landiLevel }}</h2>
           <div class="topic-text">
             <h2 v-if="topic" class="topic-text-eng">{{ topic.en_topic_name }}</h2>
             <h3 v-if="topic" class="topic-text-chn">{{ topic.cn_topic_name }}</h3>

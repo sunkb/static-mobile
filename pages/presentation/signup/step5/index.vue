@@ -11,7 +11,7 @@
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
         </div>
       </div>
-      <h2>报名学生: {{ mywork.en_name }}</h2>
+      <h2 class="level2text">报名学生: {{ mywork.en_name }}</h2>
       <div class="topic-text">
         <h2 class="topic-text-eng">{{ mywork.topic.en_topic_name }}</h2>
         <h3 class="topic-text-chn">{{ mywork.topic.cn_topic_name }}</h3>
