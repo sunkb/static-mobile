@@ -8,7 +8,7 @@
         <div class="topaction-rule" @click="gotoPageWithHistory('presentation-rule')">活动规则</div>
       </div>
       <div class="content card">
-        <h3>报名参赛，分享更多宝贝高光时刻</h3>
+        <h3 style="margin-top: 35px;">报名参赛，分享更多宝贝高光时刻</h3>
         <div class="action" @click="mainAction" ref="centerAction">
           <div class="action-content" :style="{ background: resData.button_color }">
             <div class="action-content-text">{{ haveWork ? '查看我的作品' : '我要报名参赛' }}</div>
@@ -25,7 +25,7 @@
           <div v-for="(item, index) in resData.combinations" :key="item.id" class="content-level-item" @click="selectLevel(index)"
             :style="levelSelectIndex == index ? { background: resData.button_color, color: '#fff', border: 'none' } : {}">{{ item.name }}</div>
         </div>
-        <h3>以下2个演讲主题，任意选择其中之一报名即可</h3>
+        <h3>以下演讲主题，任意选择其中之一即可</h3>
         <div class="content-video" ref="content-video">
           <div class="content-video-item" v-for="(item, index) in resData.combinations[levelSelectIndex].topics" :key="item.id">
             <video
@@ -43,8 +43,8 @@
               <img class="content-video-item-video-pic" :src="item.audios[0].pic_url" v-if="item.audios.length > 0 && item.videos.length == 0"/>
               <img class="content-video-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
             </div>
-            <h3 class="content-video-item-eng content-video-item-text">{{ item.en_topic_name }}</h3>
-            <h3 class="content-video-item-chn content-video-item-text">{{ item.cn_topic_name }}</h3>
+            <h3 class="content-video-item-eng content-video-item-text" style="margin-top: 20px;">{{ item.en_topic_name }}</h3>
+            <h3 class="content-video-item-chn content-video-item-text" style="font-size: 24px;">{{ item.cn_topic_name }}</h3>
           </div>
         </div>
       </div>
@@ -219,7 +219,7 @@ export default {
 
 .card {
   width: 690px;
-  padding: 22.5px 30px;
+  padding: 22.5px 42px;
   box-shadow: 0 2px 8px 0 #CCCCCC;
   position: relative;
   left: 50%;
@@ -308,7 +308,7 @@ export default {
 
       &-video {
         width: $topic-item-width;
-        height: 280px;
+        height: 360px;
         overflow: hidden;
         position: relative;
 
@@ -350,7 +350,7 @@ export default {
 }
 
 .action {
-  margin: 22.5px 0 60px;
+  margin: 16.5px 0 60px;
   display: inline-block;
   width: 610px;
   height: 100px;
