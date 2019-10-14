@@ -292,7 +292,7 @@ export default {
       teacherIntro: ""
     };
   },
-  mounted() {
+  created() {
     this.getTag();
     this.getTeacherInfo();
     this.getTeacherScoreFn();
