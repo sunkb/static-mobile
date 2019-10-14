@@ -328,8 +328,8 @@ export default {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 100px;
-        height: 100px;
+        width: 76px;
+        height: 76px;
         background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
       }
 
