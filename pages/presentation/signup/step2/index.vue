@@ -27,8 +27,10 @@
             <img class="topic-item-video-pic" :src="item.audios[0].pic_url" v-if="item.audios.length > 0 && item.videos.length == 0"/>
             <img class="topic-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
           </div>
-          <div class="topic-item-selector" @click="selectTopic(item.id)">
-            <img v-if="topicSelectID == item.id" class="topic-item-selector-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
+          <div class="topic-item-selector-wrapper">
+            <div class="topic-item-selector" @click="selectTopic(item.id)">
+              <img v-if="topicSelectID == item.id" class="topic-item-selector-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
+            </div>
           </div>
           <h3 class="topic-item-eng topic-item-text">{{ item.en_topic_name }}</h3>
           <h3 class="topic-item-chn topic-item-text chntext">{{ item.cn_topic_name }}</h3>
@@ -248,6 +250,10 @@ $topic-item-width: 480px;
       display: flex;
       justify-content: center;
       align-items: center;
+
+      &-wrapper {
+        padding: 50px;
+      }
 
       &-img {
         width: 42px;
