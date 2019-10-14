@@ -183,6 +183,9 @@ export default {
     }
   },
   async mounted() {
+    if (WeixinJSBridge) {
+      WeixinJSBridge.call('hideToolbar')
+    }
     this.$refs['toast'].showLoadingToast()
     const { code } = this.$route.query
     if (code == null) {
@@ -195,7 +198,6 @@ export default {
       await this.getOpenid()
       await this.initData();
     }
-
     this.$refs['toast'].hideLoadingToast()
   }
 }

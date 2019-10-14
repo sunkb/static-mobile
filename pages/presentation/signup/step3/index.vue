@@ -199,6 +199,9 @@ export default {
     },
   },
   async mounted() {
+    if (WeixinJSBridge) {
+      WeixinJSBridge.call('hideToolbar')
+    }
     const result = this.initDataFromStroge()
     if (!result) {
       await this.initDataFromAPI()

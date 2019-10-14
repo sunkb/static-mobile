@@ -87,6 +87,9 @@ export default {
     },
   },
   async mounted() {
+    if (WeixinJSBridge) {
+      WeixinJSBridge.call('hideToolbar')
+    }
     this.$refs['toast'].showLoadingToast()
     const activityID = this.$route.query.activity_id
     const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
