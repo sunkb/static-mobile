@@ -268,6 +268,11 @@ export default {
   &-topic-eng {
     color: #333333;
     margin-top: 22.5px;
+    text-align: left;
+  }
+
+  &-topic-chn {
+    text-align: left;
   }
 
   &-action {
