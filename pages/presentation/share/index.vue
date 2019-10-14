@@ -86,7 +86,13 @@ export default {
   methods: {
     async clickLike() {
       const liked = this.liked;
-      const { activity_id, work_id } = this.$route.query
+
+      this.liked = !this.liked
+      if (this.liked) {
+        this.stuData.like = this.stuData.like - 1 >= 0 ? this.stuData.like - 1 : 0
+      } else {
+        this.stuData.like++
+      }
 
       let res;
       if(!liked){
@@ -97,12 +103,6 @@ export default {
 
       if (res.status) {
         // await this.initData();
-        this.liked = !this.liked
-        if (this.liked) {
-          this.stuData.like = this.stuData.like - 1 >= 0 ? this.stuData.like - 1 : 0
-        } else {
-          this.stuData.like++
-        }
       }else{
         this.$refs['toast'].showToast(res.info)
       }
