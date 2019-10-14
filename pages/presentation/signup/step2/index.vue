@@ -248,8 +248,6 @@ $topic-item-width: 480px;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 50px;
-      box-sizing: content-box;
 
       &-img {
         width: 42px;
