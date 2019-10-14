@@ -221,8 +221,7 @@ $topic-item-width: 480px;
 
     &-eng {
       color: #333333;
-      max-height: 67px;
-      margin-bottom: 6px;
+      max-height: 63px;
       box-sizing: content-box;
     }
 
