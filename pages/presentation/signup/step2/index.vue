@@ -226,6 +226,8 @@ $topic-item-width: 480px;
     }
 
     &-chn {
+      padding-top: 15px;
+      margin-top: -10px;
     }
 
     &-text {

@@ -336,6 +336,8 @@ export default {
       }
 
       &-chn {
+        padding-top: 15px;
+        margin-top: -10px;
       }
 
       &-text {
