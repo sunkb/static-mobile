@@ -105,7 +105,7 @@ $level-height: 90px;
 #rank {
   background: #fff;
   width: 100vw;
-  height: 100%;
+  height: 100vh;
 }
 
 .headbar {
@@ -200,6 +200,7 @@ $level-height: 90px;
     padding: 18.75px 0;
     box-sizing: content-box;
     border-bottom: 1px solid #EBEBEB;
+    background: #fff;
 
     &-left {
       display: flex;
