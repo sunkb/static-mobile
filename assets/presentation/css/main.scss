@@ -2,8 +2,8 @@ $p-color-0: #16C8D2;
 $b-color: #D8E0E6;
 
 .top-step-bar {
-  padding-top: 30px;
-  margin-bottom: 30px;
+  padding-top: 20px;
+  margin-bottom: 0;
   height: 165px;
 }
 
@@ -42,5 +42,14 @@ p {
 }
 
 .title-content-space {
-  margin-bottom: 12px;
+  margin-bottom: -7.5px;
+}
+
+.level2text {
+  margin-top: 7.5px;
+  margin-bottom: 15px;
+}
+
+.chntext {
+  font-size: 24px;
 }

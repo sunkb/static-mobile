@@ -5,9 +5,6 @@
       <div class="topaction-rank" @click="gotoPageWithHistory('presentation-rank')">点赞排行</div>
     </div>
     <div class="content">
-      <!-- <video controls class="content-video" v-if="stuData.videoSrc" :poster="`${stuData.videoSrc}?vframe/jpg/offset/2/h/960/`">
-        <source :src="stuData.videoSrc"/>
-      </video> -->
       <div class="content-video" v-if="stuData.videoSrc" @click="playFn('video-share')">
         <video
           style="display: none;"
@@ -225,10 +222,6 @@ export default {
 #share {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .content {
@@ -236,9 +229,14 @@ export default {
   padding: 37.5px 22.5px;
   box-shadow: 0 0 22.5px -11.25px #999999;
   background: #fff;
+  margin-top: 46px;
+  position: relative;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
 
   &-video {
-    width: 639px;
+    width: 640px;
     height: 360px;
     overflow: hidden;
     display: flex;
@@ -320,6 +318,9 @@ export default {
   width: 100vw;
   padding: 37.5px 0;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 
   &-text {
     text-align: center;
@@ -372,7 +373,7 @@ export default {
   justify-content: space-between;
   color: #333333;
   font-size: 26px;
-  margin-top: 60px;
+  padding-top: 60px;
 
   &-rank {
     border-top-left-radius: 30px;

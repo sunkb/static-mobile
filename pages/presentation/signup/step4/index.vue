@@ -14,11 +14,12 @@
             preload="auto"
             :src="videoSrc"
           />
+          <img class="video-content-img" :src="`${videoSrc}?vframe/jpg/offset/2/h/960/`"/>
           <div class="video-content-play"></div>
         </div>
       </div>
       <div class="rule">
-        <div class="rule-select" @click="selectRule">
+        <div :class="['rule-select', ruleSelected ? 'selected' : '']" @click="selectRule">
           <img v-if="ruleSelected" class="rule-select-img" :src="require('~/assets/presentation/img/rule-select.png')"/>
         </div>
         <h3 @click="gotoRulePage">我已阅读并同意《视频授权用户协议书》</h3>
@@ -103,9 +104,6 @@ export default {
     },
   },
   async mounted() {
-    if (window.WeixinJSBridge) {
-      window.WeixinJSBridge.call('hideToolbar')
-    }
     this.$refs['toast'].showLoadingToast()
     const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))
     this.videoSrc = formData.videoSrc
@@ -147,15 +145,22 @@ export default {
     overflow: hidden;
     position: relative;
     background: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &-play {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 100px;
-      height: 100px;
+      width: 76px;
+      height: 76px;
       background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+    }
+
+    &-img {
+      height: 360px;
     }
   }
 }
@@ -175,6 +180,10 @@ export default {
       width: inherit;
       height: inherit;
     }
+  }
+
+  .selected {
+    border: none;
   }
 }
 </style>

@@ -11,7 +11,7 @@
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
         </div>
       </div>
-      <h2>报名学生: {{ mywork.en_name }}</h2>
+      <h2 class="level2text">报名学生: {{ mywork.en_name }}</h2>
       <div class="topic-text">
         <h2 class="topic-text-eng">{{ mywork.topic.en_topic_name }}</h2>
         <h3 class="topic-text-chn">{{ mywork.topic.cn_topic_name }}</h3>
@@ -25,6 +25,7 @@
             preload="auto"
             :src="mywork.video_url"
           />
+          <img class="video-content-img" :src="`${mywork.video_url}?vframe/jpg/offset/2/h/960/`"/>
           <div class="video-content-play"></div>
         </div>
       </div>
@@ -87,9 +88,6 @@ export default {
     },
   },
   async mounted() {
-    if (window.WeixinJSBridge) {
-      window.WeixinJSBridge.call('hideToolbar')
-    }
     this.$refs['toast'].showLoadingToast()
     const activityID = this.$route.query.activity_id
     const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
@@ -168,15 +166,9 @@ export default {
   
   &-eng {
     font-weight: bold;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   &-chn {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 }
 
@@ -192,15 +184,22 @@ export default {
     overflow: hidden;
     position: relative;
     background: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &-play {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 100px;
-      height: 100px;
+      width: 76px;
+      height: 76px;
       background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+    }
+
+    &-img {
+      height: 360px;
     }
   }
 }

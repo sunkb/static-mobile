@@ -6,7 +6,7 @@
     <div class="page-content">
       <h1 class="title-content-space">选择题目</h1>
       <div class="level">
-        <h2>当前级别: {{ landiLevel.name }}</h2>
+        <h2 class="level2text">当前级别: {{ landiLevel.name }}</h2>
         <h3 class="level-hint">左右滑屏可以切换样板和主题</h3>
       </div>
       <div class="topic">
@@ -27,11 +27,13 @@
             <img class="topic-item-video-pic" :src="item.audios[0].pic_url" v-if="item.audios.length > 0 && item.videos.length == 0"/>
             <img class="topic-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
           </div>
-          <div class="topic-item-selector" @click="selectTopic(item.id)">
-            <img v-if="topicSelectID == item.id" class="topic-item-selector-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
+          <div class="topic-item-selector-wrapper" @click="selectTopic(item.id)">
+            <div class="topic-item-selector" >
+              <img v-if="topicSelectID == item.id" class="topic-item-selector-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
+            </div>
           </div>
           <h3 class="topic-item-eng topic-item-text">{{ item.en_topic_name }}</h3>
-          <h3 class="topic-item-chn topic-item-text">{{ item.cn_topic_name }}</h3>
+          <h3 class="topic-item-chn topic-item-text chntext">{{ item.cn_topic_name }}</h3>
         </div>
       </div>
       <submit-area 
@@ -119,9 +121,6 @@ export default {
     },
   },
   async mounted() {
-    if (window.WeixinJSBridge) {
-      window.WeixinJSBridge.call('hideToolbar')
-    }
     this.$refs['toast'].showLoadingToast()
     const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))
     const activityID = this.$route.query.activity_id
@@ -193,7 +192,7 @@ $topic-item-width: 480px;
 
     &-video {
       width: $topic-item-width;
-      max-height: 300px;
+      height: 360px;
       overflow: hidden;
       position: relative;
 
@@ -205,14 +204,14 @@ $topic-item-width: 480px;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 100px;
-        height: 100px;
+        width: 76px;
+        height: 76px;
         background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
       }
     }
     &-videoplay {
       width: $topic-item-width;
-      max-height: 300px;
+      height: 360px;
       overflow: hidden;
       position: absolute;
       top: 0;
@@ -221,6 +220,13 @@ $topic-item-width: 480px;
 
     &-eng {
       color: #333333;
+      max-height: 63px;
+      box-sizing: content-box;
+    }
+
+    &-chn {
+      padding-top: 15px;
+      margin-top: -10px;
     }
 
     &-text {
@@ -233,11 +239,8 @@ $topic-item-width: 480px;
     }
 
     &-selector {
-      position: absolute;
-      top: 18.75px;
-      right: 18.75px;
-      width: 52.5px;
-      height: 52.5px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       background: #fff;
       box-shadow: 0 0 15px -5.25px #666666;
@@ -245,9 +248,16 @@ $topic-item-width: 480px;
       justify-content: center;
       align-items: center;
 
+      &-wrapper {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 19px;
+      }
+
       &-img {
-        width: 41.25px;
-        height: 41.25px;
+        width: 42px;
+        height: 42px;
       }
     }
   }

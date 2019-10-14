@@ -8,7 +8,7 @@
         <div class="topaction-rule" @click="gotoPageWithHistory('presentation-rule')">活动规则</div>
       </div>
       <div class="content card">
-        <h3>报名参赛，分享更多宝贝高光时刻</h3>
+        <h3 class="content-title">报名参赛，分享更多宝贝高光时刻</h3>
         <div class="action" @click="mainAction" ref="centerAction">
           <div class="action-content" :style="{ background: resData.button_color }">
             <div class="action-content-text">{{ haveWork ? '查看我的作品' : '我要报名参赛' }}</div>
@@ -25,7 +25,7 @@
           <div v-for="(item, index) in resData.combinations" :key="item.id" class="content-level-item" @click="selectLevel(index)"
             :style="levelSelectIndex == index ? { background: resData.button_color, color: '#fff', border: 'none' } : {}">{{ item.name }}</div>
         </div>
-        <h3>以下2个演讲主题，任意选择其中之一报名即可</h3>
+        <h3>以下演讲主题，任意选择其中之一即可</h3>
         <div class="content-video" ref="content-video">
           <div class="content-video-item" v-for="(item, index) in resData.combinations[levelSelectIndex].topics" :key="item.id">
             <video
@@ -44,7 +44,7 @@
               <img class="content-video-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
             </div>
             <h3 class="content-video-item-eng content-video-item-text">{{ item.en_topic_name }}</h3>
-            <h3 class="content-video-item-chn content-video-item-text">{{ item.cn_topic_name }}</h3>
+            <h3 class="content-video-item-chn content-video-item-text chntext">{{ item.cn_topic_name }}</h3>
           </div>
         </div>
       </div>
@@ -114,7 +114,8 @@ export default {
       centerActionBottom: 0,
       presentationStyle: { },
       isClassing: false,
-      showPosterModal: false
+      showPosterModal: false,
+      isLogin:true
     }
   },
   methods: {
@@ -130,6 +131,21 @@ export default {
       this.gotoPage('presentation-signup')
     },
     mainAction() {
+
+      if(!this.isLogin){
+          let redirect_url = window.location.href;
+          redirect_url = removeParam('code',redirect_url);
+          console.log('code',redirect_url);
+          redirect_url = removeParam('state',redirect_url);
+          console.log('state',redirect_url);
+          redirect_url = encodeURIComponent(redirect_url);
+          console.log('loginUrl',redirect_url);
+          const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
+          console.log('loginUrl',loginUrl);
+          window.location.href = loginUrl;
+          return
+      }
+
       if (this.haveWork) {
         // this.gotoPage('presentation-signup-step5')
         window.location = `${process.env.BASE_URL}/presentation/signup/step5/?activity_id=${this.$route.query.activity_id}`
@@ -177,11 +193,9 @@ export default {
     login.autoLogin();
   },
   async mounted() {
-    if (window.WeixinJSBridge) {
-      window.WeixinJSBridge.call('hideToolbar')
-    }
     this.steps = INDEX_STEPS
     const activityID = this.$route.query.activity_id
+
     const res = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)
     if (res.status) { 
       this.resData = res.data
@@ -191,19 +205,46 @@ export default {
     } else {
       this.$refs['toast'].showToast(res.info)
     }
-    const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
-    if (mywork.status) {
-      if (mywork.data.id) {
-        this.haveWork = true 
+    try {
+      const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
+      if (mywork.status) {
+        if (mywork.data.id) {
+          this.haveWork = true 
+        }
+        this.isClassing = mywork.data.is_classing
+      } else {
+        this.$refs['toast'].showToast(mywork.info)
       }
-      this.isClassing = mywork.data.is_classing
-    } else {
-      this.$refs['toast'].showToast(mywork.info)
+    } catch (error) {
+      console.log(error)
+      if(error.response.status === 401){
+        this.isLogin = false;
+      }
     }
+
+
 
     this.centerActionBottom = this.$refs.centerAction.getBoundingClientRect().bottom
     window.addEventListener('scroll', this.handleScroll)
   }
+}
+
+function removeParam(key, sourceURL) {
+  var rtn = sourceURL.split("?")[0],
+      param,
+      params_arr = [],
+      queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+  if (queryString !== "") {
+      params_arr = queryString.split("&");
+      for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+          param = params_arr[i].split("=")[0];
+          if (param === key) {
+              params_arr.splice(i, 1);
+          }
+      }
+      rtn = rtn + "?" + params_arr.join("&");
+  }
+  return rtn;
 }
 </script>
 
@@ -222,7 +263,7 @@ export default {
 
 .card {
   width: 690px;
-  padding: 22.5px 30px;
+  padding: 22.5px 42px;
   box-shadow: 0 2px 8px 0 #CCCCCC;
   position: relative;
   left: 50%;
@@ -311,7 +352,7 @@ export default {
 
       &-video {
         width: $topic-item-width;
-        height: 280px;
+        height: 360px;
         overflow: hidden;
         position: relative;
 
@@ -323,17 +364,20 @@ export default {
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          width: 100px;
-          height: 100px;
+          width: 76px;
+          height: 76px;
           background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
         }
       }
 
       &-eng {
         color: #333333;
+        max-height: 56px;
+        box-sizing: content-box;
       }
 
       &-chn {
+        padding-top: 15px;
         margin-top: -10px;
       }
 
@@ -350,7 +394,7 @@ export default {
 }
 
 .action {
-  margin: 22.5px 0 60px;
+  margin: 16.5px 0 60px;
   display: inline-block;
   width: 610px;
   height: 100px;
@@ -465,5 +509,9 @@ export default {
   height: 140px;
   box-shadow: 0 -2px 6px 0 #CCCCCC;
   text-align: center;
+}
+
+.content-title {
+  margin-top: 20px;
 }
 </style>

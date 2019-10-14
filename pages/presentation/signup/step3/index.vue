@@ -11,9 +11,9 @@
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
         </div>
       </div>
-      <div class="page-content-content">
+      <div>
         <div>
-          <h2>当前级别: {{ landiLevel }}</h2>
+          <h2 class="level2text">当前级别: {{ landiLevel }}</h2>
           <div class="topic-text">
             <h2 v-if="topic" class="topic-text-eng">{{ topic.en_topic_name }}</h2>
             <h3 v-if="topic" class="topic-text-chn">{{ topic.cn_topic_name }}</h3>
@@ -41,6 +41,7 @@
                 class="video-uploaded-videoplay"
               />
               <div class="video-uploaded-video" @click="playFn('video-upload')">
+                <img class="video-uploaded-video-img" :src="`${videoSrc}?vframe/jpg/offset/2/h/960/`"/>
                 <div class="video-uploaded-video-play"></div>
               </div>
             </div>
@@ -204,9 +205,6 @@ export default {
     },
   },
   async mounted() {
-    if (window.WeixinJSBridge) {
-      window.WeixinJSBridge.call('hideToolbar')
-    }
     const result = this.initDataFromStroge()
     if (!result) {
       await this.initDataFromAPI()
@@ -262,11 +260,12 @@ export default {
   justify-content: center;
   position: relative;
 
-  $video-content-width: 640px;
+  $video-content-width: 528px;
+  $video-conten-height: 297px;
 
   &-hint {
-    width: 640px;
-    height: 360px;
+    width: $video-content-width;
+    height: $video-conten-height;
     display: flex;
     flex-flow: column;
     justify-content: center;
@@ -282,8 +281,8 @@ export default {
     }
 
     &-hintimg {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
     }
 
     &-progress {
@@ -316,19 +315,26 @@ export default {
   &-uploaded {
     &-video {
       width: $video-content-width;
-      height: 360px;
+      height: $video-conten-height;
       overflow: hidden;
       position: relative;
       background: #E6E6E6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       &-play {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 100px;
-        height: 100px;
+        width: 76px;
+        height: 76px;
         background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+      }
+
+      &-img {
+        height: $video-conten-height;
       }
     }
   }
@@ -340,25 +346,24 @@ export default {
     transform: translate(-50%, 50%);
 
     &-action {
-      width: 90px;
-      height: 90px;
+      width: 80px;
+      height: 80px;
       display: flex;
       justify-content: center;
       align-items: center;
       background: #fff;
-      border-radius: 45px;
-      box-shadow: 0 0 37.5px -22.5px #666666;
+      border-radius: 40px;
+      box-shadow: 0 2px 4px 0 #DEE6EC;
 
       &-img {
-        width: 64.5px;
-        height: 64.5px;
+        width: 64px;
+        height: 64px;
       }
     }
   }
 }
 
 .submitarea {
-  position: static;
-  margin-top: 120px;
+
 }
 </style>

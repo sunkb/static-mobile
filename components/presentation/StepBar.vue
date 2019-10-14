@@ -125,13 +125,15 @@ $height: 90px;
     top: 50%;
     left: 0;
     transform: translate(0, -50%);
-    height: 8px;
+    height: 6px;
     border-radius: 4px;
   }
 
   &-empty {
     width: 100%;
-    box-shadow: 0 1.5px 2.25px #B9B9B9 inset;
+    // box-shadow: 0 1.5px 2.25px #B9B9B9 inset;
+    background: #E6E6E6;
+    height: 2px;
   }
 
   &-fill {

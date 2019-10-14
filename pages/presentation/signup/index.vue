@@ -23,6 +23,20 @@
             </select>
           </div>
           <div class="signupform-item">
+            <span class="signupform-item-label required">省份</span>
+            <select class="signupform-item-select" v-model="signupData.province" @change="provinceSelectChange" @blur="formBlur" ref="province">
+              <option value="0">请选择所在省份</option>
+              <option v-for="(item) in regionData['province']" :key="item.id" :value="item.id">{{ item.name }}</option>
+            </select>
+          </div>
+          <div class="signupform-item">
+            <span class="signupform-item-label required">城市</span>
+            <select class="signupform-item-select" v-model="signupData.city" @blur="formBlur" ref="city" @change="formBlur">
+              <option value="0">请选择所在城市</option>
+              <option v-for="(item) in regionData['city'][signupData.province]" :key="item.id" :value="item.id">{{ item.name }}</option>
+            </select>
+          </div>
+          <!-- <div class="signupform-item">
             <span class="signupform-item-label required">地址</span>
             <select class="signupform-item-select" v-model="signupData.province" @change="provinceSelectChange" @blur="formBlur" ref="province">
               <option value="0">请选择所在省份</option>
@@ -32,7 +46,7 @@
               <option value="0">城市</option>
               <option v-for="(item) in regionData['city'][signupData.province]" :key="item.id" :value="item.id">{{ item.name }}</option>
             </select>
-          </div>
+          </div> -->
         </div>
         <submit-area 
           hint="请确认信息属实, 一旦提交后不可再修改" 
@@ -127,9 +141,6 @@ export default {
     }
   },
   async mounted() {
-    if (window.WeixinJSBridge) {
-      window.WeixinJSBridge.call('hideToolbar')
-    }
     this.$refs['toast'].showLoadingToast()
     const activityID = this.$route.query.activity_id
     const data0 = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)
@@ -209,7 +220,7 @@ export default {
       font-size: 28px;
       outline: none;
       color: #333333;
-      width: 200px;
+      width: 400px;
       appearance:none;  
       -moz-appearance:none;  
       -webkit-appearance:none;
