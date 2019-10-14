@@ -99,7 +99,7 @@ export default {
         // await this.initData();
         this.liked = !this.liked
         if (this.liked) {
-          this.stuData.like = this.stuData.like - 1 >= 0 ? this.stuData.like-- : 0
+          this.stuData.like = this.stuData.like - 1 >= 0 ? this.stuData.like - 1 : 0
         } else {
           this.stuData.like++
         }
