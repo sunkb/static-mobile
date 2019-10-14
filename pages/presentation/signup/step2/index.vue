@@ -190,7 +190,7 @@ $topic-item-width: 480px;
 
     &-video {
       width: $topic-item-width;
-      height: 280px;
+      height: 360px;
       overflow: hidden;
       position: relative;
 
