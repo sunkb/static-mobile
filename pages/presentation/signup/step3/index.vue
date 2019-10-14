@@ -352,12 +352,12 @@ export default {
       justify-content: center;
       align-items: center;
       background: #fff;
-      border-radius: 45px;
+      border-radius: 40px;
       box-shadow: 0 2px 4px 0 #DEE6EC;
 
       &-img {
-        width: 64px;
-        height: 64px;
+        width: 60px;
+        height: 60px;
       }
     }
   }
