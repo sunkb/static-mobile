@@ -223,6 +223,10 @@ $topic-item-width: 480px;
       color: #333333;
     }
 
+    &-chn {
+      margin-top: -10px;
+    }
+
     &-text {
       white-space: normal;
       width: $topic-item-width;
