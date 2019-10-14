@@ -179,6 +179,7 @@ export default {
   async mounted() {
     this.steps = INDEX_STEPS
     const activityID = this.$route.query.activity_id
+
     const res = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)
     if (res.status) { 
       this.resData = res.data
@@ -188,15 +189,21 @@ export default {
     } else {
       this.$refs['toast'].showToast(res.info)
     }
-    const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
-    if (mywork.status) {
-      if (mywork.data.id) {
-        this.haveWork = true 
+    try {
+      const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
+      if (mywork.status) {
+        if (mywork.data.id) {
+          this.haveWork = true 
+        }
+        this.isClassing = mywork.data.is_classing
+      } else {
+        this.$refs['toast'].showToast(mywork.info)
       }
-      this.isClassing = mywork.data.is_classing
-    } else {
-      this.$refs['toast'].showToast(mywork.info)
+    } catch (error) {
+      console.log(error)
     }
+
+
 
     this.centerActionBottom = this.$refs.centerAction.getBoundingClientRect().bottom
     window.addEventListener('scroll', this.handleScroll)

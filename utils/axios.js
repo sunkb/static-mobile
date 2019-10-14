@@ -79,16 +79,17 @@ Axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          let redirect_url = window.location.href;
-          redirect_url = removeParam('code',redirect_url);
-          console.log('code',redirect_url);
-          redirect_url = removeParam('state',redirect_url);
-          console.log('state',redirect_url);
-          redirect_url = encodeURIComponent(redirect_url);
-          console.log('loginUrl',redirect_url);
-          const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
-          console.log('loginUrl',loginUrl);
-          window.location.href = loginUrl;
+          // let redirect_url = window.location.href;
+          // redirect_url = removeParam('code',redirect_url);
+          // console.log('code',redirect_url);
+          // redirect_url = removeParam('state',redirect_url);
+          // console.log('state',redirect_url);
+          // redirect_url = encodeURIComponent(redirect_url);
+          // console.log('loginUrl',redirect_url);
+          // const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
+          // console.log('loginUrl',loginUrl);
+          // window.location.href = loginUrl;
+          
           break;
         case 404:
           error.message = '请求错误,未找到该资源';
