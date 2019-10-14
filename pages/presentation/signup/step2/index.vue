@@ -240,15 +240,16 @@ $topic-item-width: 480px;
       position: absolute;
       top: 19px;
       right: 19px;
-      width: 54px;
-      height: 54px;
+      width: 154px;
+      height: 154px;
       border-radius: 50%;
       background: #fff;
       box-shadow: 0 0 15px -5.25px #666666;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 50px;
+      box-sizing: border-box;
 
       &-img {
         width: 42px;
