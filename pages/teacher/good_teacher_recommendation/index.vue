@@ -7,10 +7,12 @@
           <div class="teacher-item abc-border-bottom">
             <!-- 头像 -->
             <div class="avatar smallImg">
-              <img
-                :src="teacherMsg.info.avatar+'?imageView2/1/w/150/h/150'"
-                v-if="teacherMsg.info.avatar"
-              />
+              <a :href="teacherMsg.info.avatar" target="_blank">
+                <img
+                  :src="teacherMsg.info.avatar+'?imageView2/1/w/150/h/150'"
+                  v-if="teacherMsg.info.avatar"
+                />
+              </a>
             </div>
             <div class="info">
               <div class="row row-name cf">
@@ -56,7 +58,7 @@
               @click="playFn('videoPlay1')"
               v-if="teacherMsg&&teacherMsg.info.video"
             >
-            <img :src="`${teacherMsg.info.video}?vframe/jpg/offset/1/h/960/`" alt="">
+              <img :src="`${teacherMsg.info.video}?vframe/jpg/offset/1/h/960/`" alt />
               <div class="palyBtn"></div>
               <video
                 style="opacity:0;"
@@ -85,7 +87,7 @@
                 class="videoItem"
                 @click="playFn(`video${index}`)"
               >
-              <img :src="`${item}?vframe/jpg/offset/1/h/960/`" alt="">
+                <img :src="`${item}?vframe/jpg/offset/1/h/960/`" alt />
                 <div class="palyBtn">></div>
                 <video
                   style="opacity:0;"
@@ -252,9 +254,19 @@ import { videoPlayerEvent } from "~/utils/videoPlay";
 import abcRate from "~/components/cell_rate/index.vue";
 
 export default {
+  head(){
+    return {
+      title: '老师个人主页',
+      meta: [{
+        hid: 'viewport',
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1.0'
+      }]
+    }
+  },
   data() {
     return {
-      qiniuUrl:'https://qn-video.abc360.com/',
+      qiniuUrl: "https://qn-video.abc360.com/",
       tranformText: "翻译",
       loadmoreStatus: true,
       stateText: "查看更多",
@@ -443,10 +455,11 @@ export default {
       let _this = this;
       this.$nextTick(() => {
         //let video = document.getElementById("videoPlay1");
-        let video = document.getElementsByClassName('chen')
-        console.log(video)
-        let source = document.createElement("source"); // 
-        source.src = 'https://qn-video.abc360.com/20108c55-5dff-40ee-8462-55b16cb977ff.mp4';
+        let video = document.getElementsByClassName("chen");
+        console.log(video);
+        let source = document.createElement("source"); //
+        source.src =
+          "https://qn-video.abc360.com/20108c55-5dff-40ee-8462-55b16cb977ff.mp4";
         source.type = "video/mp4";
         video.appendChild(source);
         video.addEventListener("loadeddata", function() {
@@ -458,7 +471,7 @@ export default {
             .drawImage(video, 0, 0, canvas.width, canvas.width);
           var img = document.createElement("img");
           let imgsrc = canvas.toDataURL("image/png");
-          console.log(imgsrc)
+          console.log(imgsrc);
         });
       });
     }
@@ -532,9 +545,9 @@ export default {
     position: relative;
     width: 100%;
     height: 500px;
-    img{
-      width:100%;
-      height:100%;
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
   .videoItem {
@@ -542,12 +555,12 @@ export default {
     cursor: pointer;
     display: inline-block;
     width: 330px;
-    height: 330px;
+    height: 250px;
     margin-right: 14px;
     margin-bottom: 20px;
-    img{
-      width:100%;
-      height:100%;
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
   .tabWrap {
