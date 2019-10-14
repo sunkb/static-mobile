@@ -372,9 +372,8 @@ function removeParam(key, sourceURL) {
 
       &-eng {
         color: #333333;
-        max-height: 60px;
+        max-height: 56px;
         box-sizing: content-box;
-        border: 1px solid red;
       }
 
       &-chn {
