@@ -11,7 +11,7 @@
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
         </div>
       </div>
-      <div class="page-content-content">
+      <div>
         <div>
           <h2>当前级别: {{ landiLevel }}</h2>
           <div class="topic-text">
@@ -356,7 +356,6 @@ export default {
 }
 
 .submitarea {
-  position: static;
-  margin-top: 120px;
+
 }
 </style>
