@@ -199,22 +199,22 @@ export default {
     },
   },
   async mounted() {
-    // if (window.WeixinJSBridge) {
-    //   window.WeixinJSBridge.call('hideToolbar')
-    // }
-    // this.$refs['toast'].showLoadingToast()
-    // const { code } = this.$route.query
-    // if (code == null) {
-    //   sessionStorage.setItem('lastUrl', window.location.href)
-    //   getWXCode(window.location.href)
-    //   return
-    // }
+    if (window.WeixinJSBridge) {
+      window.WeixinJSBridge.call('hideToolbar')
+    }
+    this.$refs['toast'].showLoadingToast()
+    const { code } = this.$route.query
+    if (code == null) {
+      sessionStorage.setItem('lastUrl', window.location.href)
+      getWXCode(window.location.href)
+      return
+    }
 
-    // if(code){
-    //   await this.getOpenid()
-    //   await this.initData();
-    // }
-    // this.$refs['toast'].hideLoadingToast()
+    if(code){
+      await this.getOpenid()
+      await this.initData();
+    }
+    this.$refs['toast'].hideLoadingToast()
   }
 }
 </script>
