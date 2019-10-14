@@ -345,7 +345,7 @@ export default {
       align-items: center;
       background: #fff;
       border-radius: 45px;
-      box-shadow: 0 0 37.5px -22.5px #666666;
+      box-shadow: 0 2px 4px 0 #DEE6EC;
 
       &-img {
         width: 64px;
