@@ -143,6 +143,7 @@ export default {
           const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
           console.log('loginUrl',loginUrl);
           window.location.href = loginUrl;
+          return
       }
 
       if (this.haveWork) {
