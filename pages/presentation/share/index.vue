@@ -4,41 +4,39 @@
       <div></div>
       <div class="topaction-rank" @click="gotoPageWithHistory('presentation-rank')">点赞排行</div>
     </div>
-    <div class="content-wrapper">
-      <div class="content">
-        <div class="content-video" v-if="stuData.videoSrc" @click="playFn('video-share')">
-          <video
-            style="display: none;"
-            id="video-share"
-            controls
-            preload="auto"
-            :src="stuData.videoSrc"
-          />
-          <img class="content-video-img" :src="`${stuData.videoSrc}?vframe/jpg/offset/2/h/960/`"/>
-          <div class="content-video-play"></div>
-        </div>
-        <h3 class="content-topic-eng">{{ topic.en_topic_name }}</h3>
-        <h3 class="content-topic-chn">{{ topic.cn_topic_name }}</h3>
-        <div class="content-action">
-          <div class="content-action-author">作者: {{ stuData.name }}</div>
-          <div class="content-action-actions">
-            <div class="content-action-actions-btn" @click="shareToFrends" style="background: #FFD750"><img :src="require('~/assets/presentation/img/share.png')" class="share"/></div>
-            <div class="content-action-actions-btn" :style="{ background: liked ? '#F0552D' : '#E6E6E6' }" @click="clickLike">
-              <img :src="require('~/assets/presentation/img/like.png')" class="like"/></div>
-            <div class="content-action-actions-text">{{ stuData.like }}人点赞</div>
-          </div>
+    <div class="content">
+      <div class="content-video" v-if="stuData.videoSrc" @click="playFn('video-share')">
+        <video
+          style="display: none;"
+          id="video-share"
+          controls
+          preload="auto"
+          :src="stuData.videoSrc"
+        />
+        <img class="content-video-img" :src="`${stuData.videoSrc}?vframe/jpg/offset/2/h/960/`"/>
+        <div class="content-video-play"></div>
+      </div>
+      <h3 class="content-topic-eng">{{ topic.en_topic_name }}</h3>
+      <h3 class="content-topic-chn">{{ topic.cn_topic_name }}</h3>
+      <div class="content-action">
+        <div class="content-action-author">作者: {{ stuData.name }}</div>
+        <div class="content-action-actions">
+          <div class="content-action-actions-btn" @click="shareToFrends" style="background: #FFD750"><img :src="require('~/assets/presentation/img/share.png')" class="share"/></div>
+          <div class="content-action-actions-btn" :style="{ background: liked ? '#F0552D' : '#E6E6E6' }" @click="clickLike">
+            <img :src="require('~/assets/presentation/img/like.png')" class="like"/></div>
+          <div class="content-action-actions-text">{{ stuData.like }}人点赞</div>
         </div>
       </div>
-      <div class="action">
-        <div class="action-text">
-          <span @click="gotoRegister" class="action-text-accent">免费领取</span>
-          <span>兰迪288元试听课大礼包</span>
-        </div>
-        <div class="action-content" :style="{ background: themeColor }" @click="gotoIndex">
-          <div class="action-content-text">去首页看看</div>
-          <div class="action-content-deco0"></div>
-          <div class="action-content-deco1"></div>
-        </div>
+    </div>
+    <div class="action">
+      <div class="action-text">
+        <span @click="gotoRegister" class="action-text-accent">免费领取</span>
+        <span>兰迪288元试听课大礼包</span>
+      </div>
+      <div class="action-content" :style="{ background: themeColor }" @click="gotoIndex">
+        <div class="action-content-text">去首页看看</div>
+        <div class="action-content-deco0"></div>
+        <div class="action-content-deco1"></div>
       </div>
     </div>
     <div class="sharehelp" v-if="showShareHelp" @click="() => { showShareHelp = false }">
@@ -231,6 +229,7 @@ export default {
   padding: 37.5px 22.5px;
   box-shadow: 0 0 22.5px -11.25px #999999;
   background: #fff;
+  margin-top: 46px;
 
   &-video {
     width: 640px;
@@ -315,6 +314,9 @@ export default {
   width: 100vw;
   padding: 37.5px 0;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 
   &-text {
     text-align: center;
@@ -395,13 +397,5 @@ export default {
     left: 135px;
     top: 0;
   }
-}
-
-.content-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 46px;
 }
 </style>
