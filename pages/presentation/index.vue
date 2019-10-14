@@ -26,7 +26,7 @@
             :style="levelSelectIndex == index ? { background: resData.button_color, color: '#fff', border: 'none' } : {}">{{ item.name }}</div>
         </div>
         <h3>以下2个演讲主题，任意选择其中之一报名即可</h3>
-        <div class="content-video">
+        <div class="content-video" ref="content-video">
           <div class="content-video-item" v-for="(item, index) in resData.combinations[levelSelectIndex].topics" :key="item.id">
             <video
               v-if="srcType(item) == 'video' || srcType(item) == 'audio'"
@@ -120,7 +120,7 @@ export default {
   methods: {
     selectLevel(index) {
       this.levelSelectIndex = index
-      
+      this.$refs['content-video'].scroll(0, 0)
     },
     signup() {
       if (!this.resData.is_enable) {
@@ -331,6 +331,10 @@ export default {
 
       &-eng {
         color: #333333;
+      }
+
+      &-chn {
+        margin-top: -10px;
       }
 
       &-text {
