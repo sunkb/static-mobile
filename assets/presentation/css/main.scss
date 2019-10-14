@@ -9,6 +9,13 @@ $b-color: #D8E0E6;
 
 .page-content {
   padding: 0 30px;
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 73vh;
+  }
 }
 h1 {
   font-size: 30px;

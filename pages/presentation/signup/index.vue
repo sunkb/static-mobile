@@ -5,41 +5,43 @@
     </div>
     <div class="page-content">
       <h1>报名信息</h1>
-      <div class="signupform">
-        <div class="signupform-item">
-          <span class="signupform-item-label required">孩子中文名</span>
-          <input class="signupform-item-input" v-model="signupData.chnName" placeholder="请填写中文名" @blur="formBlur"/>
+      <div class="page-content-content">
+        <div class="signupform">
+          <div class="signupform-item">
+            <span class="signupform-item-label required">孩子中文名</span>
+            <input class="signupform-item-input" v-model="signupData.chnName" placeholder="请填写中文名" @blur="formBlur"/>
+          </div>
+          <div class="signupform-item">
+            <span class="signupform-item-label required">孩子英文名</span>
+            <input class="signupform-item-input" v-model="signupData.engName" placeholder="请填写英文名" @blur="formBlur"/>
+          </div>
+          <div class="signupform-item">
+            <span class="signupform-item-label required">兰迪级别</span>
+            <select class="signupform-item-select" v-model="signupData.landiLevel" @blur="formBlur" @change="formBlur">
+              <option value="">请选择级别</option>
+              <option v-for="(item) in landiLevels" :key="item.id" :value="item.id">{{item.name}}</option>
+            </select>
+          </div>
+          <div class="signupform-item">
+            <span class="signupform-item-label required">地址</span>
+            <select class="signupform-item-select" v-model="signupData.province" @change="provinceSelectChange" @blur="formBlur" ref="province">
+              <option value="0">请选择所在省份</option>
+              <option v-for="(item) in regionData['province']" :key="item.id" :value="item.id">{{ item.name }}</option>
+            </select>
+            <select class="signupform-item-select" v-model="signupData.city" @blur="formBlur" ref="city" @change="formBlur">
+              <option value="0">城市</option>
+              <option v-for="(item) in regionData['city'][signupData.province]" :key="item.id" :value="item.id">{{ item.name }}</option>
+            </select>
+          </div>
         </div>
-        <div class="signupform-item">
-          <span class="signupform-item-label required">孩子英文名</span>
-          <input class="signupform-item-input" v-model="signupData.engName" placeholder="请填写英文名" @blur="formBlur"/>
-        </div>
-        <div class="signupform-item">
-          <span class="signupform-item-label required">兰迪级别</span>
-          <select class="signupform-item-select" v-model="signupData.landiLevel" @blur="formBlur" @change="formBlur">
-            <option value="">请选择级别</option>
-            <option v-for="(item) in landiLevels" :key="item.id" :value="item.id">{{item.name}}</option>
-          </select>
-        </div>
-        <div class="signupform-item">
-          <span class="signupform-item-label required">地址</span>
-          <select class="signupform-item-select" v-model="signupData.province" @change="provinceSelectChange" @blur="formBlur" ref="province">
-            <option value="0">请选择所在省份</option>
-            <option v-for="(item) in regionData['province']" :key="item.id" :value="item.id">{{ item.name }}</option>
-          </select>
-          <select class="signupform-item-select" v-model="signupData.city" @blur="formBlur" ref="city" @change="formBlur">
-            <option value="0">城市</option>
-            <option v-for="(item) in regionData['city'][signupData.province]" :key="item.id" :value="item.id">{{ item.name }}</option>
-          </select>
-        </div>
+        <submit-area 
+          hint="请确认信息属实, 一旦提交后不可再修改" 
+          btnText="提交报名信息"
+          :isClickable="dataNotEmpty"
+          @submit="formSubmit"
+          class="submitarea"
+        ></submit-area>
       </div>
-      <submit-area 
-        hint="请确认信息属实, 一旦提交后不可再修改" 
-        btnText="提交报名信息"
-        :isClickable="dataNotEmpty"
-        @submit="formSubmit"
-        class="submitarea"
-      ></submit-area>
     </div>
     <toast ref="toast"></toast>
   </div>

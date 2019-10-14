@@ -11,52 +11,56 @@
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
         </div>
       </div>
-      <h2>当前级别: {{ landiLevel }}</h2>
-      <div class="topic-text">
-        <h2 v-if="topic" class="topic-text-eng">{{ topic.en_topic_name }}</h2>
-        <h3 v-if="topic" class="topic-text-chn">{{ topic.cn_topic_name }}</h3>
-      </div>
-      <div class="video">
-        <div class="video-hint" v-if="videoStatus.type != 'uploaded'">
-          <img v-if="videoStatus.type == 'add'" class="video-hint-hintimg" :src="require('~/assets/presentation/img/wait-upload.png')"/>
-          <img v-if="videoStatus.type == 'error'" class="video-hint-hintimg" :src="require('~/assets/presentation/img/upload-error.png')"/>
-          <div v-if="videoStatus.hint" class="video-hint-hint">{{ videoStatus.hint }}</div>
-          <div v-if="videoStatus.type == 'uploading'">
-            <div class="video-hint-progress">
-              <div class="video-hint-progress-bg"></div>
-              <div class="video-hint-progress-fg" :style="{ width: `${videoStatus.progress}%` }"></div>
+      <div class="page-content-content">
+        <div>
+          <h2>当前级别: {{ landiLevel }}</h2>
+          <div class="topic-text">
+            <h2 v-if="topic" class="topic-text-eng">{{ topic.en_topic_name }}</h2>
+            <h3 v-if="topic" class="topic-text-chn">{{ topic.cn_topic_name }}</h3>
+          </div>
+          <div class="video">
+            <div class="video-hint" v-if="videoStatus.type != 'uploaded'">
+              <img v-if="videoStatus.type == 'add'" class="video-hint-hintimg" :src="require('~/assets/presentation/img/wait-upload.png')"/>
+              <img v-if="videoStatus.type == 'error'" class="video-hint-hintimg" :src="require('~/assets/presentation/img/upload-error.png')"/>
+              <div v-if="videoStatus.hint" class="video-hint-hint">{{ videoStatus.hint }}</div>
+              <div v-if="videoStatus.type == 'uploading'">
+                <div class="video-hint-progress">
+                  <div class="video-hint-progress-bg"></div>
+                  <div class="video-hint-progress-fg" :style="{ width: `${videoStatus.progress}%` }"></div>
+                </div>
+                <h3>正在上传 {{ videoStatus.progress }}%</h3>
+              </div>
             </div>
-            <h3>正在上传 {{ videoStatus.progress }}%</h3>
+            <div class="video-uploaded" v-if="videoStatus.type == 'uploaded'">
+              <video
+                style="display: none;"
+                id="video-upload"
+                controls
+                preload="auto"
+                :src="videoSrc"
+                class="video-uploaded-videoplay"
+              />
+              <div class="video-uploaded-video" @click="playFn('video-upload')">
+                <div class="video-uploaded-video-play"></div>
+              </div>
+            </div>
+            <div class="video-upload" v-if="videoStatus.type != 'uploading'">
+              <label class="video-upload-action" for="video-upload-input">
+                <img class="video-upload-action-img" :src="require('~/assets/presentation/img/upload-add.png')"/>
+              </label>
+              <input id="video-upload-input" type="file" accept="video/*" ref="videoUploadInput" @change="videoUpload" style="display: none"/>
+            </div>
           </div>
         </div>
-        <div class="video-uploaded" v-if="videoStatus.type == 'uploaded'">
-          <video
-            style="display: none;"
-            id="video-upload"
-            controls
-            preload="auto"
-            :src="videoSrc"
-            class="video-uploaded-videoplay"
-          />
-          <div class="video-uploaded-video" @click="playFn('video-upload')">
-            <div class="video-uploaded-video-play"></div>
-          </div>
-        </div>
-        <div class="video-upload" v-if="videoStatus.type != 'uploading'">
-          <label class="video-upload-action" for="video-upload-input">
-            <img class="video-upload-action-img" :src="require('~/assets/presentation/img/upload-add.png')"/>
-          </label>
-          <input id="video-upload-input" type="file" accept="video/*" ref="videoUploadInput" @change="videoUpload" style="display: none"/>
-        </div>
+        <submit-area 
+          hint="视频要求时长10-90秒, 视频小于300M" 
+          btnText="进入下一步"
+          :isClickable="videoUploaded"
+          @submit="nextStep"
+          class="submitarea"
+        ></submit-area>
       </div>
     </div>
-    <submit-area 
-      hint="视频要求时长10-90秒, 视频小于300M" 
-      btnText="进入下一步"
-      :isClickable="videoUploaded"
-      @submit="nextStep"
-      class="submitarea"
-    ></submit-area>
     <toast ref="toast"></toast>
   </div>
 </template>
