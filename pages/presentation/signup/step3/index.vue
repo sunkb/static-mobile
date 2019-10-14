@@ -356,8 +356,8 @@ export default {
       box-shadow: 0 2px 4px 0 #DEE6EC;
 
       &-img {
-        width: 60px;
-        height: 60px;
+        width: 64px;
+        height: 64px;
       }
     }
   }

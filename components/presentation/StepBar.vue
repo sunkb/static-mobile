@@ -133,6 +133,7 @@ $height: 90px;
     width: 100%;
     // box-shadow: 0 1.5px 2.25px #B9B9B9 inset;
     background: #E6E6E6;
+    height: 2px;
   }
 
   &-fill {

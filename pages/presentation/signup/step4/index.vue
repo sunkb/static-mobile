@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="rule">
-        <div class="rule-select" @click="selectRule">
+        <div :class="['rule-select', ruleSelected ? 'selected' : '']" @click="selectRule">
           <img v-if="ruleSelected" class="rule-select-img" :src="require('~/assets/presentation/img/rule-select.png')"/>
         </div>
         <h3 @click="gotoRulePage">我已阅读并同意《视频授权用户协议书》</h3>
@@ -180,6 +180,10 @@ export default {
       width: inherit;
       height: inherit;
     }
+  }
+
+  .selected {
+    border: none;
   }
 }
 </style>
