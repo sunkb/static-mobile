@@ -44,7 +44,7 @@
               <img class="content-video-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
             </div>
             <h3 class="content-video-item-eng content-video-item-text">{{ item.en_topic_name }}</h3>
-            <h3 class="content-video-item-chn content-video-item-text">{{ item.cn_topic_name }}</h3>
+            <h3 class="content-video-item-chn content-video-item-text chntext">{{ item.cn_topic_name }}</h3>
           </div>
         </div>
       </div>
@@ -320,8 +320,8 @@ export default {
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          width: 100px;
-          height: 100px;
+          width: 76px;
+          height: 76px;
           background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
         }
       }
