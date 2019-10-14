@@ -58,13 +58,14 @@
               @click="playFn('videoPlay1')"
               v-if="teacherMsg&&teacherMsg.info.video"
             >
-              <img :src="`${teacherMsg.info.video}?vframe/jpg/offset/1/h/960/`" alt />
+              <!-- <img :src="`${teacherMsg.info.video}?vframe/jpg/offset/1/h/960/`" alt /> -->
               <div class="palyBtn"></div>
               <video
                 style="opacity:0;"
                 id="videoPlay1"
                 v-if="isMobile()"
                 controls
+                controlslist="nodownload"
                 preload="auto"
                 :src="`${teacherMsg.info.video}`"
               />
@@ -72,6 +73,7 @@
                 v-else
                 id="videoPlay1"
                 controls
+                controlslist="nodownload"
                 preload="auto"
                 :src="`${teacherMsg.info.video}`"
               />
@@ -87,13 +89,14 @@
                 class="videoItem"
                 @click="playFn(`video${index}`)"
               >
-                <img :src="`${item}?vframe/jpg/offset/1/h/960/`" alt />
+                <!-- <img :src="`${item}?vframe/jpg/offset/1/h/960/`" alt /> -->
                 <div class="palyBtn">></div>
                 <video
                   style="opacity:0;"
                   v-if="isMobile()"
                   :id="`video${index}`"
                   controls
+                  controlslist="nodownload"
                   :key="index"
                   preload="auto"
                   :src="item"
@@ -102,6 +105,7 @@
                   v-else
                   :id="`video${index}`"
                   controls
+                  controlslist="nodownload"
                   :key="index"
                   preload="auto"
                   :src="item"
@@ -644,14 +648,13 @@ export default {
         img {
           width: 100%;
           height: 100%;
-          border: 1px solid #fff;
+          border: 2px solid #fff;
           border-radius: 100%;
         }
       }
       .avatar.smallImg {
         width: 134px;
         height: 134px;
-        border: 2px solid #fff;
       }
       .info {
         flex: 1;
