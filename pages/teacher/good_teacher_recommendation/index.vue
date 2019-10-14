@@ -50,35 +50,46 @@
           <!-- 自我介绍 -->
           <div class="introduction" v-if="teacherMsg&&teacherMsg.info.video">
             <h6 class="title video_icon">自我介绍</h6>
-            <div class="content videoCon" style="text-indent: 0" @click='playFn("videoPlay1")' v-if="teacherMsg&&teacherMsg.info.video">
-              <div class='palyBtn'>></div>
+            <div
+              class="content videoCon"
+              style="text-indent: 0"
+              @click="playFn('videoPlay1')"
+              v-if="teacherMsg&&teacherMsg.info.video"
+            >
+            <img :src="`${teacherMsg.info.video}?vframe/jpg/offset/2/h/960/`" alt="">
+              <div class="palyBtn"></div>
               <video
-              style="opacity:0;"
-              id='videoPlay1'
-              v-if='isMobile()'
-              controls
-              preload="auto"
-              :src="`${teacherMsg.info.video}`"
-            />
-            <video
-              v-else
-              id='videoPlay1'
-              controls
-              preload="auto"
-              :src="`${teacherMsg.info.video}`"
-            />
+                style="opacity:0;"
+                id="videoPlay1"
+                v-if="isMobile()"
+                controls
+                preload="auto"
+                :src="`${teacherMsg.info.video}`"
+              />
+              <video
+                v-else
+                id="videoPlay1"
+                controls
+                preload="auto"
+                :src="`${teacherMsg.info.video}`"
+              />
             </div>
-            
           </div>
           <!-- 上课风采 -->
           <div class="introduction" v-if="videoList&&videoList.length>0">
             <h6 class="title video_icon">上课风采</h6>
             <div class="content" style="text-indent: 0">
-              <div v-for="(item,index) in videoList" :key="index" class="videoItem" @click="playFn(`video${index}`)">
-                <div class='palyBtn'>></div>
+              <div
+                v-for="(item,index) in videoList"
+                :key="index"
+                class="videoItem"
+                @click="playFn(`video${index}`)"
+              >
+              <img :src="`${item}?vframe/jpg/offset/2/h/960/`" alt="">
+                <div class="palyBtn">></div>
                 <video
                   style="opacity:0;"
-                  v-if='isMobile()'
+                  v-if="isMobile()"
                   :id="`video${index}`"
                   controls
                   :key="index"
@@ -237,12 +248,13 @@
 <script>
 import apiGoodTeacher from "~/api/goodTeacher";
 import { getQueryString } from "~/utils/goodTeacher";
-import { videoPlayerEvent } from '~/utils/videoPlay';
+import { videoPlayerEvent } from "~/utils/videoPlay";
 import abcRate from "~/components/cell_rate/index.vue";
 
 export default {
   data() {
     return {
+      qiniuUrl:'https://qn-video.abc360.com/',
       tranformText: "翻译",
       loadmoreStatus: true,
       stateText: "查看更多",
@@ -268,22 +280,24 @@ export default {
       teacherIntro: ""
     };
   },
-  created() {
+  mounted() {
     this.getTag();
     this.getTeacherInfo();
     this.getTeacherScoreFn();
   },
   methods: {
-    isMobile(){
-      if (/Android|webOS|iPhone|iPad|BlackBerry|iPod/i.test(navigator.userAgent)) {
+    isMobile() {
+      if (
+        /Android|webOS|iPhone|iPad|BlackBerry|iPod/i.test(navigator.userAgent)
+      ) {
         return true;
-      }else{
+      } else {
         return false;
       }
     },
-    playFn(name){
-      let video1 = document.getElementById(name)
-      videoPlayerEvent(video1)
+    playFn(name) {
+      let video1 = document.getElementById(name);
+      videoPlayerEvent(video1);
     },
     // 获取老师个人信息
     async getTeacherInfo() {
@@ -348,7 +362,7 @@ export default {
       }
     },
     //tab切换
-    tabChange(index) { 
+    tabChange(index) {
       this.tabIndex = index;
       this.commentList = [];
       this.currentPage = 1;
@@ -424,6 +438,30 @@ export default {
         }
       });
     },
+    //获取video的第一帧
+    findvideocover() {
+      let _this = this;
+      this.$nextTick(() => {
+        //let video = document.getElementById("videoPlay1");
+        let video = document.getElementsByClassName('chen')
+        console.log(video)
+        let source = document.createElement("source"); // 
+        source.src = 'https://qn-video.abc360.com/20108c55-5dff-40ee-8462-55b16cb977ff.mp4';
+        source.type = "video/mp4";
+        video.appendChild(source);
+        video.addEventListener("loadeddata", function() {
+          var canvas = document.createElement("canvas");
+          canvas.width = "320";
+          canvas.height = "320";
+          canvas
+            .getContext("2d")
+            .drawImage(video, 0, 0, canvas.width, canvas.width);
+          var img = document.createElement("img");
+          let imgsrc = canvas.toDataURL("image/png");
+          console.log(imgsrc)
+        });
+      });
+    }
   },
   components: {
     abcRate
@@ -467,35 +505,37 @@ export default {
   .rt {
     float: right;
   }
-  video{
+  video {
     //position: relative;
     //z-index: -1;
     // opacity: 0;
-    height:0;
-    width:0;
+    height: 0;
+    width: 0;
   }
-  .palyBtn{
+  .palyBtn {
     text-align: center;
     line-height: 100px;
     position: absolute;
-    width:100px;
-    height:100px;
+    width: 100px;
+    height: 100px;
     border-radius: 100%;
-    border:1px solid #000;
-    top:50%;
-    left:50%;
+    top: 50%;
+    left: 50%;
     margin-left: -50px;
-    margin-top:-50px;
-    background:rgba(0, 0, 0, 0.8);
+    margin-top: -50px;
     color: #fff;
     font-size: 32px;
+    background: url(~assets/good_teacher/images/play.png) center;
+    background: cover;
   }
-  .videoCon{
+  .videoCon {
     position: relative;
-    width:100%;
-    height:500px;
-    background:url('https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png') center;
-    background-size: cover;
+    width: 100%;
+    height: 500px;
+    img{
+      width:100%;
+      height:100%;
+    }
   }
   .videoItem {
     position: relative;
@@ -505,8 +545,10 @@ export default {
     height: 330px;
     margin-right: 14px;
     margin-bottom: 20px;
-    background:url('https://qn-static.landi.com/uploadtool56510002dc36f24b334a80a295fe3efc.png') center;
-    background-size: cover;
+    img{
+      width:100%;
+      height:100%;
+    }
   }
   .tabWrap {
     display: flex;
