@@ -221,6 +221,7 @@ $topic-item-width: 480px;
 
     &-eng {
       color: #333333;
+      padding-bottom: 5px;
     }
 
     &-chn {

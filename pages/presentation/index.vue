@@ -331,6 +331,7 @@ export default {
 
       &-eng {
         color: #333333;
+        padding-bottom: 5px;
       }
 
       &-chn {
