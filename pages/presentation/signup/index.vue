@@ -220,7 +220,7 @@ export default {
       font-size: 28px;
       outline: none;
       color: #333333;
-      width: 200px;
+      width: 400px;
       appearance:none;  
       -moz-appearance:none;  
       -webkit-appearance:none;
