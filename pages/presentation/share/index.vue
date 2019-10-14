@@ -97,20 +97,12 @@ export default {
 
       if (res.status) {
         // await this.initData();
-        // this.liked = !this.liked
-        const { activity_id, work_id } = this.$route.query
-        const res = await axios.get(`${API.WORK}?activity_id=${activity_id}&work_id=${work_id}`)
-        if (!res.status) {
-          this.$refs['toast'].showToast(res.info)
-          return
+        this.liked = !this.liked
+        if (this.liked) {
+          this.stuData.like = this.stuData.like - 1 >= 0 ? this.stuData.like-- : 0
+        } else {
+          this.stuData.like++
         }
-        const work = res.data.work;
-        this.stuData = {
-          videoSrc: work.video_url,
-          like: work.zan,
-          name: work.en_name
-        }
-        this.liked = work.is_zan
       }else{
         this.$refs['toast'].showToast(res.info)
       }
