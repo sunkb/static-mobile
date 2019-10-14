@@ -87,8 +87,8 @@ export default {
     },
   },
   async mounted() {
-    if (WeixinJSBridge) {
-      WeixinJSBridge.call('hideToolbar')
+    if (window.WeixinJSBridge) {
+      window.WeixinJSBridge.call('hideToolbar')
     }
     this.$refs['toast'].showLoadingToast()
     const activityID = this.$route.query.activity_id
