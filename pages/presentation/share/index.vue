@@ -5,9 +5,20 @@
       <div class="topaction-rank" @click="gotoPageWithHistory('presentation-rank')">点赞排行</div>
     </div>
     <div class="content">
-      <video controls class="content-video" v-if="stuData.videoSrc" :poster="`${stuData.videoSrc}?vframe/jpg/offset/2/h/960/`">
+      <!-- <video controls class="content-video" v-if="stuData.videoSrc" :poster="`${stuData.videoSrc}?vframe/jpg/offset/2/h/960/`">
         <source :src="stuData.videoSrc"/>
-      </video>
+      </video> -->
+      <div class="content-video" v-if="stuData.videoSrc" @click="playFn('video-share')">
+        <video
+          style="display: none;"
+          id="video-share"
+          controls
+          preload="auto"
+          :src="videoSrc"
+        />
+        <img class="content-video-img" :src="`${stuData.videoSrc}?vframe/jpg/offset/2/h/960/`"/>
+        <div class="content-video-play"></div>
+      </div>
       <h3 class="content-topic-eng">{{ topic.en_topic_name }}</h3>
       <h3 class="content-topic-chn">{{ topic.cn_topic_name }}</h3>
       <div class="content-action">
@@ -44,6 +55,7 @@ import { API } from '~/pages/presentation/consts'
 import { getWXCode, initWX } from '~/pages/presentation/wx'
 import Toast from '~/components/Toast'
 import PrtMixin from '~/pages/presentation/mixin'
+import { videoPlayerEvent } from '~/utils/videoPlay'
 import '~/pages/presentation/presentation'
 
 export default {
@@ -180,25 +192,29 @@ export default {
     },
     gotoIndex() {
       window.location = `${process.env.BASE_URL}/presentation/?activity_id=${this.$route.query.activity_id}`
-    }
+    },
+    playFn(name){
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
+    },
   },
   async mounted() {
-    if (window.WeixinJSBridge) {
-      window.WeixinJSBridge.call('hideToolbar')
-    }
-    this.$refs['toast'].showLoadingToast()
-    const { code } = this.$route.query
-    if (code == null) {
-      sessionStorage.setItem('lastUrl', window.location.href)
-      getWXCode(window.location.href)
-      return
-    }
+    // if (window.WeixinJSBridge) {
+    //   window.WeixinJSBridge.call('hideToolbar')
+    // }
+    // this.$refs['toast'].showLoadingToast()
+    // const { code } = this.$route.query
+    // if (code == null) {
+    //   sessionStorage.setItem('lastUrl', window.location.href)
+    //   getWXCode(window.location.href)
+    //   return
+    // }
 
-    if(code){
-      await this.getOpenid()
-      await this.initData();
-    }
-    this.$refs['toast'].hideLoadingToast()
+    // if(code){
+    //   await this.getOpenid()
+    //   await this.initData();
+    // }
+    // this.$refs['toast'].hideLoadingToast()
   }
 }
 </script>
@@ -229,6 +245,24 @@ export default {
     width: 639px;
     height: 360px;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    &-img {
+      height: inherit;
+    }
+
+    &-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+    }
   }
 
   &-topic-eng {
