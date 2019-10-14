@@ -119,9 +119,6 @@ export default {
     },
   },
   async mounted() {
-    if (window.WeixinJSBridge) {
-      window.WeixinJSBridge.call('hideToolbar')
-    }
     this.$refs['toast'].showLoadingToast()
     const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))
     const activityID = this.$route.query.activity_id
@@ -193,7 +190,7 @@ $topic-item-width: 480px;
 
     &-video {
       width: $topic-item-width;
-      max-height: 300px;
+      height: 280px;
       overflow: hidden;
       position: relative;
 
@@ -212,7 +209,7 @@ $topic-item-width: 480px;
     }
     &-videoplay {
       width: $topic-item-width;
-      max-height: 300px;
+      height: 280px;
       overflow: hidden;
       position: absolute;
       top: 0;

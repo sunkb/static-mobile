@@ -238,7 +238,7 @@ export default {
   background: #fff;
 
   &-video {
-    width: 639px;
+    width: 640px;
     height: 360px;
     overflow: hidden;
     display: flex;

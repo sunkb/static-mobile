@@ -103,9 +103,6 @@ export default {
     },
   },
   async mounted() {
-    if (window.WeixinJSBridge) {
-      window.WeixinJSBridge.call('hideToolbar')
-    }
     this.$refs['toast'].showLoadingToast()
     const formData = JSON.parse(localStorage.getItem(STROGE.FORM_DATA))
     this.videoSrc = formData.videoSrc

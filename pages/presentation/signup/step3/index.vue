@@ -204,9 +204,6 @@ export default {
     },
   },
   async mounted() {
-    if (window.WeixinJSBridge) {
-      window.WeixinJSBridge.call('hideToolbar')
-    }
     const result = this.initDataFromStroge()
     if (!result) {
       await this.initDataFromAPI()
@@ -262,11 +259,12 @@ export default {
   justify-content: center;
   position: relative;
 
-  $video-content-width: 640px;
+  $video-content-width: 528px;
+  $video-conten-height: 297px;
 
   &-hint {
-    width: 640px;
-    height: 360px;
+    width: $video-content-width;
+    height: $video-conten-height;
     display: flex;
     flex-flow: column;
     justify-content: center;
@@ -316,7 +314,7 @@ export default {
   &-uploaded {
     &-video {
       width: $video-content-width;
-      height: 360px;
+      height: $video-conten-height;
       overflow: hidden;
       position: relative;
       background: #E6E6E6;
