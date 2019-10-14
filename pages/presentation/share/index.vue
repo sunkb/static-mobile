@@ -230,6 +230,10 @@ export default {
   box-shadow: 0 0 22.5px -11.25px #999999;
   background: #fff;
   margin-top: 46px;
+  position: relative;
+  left: 0;
+  top: 0;
+  transform: translateX(50%);
 
   &-video {
     width: 640px;
