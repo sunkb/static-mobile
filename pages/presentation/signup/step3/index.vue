@@ -280,8 +280,8 @@ export default {
     }
 
     &-hintimg {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
     }
 
     &-progress {
@@ -338,8 +338,8 @@ export default {
     transform: translate(-50%, 50%);
 
     &-action {
-      width: 90px;
-      height: 90px;
+      width: 80px;
+      height: 80px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -348,8 +348,8 @@ export default {
       box-shadow: 0 0 37.5px -22.5px #666666;
 
       &-img {
-        width: 64.5px;
-        height: 64.5px;
+        width: 64px;
+        height: 64px;
       }
     }
   }
