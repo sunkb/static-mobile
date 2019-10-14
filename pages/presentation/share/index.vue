@@ -96,7 +96,8 @@ export default {
       }
 
       if (res.status) {
-        await this.initData();
+        // await this.initData();
+        this.liked = !this.liked
       }else{
         this.$refs['toast'].showToast(res.info)
       }
