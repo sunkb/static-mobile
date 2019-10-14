@@ -200,7 +200,7 @@ $level-height: 90px;
     box-sizing: content-box;
     border-bottom: 1px solid #EBEBEB;
     background: #fff;
-    padding: 0 18.75px;
+    padding: 18.75px 0;
 
     &-left {
       display: flex;
