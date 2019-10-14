@@ -139,13 +139,13 @@ export default {
       this.$refs['toast'].showToast(data1.info)
       return
     } else {
+      this.signupData.engName = data1.data.en_name
+      this.signupData.chnName = data1.data.cn_name
       if (data1.data.id) {
         this.signupData.landiLevel = data1.data.combination_id
         const address = (data1.data.address.split('#')[1]).split('/')
         this.signupData.province = address[0]
         this.signupData.city = address[1]
-        this.signupData.engName = data1.data.en_name
-        this.signupData.chnName = data1.data.cn_name
       }
     }
     this.formBlur()
