@@ -209,7 +209,6 @@ export default {
       color: #333333;
       appearance: none;
       width: 200px;
-      opacity: 0;
     }
 
     &-vcode {
