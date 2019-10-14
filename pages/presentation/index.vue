@@ -120,6 +120,7 @@ export default {
   methods: {
     selectLevel(index) {
       this.levelSelectIndex = index
+      
     },
     signup() {
       if (!this.resData.is_enable) {

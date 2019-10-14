@@ -153,7 +153,7 @@ $level-height: 90px;
 
   &-item {
     position: relative;
-    width: 127.5px;
+    width: 200px;
     text-align: center;
 
     &-content {
