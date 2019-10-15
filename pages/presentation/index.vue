@@ -189,8 +189,9 @@ export default {
       videoPlayerEvent(video1)
     },
     async updateWXShare() {
-      const resWX = await axios.post(`${API.WX_SHARE_COMMON}`, {
-        url: window.location.href.split('#')[0]
+      const resWX = await axios.post(`${API.WX_INDEX_SHARE}`, {
+        url: window.location.href.split('#')[0],
+        activity_id: this.$route.query.activity_id
       })
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)
@@ -206,14 +207,14 @@ export default {
       });
       
       const shareObj = { 
-        // title: wx_data.share_title,
-        // desc: wx_data.share_desc,
-        // link: wx_data.share_link,
-        // imgUrl: wx_data.share_img_url,
-        title: 'title',
-        desc: 'desc',
-        link: window.location.href,
-        imgUrl: 'https://qn-static.landi.com/uploadtool74007a0ed04a743f8ac9c5aebcc97dab.jpg',
+        title: wx_data.share_title,
+        desc: wx_data.share_desc,
+        link: wx_data.share_link,
+        imgUrl: wx_data.share_img_url,
+        // title: 'title',
+        // desc: 'desc',
+        // link: window.location.href,
+        // imgUrl: 'https://qn-static.landi.com/uploadtool74007a0ed04a743f8ac9c5aebcc97dab.jpg',
       }
       wx.ready(() => {
         wx.updateAppMessageShareData(shareObj)

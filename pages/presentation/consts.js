@@ -10,7 +10,7 @@ const API = {
   RANK: '/Mobile/StudentActivityDetail/rank',
   WX_SHARE: '/Mobile/StudentActivityDetail/share',
   WX_SHARE1: '/Mobile/StudentActivityDetail/share1',
-  WX_SHARE_COMMON: '/Mobile/Wx/share',
+  WX_INDEX_SHARE: '/Mobile/Wx/indexShare',
   WORK: '/Mobile/StudentActivityDetail/work',
   LIKE: '/Mobile/StudentActivityDetail/zan',
   UNLIKE: '/Mobile/StudentActivityDetail/unZan',
