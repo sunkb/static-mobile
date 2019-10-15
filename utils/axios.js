@@ -16,6 +16,24 @@ import Qs from 'qs';
 
 console.log('process.env.ENV_API',process.env.ENV_API)
 
+function removeParam(key, sourceURL) {
+  var rtn = sourceURL.split("?")[0],
+      param,
+      params_arr = [],
+      queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+  if (queryString !== "") {
+      params_arr = queryString.split("&");
+      for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+          param = params_arr[i].split("=")[0];
+          if (param === key) {
+              params_arr.splice(i, 1);
+          }
+      }
+      rtn = rtn + "?" + params_arr.join("&");
+  }
+  return rtn;
+}
+
 const Axios = axios.create({
   baseURL: process.env.ENV_API,
   // 请求前的数据处理
@@ -58,9 +76,31 @@ Axios.interceptors.response.use(
     }
   },
   error => {
-    console.log(error, error.response)
-    // errorHandle(error)
-
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          // let redirect_url = window.location.href;
+          // redirect_url = removeParam('code',redirect_url);
+          // console.log('code',redirect_url);
+          // redirect_url = removeParam('state',redirect_url);
+          // console.log('state',redirect_url);
+          // redirect_url = encodeURIComponent(redirect_url);
+          // console.log('loginUrl',redirect_url);
+          // const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
+          // console.log('loginUrl',loginUrl);
+          // window.location.href = loginUrl;
+          
+          break;
+        case 404:
+          error.message = '请求错误,未找到该资源';
+          break;
+        case 500:
+          error.message = '服务器端出错';
+          break;
+        default:
+          error.message = `连接错误${error.response.status}`;
+      }
+    }
     return Promise.reject(error)
   })
 

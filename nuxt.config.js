@@ -44,6 +44,11 @@ export default {
       src: 'https://cdn.jsdelivr.net/npm/eruda',
       type: 'text/javascript',
       charset: 'utf-8'
+    },
+    {
+      src: 'https://www.landi.com/Public/Teen/Web/MarketSignIn/js/tools-gt.js',
+      type: 'text/javascript',
+      charset: 'utf-8'
     }]
   },
   /*
@@ -58,13 +63,13 @@ export default {
   css: [{
     src: '~assets/group_buy/css/main.scss',
     lang: 'scss'
-  }],
+  },],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
     { src: '~plugins/baidu.js', ssr: false },
-    { src: '~plugins/pullto.js', ssr: false }
+    { src: '~plugins/pullto.js', ssr: false },
   ],
   /*
    ** Nuxt.js dev-modules
@@ -109,8 +114,11 @@ export default {
     //publicPath:'https://api-master.abc360.cn/static/web/',
     extend(config, ctx) {},
     postcss: [
-      require('postcss-px2rem')({
-        remUnit: 75
+      require('postcss-pxtorem')({
+        rootValue: 75,
+        unitPrecision: 5,
+        propList: ['*'],
+        selectorBlackList: ['border', 'border-width', 'border-top', 'border-right', 'border-left', 'border-bottom', 'border-top-width', 'border-right-width', 'border-left-width', 'border-bottom-width']
       })
     ],
     vendor: ['axios'] //防止重复打包
