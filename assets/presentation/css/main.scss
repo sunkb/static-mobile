@@ -3,7 +3,7 @@ $b-color: #D8E0E6;
 
 .top-step-bar {
   padding-top: 20px;
-  margin-bottom: 0;
+  margin-bottom: 20px;
   height: 165px;
 }
 
@@ -41,11 +41,15 @@ $b-color: #D8E0E6;
 //   color: #808080;
 // }
 
-.title-content-space {
-  margin-bottom: -7.5px;
+.signup-title {
+  font-size: 30px;
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 30px;
 }
 
-.level2text {
-  margin-top: 7.5px;
-  margin-bottom: 15px;
+.signup-title2 {
+  font-size: 28px;
+  color: #333333;
+  margin-bottom: 20px;
 }

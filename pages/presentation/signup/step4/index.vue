@@ -4,7 +4,7 @@
       <step-bar :steps="steps" :progress="70"></step-bar>
     </div>
     <div class="page-content">
-      <h1 class="title-content-space">确认提交</h1>
+      <div class="signup-title">确认提交</div>
       <div class="video">
         <div v-if="videoSrc && videoSrc != ''" class="video-content" @click="playFn('video-upload')">
           <video
@@ -22,7 +22,7 @@
         <div :class="['rule-select', ruleSelected ? 'selected' : '']" @click="selectRule">
           <img v-if="ruleSelected" class="rule-select-img" :src="require('~/assets/presentation/img/rule-select.png')"/>
         </div>
-        <h3 @click="gotoRulePage">我已阅读并同意《视频授权用户协议书》</h3>
+        <div @click="gotoRulePage" class="rule-text">我已阅读并同意《视频授权用户协议书》</div>
       </div>
     </div>
     <submit-area 
@@ -168,13 +168,13 @@ export default {
 .rule {
   display: flex;
   align-items: center;
-  margin: 22.5px 22.5px;
+  margin: 35px 22px;
 
   &-select {
-    margin-right: 22.5px;
+    margin-right: 10px;
     width: 40px;
     height: 40px;
-    border: 1.5px solid #E6E6E6;
+    border: 1px solid #E6E6E6;
 
     &-img {
       width: inherit;
@@ -184,6 +184,11 @@ export default {
 
   .selected {
     border: none;
+  }
+
+  &-text {
+    font-size: 24px;
+    color: #B2B2B2;
   }
 }
 </style>

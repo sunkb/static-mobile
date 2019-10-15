@@ -4,10 +4,10 @@
       <step-bar :steps="steps" :progress="30"></step-bar>
     </div>
     <div class="page-content">
-      <h1 class="title-content-space">选择题目</h1>
+      <div class="signup-title">选择题目</div>
       <div class="level">
-        <h2 class="level2text">当前级别: {{ landiLevel.name }}</h2>
-        <h3 class="level-hint">左右滑屏可以切换样板和主题</h3>
+        <div class="signup-title2">当前级别: {{ landiLevel.name }}</div>
+        <div class="level-hint">左右滑屏可以切换样板和主题</div>
       </div>
       <div class="topic">
         <div class="topic-item" v-for="(item, index) in topics" :key="item.id">
@@ -32,8 +32,8 @@
               <img v-if="topicSelectID == item.id" class="topic-item-selector-img" :src="require('~/assets/presentation/img/topic-selector.png')"/>
             </div>
           </div>
-          <h3 class="topic-item-eng topic-item-text">{{ item.en_topic_name }}</h3>
-          <h3 class="topic-item-chn topic-item-text chntext">{{ item.cn_topic_name }}</h3>
+          <div class="topic-item-eng topic-item-text">{{ item.en_topic_name }}</div>
+          <div class="topic-item-chn topic-item-text">{{ item.cn_topic_name }}</div>
         </div>
       </div>
       <submit-area 
@@ -167,7 +167,10 @@ export default {
   align-items: center;
 
   &-hint {
-    margin-left: 22.5px;
+    margin-left: 30px;
+    font-size: 24px;
+    color: #B2B2B2;
+    margin-bottom: 20px;
     &::before {
       content: '*';
       color: #F0552D;
@@ -198,6 +201,7 @@ $topic-item-width: 480px;
 
       &-pic {
         width: inherit;
+        height: inherit;
       }
       &-play {
         position: absolute;
@@ -219,14 +223,18 @@ $topic-item-width: 480px;
     }
 
     &-eng {
+      font-size: 26px;
       color: #333333;
-      max-height: 63px;
-      box-sizing: content-box;
+      letter-spacing: 0;
+      margin-top: 20px;
     }
 
     &-chn {
-      padding-top: 15px;
-      margin-top: -10px;
+      font-size: 24px;
+      color: #B2B2B2;
+      letter-spacing: 0;
+      line-height: 38px;
+      margin-top: 10px;
     }
 
     &-text {

@@ -5,18 +5,18 @@
     </div>
     <div class="page-content">
       <div class="title">
-        <h1 class="title-content-space">上传视频</h1>
+        <div class="signup-title">上传视频</div>
         <div class="title-action" @click="gotoStep2">
-          <h3>查看题目</h3>
+          <div class="title-action-text">查看题目</div>
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
         </div>
       </div>
       <div>
         <div>
-          <h2 class="level2text">当前级别: {{ landiLevel }}</h2>
+          <div class="signup-title2">当前级别: {{ landiLevel }}</div>
           <div class="topic-text">
-            <h2 v-if="topic" class="topic-text-eng">{{ topic.en_topic_name }}</h2>
-            <h3 v-if="topic" class="topic-text-chn">{{ topic.cn_topic_name }}</h3>
+            <div v-if="topic" class="topic-text-eng">{{ topic.en_topic_name }}</div>
+            <div v-if="topic" class="topic-text-chn">{{ topic.cn_topic_name }}</div>
           </div>
           <div class="video">
             <div class="video-hint" v-if="videoStatus.type != 'uploaded'">
@@ -28,7 +28,7 @@
                   <div class="video-hint-progress-bg"></div>
                   <div class="video-hint-progress-fg" :style="{ width: `${videoStatus.progress}%` }"></div>
                 </div>
-                <h3>正在上传 {{ videoStatus.progress }}%</h3>
+                <div class="video-hint-progresstext">正在上传 {{ videoStatus.progress }}%</div>
               </div>
             </div>
             <div class="video-uploaded" v-if="videoStatus.type == 'uploaded'">
@@ -230,9 +230,11 @@ export default {
   padding-right: 22.5px;
 
   &-action {
-    h3 {
+    &-text {
       color: $p-color-0;
       display: inline-block;
+      font-size: 26px;
+      margin-bottom: 30px;
     }
 
     &-img {
@@ -246,16 +248,22 @@ export default {
   width: 675px;
   
   &-eng {
-    font-weight: bold;
+    font-size: 26px;
+    color: #333333;
+    letter-spacing: 0;
+    margin-bottom: 14px;
   }
 
   &-chn {
+    font-size: 24px;
+    color: #B2B2B2;
+    letter-spacing: 0;
   }
 }
 
 .video {
   text-align: center;
-  margin-top: 22.5px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   position: relative;
@@ -271,7 +279,13 @@ export default {
     justify-content: center;
     align-items: center;
     background: #FAFAFA;
-    border: 1.5px dashed #E6E6E6;
+    border: 1px dashed #E6E6E6;
+
+    &-progresstext {
+      font-size: 26px;
+      color: #B2B2B2;
+      margin-top: 20px;
+    }
 
     &-hint {
       width: 195px;

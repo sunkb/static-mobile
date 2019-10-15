@@ -45,8 +45,8 @@ export default {
 <style lang="scss" scoped>
 @import '~/assets/presentation/css/main.scss';
 
-$circle-size: 52px;
-$circle-content-size: 40px;
+$circle-size: 50px;
+$circle-content-size: 38px;
 $height: 90px;
 
 #stepbar {

@@ -4,7 +4,7 @@
       <step-bar :steps="steps" :progress="10"></step-bar>
     </div>
     <div class="page-content">
-      <h1>报名信息</h1>
+      <div class="signup-title">报名信息</div>
       <div class="page-content-content">
         <div class="signupform">
           <div class="signupform-item">
@@ -184,12 +184,12 @@ export default {
 .signupform {
 
   &-item {
-    border-top: 1.5px solid #E6E6E6;
-    padding: 30px 0;
+    border-top: 1px solid #E6E6E6;
+    padding: 32px 0;
     white-space: nowrap;
 
     &:last-child {
-      border-bottom: 1.5px solid #E6E6E6;
+      border-bottom: 1px solid #E6E6E6;
     }
 
     &-label {

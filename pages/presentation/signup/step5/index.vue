@@ -5,16 +5,16 @@
     </div>
     <div class="page-content" v-if="mywork">
       <div class="title">
-        <h1>我的作品</h1>
+        <div class="signup-title">我的作品</div>
         <div class="title-action" @click="reUpload" v-if="canReUpload">
-          <h3>重新上传</h3>
+          <div class="title-action-text">重新上传</div>
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
         </div>
       </div>
-      <h2 class="level2text">报名学生: {{ mywork.en_name }}</h2>
+      <div class="signup-title2">报名学生: {{ mywork.en_name }}</div>
       <div class="topic-text">
-        <h2 class="topic-text-eng">{{ mywork.topic.en_topic_name }}</h2>
-        <h3 class="topic-text-chn">{{ mywork.topic.cn_topic_name }}</h3>
+        <div class="topic-text-eng">{{ mywork.topic.en_topic_name }}</div>
+        <div class="topic-text-chn">{{ mywork.topic.cn_topic_name }}</div>
       </div>
       <div class="video">
         <div class="video-content" @click="playFn('video-upload')">
@@ -161,14 +161,20 @@ export default {
 }
 
 .topic-text {
-  margin-top: -7.5px;
   width: 675px;
   
   &-eng {
-    font-weight: bold;
+    font-size: 26px;
+    color: #333333;
+    letter-spacing: 0;
   }
 
   &-chn {
+    font-size: 24px;
+    color: #B2B2B2;
+    letter-spacing: 0;
+    line-height: 38px;
+    margin-top: 14px;
   }
 }
 
@@ -211,13 +217,15 @@ export default {
   padding-right: 22.5px;
 
   &-action {
-    h3 {
-      color: $p-color-0;
-      display: inline-block;
-    }
-
     &-img {
       width: 10px;
+    }
+
+    &-text {
+      color: $p-color-0;
+      display: inline-block;
+      font-size: 26px;
+      margin-bottom: 30px;
     }
   }
 }

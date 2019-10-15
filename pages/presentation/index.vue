@@ -43,8 +43,8 @@
               <img class="content-video-item-video-pic" :src="item.audios[0].pic_url" v-if="item.audios.length > 0 && item.videos.length == 0"/>
               <img class="content-video-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
             </div>
-            <h3 class="content-video-item-eng content-video-item-text">{{ item.en_topic_name }}</h3>
-            <h3 class="content-video-item-chn content-video-item-text">{{ item.cn_topic_name }}</h3>
+            <div class="content-video-item-eng content-video-item-text">{{ item.en_topic_name }}</div>
+            <div class="content-video-item-chn content-video-item-text">{{ item.cn_topic_name }}</div>
           </div>
         </div>
       </div>
@@ -325,7 +325,7 @@ function removeParam(key, sourceURL) {
     &-item {
       width: 150px;
       height: 60px;
-      border: 1.5px solid #E6E6E6;
+      border: 1px solid #E6E6E6;
       border-radius: 30px;
       color: #333333;
       font-size: 26px;
@@ -492,7 +492,11 @@ function removeParam(key, sourceURL) {
     width: 500px;
     display: inline-block;
     color: #333333;
-    margin-bottom: 22.5px;
+    margin-bottom: 18px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &-content { 
       width: 100%;
@@ -501,12 +505,12 @@ function removeParam(key, sourceURL) {
       border: 1px dashed #C0C7CC;
       border-radius: 37.5px;
       background: #FAFAFA;
-      margin-bottom: 22.5px;
+      margin-bottom: 18px;
     }
     &-deco {
       width: 30px;
       height: 14px;
-      background: url('');
+      background: url('~assets/presentation/img/triangle.png') 50% 50% / cover;
       position: relative;
       left: 50%;
       transform: translateX(-50%)
