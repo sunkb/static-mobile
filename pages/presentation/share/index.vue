@@ -97,9 +97,9 @@ export default {
 
       let res;
       if(!liked){
-        res = await axios.get(`${API.UNLIKE}?&work_id=${work_id}`)
-      }else{
         res = await axios.get(`${API.LIKE}?work_id=${work_id}`)
+      }else{
+        res = await axios.get(`${API.UNLIKE}?&work_id=${work_id}`)
       }
 
       if (res.status) {
