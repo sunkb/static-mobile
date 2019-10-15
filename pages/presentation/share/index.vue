@@ -22,8 +22,7 @@
         <div class="content-action-author">作者: {{ stuData.name }}</div>
         <div class="content-action-actions">
           <div class="content-action-actions-btn" @click="shareToFrends" style="background: #FFD750"><img :src="require('~/assets/presentation/img/share.png')" class="share"/></div>
-          <div class="content-action-actions-btn" :style="{ background: !liked ? '#F0552D' : '#E6E6E6' }" @click="clickLike">
-            <img :src="require('~/assets/presentation/img/like.png')" class="like"/></div>
+          <div class="content-action-actions-btn" :style="{ background: !liked ? '#F0552D' : '#E6E6E6' }" @click="clickLike"><img :src="require('~/assets/presentation/img/like.png')" class="like"/></div>
           <div class="content-action-actions-text">{{ stuData.like }}人点赞</div>
         </div>
       </div>
@@ -316,12 +315,12 @@ export default {
       }
 
       .share {
-        width: 37.5px;
-        height: 37.5px;
+        width: 37px;
+        height: 37px;
       }
       .like {
-        width: 35.25px;
-        height: 34.5px;
+        width: 35px;
+        height: 34px;
       }
     }
   }
