@@ -117,8 +117,7 @@ export default {
       require('postcss-pxtorem')({
         rootValue: 75,
         unitPrecision: 5,
-        propList: ['*'],
-        selectorBlackList: ['border', 'border-width', 'border-top', 'border-right', 'border-left', 'border-bottom', 'border-top-width', 'border-right-width', 'border-left-width', 'border-bottom-width']
+        propList: ['*', '!border-bottom', '!border', '!border-width', '!border-top', '!border-right', '!border-left', '!border-top-width', '!border-right-width', '!border-left-width', '!border-bottom-width'],
       })
     ],
     vendor: ['axios'] //防止重复打包

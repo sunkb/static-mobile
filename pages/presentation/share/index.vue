@@ -16,8 +16,8 @@
         <img class="content-video-img" :src="`${stuData.videoSrc}?vframe/jpg/offset/2/h/960/`"/>
         <div class="content-video-play"></div>
       </div>
-      <h3 class="content-topic-eng">{{ topic.en_topic_name }}</h3>
-      <h3 class="content-topic-chn">{{ topic.cn_topic_name }}</h3>
+      <div class="content-topic-eng">{{ topic.en_topic_name }}</div>
+      <div class="content-topic-chn">{{ topic.cn_topic_name }}</div>
       <div class="content-action">
         <div class="content-action-author">作者: {{ stuData.name }}</div>
         <div class="content-action-actions">
@@ -233,8 +233,8 @@ export default {
 
 .content {
   width: 690px;
-  padding: 37.5px 22.5px;
-  box-shadow: 0 0 22.5px -11.25px #999999;
+  padding: 30px 25px;
+  box-shadow: 0 2px 4px 0 #CCCCCC;
   background: #fff;
   margin-top: 46px;
   position: relative;
@@ -267,13 +267,20 @@ export default {
   }
 
   &-topic-eng {
+    font-size: 26px;
     color: #333333;
-    margin-top: 22.5px;
+    letter-spacing: 0;
     text-align: left;
+    margin-top: 30px;
   }
 
   &-topic-chn {
     text-align: left;
+    font-size: 24px;
+    color: #B2B2B2;
+    letter-spacing: 0;
+    line-height: 38px;
+    margin-top: 10px;
   }
 
   &-action {

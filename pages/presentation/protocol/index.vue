@@ -35,17 +35,15 @@ export default {
   height: 100%;
 }
 
-.back {
-  position: fixed;
-  top: 37.5px;
-  right: 0;
-  padding: 22.5px 30px;
-  font-size: 26px;
+h1 {
+  font-size: 28px;
   font-weight: bold;
-  color: #fff;
-  background: $p-color-0;
-  box-shadow: 0 0 22.5px -15px black;
-  border-top-left-radius: 40%;
-  border-bottom-left-radius: 40%;
+  color: #333333;
+  padding: 20px 0;
+}
+p {
+  font-size: 26px;
+  color: #808080;
+  line-height: 41px;
 }
 </style>
