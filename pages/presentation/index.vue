@@ -91,6 +91,7 @@ import Toast from '~/components/Toast'
 import { PosterModal } from '~/components/presentation'
 import PrtMixin from '~/pages/presentation/mixin'
 import { videoPlayerEvent } from '~/utils/videoPlay'
+import { initWX } from '~/pages/presentation/wx'
 
 export default {
   name: 'Presentation',
@@ -186,6 +187,43 @@ export default {
     playFn(name){
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
+    },
+    async updateWXShare() {
+      const resWX = await axios.post(`${API.WX_SHARE_COMMON}`, {
+        url: window.location.href.split('#').split[0]
+      })
+      if (!resWX.status) {
+        this.$refs['toast'].showToast(resWX.info)
+        return
+      }
+      const wxConfig = resWX.data.wx_config;
+      const wx_data = resWX.data.wx_data;
+      const wx = initWX({
+        appId: wxConfig.appId,
+        timestamp: wxConfig.timestamp,
+        nonceStr: wxConfig.nonceStr,
+        signature: wxConfig.signature,
+      });
+      
+      const shareObj = { 
+        // title: wx_data.share_title,
+        // desc: wx_data.share_desc,
+        // link: wx_data.share_link,
+        // imgUrl: wx_data.share_img_url,
+        title: 'title',
+        desc: 'desc',
+        link: window.location.href,
+        imgUrl: 'https://qn-static.landi.com/uploadtool74007a0ed04a743f8ac9c5aebcc97dab.jpg',
+      }
+      wx.ready(() => {
+        wx.updateAppMessageShareData(shareObj)
+        wx.updateTimelineShareData(shareObj)
+        wx.onMenuShareAppMessage(shareObj);
+        wx.onMenuShareTimeline(shareObj);
+        wx.error(function(res){
+          console.log(res);
+        });
+      })
     }
   },
   created() {
@@ -221,8 +259,7 @@ export default {
         this.isLogin = false;
       }
     }
-
-
+    await this.updateWXShare()
 
     this.centerActionBottom = this.$refs.centerAction.getBoundingClientRect().bottom
     window.addEventListener('scroll', this.handleScroll)
