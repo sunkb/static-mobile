@@ -8,7 +8,7 @@
         <div class="topaction-rule" @click="gotoPageWithHistory('presentation-rule')">活动规则</div>
       </div>
       <div class="content card">
-        <h3 class="content-title">报名参赛，分享更多宝贝高光时刻</h3>
+        <div class="content-title">报名参赛，分享更多宝贝高光时刻</div>
         <div class="action" @click="mainAction" ref="centerAction">
           <div class="action-content" :style="{ background: resData.button_color }">
             <div class="action-content-text">{{ haveWork ? '查看我的作品' : '我要报名参赛' }}</div>
@@ -25,7 +25,7 @@
           <div v-for="(item, index) in resData.combinations" :key="item.id" class="content-level-item" @click="selectLevel(index)"
             :style="levelSelectIndex == index ? { background: resData.button_color, color: '#fff', border: 'none' } : {}">{{ item.name }}</div>
         </div>
-        <h3>以下演讲主题，任意选择其中之一即可</h3>
+        <div class="content-topictitle">以下演讲主题，任意选择其中之一即可</div>
         <div class="content-video" ref="content-video">
           <div class="content-video-item" v-for="(item, index) in resData.combinations[levelSelectIndex].topics" :key="item.id">
             <video
@@ -44,7 +44,7 @@
               <img class="content-video-item-video-pic" :src="item.pics[0]" v-if="item.pics.length > 0 && item.videos.length == 0 && item.audios.length == 0"/>
             </div>
             <h3 class="content-video-item-eng content-video-item-text">{{ item.en_topic_name }}</h3>
-            <h3 class="content-video-item-chn content-video-item-text chntext">{{ item.cn_topic_name }}</h3>
+            <h3 class="content-video-item-chn content-video-item-text">{{ item.cn_topic_name }}</h3>
           </div>
         </div>
       </div>
@@ -263,7 +263,7 @@ function removeParam(key, sourceURL) {
 
 .card {
   width: 690px;
-  padding: 22.5px 42px;
+  padding: 40px 20px 50px;
   box-shadow: 0 2px 8px 0 #CCCCCC;
   position: relative;
   left: 50%;
@@ -309,11 +309,18 @@ function removeParam(key, sourceURL) {
   margin-top: 495px;
   text-align: center;
 
+  &-title {
+    font-family: MicrosoftYaHei;
+    font-size: 24px;
+    color: #B2B2B2;
+    margin-top: 20px;
+  }
+
   &-level {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 22.5px;
+    margin-bottom: 30px;
 
     &-item {
       width: 150px;
@@ -333,12 +340,18 @@ function removeParam(key, sourceURL) {
     }
   }
 
+  &-topictitle {
+    font-family: MicrosoftYaHei;
+    font-size: 24px;
+    color: #B2B2B2;
+  }
+
   $topic-item-width: 480px;
   &-video {
     display: flex;
     white-space: nowrap;
     overflow-x: scroll;
-    margin-top: 22.5px;
+    margin-top: 40px;
     text-align: left;
     &::-webkit-scrollbar {
       display: none;
@@ -358,6 +371,7 @@ function removeParam(key, sourceURL) {
 
         &-pic {
           width: inherit;
+          height: inherit;
         }
         &-play {
           position: absolute;
@@ -371,14 +385,16 @@ function removeParam(key, sourceURL) {
       }
 
       &-eng {
+        font-size: 26px;
         color: #333333;
-        max-height: 56px;
-        box-sizing: content-box;
+        letter-spacing: -1.86px;
+        margin-top: 28px;
       }
 
       &-chn {
-        padding-top: 15px;
-        margin-top: -10px;
+        font-size: 24px;
+        color: #B2B2B2;
+        margin-top: 8px;
       }
 
       &-text {
@@ -394,7 +410,7 @@ function removeParam(key, sourceURL) {
 }
 
 .action {
-  margin: 16.5px 0 60px;
+  margin: 24px 0 60px;
   display: inline-block;
   width: 610px;
   height: 100px;
@@ -442,10 +458,6 @@ function removeParam(key, sourceURL) {
     width: 100%;
     margin-bottom: 40px;
 
-    &-space {
-      margin-top: 20px;
-    }
-
     &-text {
       margin: 0 37.5px;
       font-size: 28px;
@@ -465,6 +477,9 @@ function removeParam(key, sourceURL) {
   padding-bottom: 37.5px;
 
   p {
+    font-size: 26px;
+    color: #808080;
+    text-align: justify;
     line-height: 44px;
   }
 }
@@ -483,16 +498,15 @@ function removeParam(key, sourceURL) {
       width: 100%;
       line-height: 70px;
       font-size: 28px;
-      border: 1.5px dashed #C0C7CC;
+      border: 1px dashed #C0C7CC;
       border-radius: 37.5px;
       background: #FAFAFA;
       margin-bottom: 22.5px;
     }
     &-deco {
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-top: 15px solid #333333;
       width: 30px;
+      height: 14px;
+      background: url('');
       position: relative;
       left: 50%;
       transform: translateX(-50%)
@@ -509,9 +523,5 @@ function removeParam(key, sourceURL) {
   height: 140px;
   box-shadow: 0 -2px 6px 0 #CCCCCC;
   text-align: center;
-}
-
-.content-title {
-  margin-top: 20px;
 }
 </style>
