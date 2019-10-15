@@ -173,13 +173,13 @@ $level-height: 90px;
     &-selector {
       position: absolute;
       left: 50%;
-      bottom: -1.5px;
+      bottom: 0;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-bottom: 15px solid #fff;
+      width: 30px;
+      height: 14px;
+      background: url('~assets/presentation/img/triangle1.png') 50% 50% / cover;
     }
   }
 }
