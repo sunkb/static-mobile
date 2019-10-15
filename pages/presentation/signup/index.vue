@@ -135,7 +135,9 @@ export default {
       const _city = this.$refs['city']
       localStorage.setItem(STROGE.FORM_DATA, JSON.stringify({
         landiLevel: _landiLevel,
-        address: `${_province.options[_province.selectedIndex].text}/${_city.options[_city.selectedIndex].text}#${this.signupData.province}/${this.signupData.city}`
+        address: `${_province.options[_province.selectedIndex].text}/${_city.options[_city.selectedIndex].text}#${this.signupData.province}/${this.signupData.city}`,
+        en_name: this.signupData.engName,
+        cn_name: this.signupData.chnName
       }))
       this.gotoPage('presentation-signup-step2')
     }

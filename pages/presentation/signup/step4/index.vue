@@ -83,6 +83,9 @@ export default {
         }
         if (this.formData.workID) {
           data.id = this.formData.workID
+        } else {
+          data.cn_name = this.formData.cn_name
+          data.en_name = this.formData.en_name
         }
         const res = await axios.post(API.SUBMIT_WORK, data)
         if (res.status) {
