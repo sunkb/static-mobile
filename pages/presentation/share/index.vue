@@ -86,6 +86,7 @@ export default {
   methods: {
     async clickLike() {
       const liked = this.liked;
+      const { activity_id, work_id } = this.$route.query
 
       if (this.liked) {
         this.stuData.like = this.stuData.like - 1 >= 0 ? this.stuData.like - 1 : 0
