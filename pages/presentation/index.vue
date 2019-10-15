@@ -190,7 +190,7 @@ export default {
     },
     async updateWXShare() {
       const resWX = await axios.post(`${API.WX_SHARE_COMMON}`, {
-        url: window.location.href.split('#').split[0]
+        url: window.location.href.split('#')[0]
       })
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)
