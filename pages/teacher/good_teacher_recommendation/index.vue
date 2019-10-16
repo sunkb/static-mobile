@@ -66,7 +66,7 @@
                 v-if="isMobile()"
                 controls
                 controlslist="nodownload"
-                preload="preload"
+                preload="auto"
               >
                <source :src="`${teacherMsg.info.video}`" type="video/mp4" />
               </video>
@@ -75,7 +75,7 @@
                 id="videoPlay1"
                 controls
                 controlslist="nodownload"
-                preload="preload"
+                preload="auto"
                 :src="`${teacherMsg.info.video}`"
               />
             </div>
@@ -98,7 +98,7 @@
                   :id="`video${index}`"
                   controls
                   :key="index"
-                  preload="preload"
+                  preload="auto"
                 >
                 <source :src="item" type="video/mp4" />
                </video>
@@ -107,7 +107,7 @@
                   :id="`video${index}`"
                   controls
                   :key="index"
-                  preload="preload"
+                  preload="auto"
                   :src="item"
                 />
               </div>
@@ -550,10 +550,9 @@ export default {
   .videoCon {
     position: relative;
     width: 100%;
-    height: 500px;
+    min-height: 300px;
     img {
       width: 100%;
-      height: 100%;
     }
   }
   .videoItem {
@@ -561,7 +560,7 @@ export default {
     cursor: pointer;
     display: inline-block;
     width: 330px;
-    height: 250px;
+    height: 200px;
     margin-right: 14px;
     margin-bottom: 20px;
     img {
