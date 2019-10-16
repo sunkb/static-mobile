@@ -348,9 +348,8 @@ export default {
         }
         if (
           infoData.info.qualifications.education &&
-          infoData.info.qualifications.education.audit != undefined &&
-          infoData.info.qualifications.education.audit.files[0].path !=
-            undefined
+          infoData.info.qualifications.education.audit &&
+          infoData.info.qualifications.education.audit.files.length>0
         ) {
           this.imgsrc =
             infoData.info.qualifications.education.audit.files[0].path;
