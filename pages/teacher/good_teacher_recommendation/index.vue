@@ -692,7 +692,7 @@ export default {
           p {
             color: #fff;
             margin-top: 16px;
-            font-size: 28px;
+            font-size: 24px;
           }
           .name {
             margin-right: 14px;
