@@ -48,6 +48,34 @@
           </div>
         </div>
       </div>
+      <!-- 兰迪学员风采 -->
+      <div class="appearance card">
+        <div class="divide-title divide-title-space">
+          <div class="divide-decohr"></div>
+          <div class="divide-title-text">兰迪学员风采</div>
+          <div class="divide-decohr"></div>
+        </div>
+        <div class="appearance-video">
+          <video
+            preload="auto"
+            style="display: none;"
+            controls
+            src="https://qn-static.landi.com/uploadtoold19f30be4b5f13a89986f3f7b99d53fd.mp4"
+          />
+          <div class="appearance-video-item">
+            <div class="content-video-item-video-play"></div>
+            <img class="content-video-item-video-pic" src="https://qn-static.landi.com/uploadtoole039de222d3bce70bc1c871709412986.jpeg"/>
+          </div>
+        </div>
+        <p class="appearance-english">We can't just leave environmental protection to our govern ment every bady.</p>
+        <p class="appearance-chinese">环境保护不仅仅是政府的事情，我们在日常生活中能为保护环境做什么呢？</p>
+        <div class="appearance-info"> 
+          <div>作者：ROMA</div>
+          <div>推荐指数：*****</div>
+        </div>
+        <div class="appearance-cut"><p>再看看</p></div>
+      </div>
+      <!-- 兰迪简介 -->
       <div class="description card">
         <div class="divide-title divide-title-space">
           <div class="divide-decohr"></div>
@@ -507,6 +535,55 @@ function removeParam(key, sourceURL) {
   &-decohr {
     width: 120px;
     border-bottom: 1px solid #E6E6E6;
+  }
+}
+
+// 兰迪学员风采模块样式
+.appearance {
+  margin-top: 37.5px;
+  padding-bottom: 37.5px;
+  .appearance-video {
+    position: relative;
+    &-item {
+      width: 100%;
+      height: 360px;
+    }
+  }
+  &-english {
+    margin-top: 30px;
+    font-size: 26px;
+    color: #333333;
+    letter-spacing: 0;
+    text-align: justify;
+  }
+  &-chinese {
+    margin-top: 10px;
+    font-size: 24px;
+    color: #B2B2B2;
+    letter-spacing: 0;
+    text-align: justify;
+    line-height: 38px;
+  }
+  &-info {
+    display: flex;
+    margin-top: 40px;
+    font-size: 26px;
+    color: #333333;
+  }
+  &-cut {
+    width: 140px;
+    height: 60px;
+    background: #FFFFFF;
+    border: 1px solid #E6E6E6;
+    border-radius: 30px;
+    font-size: 26px;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 11px;
+    margin-left: 520px;
+    
   }
 }
 
