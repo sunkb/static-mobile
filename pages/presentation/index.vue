@@ -73,7 +73,7 @@
           <div>作者：ROMA</div>
           <div>推荐指数：*****</div>
         </div>
-        <div class="appearance-cut"><p>再看看</p></div>
+        <div class="appearance-cut" @click="cutStudentMien"><p>再看看</p></div>
       </div>
       <!-- 兰迪简介 -->
       <div class="description card">
@@ -108,6 +108,7 @@
     </div>
     <toast ref="toast"></toast>
     <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0"></poster-modal>
+    <poster-modal v-model="loginRegistModal" @click="gotoLoginRegister" :poster="2"></poster-modal>
   </div>
 </template>
 
@@ -143,8 +144,11 @@ export default {
       centerActionBottom: 0,
       presentationStyle: { },
       isClassing: false,
-      showPosterModal: false,
-      isLogin:true
+      showPosterModal: true,
+      loginRegistModal: false,
+      isLogin:true,
+      curUserSid: '', // 当前用户的sid
+      curUserFrom: '' // 当前用户的渠道来源
     }
   },
   methods: {
@@ -219,7 +223,8 @@ export default {
     async updateWXShare() {
       const resWX = await axios.post(`${API.WX_INDEX_SHARE}`, {
         url: window.location.href.split('#')[0],
-        activity_id: this.$route.query.activity_id
+        activity_id: this.$route.query.activity_id,
+        sid: this.curUserSid
       })
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)
@@ -253,11 +258,39 @@ export default {
           console.log(res);
         });
       })
+    },
+    //登录或者注册模式选择
+    async gotoLoginRegister(mode) {
+      const registerUrl = 'https://www.landi.com/Mobile/Login/index'
+      const loginUrl = 'https://www.landi.com/Mobile/Login/index'
+      if(mode === "register") {
+        window.location = loginUrl
+      } else {
+        const params = {
+          from: this.curUserFrom,
+          tjm: this.$route.query.sid
+        }
+        try {
+          const resultData = await axios.post(`${API.FROM_TJM}`, params)
+          if(resultData.status) {
+             window.location = registerUrl
+          } else {
+            console.log(resultData.info)
+          }
+        } catch (err) {
+          console.log(err)
+        }
+      }
+    },
+    //切换学员风采
+    async cutStudentMien() {
+      
     }
   },
   created() {
     const login = new Login();
     login.autoLogin();
+    this.curUserSid = this.$route.query.sid ? this.$route.query.sid : ''
   },
   async mounted() {
     this.steps = INDEX_STEPS
@@ -269,6 +302,7 @@ export default {
       document.title = this.resData.name
       this.presentationStyle.background = `url(${this.resData.background_pic_url}) 0 0 / contain local no-repeat`
       this.presentationStyle.backgroundColor = '#fff'
+      this.curUserFrom = this.resData.from // 获取当前的渠道来源
     } else {
       this.$refs['toast'].showToast(res.info)
     }
@@ -279,13 +313,15 @@ export default {
           this.haveWork = true 
         }
         this.isClassing = mywork.data.is_classing
+        this.curUserSid = mywork.data.sid // 获取当前用户的sid
       } else {
         this.$refs['toast'].showToast(mywork.info)
       }
     } catch (error) {
       console.log(error)
-      if(error.response.status === 401){
-        this.isLogin = false;
+      if(error.response.status === 401){ // 用于判断是否登录过
+        this.isLogin = false
+        this.loginRegistModal = true
       }
     }
     await this.updateWXShare()

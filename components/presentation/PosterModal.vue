@@ -7,6 +7,15 @@
         </div>
         <img class="content-poster" v-if="poster == 0" @click="gotoLink" :src="require('~/assets/presentation/img/poster-signup-index.png')"/>
         <img class="content-poster" v-if="poster == 1" @click="gotoLink" :src="require('~/assets/presentation/img/submit-success.png')"/>
+        <div class="content-poster content-register" v-if="poster == 2">
+          <img class="content-poster" v-if="poster == 2" :src="require('~/assets/presentation/img/login_register.png')"/>
+          <div class="register-button" @click="gotoLoginRegister('register')">
+            <img class="register-button-img" :src="require('~/assets/presentation/img/register_button.png')"/>
+          </div>
+          <div class="login-button" @click="gotoLoginRegister('login')">
+            <img class="login-button-img" :src="require('~/assets/presentation/img/login_button.png')">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -36,6 +45,9 @@ export default {
     },
     gotoLink() {
       this.$emit('click')
+    },
+    gotoLoginRegister(mode) {
+      this.$emit('click', mode)
     }
   }
 }
@@ -63,6 +75,27 @@ export default {
 
   &-poster {
     width: 560px;
+  }
+
+  &-register {
+    position: relative;
+    .register-button {
+      position: absolute;
+      bottom: 90px;
+      left: 55px;
+      width: 450px;
+      &-img {
+        width: 450px;
+      }
+    }
+    .login-button {
+      position: absolute;
+      bottom: 50px;
+      left: 140px;
+      &-img {
+        width: 280px;
+      }
+    }
   }
 
   &-close {

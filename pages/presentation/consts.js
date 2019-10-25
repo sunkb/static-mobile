@@ -16,7 +16,8 @@ const API = {
   UNLIKE: '/Mobile/StudentActivityDetail/unZan',
   GET_OPENID: '/Mobile/StudentActivityDetail/getOpenid',
   GET_RANK_CONFIG: '/Mobile/StudentActivity/getRankConfig',
-  NEW_RANK: '/Mobile/StudentActivity/rank' // 学习效果外化第二期的排行榜数据接口
+  NEW_RANK: '/Mobile/StudentActivity/rank', // 学习效果外化第二期的排行榜数据接口
+  FROM_TJM: '/Mobile/StudentActivity/changeFromAndTjm', // 学习效果外化第二期的提交转介绍人和渠道接口
 }
 
 const SIGNUP_DATA_RULE = {
