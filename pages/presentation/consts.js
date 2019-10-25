@@ -14,7 +14,9 @@ const API = {
   WORK: '/Mobile/StudentActivityDetail/work',
   LIKE: '/Mobile/StudentActivityDetail/zan',
   UNLIKE: '/Mobile/StudentActivityDetail/unZan',
-  GET_OPENID: '/Mobile/StudentActivityDetail/getOpenid'
+  GET_OPENID: '/Mobile/StudentActivityDetail/getOpenid',
+  GET_RANK_CONFIG: '/Mobile/StudentActivity/getRankConfig',
+  NEW_RANK: '/Mobile/StudentActivity/rank' // 学习效果外化第二期的排行榜数据接口
 }
 
 const SIGNUP_DATA_RULE = {
