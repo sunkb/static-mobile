@@ -52,7 +52,7 @@
       <div class="appearance card">
         <div class="divide-title divide-title-space">
           <div class="divide-decohr"></div>
-          <div class="divide-title-text">兰迪学员风采</div>
+          <div class="divide-title-text">{{goodWorkData.activity_name}}</div>
           <div class="divide-decohr"></div>
         </div>
         <div class="appearance-video">
@@ -60,18 +60,18 @@
             preload="auto"
             style="display: none;"
             controls
-            src="https://qn-static.landi.com/uploadtoold19f30be4b5f13a89986f3f7b99d53fd.mp4"
+            :src="goodWorkData.video_url"
           />
           <div class="appearance-video-item">
             <div class="content-video-item-video-play"></div>
             <img class="content-video-item-video-pic" src="https://qn-static.landi.com/uploadtoole039de222d3bce70bc1c871709412986.jpeg"/>
           </div>
         </div>
-        <p class="appearance-english">We can't just leave environmental protection to our govern ment every bady.</p>
-        <p class="appearance-chinese">环境保护不仅仅是政府的事情，我们在日常生活中能为保护环境做什么呢？</p>
+        <p class="appearance-english">{{goodWorkData.en_topic_name}}</p>
+        <p class="appearance-chinese">{{goodWorkData.cn_topic_name}}</p>
         <div class="appearance-info"> 
-          <div>作者：ROMA</div>
-          <div>推荐指数：*****</div>
+          <div>作者：{{goodWorkData.nickname}}</div>
+          <div class="appearance-info-index">推荐指数：*****</div>
         </div>
         <div class="appearance-cut" @click="cutStudentMien"><p>再看看</p></div>
       </div>
@@ -148,7 +148,10 @@ export default {
       loginRegistModal: false,
       isLogin:true,
       curUserSid: '', // 当前用户的sid
-      curUserFrom: '' // 当前用户的渠道来源
+      curUserFrom: '', // 当前用户的渠道来源
+      goodWorkPage: 1,
+      goodWorkData: {},
+      hasNext: true
     }
   },
   methods: {
@@ -284,7 +287,24 @@ export default {
     },
     //切换学员风采
     async cutStudentMien() {
-      
+      if(this.hasNext) {
+        const activityID = this.$route.query.activity_id
+        try {
+          const goodWorkData = await axios.get(`${API.GET_GOOD_WORK}?activity_id=${activityID}&page=${this.goodWorkPage}`)
+          if(goodWorkData.status) {
+            this.goodWorkData = goodWorkData.data.work
+            this.hasNext = goodWorkData.data.has_next
+            this.goodWorkPage = this.goodWorkPage + 1
+          } else {
+            console.log(goodWorkData.info)
+          }
+        } catch (err) {
+          console.log(err)
+        }
+      } else {
+        this.hasNext = true
+        this.goodWorkPage = 1
+      }
     }
   },
   created() {
@@ -293,9 +313,9 @@ export default {
     this.curUserSid = this.$route.query.sid ? this.$route.query.sid : ''
   },
   async mounted() {
+    this.cutStudentMien()
     this.steps = INDEX_STEPS
     const activityID = this.$route.query.activity_id
-
     const res = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)
     if (res.status) { 
       this.resData = res.data
@@ -605,6 +625,9 @@ function removeParam(key, sourceURL) {
     margin-top: 40px;
     font-size: 26px;
     color: #333333;
+    .appearance-info-index {
+      margin-left: 20px;
+    }
   }
   &-cut {
     width: 140px;
