@@ -8,6 +8,17 @@
       <div class="page-content-content">
         <div class="signupform">
           <div class="signupform-item">
+            <span class="signupform-item-label required">{{fromInputData.label}}</span>
+            <input class="signupform-item-input" v-model="signupData.chnName"  :placeholder="fromInputData.placeholder" @blur="formBlur"/>
+          </div>
+          <div class="signupform-item">
+            <span class="signupform-item-label required">{{fromSelectData.label}}</span>
+            <select class="signupform-item-select" v-model="signupData.landiLevel" @blur="formBlur" @change="formBlur">
+              <option value="">{{fromSelectData.placeholder}}</option>
+              <option v-for="(item) in fromSelectData.options" :key="item.value" :value="item.value">{{item.text}}</option>
+            </select>
+          </div>
+          <!-- <div class="signupform-item">
             <span class="signupform-item-label required">孩子中文名</span>
             <input class="signupform-item-input" v-model="signupData.chnName" placeholder="请填写中文名" @blur="formBlur"/>
           </div>
@@ -35,7 +46,7 @@
               <option value="0">请选择所在城市</option>
               <option v-for="(item) in regionData['city'][signupData.province]" :key="item.id" :value="item.id">{{ item.name }}</option>
             </select>
-          </div>
+          </div> -->
           <!-- <div class="signupform-item">
             <span class="signupform-item-label required">地址</span>
             <select class="signupform-item-select" v-model="signupData.province" @change="provinceSelectChange" @blur="formBlur" ref="province">
@@ -86,19 +97,28 @@ export default {
   data() {
     return {
       steps: STEPS,
-      signupData: {
-        chnName: '',
-        engName: '',
-        landiLevel: '',
-        province: '0',
-        city: '0'
-      },
+      // signupData: {
+      //   chnName: '',
+      //   engName: '',
+      //   landiLevel: '',
+      //   province: '0',
+      //   city: '0'
+      // },
       validateCodeTimeout: 0,
       dataNotEmpty: false,
       landiLevels: [],
       regionData: REGION_DATA,
-      errorMessage: ''
+      errorMessage: '',
+      fromInputData: {}, // 表单数据
+      fromSelectData: {}, // 表单数据
+      signupData: {
+        chnName: '',
+        landiLevel: ''
+      }
     }
+  },
+  async created() {
+    this.getSignInfo()
   },
   methods: {
     provinceSelectChange() {
@@ -131,15 +151,31 @@ export default {
           _landiLevel = item
         }
       }
-      const _province = this.$refs['province']
-      const _city = this.$refs['city']
+      // const _province = this.$refs['province']
+      // const _city = this.$refs['city']
       localStorage.setItem(STROGE.FORM_DATA, JSON.stringify({
         landiLevel: _landiLevel,
-        address: `${_province.options[_province.selectedIndex].text}/${_city.options[_city.selectedIndex].text}#${this.signupData.province}/${this.signupData.city}`,
-        en_name: this.signupData.engName,
+        // address: `${_province.options[_province.selectedIndex].text}/${_city.options[_city.selectedIndex].text}#${this.signupData.province}/${this.signupData.city}`,
+        // en_name: this.signupData.engName,
         cn_name: this.signupData.chnName
       }))
       this.gotoPage('presentation-signup-step2')
+    },
+    // 获取报名的配置信息
+    async getSignInfo () {
+      const activityID = this.$route.query.activity_id
+      try {
+        const signInfoData = await axios.get(`${API.GET_SIGN_INFO}?activity_id=${activityID}`)
+        if(signInfoData.status) {
+          console.log(signInfoData.data)
+          this.fromInputData = signInfoData.data[0]
+          this.fromSelectData = signInfoData.data[1]
+        } else {
+          console.log(signInfoData.info)
+        }
+      } catch(err) {
+        console.log(err)
+      }
     }
   },
   async mounted() {
@@ -151,7 +187,7 @@ export default {
       this.$refs['toast'].showToast(data0.info)
       return
     }
-    this.landiLevels = data0.data.combinations
+    // this.landiLevels = data0.data.combinations
 
     const data1 = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
     if (!data1.status) {
@@ -159,13 +195,9 @@ export default {
       this.$refs['toast'].showToast(data1.info)
       return
     } else {
-      this.signupData.engName = data1.data.en_name
       this.signupData.chnName = data1.data.cn_name
       if (data1.data.id) {
         this.signupData.landiLevel = data1.data.combination_id
-        const address = (data1.data.address.split('#')[1]).split('/')
-        this.signupData.province = address[0]
-        this.signupData.city = address[1]
       }
     }
     this.formBlur()

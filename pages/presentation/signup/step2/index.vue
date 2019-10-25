@@ -118,7 +118,7 @@ export default {
     playFn(name){
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
-    },
+    }
   },
   async mounted() {
     this.$refs['toast'].showLoadingToast()

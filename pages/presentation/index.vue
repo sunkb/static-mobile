@@ -144,7 +144,7 @@ export default {
       centerActionBottom: 0,
       presentationStyle: { },
       isClassing: false,
-      showPosterModal: true,
+      showPosterModal: false,
       loginRegistModal: false,
       isLogin:true,
       curUserSid: '', // 当前用户的sid
