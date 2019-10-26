@@ -3,7 +3,7 @@
     <div v-if="resData">
       <div class="topaction">
         <div class="topaction-rank" @click="gotoPageWithHistory('presentation-rank')">
-          <span v-if="haveWork">点赞排行</span>
+          <span>点赞排行</span>
         </div>
         <div class="topaction-rule" @click="gotoPageWithHistory('presentation-rule')">活动规则</div>
       </div>
@@ -145,13 +145,12 @@ export default {
       presentationStyle: { },
       isClassing: false,
       showPosterModal: false,
-      loginRegistModal: false,
+      loginRegistModal: true,
       isLogin:true,
-      curUserSid: '', // 当前用户的sid
       curUserFrom: '', // 当前用户的渠道来源
-      goodWorkPage: 1,
-      goodWorkData: {},
-      hasNext: true
+      goodWorkData: {},// 兰迪学员风采模块--学员数据
+      goodWorkPage: 1, // 兰迪学员风采模块--分页页码
+      hasNext: true // 兰迪学员风采模块--判断是否还存在下个数据
     }
   },
   methods: {
@@ -227,7 +226,7 @@ export default {
       const resWX = await axios.post(`${API.WX_INDEX_SHARE}`, {
         url: window.location.href.split('#')[0],
         activity_id: this.$route.query.activity_id,
-        sid: this.curUserSid
+        sid: window.localStorage.getItem("userSid")
       })
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)
@@ -271,7 +270,7 @@ export default {
       } else {
         const params = {
           from: this.curUserFrom,
-          tjm: this.$route.query.sid
+          tjm: window.localStorage.getItem("userSid")
         }
         try {
           const resultData = await axios.post(`${API.FROM_TJM}`, params)
@@ -285,34 +284,34 @@ export default {
         }
       }
     },
-    //切换学员风采
+    //切换兰迪学员风采
     async cutStudentMien() {
-      if(this.hasNext) {
-        const activityID = this.$route.query.activity_id
-        try {
-          const goodWorkData = await axios.get(`${API.GET_GOOD_WORK}?activity_id=${activityID}&page=${this.goodWorkPage}`)
-          if(goodWorkData.status) {
-            this.goodWorkData = goodWorkData.data.work
-            this.hasNext = goodWorkData.data.has_next
-            this.goodWorkPage = this.goodWorkPage + 1
-          } else {
-            console.log(goodWorkData.info)
-          }
-        } catch (err) {
-          console.log(err)
-        }
-      } else {
+      const activityID = this.$route.query.activity_id
+      if(!this.hasNext) {
         this.hasNext = true
         this.goodWorkPage = 1
+      }
+      try {
+        const goodWorkData = await axios.get(`${API.GET_GOOD_WORK}?activity_id=${activityID}&page=${this.goodWorkPage}`)
+        if(goodWorkData.status) {
+          this.goodWorkData = goodWorkData.data.work
+          this.hasNext = goodWorkData.data.has_next
+          this.goodWorkPage++
+        } else {
+          console.log(goodWorkData.info)
+        }
+      } catch (err) {
+        console.log(err)
       }
     }
   },
   created() {
     const login = new Login();
     login.autoLogin();
-    this.curUserSid = this.$route.query.sid ? this.$route.query.sid : ''
   },
   async mounted() {
+    const userSid = this.$route.query.sid || ""
+    window.localStorage.setItem("userSid", userSid)
     this.cutStudentMien()
     this.steps = INDEX_STEPS
     const activityID = this.$route.query.activity_id
@@ -333,7 +332,7 @@ export default {
           this.haveWork = true 
         }
         this.isClassing = mywork.data.is_classing
-        this.curUserSid = mywork.data.sid // 获取当前用户的sid
+        window.localStorage.setItem("userSid", mywork.data.sid) // 获取当前用户的sid,且在localStorage中存储
       } else {
         this.$refs['toast'].showToast(mywork.info)
       }
