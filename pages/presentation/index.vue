@@ -143,9 +143,9 @@ export default {
       showFloatAction: false,
       centerActionBottom: 0,
       presentationStyle: { },
-      isClassing: false,
+      // isClassing: false,
       showPosterModal: false,
-      loginRegistModal: true,
+      loginRegistModal: false,
       isLogin:true,
       curUserFrom: '', // 当前用户的渠道来源
       goodWorkData: {},// 兰迪学员风采模块--学员数据
@@ -167,29 +167,34 @@ export default {
     },
     mainAction() {
 
-      if(!this.isLogin){
-          let redirect_url = window.location.href;
-          redirect_url = removeParam('code',redirect_url);
-          console.log('code',redirect_url);
-          redirect_url = removeParam('state',redirect_url);
-          console.log('state',redirect_url);
-          redirect_url = encodeURIComponent(redirect_url);
-          console.log('loginUrl',redirect_url);
-          const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
-          console.log('loginUrl',loginUrl);
-          window.location.href = loginUrl;
-          return
+      // if(!this.isLogin){
+      //     let redirect_url = window.location.href;
+      //     redirect_url = removeParam('code',redirect_url);
+      //     console.log('code',redirect_url);
+      //     redirect_url = removeParam('state',redirect_url);
+      //     console.log('state',redirect_url);
+      //     redirect_url = encodeURIComponent(redirect_url);
+      //     console.log('loginUrl',redirect_url);
+      //     const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
+      //     console.log('loginUrl',loginUrl);
+      //     window.location.href = loginUrl;
+      //     return
+      // }
+      if(!this.isLogin) {
+        this.loginRegistModal = true
+        return
       }
 
       if (this.haveWork) {
         // this.gotoPage('presentation-signup-step5')
         window.location = `${process.env.BASE_URL}/presentation/signup/step5/?activity_id=${this.$route.query.activity_id}`
       } else {
-        if (this.isClassing) {
-          this.signup()
-        } else {
-          this.showPosterModal = true
-        }
+        // if (this.isClassing) {
+        //   this.signup()
+        // } else {
+        //   this.showPosterModal = true
+        // }
+        this.signup()
       }
     },
     handleScroll() {
@@ -331,7 +336,7 @@ export default {
         if (mywork.data.id) {
           this.haveWork = true 
         }
-        this.isClassing = mywork.data.is_classing
+        // this.isClassing = mywork.data.is_classing
         window.localStorage.setItem("userSid", mywork.data.sid) // 获取当前用户的sid,且在localStorage中存储
       } else {
         this.$refs['toast'].showToast(mywork.info)
@@ -340,7 +345,7 @@ export default {
       console.log(error)
       if(error.response.status === 401){ // 用于判断是否登录过
         this.isLogin = false
-        this.loginRegistModal = true
+        console.log(error.response.info)
       }
     }
     await this.updateWXShare()
