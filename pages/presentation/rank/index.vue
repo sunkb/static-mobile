@@ -12,7 +12,7 @@
         <div v-if="landiLevelIndex == item.id" class="level-item-selector"></div>
       </div>
     </div>
-    <van-list class="rank" :finished="finished" v-model="loading" @load="onLoad" finished-text="没有更多了">
+    <mt-loadmore class="rank" :bottom-method="onLoad" ref="loadmore" :bottom-all-loaded="allLoaded" bottomPullText="" bottomDropText="" :auto-fill="false">
       <div class="rank-self" v-if="Object.keys(selfRankData).length > 0 ? true : false" @click="checkProduction(selfRankData.work_id)">
         <div class="rank-item" >
           <div class="rank-item-left">
@@ -50,7 +50,7 @@
           <div class="rank-item-like-text">点赞数</div>
         </div>
       </div>
-    </van-list>
+    </mt-loadmore>
     <toast ref="toast"></toast>
   </div>
 </template>
@@ -60,7 +60,7 @@ import { API } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 import PrtMixin from '~/pages/presentation/mixin'
-import { List } from 'vant';
+import { Loadmore } from 'mint-ui'
 
 export default {
   name: 'Rank',
@@ -72,31 +72,29 @@ export default {
   },
   components: {
     'toast': Toast,
-    'van-list': List
+    'mt-loadmore': Loadmore
   },
   data() {
     return {
       landiLevels: [],
-      landiLevelIndex: 0,
+      landiLevelIndex: 1,
       rankList: [],
       innerScroll: false,
       headbarBottom: 0,
       selfRankData: {}, // 用户自身在当前的级别的排名数据
       pageIndex: 1,
-      finished: false,
-      loading: false,
-      hasNext: true, // 当前排行榜是否还有数据
-      list: []
+      allLoaded: false,
+      hasNext: true // 当前排行榜是否还有数据
     }
   },
   methods: {
     listUpdate(levelIndex) {
       this.pageIndex = 1;
       this.landiLevelIndex = levelIndex
-      // this.rankList = this.landiLevels[levelIndex].students
+      this.rankList = []
+      this.allLoaded = false
+      this.hasNext = true
       this.getListData(levelIndex)
-      this.loading = false
-      this.finished = false
     },
     handleScroll() {
       if (window.scrollY >= this.headbarBottom) {
@@ -116,7 +114,7 @@ export default {
           this.$refs['toast'].showToast(rankData.info)
           return
         }
-        this.rankList = rankData.data.list
+        this.rankList.push(...rankData.data.list)
         this.selfRankData = rankData.data.my_work || {}
         this.hasNext = rankData.data.has_next
       } catch (err) {
@@ -142,14 +140,16 @@ export default {
     },
     // 下拉加载数据
     onLoad () {
-      this.pageIndex++
-      this.getListData(1)
-      this.loading = false
-      this.hasNext ? this.finished = true : this.finished = false
+      if(this.hasNext) {
+        this.pageIndex++
+        this.getListData(this.landiLevelIndex)
+      } else {
+        this.allLoaded = true;// 若数据已全部获取完毕
+        this.$refs.loadmore.onBottomLoaded();
+      }
     },
     // 查看排行榜中用户的作品
     checkProduction (workId) {
-      console.log(workId)
       window.location = `${process.env.BASE_URL}/presentation/share?activity_id=${this.$route.query.activity_id}&work_id=${workId}`
     }
   },
