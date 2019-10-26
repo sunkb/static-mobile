@@ -81,6 +81,7 @@ export default {
       liked: false,
       shareStyle: {},
       showShareHelp: false,
+      curUserSid: ''
     }
   },
   methods: {
@@ -110,6 +111,7 @@ export default {
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
+      this.curUserSid = this.$route.query.sid || ''
       // const url = encodeURIComponent(window.location.href)
       // const url = encodeURIComponent(sessionStorage.getItem('lastUrl'))
       // const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/share/?activity_id=1&work_id=1')
@@ -146,7 +148,8 @@ export default {
       const resWX = await axios.post(`${API.WX_SHARE1}`, {
         activity_id,
         url,
-        work_id
+        work_id,
+        sid: this.curUserSid
       })
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)

@@ -7,14 +7,14 @@
       </div>
     </div>
     <div class="level" :style="{ position: innerScroll ? 'fixed' : 'static' }">
-      <div v-for="(item, index) in landiLevels" :key="item.id" @click="listUpdate(index)" class="level-item">
-        <div :class="['level-item-content', landiLevelIndex == index ? 'accent' : '' ]" >{{ item.name }}</div>
-        <div v-if="landiLevelIndex == index" class="level-item-selector"></div>
+      <div v-for="(item) in landiLevels" :key="item.id" @click="listUpdate(item.id)" class="level-item">
+        <div :class="['level-item-content', landiLevelIndex == item.id ? 'accent' : '' ]" >{{ item.name }}</div>
+        <div v-if="landiLevelIndex == item.id" class="level-item-selector"></div>
       </div>
     </div>
     <van-list class="rank" :finished="finished" v-model="loading" @load="onLoad" finished-text="没有更多了">
-      <div class="rank-self" v-if="selfRankData ? true : false" @click="checkProduction">
-        <div class="rank-item">
+      <div class="rank-self" v-if="Object.keys(selfRankData).length > 0 ? true : false" @click="checkProduction(selfRankData.work_id)">
+        <div class="rank-item" >
           <div class="rank-item-left">
             <div class="rank-item-rank"></div>
             <div class="rank-item-avatar">
@@ -32,7 +32,7 @@
         </div>
         <div class="rank-division"></div>
       </div>
-      <div v-for="(item, index) in rankList" :key="item.sid" class="rank-item" @click="checkProduction">
+      <div v-for="(item, index) in rankList" :key="item.sid" class="rank-item" @click="checkProduction(item.work_id)">
         <div class="rank-item-left">
           <div class="rank-item-rank">
             <div v-if="index > 2">{{ `${index + 1}`.padStart(2, '0') }}</div>
@@ -59,7 +59,6 @@
 import { API } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
-q
 import PrtMixin from '~/pages/presentation/mixin'
 import { List } from 'vant';
 
@@ -111,97 +110,14 @@ export default {
       const activityID = this.$route.query.activity_id
       try {
         const getUrl = `${API.NEW_RANK}?activity_id=${activityID}&combination_id=${levelIndex}&page=${this.pageIndex}`
-        const rankData1 = await axios.get(getUrl)
-        // -------- todo -----------
-        let rankData = {
-          status: true,
-          info: 'SUCCESS',
-          data: {
-            my_work: {
-              avatar: "https://qn-global.abc360.com/ketasl1571544762000?imageView2/0/w/240/h/180",
-              en_name: "Alisa",
-              sid: "1683801",
-              zan: "5943",
-              rank: 1
-            },
-            list: [
-              {
-                avatar: "https://qn-global.abc360.com/ketasl1571544762000?imageView2/0/w/240/h/180",
-                en_name: "Alisa",
-                sid: "1683801",
-                zan: "5943"
-              },
-              {
-                avatar: "https://qn-global.abc360.com/mfxou41547548497000?imageView2/0/w/240/h/180",
-                en_name: "Joy",
-                sid: "1716624",
-                zan: "4260"
-              },
-              {
-                avatar: "https://qn-global.abc360.com/mfxou41547548497000?imageView2/0/w/240/h/180",
-                en_name: "Joy",
-                sid: "1716625",
-                zan: "4260"
-              },
-              {
-                avatar: "https://qn-global.abc360.com/mfxou41547548497000?imageView2/0/w/240/h/180",
-                en_name: "Joy",
-                sid: "1716626",
-                zan: "4260"
-              },
-              {
-                avatar: "https://qn-global.abc360.com/mfxou41547548497000?imageView2/0/w/240/h/180",
-                en_name: "Joy",
-                sid: "1716627",
-                zan: "4260"
-              },
-              {
-                avatar: "https://qn-global.abc360.com/mfxou41547548497000?imageView2/0/w/240/h/180",
-                en_name: "Joy",
-                sid: "1716628",
-                zan: "4260"
-              },
-              {
-                avatar: "https://qn-global.abc360.com/mfxou41547548497000?imageView2/0/w/240/h/180",
-                en_name: "Joy",
-                sid: "1716629",
-                zan: "4260"
-              },
-              {
-                avatar: "https://qn-global.abc360.com/mfxou41547548497000?imageView2/0/w/240/h/180",
-                en_name: "Joy",
-                sid: "1716630",
-                zan: "4260"
-              },
-              {
-                avatar: "https://qn-global.abc360.com/mfxou41547548497000?imageView2/0/w/240/h/180",
-                en_name: "Joy",
-                sid: "1716631",
-                zan: "4260"
-              },
-              {
-                avatar: "https://qn-global.abc360.com/mfxou41547548497000?imageView2/0/w/240/h/180",
-                en_name: "Joy",
-                sid: "1716632",
-                zan: "4260"
-              },
-              {
-                avatar: "https://qn-global.abc360.com/mfxou41547548497000?imageView2/0/w/240/h/180",
-                en_name: "Joy",
-                sid: "1716633",
-                zan: "4260"
-              }
-            ]
-          }
-        }
-        // -------- todo -----------
+        const rankData = await axios.get(getUrl)
         if (!rankData.status) {
           this.$refs['toast'].hideLoadingToast()
           this.$refs['toast'].showToast(rankData.info)
           return
         }
         this.rankList = rankData.data.list
-        this.selfRankData = rankData.data.my_work ? rankData.data.my_work : '';
+        this.selfRankData = rankData.data.my_work || {}
         this.hasNext = rankData.data.has_next
       } catch (err) {
         console.log(err)
@@ -216,6 +132,7 @@ export default {
         if(rankConfig.status) {
           document.title = rankConfig.data.activity_name
           this.landiLevels = rankConfig.data.combinations
+          this.landiLevelIndex = rankConfig.data.combinations[0].id
         } else {
           console.log(rankConfig.info)
         }
@@ -226,13 +143,14 @@ export default {
     // 下拉加载数据
     onLoad () {
       this.pageIndex++
-      this.getListData(0)
+      this.getListData(1)
       this.loading = false
       this.hasNext ? this.finished = true : this.finished = false
     },
     // 查看排行榜中用户的作品
-    checkProduction () {
-      window.location = `${process.env.BASE_URL}/presentation/signup/step5/?activity_id=${this.$route.query.activity_id}`
+    checkProduction (workId) {
+      console.log(workId)
+      window.location = `${process.env.BASE_URL}/presentation/share?activity_id=${this.$route.query.activity_id}&work_id=${workId}`
     }
   },
   async mounted() {
@@ -241,7 +159,7 @@ export default {
 
     this.$refs['toast'].showLoadingToast()
     this.getRankConfig()
-    this.getListData(0)
+    this.getListData(1)
     this.$refs['toast'].hideLoadingToast()
   }
 }
