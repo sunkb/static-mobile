@@ -17,8 +17,8 @@ const API = {
   GET_OPENID: '/Mobile/StudentActivityDetail/getOpenid',
   GET_RANK_CONFIG: '/Mobile/StudentActivityDetail/getRankConfig', // 学习效果外化第二期的排行版页面参数
   NEW_RANK: '/Mobile/StudentActivityDetail/rank', // 学习效果外化第二期的排行榜数据接口
-  FROM_TJM: '/Mobile/StudentActivity/changeFromAndTjm', // 学习效果外化第二期的提交转介绍人和渠道接口
-  GET_SIGN_INFO: '/Mobile/StudentActivity/getSignInfo', //  学习效果外化第二期的获取报名的配置信息接口
+  FROM_TJM: '/Mobile/StudentActivityDetail/changeFromAndTjm', // 学习效果外化第二期的提交转介绍人和渠道接口
+  GET_SIGN_INFO: '/Mobile/StudentActivityDetail/getSignInfo', //  学习效果外化第二期的获取报名的配置信息接口
   GET_GOOD_WORK: '/Mobile/StudentActivityDetail/getGoodWork', // 学习效果外化第二期的获取优秀作品【分页】
   CLEAR_CACHE: '/Mobile/StudentActivityDetail/clearCache' // 二期中清空活动缓存（供测试或调试使用）
 }

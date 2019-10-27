@@ -167,7 +167,6 @@ export default {
       try {
         const signInfoData = await axios.get(`${API.GET_SIGN_INFO}?activity_id=${activityID}`)
         if(signInfoData.status) {
-          console.log(signInfoData.data)
           this.fromInputData = signInfoData.data[0]
           this.fromSelectData = signInfoData.data[1]
         } else {
