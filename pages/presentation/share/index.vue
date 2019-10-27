@@ -42,6 +42,7 @@
     <div class="sharehelp" v-if="showShareHelp" @click="() => { showShareHelp = false }">
       <img class="sharehelp-img" :src="require('~/assets/presentation/img/share-help.png')" />
     </div>
+    <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0"></poster-modal>
     <toast ref="toast"></toast>
   </div>
 </template>
@@ -53,6 +54,7 @@ import { getWXCode, initWX } from '~/pages/presentation/wx'
 import Toast from '~/components/Toast'
 import PrtMixin from '~/pages/presentation/mixin'
 import { videoPlayerEvent } from '~/utils/videoPlay'
+import { PosterModal } from '~/components/presentation'
 import '~/pages/presentation/presentation'
 
 export default {
@@ -64,6 +66,7 @@ export default {
     }
   },
   components: {
+    'poster-modal': PosterModal,
     'toast': Toast
   },
   data() {
@@ -81,7 +84,8 @@ export default {
       liked: false,
       shareStyle: {},
       showShareHelp: false,
-      curUserSid: ''
+      curUserSid: '',
+      showPosterModal: false
     }
   },
   methods: {
@@ -112,6 +116,9 @@ export default {
     async initData() {
       const { activity_id, work_id } = this.$route.query
       this.curUserSid = this.$route.query.sid || ''
+      if (!window.localStorage.getItem("userSid")) {
+        window.localStorage.setItem("userSid", this.curUserSid)
+      }
       // const url = encodeURIComponent(window.location.href)
       // const url = encodeURIComponent(sessionStorage.getItem('lastUrl'))
       // const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/share/?activity_id=1&work_id=1')
@@ -149,7 +156,7 @@ export default {
         activity_id,
         url,
         work_id,
-        sid: this.curUserSid
+        sid: window.localStorage.getItem("userSid") ? window.localStorage.getItem("userSid") : this.curUserSid
       })
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)
