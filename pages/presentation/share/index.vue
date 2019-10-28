@@ -109,9 +109,26 @@ export default {
 
       if (res.status) {
         // await this.initData();
+
       }else{
         this.$refs['toast'].showToast(res.info)
       }
+
+    },
+    async checkLogin() {
+      try {
+        const loginResult = await axios.get(`${API.CHECK_LOGIN}`)
+        if(!loginResult.status) {
+          console.log(loginResult.info)
+        } else {
+          if(!(loginResult.data && loginResult.data.is_login === 1)) {
+            this.showPosterModal = true
+          }
+        }
+      } catch (err) {
+        console.log(err)
+      }
+      
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
@@ -205,7 +222,7 @@ export default {
       this.showShareHelp = true
     },
     gotoIndex() {
-      window.location = `${process.env.BASE_URL}/presentation/?activity_id=${this.$route.query.activity_id}`
+      window.location = `${process.env.BASE_URL}/presentation/?activity_id=${this.$route.query.activity_id}&sid=${window.localStorage.getItem("userSid")}`
     },
     playFn(name){
       let video1 = document.getElementById(name)

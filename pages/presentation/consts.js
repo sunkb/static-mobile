@@ -20,7 +20,8 @@ const API = {
   FROM_TJM: '/Mobile/StudentActivityDetail/changeFromAndTjm', // 学习效果外化第二期的提交转介绍人和渠道接口
   GET_SIGN_INFO: '/Mobile/StudentActivityDetail/getSignInfo', //  学习效果外化第二期的获取报名的配置信息接口
   GET_GOOD_WORK: '/Mobile/StudentActivityDetail/getGoodWork', // 学习效果外化第二期的获取优秀作品【分页】
-  CLEAR_CACHE: '/Mobile/StudentActivityDetail/clearCache' // 二期中清空活动缓存（供测试或调试使用）
+  CLEAR_CACHE: '/Mobile/StudentActivityDetail/clearCache', // 二期中清空活动缓存（供测试或调试使用）
+  CHECK_LOGIN: '/Mobile/StudentActivity/login' // 自动登录接口
 }
 
 const SIGNUP_DATA_RULE = {

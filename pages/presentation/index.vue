@@ -49,7 +49,7 @@
         </div>
       </div>
       <!-- 兰迪学员风采 -->
-      <div class="appearance card">
+      <div class="appearance card" v-if="appearanceShow">
         <div class="divide-title divide-title-space">
           <div class="divide-decohr"></div>
           <div class="divide-title-text">{{goodWorkData.activity_name}}</div>
@@ -71,7 +71,7 @@
         <p class="appearance-chinese">{{goodWorkData.cn_topic_name}}</p>
         <div class="appearance-info"> 
           <div>作者：{{goodWorkData.nickname}}</div>
-          <div class="appearance-info-index">推荐指数：*****</div>
+          <div class="appearance-info-index">推荐指数：<div style="color: red;">★★★★★</div></div>
         </div>
         <div class="appearance-cut" @click="cutStudentMien"><p>再看看</p></div>
       </div>
@@ -145,8 +145,9 @@ export default {
       presentationStyle: { },
       // isClassing: false,
       showPosterModal: false,
-      loginRegistModal: false,
+      loginRegistModal: true,
       isLogin:true,
+      appearanceShow: true, // 兰迪学员风采模块
       curUserFrom: '', // 当前用户的渠道来源
       goodWorkData: {},// 兰迪学员风采模块--学员数据
       goodWorkPage: 1, // 兰迪学员风采模块--分页页码
@@ -255,14 +256,14 @@ export default {
     //登录或者注册模式选择
     async gotoLoginRegister(mode) {
       if(mode === "register") {
-        let redirect_url = window.location.href;
-        redirect_url = removeParam('code',redirect_url);
-        console.log('code',redirect_url);
-        redirect_url = removeParam('state',redirect_url);
-        console.log('state',redirect_url);
-        redirect_url = encodeURIComponent(redirect_url);
-        console.log('loginUrl',redirect_url);
-        const loginUrl = process.env.ENV_API+'http://www.landi.com/mobile/login/index/#/login';
+        // let redirect_url = window.location.href;
+        // redirect_url = removeParam('code',redirect_url);
+        // console.log('code',redirect_url);
+        // redirect_url = removeParam('state',redirect_url);
+        // console.log('state',redirect_url);
+        // redirect_url = encodeURIComponent(redirect_url);
+        // console.log('loginUrl',redirect_url);
+        const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login';
         console.log('loginUrl',loginUrl);
         window.location.href = loginUrl;
         return
@@ -274,7 +275,7 @@ export default {
         try {
           const resultData = await axios.post(`${API.FROM_TJM}`, params)
           if(resultData.status) {
-             window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
+             window.location = process.env.ENV_API+'/mobile/Login';
           } else {
             console.log(resultData.info)
           }
@@ -297,9 +298,11 @@ export default {
           this.hasNext = goodWorkData.data.has_next
           this.goodWorkPage++
         } else {
+          this.appearanceShow = false
           console.log(goodWorkData.info)
         }
       } catch (err) {
+        this.appearanceShow = false
         console.log(err)
       }
     }
@@ -625,6 +628,8 @@ function removeParam(key, sourceURL) {
     color: #333333;
     .appearance-info-index {
       margin-left: 20px;
+      display: flex;
+      align-items: center;
     }
   }
   &-cut {
