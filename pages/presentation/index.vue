@@ -280,6 +280,7 @@ export default {
           // } else {
           //   console.log(resultData.info)
           // }
+          console.log(resultData.info)
         } catch (err) {
           console.log(err)
         }
