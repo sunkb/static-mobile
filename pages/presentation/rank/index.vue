@@ -150,7 +150,7 @@ export default {
     },
     // 查看排行榜中用户的作品
     checkProduction (workId) {
-      window.location = `${process.env.BASE_URL}/presentation/share?activity_id=${this.$route.query.activity_id}&work_id=${workId}`
+      window.location = `${process.env.BASE_URL}/presentation/share/?activity_id=${this.$route.query.activity_id}&work_id=${workId}`
     }
   },
   async mounted() {
