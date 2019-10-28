@@ -186,7 +186,7 @@ export default {
       this.$refs['toast'].showToast(data0.info)
       return
     }
-    // this.landiLevels = data0.data.combinations
+    this.landiLevels = data0.data.combinations
 
     const data1 = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
     if (!data1.status) {
