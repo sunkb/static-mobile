@@ -268,7 +268,6 @@ export default {
     },
     //登录或者注册模式选择
     async gotoLoginRegister(mode) {
-      const registerUrl = 'https://www.landi.com/Mobile/Login/index'
       if(mode === "register") {
         let redirect_url = window.location.href;
         redirect_url = removeParam('code',redirect_url);
@@ -289,7 +288,7 @@ export default {
         try {
           const resultData = await axios.post(`${API.FROM_TJM}`, params)
           if(resultData.status) {
-             window.location = registerUrl
+             window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
           } else {
             console.log(resultData.info)
           }
