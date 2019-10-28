@@ -274,13 +274,11 @@ export default {
         }
         try {
           const resultData = await axios.post(`${API.FROM_TJM}`, params)
-          window.location = process.env.ENV_API+'/mobile/Login';
-          // if(resultData.status) {
-          //    window.location = process.env.ENV_API+'/mobile/Login';
-          // } else {
-          //   console.log(resultData.info)
-          // }
-          console.log(resultData.info)
+          if(resultData.status) {
+            window.location = process.env.ENV_API+'/mobile/Login#/register';
+          } else {
+            console.log(resultData.info)
+          }
         } catch (err) {
           console.log(err)
         }
