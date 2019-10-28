@@ -335,7 +335,7 @@ export default {
       document.title = this.resData.name
       this.presentationStyle.background = `url(${this.resData.background_pic_url}) 0 0 / contain local no-repeat`
       this.presentationStyle.backgroundColor = '#fff'
-      this.curUserFrom = this.resData.from // 获取当前的渠道来源
+      this.curUserFrom = this.resData.ad_source_id // 获取当前的渠道来源
     } else {
       this.$refs['toast'].showToast(res.info)
     }
