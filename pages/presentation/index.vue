@@ -277,7 +277,7 @@ export default {
         console.log('state',redirect_url);
         redirect_url = encodeURIComponent(redirect_url);
         console.log('loginUrl',redirect_url);
-        const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
+        const loginUrl = process.env.ENV_API+'http://www.landi.com/mobile/login/index/#/login';
         console.log('loginUrl',loginUrl);
         window.location.href = loginUrl;
         return
