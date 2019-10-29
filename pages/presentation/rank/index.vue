@@ -159,7 +159,7 @@ export default {
 
     this.$refs['toast'].showLoadingToast()
     this.getRankConfig()
-    this.getListData(1)
+    this.getListData(this.landiLevelIndex)
     this.$refs['toast'].hideLoadingToast()
   }
 }

@@ -59,10 +59,11 @@
           <video
             preload="auto"
             style="display: none;"
+            id="appearance1"
             controls
             :src="goodWorkData.video_url"
           />
-          <div class="appearance-video-item">
+          <div class="appearance-video-item" @click="playFn('appearance1')">
             <div class="content-video-item-video-play"></div>
             <img class="content-video-item-video-pic" src="https://qn-static.landi.com/uploadtoole039de222d3bce70bc1c871709412986.jpeg"/>
           </div>

@@ -141,7 +141,7 @@ export default {
           return
         }
         if (getZanConfig.data && getZanConfig.data.is_show_zan_alert === '1'){
-          this.registerUrl = getZanConfig.data.zan_alter_link
+          this.registerUrl = getZanConfig.data.my_url
           this.isShowWindow = true
         }
       } catch (err) {
