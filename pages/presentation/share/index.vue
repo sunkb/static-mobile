@@ -122,11 +122,11 @@ export default {
         const loginResult = await axios.get(`${API.CHECK_LOGIN}`)
         if(!loginResult.status) {
           console.log(loginResult.info)
-          if(this.isShowWindow) {
-            this.showPosterModal = true
-          }
         }
-      } catch (err) {
+      } catch (error) {
+        if(error.response.status === 401 && this.isShowWindow) {
+          this.showPosterModal = true
+        }
         console.log(err)
       }
       
@@ -140,7 +140,7 @@ export default {
           console.log(getZanConfig.info)
           return
         }
-        if (getZanConfig.data && getZanConfig.data.is_show_zan_alert === '1'){
+        if (getZanConfig.data && getZanConfig.data.is_show_zan_alert == '1'){
           this.registerUrl = getZanConfig.data.my_url
           this.isShowWindow = true
         }
