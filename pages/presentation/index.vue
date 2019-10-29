@@ -65,7 +65,7 @@
           />
           <div class="appearance-video-item" @click="playFn('appearance1')">
             <div class="content-video-item-video-play"></div>
-            <img class="content-video-item-video-pic" src="https://qn-static.landi.com/uploadtoole039de222d3bce70bc1c871709412986.jpeg"/>
+            <img class="content-video-item-video-pic" :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'"/>
           </div>
         </div>
         <p class="appearance-english">{{goodWorkData.en_topic_name}}</p>
