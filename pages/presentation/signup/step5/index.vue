@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="reminder">
-      <p>重新上传截止时间 2019.10.29 23:00:00</p>
+      <p>重新上传截止时间 {{mywork.reupload_time}}</p>
     </div>
     <div class="action">
       <div class="action-btn action-left" @click="gotoIndex">去首页看看</div>
@@ -111,7 +111,8 @@ export default {
         en_topic_name: mywork.data.en_topic_name,
       },
       en_name: mywork.data.en_name,
-      zan: mywork.data.zan
+      zan: mywork.data.zan,
+      reupload_time: mywork.reupload_time
     }
     this.canReUpload = mywork.data.is_reupload
 
