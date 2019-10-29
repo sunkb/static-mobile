@@ -87,13 +87,20 @@ export default {
       curUserSid: '',
       showPosterModal: false,
       registerUrl: '', // 注册页面路由地址
-      isShowWindow: false
+      isShowWindow: false,
+      curUserFrom: '', // 当前用户的渠道来源
+      isEnable: false // 集赞是否在活动时间范围内
     }
   },
   methods: {
     async clickLike() {
       const liked = this.liked;
       const { activity_id, work_id } = this.$route.query
+
+      if (!this.isEnable) {
+        this.$refs['toast'].showToast('集赞活动已结束')
+        return
+      }
 
       if (this.liked) {
         this.stuData.like = this.stuData.like - 1 >= 0 ? this.stuData.like - 1 : 0
@@ -145,7 +152,7 @@ export default {
     async checkWindows() {
       try {
         const { activity_id } = this.$route.query 
-        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}?activity_id=${activity_id}`)
+        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}?activity_id=${activity_id}&tjm=${this.curUserFrom}`)
         if (!getZanConfig.status) {
           console.log(getZanConfig.info)
           return
@@ -154,6 +161,7 @@ export default {
           this.registerUrl = getZanConfig.data.my_url
           this.isShowWindow = true
         }
+        this.isEnable = getZanConfig.data.is_enable
       } catch (err) {
         console.log(err)
       }
@@ -189,6 +197,7 @@ export default {
         this.$refs['toast'].showToast(detail.info)
         return
       }
+      this.curUserFrom = detail.data.ad_source_id
       document.title = detail.data.name
       this.themeColor = detail.data.button_color
       this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 / contain no-repeat`
