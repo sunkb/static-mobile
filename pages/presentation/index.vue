@@ -146,7 +146,7 @@ export default {
       presentationStyle: { },
       // isClassing: false,
       showPosterModal: false,
-      loginRegistModal: false,
+      loginRegistModal: true,
       isLogin:true,
       appearanceShow: true, // 兰迪学员风采模块
       curUserFrom: '', // 当前用户的渠道来源
@@ -257,16 +257,12 @@ export default {
     //登录或者注册模式选择
     async gotoLoginRegister(mode) {
       if(mode === "register") {
-        // let redirect_url = window.location.href;
-        // redirect_url = removeParam('code',redirect_url);
-        // console.log('code',redirect_url);
-        // redirect_url = removeParam('state',redirect_url);
-        // console.log('state',redirect_url);
-        // redirect_url = encodeURIComponent(redirect_url);
-        // console.log('loginUrl',redirect_url);
-        const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login';
-        console.log('loginUrl',loginUrl);
-        window.location.href = loginUrl;
+        let redirect_url = window.location.href;
+        redirect_url = removeParam('code',redirect_url);
+        redirect_url = removeParam('state',redirect_url);
+        redirect_url = encodeURIComponent(redirect_url);
+        const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login?redirect_url='+redirect_url;
+        window.location = loginUrl;
         return
       } else {
         const params = {
