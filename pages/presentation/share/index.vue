@@ -88,7 +88,6 @@ export default {
       showPosterModal: false,
       registerUrl: '', // 注册页面路由地址
       isShowWindow: false,
-      curUserFrom: '', // 当前用户的渠道来源
       isEnable: false // 集赞是否在活动时间范围内
     }
   },
@@ -132,11 +131,11 @@ export default {
         }
       } catch (error) {
         if(error.response.status === 401 && this.isShowWindow) {
-          const windowPicData = Cookies.get("windowPic")
+          const windowPicData = document.cookies.get("windowPic")
           if (!windowPicData) {
             const millisecond = new Date().getTime();
             const expiresTime = new Date(millisecond + 60 * 1000 * 15 * 32);
-            Cookies.set("windowPic", true, {
+            document.cookies.set("windowPic", true, {
               expires: expiresTime,
             })
             this.showPosterModal = true
@@ -152,7 +151,7 @@ export default {
     async checkWindows() {
       try {
         const { activity_id } = this.$route.query 
-        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}?activity_id=${activity_id}&tjm=${this.curUserFrom}`)
+        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}?activity_id=${activity_id}&tjm=${this.curUserSid}`)
         if (!getZanConfig.status) {
           console.log(getZanConfig.info)
           return
@@ -198,7 +197,6 @@ export default {
         this.$refs['toast'].showToast(detail.info)
         return
       }
-      this.curUserFrom = detail.data.ad_source_id
       document.title = detail.data.name
       this.themeColor = detail.data.button_color
       this.shareStyle.background = `url(${detail.data.share_pic_url}) 0 0 / contain no-repeat`
