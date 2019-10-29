@@ -225,7 +225,6 @@ export default {
       //   wx.onMenuShareAppMessage(shareObj);
       //   wx.onMenuShareTimeline(shareObj);
       // });
-      this.checkWindows()
     },
     gotoRegister() {
       window.location = this.registerUrl
@@ -263,6 +262,7 @@ export default {
     if(code){
       await this.getOpenid()
       await this.initData();
+      await this.checkWindows();
     }
     this.$refs['toast'].hideLoadingToast()
   }
