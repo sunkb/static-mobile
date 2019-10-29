@@ -130,20 +130,22 @@ export default {
           console.log(loginResult.info)
         }
       } catch (error) {
+        console.log(err)
         if(error.response.status === 401 && this.isShowWindow) {
-          const windowPicData = document.cookies.get("windowPic")
+          const windowPicData = window.localStorage.getItem("curTime")
           if (!windowPicData) {
-            const millisecond = new Date().getTime();
-            const expiresTime = new Date(millisecond + 60 * 1000 * 15 * 32);
-            document.cookies.set("windowPic", true, {
-              expires: expiresTime,
-            })
+            window.localStorage.setItem("curTime", new Date().getTime())
             this.showPosterModal = true
           } else {
+            const time = new Date().getTime() - windowPicData
+            if(time > 28800000) {
+              this.showPosterModal = true
+              window.localStorage.setItem("curTime", new Date().getTime())
+              return 
+            }
             this.showPosterModal = false
           }
         }
-        console.log(err)
       }
       
     },
