@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       landiLevels: [],
-      landiLevelIndex: 1,
+      landiLevelIndex: 4,
       rankList: [],
       innerScroll: false,
       headbarBottom: 0,
@@ -131,6 +131,7 @@ export default {
           document.title = rankConfig.data.activity_name
           this.landiLevels = rankConfig.data.combinations
           this.landiLevelIndex = rankConfig.data.combinations[0].id
+          this.getListData(this.landiLevelIndex)
         } else {
           console.log(rankConfig.info)
         }
@@ -156,10 +157,8 @@ export default {
   async mounted() {
     this.headbarBottom = this.$refs.headbar.getBoundingClientRect().bottom
     window.addEventListener('scroll', this.handleScroll)
-
     this.$refs['toast'].showLoadingToast()
     this.getRankConfig()
-    this.getListData(this.landiLevelIndex)
     this.$refs['toast'].hideLoadingToast()
   }
 }
