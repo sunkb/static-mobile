@@ -85,7 +85,9 @@ export default {
       shareStyle: {},
       showShareHelp: false,
       curUserSid: '',
-      showPosterModal: false
+      showPosterModal: false,
+      registerUrl: '', // 注册页面路由地址
+      isShowWindow: false
     }
   },
   methods: {
@@ -109,7 +111,7 @@ export default {
 
       if (res.status) {
         // await this.initData();
-
+        this.checkLogin()
       }else{
         this.$refs['toast'].showToast(res.info)
       }
@@ -120,8 +122,7 @@ export default {
         const loginResult = await axios.get(`${API.CHECK_LOGIN}`)
         if(!loginResult.status) {
           console.log(loginResult.info)
-        } else {
-          if(!(loginResult.data && loginResult.data.is_login === 1)) {
+          if(this.isShowWindow) {
             this.showPosterModal = true
           }
         }
@@ -129,6 +130,22 @@ export default {
         console.log(err)
       }
       
+    },
+    // 判断此次活动是否需要显示弹窗
+    async checkWindows() {
+      try {
+        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}`)
+        if (!getZanConfig.status) {
+          console.log(getZanConfig.info)
+          return
+        }
+        if (getZanConfig.data && getZanConfig.data.is_show_zan_alert === '1'){
+          this.registerUrl = getZanConfig.data.zan_alter_link
+          this.isShowWindow = true
+        }
+      } catch (err) {
+        console.log(err)
+      }
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
@@ -207,6 +224,7 @@ export default {
       //   wx.onMenuShareAppMessage(shareObj);
       //   wx.onMenuShareTimeline(shareObj);
       // });
+      this.checkWindows()
     },
     gotoRegister() {
       window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
