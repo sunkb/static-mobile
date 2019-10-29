@@ -9,10 +9,10 @@
         <img class="content-poster" v-if="poster == 1" @click="gotoLink" :src="require('~/assets/presentation/img/submit-success.png')"/>
         <div class="content-poster content-register" v-if="poster == 2">
           <img class="content-poster" v-if="poster == 2" :src="require('~/assets/presentation/img/login_register.png')"/>
-          <div class="register-button" @click="gotoLoginRegister('register')">
+          <div class="register-button" @click="gotoLoginRegister('login')">
             <img class="register-button-img" :src="require('~/assets/presentation/img/register_button.png')"/>
           </div>
-          <div class="login-button" @click="gotoLoginRegister('login')">
+          <div class="login-button" @click="gotoLoginRegister('register')">
             <img class="login-button-img" :src="require('~/assets/presentation/img/login_button.png')">
           </div>
         </div>

@@ -134,7 +134,8 @@ export default {
     // 判断此次活动是否需要显示弹窗
     async checkWindows() {
       try {
-        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}`)
+        const { activity_id } = this.$route.query 
+        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}?activity_id=${activity_id}`)
         if (!getZanConfig.status) {
           console.log(getZanConfig.info)
           return
