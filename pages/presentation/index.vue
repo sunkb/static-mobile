@@ -146,7 +146,7 @@ export default {
       presentationStyle: { },
       // isClassing: false,
       showPosterModal: false,
-      loginRegistModal: true,
+      loginRegistModal: false,
       isLogin:true,
       appearanceShow: true, // 兰迪学员风采模块
       curUserFrom: '', // 当前用户的渠道来源
