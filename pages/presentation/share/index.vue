@@ -181,6 +181,7 @@ export default {
         return
       }
       const work = res.data.work;
+      this.curUserSid = work.sid
       this.topic = {
         cn_topic_name: work.cn_topic_name,
         en_topic_name: work.en_topic_name,
