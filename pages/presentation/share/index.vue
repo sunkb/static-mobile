@@ -227,7 +227,7 @@ export default {
       this.checkWindows()
     },
     gotoRegister() {
-      window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
+      window.location = this.registerUrl
     },
     async getOpenid(){
       const { code, activity_id, work_id } = this.$route.query
