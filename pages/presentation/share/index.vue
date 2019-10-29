@@ -125,7 +125,17 @@ export default {
         }
       } catch (error) {
         if(error.response.status === 401 && this.isShowWindow) {
-          this.showPosterModal = true
+          const windowPicData = Cookies.get("windowPic")
+          if (!windowPicData) {
+            const millisecond = new Date().getTime();
+            const expiresTime = new Date(millisecond + 60 * 1000 * 15 * 32);
+            Cookies.set("windowPic", true, {
+              expires: expiresTime,
+            })
+            this.showPosterModal = true
+          } else {
+            this.showPosterModal = false
+          }
         }
         console.log(err)
       }
