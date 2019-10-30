@@ -97,6 +97,7 @@ export default {
     this.$refs['toast'].showLoadingToast()
     const activityID = this.$route.query.activity_id
     const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
+    console.log(mywork)
     if (!mywork.status) {
       this.$refs['toast'].hideLoadingToast()
       this.$refs['toast'].showToast(mywork.info)
@@ -114,6 +115,8 @@ export default {
       zan: mywork.data.zan,
       reupload_time: mywork.data.reupload_time ? mywork.data.reupload_time : ''
     }
+    console.log(11111111)
+    console.log(this.mywork)
     this.canReUpload = mywork.data.is_reupload
 
     const url = encodeURIComponent(window.location.href)
