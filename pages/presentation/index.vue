@@ -272,7 +272,7 @@ export default {
         try {
           const resultData = await axios.post(`${API.FROM_TJM}`, params)
           if(resultData.status) {
-            window.location = process.env.ENV_API+'/mobile/Login#/register?redirect_url='+redirect_url;
+            window.location = process.env.ENV_API+'/mobile/Login#/register';
           } else {
             console.log(resultData.info)
           }

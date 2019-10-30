@@ -112,7 +112,7 @@ export default {
       },
       en_name: mywork.data.en_name,
       zan: mywork.data.zan,
-      reupload_time: mywork.reupload_time ? mywork.reupload_time : ''
+      reupload_time: mywork.data.reupload_time ? mywork.data.reupload_time : ''
     }
     this.canReUpload = mywork.data.is_reupload
 
