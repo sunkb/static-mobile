@@ -152,7 +152,7 @@ export default {
     async checkWindows() {
       try {
         const { activity_id } = this.$route.query 
-        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}?activity_id=${activity_id}&tjm=${window.localStorage.setItem("userSid")}`)
+        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}?activity_id=${activity_id}&tjm=${window.localStorage.getItem("userSid")}`)
         if (!getZanConfig.status) {
           console.log(getZanConfig.info)
           return
