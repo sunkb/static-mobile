@@ -256,11 +256,11 @@ export default {
     },
     //登录或者注册模式选择
     async gotoLoginRegister(mode) {
+      let redirect_url = window.location.href;
+      redirect_url = removeParam('code',redirect_url);
+      redirect_url = removeParam('state',redirect_url);
+      redirect_url = encodeURIComponent(redirect_url);
       if(mode === "register") {
-        let redirect_url = window.location.href;
-        redirect_url = removeParam('code',redirect_url);
-        redirect_url = removeParam('state',redirect_url);
-        redirect_url = encodeURIComponent(redirect_url);
         const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login?redirect_url='+redirect_url;
         window.location = loginUrl;
         return
@@ -272,7 +272,7 @@ export default {
         try {
           const resultData = await axios.post(`${API.FROM_TJM}`, params)
           if(resultData.status) {
-            window.location = process.env.ENV_API+'/mobile/Login#/register';
+            window.location = process.env.ENV_API+'/mobile/Login#/register?redirect_url='+redirect_url;
           } else {
             console.log(resultData.info)
           }
