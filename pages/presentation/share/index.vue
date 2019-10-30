@@ -130,7 +130,7 @@ export default {
           console.log(loginResult.info)
         }
       } catch (error) {
-        console.log(err)
+        console.log(error)
         if(error.response.status === 401 && this.isShowWindow) {
           const windowPicData = window.localStorage.getItem("curTime")
           if (!windowPicData) {
