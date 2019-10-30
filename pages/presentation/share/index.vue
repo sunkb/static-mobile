@@ -169,7 +169,7 @@ export default {
     async initData() {
       const { activity_id, work_id } = this.$route.query
       if (this.$route.query.sid) {
-        window.localStorage.setItem("userSid", this.curUserSid) // 为空不设置
+        window.localStorage.setItem("userSid", this.$route.query.sid) // 为空不设置
       }
       // const url = encodeURIComponent(window.location.href)
       // const url = encodeURIComponent(sessionStorage.getItem('lastUrl'))
@@ -208,7 +208,7 @@ export default {
         activity_id,
         url,
         work_id,
-        sid: window.localStorage.getItem("userSid") ? window.localStorage.getItem("userSid") : this.curUserSid
+        sid: window.localStorage.getItem("userSid") ? window.localStorage.getItem("userSid") : ""
       })
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)
