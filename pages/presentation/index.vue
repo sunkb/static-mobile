@@ -320,7 +320,7 @@ export default {
   },
   async mounted() {
     if (this.$route.query.sid) {
-      window.localStorage.setItem("userSid", userSid) // 为空不设置
+      window.localStorage.setItem("userSid", this.$route.query.sid) // 为空不设置
     }
     await this.cutStudentMien()
     await this.getSid()
