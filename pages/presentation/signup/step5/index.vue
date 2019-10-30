@@ -75,7 +75,7 @@ export default {
       stuEngName: '',
       canReUpload: true,
       showShareHelp: false,
-      mywork: null
+      mywork: {}
     }
   },
   methods: {
