@@ -153,11 +153,13 @@ export default {
       }
       // const _province = this.$refs['province']
       // const _city = this.$refs['city']
+      const name = this.fromInputData.name
+      const leaveName = this.fromSelectData.name
       localStorage.setItem(STROGE.FORM_DATA, JSON.stringify({
-        [this.fromInputData.name]: _landiLevel,
+        [name]: _landiLevel,
         // address: `${_province.options[_province.selectedIndex].text}/${_city.options[_city.selectedIndex].text}#${this.signupData.province}/${this.signupData.city}`,
         // en_name: this.signupData.engName,
-        [this.fromSelectData.name]: this.signupData.engName
+        [leaveName]: this.signupData.engName
       }))
       this.gotoPage('presentation-signup-step2')
     },
