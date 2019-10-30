@@ -33,8 +33,8 @@
         </div>
       </div>
     </div>
-    <div class="reminder">
-      <p>重新上传截止时间 {{mywork.reupload_time}}</p>
+    <div class="reminder" v-if="mywork.reupload_time ? true : false">
+      <p>重新上传截止时间 {{mywork.reupload_time ? mywork.reupload_time : ''}}</p>
     </div>
     <div class="action">
       <div class="action-btn action-left" @click="gotoIndex">去首页看看</div>
