@@ -93,11 +93,10 @@ export default {
       videoPlayerEvent(video1)
     },
   },
-  async mounted() {
+  async created () {
     this.$refs['toast'].showLoadingToast()
     const activityID = this.$route.query.activity_id
     const mywork = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
-    console.log(mywork)
     if (!mywork.status) {
       this.$refs['toast'].hideLoadingToast()
       this.$refs['toast'].showToast(mywork.info)
@@ -113,16 +112,21 @@ export default {
       },
       en_name: mywork.data.en_name,
       zan: mywork.data.zan,
-      reupload_time: mywork.data.reupload_time ? mywork.data.reupload_time : ''
+      reupload_time: mywork.data.reupload_time ? mywork.data.reupload_time : '',
+      id: mywork.data.id
     }
-    console.log(11111111)
-    console.log(this.mywork)
     this.canReUpload = mywork.data.is_reupload
+
+    this.$refs['toast'].hideLoadingToast()
+  },
+  async mounted() {
+    this.$refs['toast'].showLoadingToast()
+    const activityID = this.$route.query.activity_id
 
     const url = encodeURIComponent(window.location.href)
     
     // const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/?activity_id=1')
-    const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${url}&work_id=${mywork.data.id}&sid=${window.localStorage.getItem("userSid")}`)
+    const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${url}&work_id=${this.mywork.id}&sid=${window.localStorage.getItem("userSid")}`)
     if (!res.status) {
       this.$refs['toast'].hideLoadingToast()
       this.$refs['toast'].showToast(res.info)
