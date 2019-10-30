@@ -169,9 +169,8 @@ export default {
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
-      this.curUserSid = this.$route.query.sid || ''
-      if (!window.localStorage.getItem("userSid")) {
-        window.localStorage.setItem("userSid", this.curUserSid)
+      if (this.$route.query.sid) {
+        window.localStorage.setItem("userSid", this.curUserSid) // 为空不设置
       }
       // const url = encodeURIComponent(window.location.href)
       // const url = encodeURIComponent(sessionStorage.getItem('lastUrl'))
@@ -265,6 +264,16 @@ export default {
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
     },
+    async getSid () {
+      try {
+        const userSidData = await axios.get(`${API.MY_SID}`)
+        if (userSidData.status) {
+          window.localStorage.setItem("userSid", userSidData.data.sid)
+        } 
+      } catch (error) {
+        console.log(error)  
+      }
+    }
   },
   async mounted() {
     if (window.WeixinJSBridge) {
@@ -282,6 +291,7 @@ export default {
       await this.getOpenid()
       await this.initData();
       await this.checkWindows();
+      await this.getSid()
     }
     this.$refs['toast'].hideLoadingToast()
   }

@@ -302,6 +302,16 @@ export default {
         this.appearanceShow = false
         console.log(err)
       }
+    },
+    async getSid () {
+      try {
+        const userSidData = await axios.get(`${API.MY_SID}`)
+        if (userSidData.status) {
+          window.localStorage.setItem("userSid", userSidData.data.sid) // 获取当前用户的sid,且在localStorage中存储
+        } 
+      } catch (error) {
+        console.log(error)  
+      }
     }
   },
   created() {
@@ -309,9 +319,11 @@ export default {
     login.autoLogin();
   },
   async mounted() {
-    const userSid = this.$route.query.sid || ""
-    window.localStorage.setItem("userSid", userSid)
-    this.cutStudentMien()
+    if (this.$route.query.sid) {
+      window.localStorage.setItem("userSid", userSid) // 为空不设置
+    }
+    await this.cutStudentMien()
+    await this.getSid()
     this.steps = INDEX_STEPS
     const activityID = this.$route.query.activity_id
     const res = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)
@@ -331,7 +343,6 @@ export default {
           this.haveWork = true 
         }
         // this.isClassing = mywork.data.is_classing
-        window.localStorage.setItem("userSid", mywork.data.sid) // 获取当前用户的sid,且在localStorage中存储
       } else {
         this.$refs['toast'].showToast(mywork.info)
       }
