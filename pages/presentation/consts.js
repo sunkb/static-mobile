@@ -23,7 +23,7 @@ const API = {
   CLEAR_CACHE: '/Mobile/StudentActivityDetail/clearCache', // 二期中清空活动缓存（供测试或调试使用）
   CHECK_LOGIN: '/Mobile/StudentActivity/login', // 自动登录接口
   GET_ZAN_CONFIG: '/Mobile/StudentActivityDetail/getZanConfig', // 获取点赞配置
-  MY_SID: '/Mobile/StudentActivityDetail/mySid' // 获取当前用户的sid
+  MY_SID: '/Mobile/StudentActivity/mySid' // 获取当前用户的sid
 }
 
 const SIGNUP_DATA_RULE = {
