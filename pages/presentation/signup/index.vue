@@ -143,7 +143,6 @@ export default {
           return 
         }
       }
-
       let _landiLevel = {}
       let _topic = {}
       for (let item of this.landiLevels) {
@@ -153,13 +152,11 @@ export default {
       }
       // const _province = this.$refs['province']
       // const _city = this.$refs['city']
-      const name = this.fromInputData.name
-      const leaveName = this.fromSelectData.name
       localStorage.setItem(STROGE.FORM_DATA, JSON.stringify({
-        [name]: _landiLevel,
+        landiLevel: _landiLevel,
         // address: `${_province.options[_province.selectedIndex].text}/${_city.options[_city.selectedIndex].text}#${this.signupData.province}/${this.signupData.city}`,
         // en_name: this.signupData.engName,
-        [leaveName]: this.signupData.engName
+        en_name: this.signupData.engName
       }))
       this.gotoPage('presentation-signup-step2')
     },
@@ -189,7 +186,6 @@ export default {
       return
     }
     this.landiLevels = data0.data.combinations
-
     const data1 = await axios.get(`${API.MY_WORK}?activity_id=${activityID}`)
     if (!data1.status) {
       this.$refs['toast'].hideLoadingToast()
