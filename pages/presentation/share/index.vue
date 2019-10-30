@@ -84,7 +84,6 @@ export default {
       liked: false,
       shareStyle: {},
       showShareHelp: false,
-      curUserSid: '',
       showPosterModal: false,
       registerUrl: '', // 注册页面路由地址
       isShowWindow: false,
@@ -153,7 +152,7 @@ export default {
     async checkWindows() {
       try {
         const { activity_id } = this.$route.query 
-        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}?activity_id=${activity_id}&tjm=${this.curUserSid}`)
+        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}?activity_id=${activity_id}&tjm=${window.localStorage.setItem("userSid")}`)
         if (!getZanConfig.status) {
           console.log(getZanConfig.info)
           return
