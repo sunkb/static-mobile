@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="reminder" v-if="mywork.reupload_time ? true : false">
-      <p>重新上传截止时间 {{mywork.reupload_time ? mywork.reupload_time : ''}}</p>
+      <p>重新上传截止时间 {{mywork.reupload_time}}</p>
     </div>
     <div class="action">
       <div class="action-btn action-left" @click="gotoIndex">去首页看看</div>
@@ -112,7 +112,7 @@ export default {
       },
       en_name: mywork.data.en_name,
       zan: mywork.data.zan,
-      reupload_time: mywork.reupload_time
+      reupload_time: mywork.reupload_time ? mywork.reupload_time : ''
     }
     this.canReUpload = mywork.data.is_reupload
 
