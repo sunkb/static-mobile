@@ -3,7 +3,7 @@
     <div v-if="resData">
       <div class="topaction">
         <div class="topaction-rank" @click="gotoPageWithHistory('presentation-rank')">
-          <span v-if="haveWork">点赞排行</span>
+          <span>点赞排行</span>
         </div>
         <div class="topaction-rule" @click="gotoPageWithHistory('presentation-rule')">活动规则</div>
       </div>
