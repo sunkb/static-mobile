@@ -116,6 +116,10 @@ export default {
         }
         this.rankList.push(...rankData.data.list)
         this.selfRankData = rankData.data.my_work || {}
+        console.log('-----------------')
+        console.log(rankData.data.my_work)
+        console.log(this.selfRankData)
+        console.log('-----------------')
         this.hasNext = rankData.data.has_next
       } catch (err) {
         console.log(err)
@@ -151,6 +155,7 @@ export default {
     },
     // 查看排行榜中用户的作品
     checkProduction (workId) {
+      console.log(workId)
       window.location = `${process.env.BASE_URL}/presentation/share/?activity_id=${this.$route.query.activity_id}&work_id=${workId}`
     }
   },
