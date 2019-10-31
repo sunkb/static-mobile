@@ -5,7 +5,7 @@
         <div class="content-close">
           <img class="content-close-img" @click="close" :src="require('~/assets/presentation/img/close.png')"/>
         </div>
-        <img class="content-poster" v-if="poster == 0" @click="gotoLink" :src="require('~/assets/presentation/img/poster-signup-index.png')"/>
+        <img class="content-poster" v-if="poster == 0" @click="gotoLink" :src="require('~/assets/presentation/img/activity_November.png')"/>
         <img class="content-poster" v-if="poster == 1" @click="gotoLink" :src="require('~/assets/presentation/img/submit-success.png')"/>
         <div class="content-poster content-register" v-if="poster == 2">
           <img class="content-poster" v-if="poster == 2" :src="require('~/assets/presentation/img/login_register.png')"/>
