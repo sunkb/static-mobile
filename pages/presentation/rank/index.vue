@@ -22,7 +22,7 @@
             </div>
             <div class="rank-item-name">
               <div>{{ selfRankData.en_name }}</div>
-              <div class='rank-self-data'>第{{selfRankData.rank}}名{{selfRankData.work_id}}</div>
+              <div class='rank-self-data'>第{{selfRankData.rank}}名</div>
             </div>
           </div>
           <div class="rank-item-like">
@@ -116,10 +116,6 @@ export default {
         }
         this.rankList.push(...rankData.data.list)
         this.selfRankData = rankData.data.my_work || {}
-        console.log('-----------------')
-        console.log(rankData.data.my_work)
-        console.log(this.selfRankData)
-        console.log('-----------------')
         this.hasNext = rankData.data.has_next
       } catch (err) {
         console.log(err)
