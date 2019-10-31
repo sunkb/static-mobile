@@ -9,7 +9,7 @@
         <div class="signupform">
           <div class="signupform-item">
             <span class="signupform-item-label required">{{fromInputData.label}}</span>
-            <input class="signupform-item-input" v-model="signupData.engName"  :placeholder="fromInputData.placeholder" @blur="formBlur"/>
+            <input class="signupform-item-input" v-model="signupData.engNumName"  :placeholder="fromInputData.placeholder" @blur="formBlur"/>
           </div>
           <div class="signupform-item">
             <span class="signupform-item-label required">{{fromSelectData.label}}</span>
@@ -112,7 +112,7 @@ export default {
       fromInputData: {}, // 表单数据
       fromSelectData: {}, // 表单数据
       signupData: {
-        engName: '',
+        engNumName: '',
         landiLevel: ''
       }
     }
@@ -156,7 +156,7 @@ export default {
         landiLevel: _landiLevel,
         // address: `${_province.options[_province.selectedIndex].text}/${_city.options[_city.selectedIndex].text}#${this.signupData.province}/${this.signupData.city}`,
         // en_name: this.signupData.engName,
-        en_name: this.signupData.engName
+        en_name: this.signupData.engNumName
       }))
       this.gotoPage('presentation-signup-step2')
     },
@@ -192,7 +192,7 @@ export default {
       this.$refs['toast'].showToast(data1.info)
       return
     } else {
-      this.signupData.engName = data1.data.en_name
+      this.signupData.engNumName = data1.data.en_name
       if (data1.data.id) {
         this.signupData.landiLevel = data1.data.combination_id
       }

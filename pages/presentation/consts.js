@@ -27,6 +27,10 @@ const API = {
 }
 
 const SIGNUP_DATA_RULE = {
+  engNumName: {
+    rule: /^[0-9a-zA-Z]+$/,
+    message: '请输入正确的英文名'
+  },
   chnName: {
     rule: /[\u4e00-\u9fa5]{2,}/,
     message: '请输入正确的中文名'
