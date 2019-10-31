@@ -74,7 +74,7 @@
           <div>作者：{{goodWorkData.nickname}}</div>
           <div class="appearance-info-index">推荐指数：<div style="color: red;">★★★★★</div></div>
         </div>
-        <div class="appearance-cut" @click="cutStudentMien"><p>下一个</p></div>
+        <div class="appearance-cut" @click="cutStudentMien"><p>换一个</p></div>
       </div>
       <!-- 兰迪简介 -->
       <div class="description card">
