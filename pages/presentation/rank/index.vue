@@ -22,7 +22,7 @@
             </div>
             <div class="rank-item-name">
               <div>{{ selfRankData.en_name }}</div>
-              <div class='rank-self-data'>第{{selfRankData.rank}}名</div>
+              <div class='rank-self-data'>第{{selfRankData.rank}}名{{selfRankData.work_id}}</div>
             </div>
           </div>
           <div class="rank-item-like">
