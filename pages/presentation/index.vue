@@ -162,7 +162,7 @@ export default {
     },
     signup() {
       if (!this.resData.is_enable) {
-        this.$refs['toast'].showToast('活动已结束')
+        this.$refs['toast'].showToast('报名已截止')
         return 
       }
       this.gotoPage('presentation-signup')
