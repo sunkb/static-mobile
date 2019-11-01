@@ -85,7 +85,7 @@ export default {
           data.id = this.formData.workID
         } else {
           data.cn_name = this.formData.cn_name
-          data.en_name = this.formData.en_name
+          data.nickname = this.formData.en_name
         }
         const res = await axios.post(API.SUBMIT_WORK, data)
         if (res.status) {
@@ -96,7 +96,8 @@ export default {
       }
     },
     gotoStep5() {
-      this.gotoPage('presentation-signup-step5')
+      window.location = `${process.env.BASE_URL}/presentation/signup/step5/?activity_id=${this.$route.query.activity_id}`
+      // this.gotoPage('presentation-signup-step5')
     },
     gotoRulePage() {
       this.gotoPageWithHistory('presentation-protocol')
