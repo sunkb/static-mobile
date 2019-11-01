@@ -11,7 +11,10 @@
           <img class="title-action-img" :src="require('~/assets/presentation/img/arrow-right.png')"/>
         </div>
       </div>
-      <div class="signup-title2">报名学生: {{ mywork.en_name }}</div>
+      <div class="production-info">
+        <div class="signup-title2">报名学生: {{ mywork.en_name }}</div>
+        <div class="signup-title2 production-info-like">作品<p class="number">{{mywork.zan}}</p>人已点赞</div>
+      </div>
       <div class="topic-text">
         <div class="topic-text-eng">{{ mywork.topic.en_topic_name }}</div>
         <div class="topic-text-chn">{{ mywork.topic.cn_topic_name }}</div>
@@ -29,6 +32,9 @@
           <div class="video-content-play"></div>
         </div>
       </div>
+    </div>
+    <div class="reminder" v-if="mywork.reupload_time ? true : false">
+      <p>重新上传截止时间 {{mywork.reupload_time}}</p>
     </div>
     <div class="action">
       <div class="action-btn action-left" @click="gotoIndex">去首页看看</div>
@@ -69,7 +75,7 @@ export default {
       stuEngName: '',
       canReUpload: true,
       showShareHelp: false,
-      mywork: null
+      mywork: {}
     }
   },
   methods: {
@@ -101,17 +107,19 @@ export default {
     this.mywork = {
       video_url: mywork.data.video_url,
       topic: {
-        cn_topic_name: mywork.data.cn_topic_name,
-        en_topic_name: mywork.data.en_topic_name,
+        cn_topic_name: mywork.data.cn_topic_name || '',
+        en_topic_name: mywork.data.en_topic_name || '',
       },
-      en_name: mywork.data.en_name
+      en_name: mywork.data.en_name,
+      zan: mywork.data.zan,
+      reupload_time: mywork.data.reupload_time || ''
     }
     this.canReUpload = mywork.data.is_reupload
 
     const url = encodeURIComponent(window.location.href)
     
     // const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/?activity_id=1')
-    const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${url}&work_id=${mywork.data.id}`)
+    const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${url}&work_id=${mywork.data.id}&sid=${window.localStorage.getItem("userSid")}`)
     if (!res.status) {
       this.$refs['toast'].hideLoadingToast()
       this.$refs['toast'].showToast(res.info)
@@ -158,6 +166,28 @@ export default {
   width: 100vw;
   height: 100vh;
   background: #fff;
+}
+
+.production-info {
+  display: flex;
+  &-like {
+    display: flex;
+    font-family: MicrosoftYaHei;
+    font-size: 24px;
+    color: #B2B2B2;
+    letter-spacing: 0;
+    text-align: justify;
+    margin-left: 20px;
+    align-items: center;
+    .number {
+      font-family: MicrosoftYaHei;
+      color: red;
+      letter-spacing: 0;
+      text-align: justify;
+      line-height: 31px;
+      margin: 0 5px 0 5px;
+    }
+  }
 }
 
 .topic-text {
@@ -227,6 +257,19 @@ export default {
       font-size: 26px;
       margin-bottom: 30px;
     }
+  }
+}
+
+.reminder{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 150px;
+  p {
+    font-family: MicrosoftYaHei;
+    font-size: 24px;
+    color: #B2B2B2;
   }
 }
 

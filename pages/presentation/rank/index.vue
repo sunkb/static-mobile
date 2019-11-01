@@ -7,13 +7,32 @@
       </div>
     </div>
     <div class="level" :style="{ position: innerScroll ? 'fixed' : 'static' }">
-      <div v-for="(item, index) in landiLevels" :key="item.id" @click="listUpdate(index)" class="level-item">
-        <div :class="['level-item-content', landiLevelIndex == index ? 'accent' : '' ]" >{{ item.name }}</div>
-        <div v-if="landiLevelIndex == index" class="level-item-selector"></div>
+      <div v-for="(item) in landiLevels" :key="item.id" @click="listUpdate(item.id)" class="level-item">
+        <div :class="['level-item-content', landiLevelIndex == item.id ? 'accent' : '' ]" >{{ item.name }}</div>
+        <div v-if="landiLevelIndex == item.id" class="level-item-selector"></div>
       </div>
     </div>
-    <div class="rank">
-      <div v-for="(item, index) in rankList" :key="item.sid" class="rank-item">
+    <mt-loadmore class="rank" :bottom-method="onLoad" ref="loadmore" :bottom-all-loaded="allLoaded" bottomPullText="" bottomDropText="" :auto-fill="false">
+      <div class="rank-self" v-if="Object.keys(selfRankData).length > 0 ? true : false" @click="checkProduction(selfRankData.work_id)">
+        <div class="rank-item" >
+          <div class="rank-item-left">
+            <div class="rank-item-rank"></div>
+            <div class="rank-item-avatar">
+              <img class="rank-item-avatar-img" :src="selfRankData.avatar"/>
+            </div>
+            <div class="rank-item-name">
+              <div>{{ selfRankData.en_name }}</div>
+              <div class='rank-self-data'>第{{selfRankData.rank}}名</div>
+            </div>
+          </div>
+          <div class="rank-item-like">
+            <div class="rank-item-like-num">{{ selfRankData.zan }}</div>
+            <div class="rank-item-like-text">点赞数</div>
+          </div>
+        </div>
+        <div class="rank-division"></div>
+      </div>
+      <div v-for="(item, index) in rankList" :key="item.sid" class="rank-item" @click="checkProduction(item.work_id)">
         <div class="rank-item-left">
           <div class="rank-item-rank">
             <div v-if="index > 2">{{ `${index + 1}`.padStart(2, '0') }}</div>
@@ -31,7 +50,7 @@
           <div class="rank-item-like-text">点赞数</div>
         </div>
       </div>
-    </div>
+    </mt-loadmore>
     <toast ref="toast"></toast>
   </div>
 </template>
@@ -41,6 +60,7 @@ import { API } from '~/pages/presentation/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 import PrtMixin from '~/pages/presentation/mixin'
+import { Loadmore } from 'mint-ui'
 
 export default {
   name: 'Rank',
@@ -51,21 +71,30 @@ export default {
     }
   },
   components: {
-    'toast': Toast
+    'toast': Toast,
+    'mt-loadmore': Loadmore
   },
   data() {
     return {
       landiLevels: [],
-      landiLevelIndex: 0,
+      landiLevelIndex: 4,
       rankList: [],
       innerScroll: false,
-      headbarBottom: 0
+      headbarBottom: 0,
+      selfRankData: {}, // 用户自身在当前的级别的排名数据
+      pageIndex: 1,
+      allLoaded: false,
+      hasNext: true // 当前排行榜是否还有数据
     }
   },
   methods: {
     listUpdate(levelIndex) {
+      this.pageIndex = 1;
       this.landiLevelIndex = levelIndex
-      this.rankList = this.landiLevels[levelIndex].students
+      this.rankList = []
+      this.allLoaded = false
+      this.hasNext = true
+      this.getListData(levelIndex)
     },
     handleScroll() {
       if (window.scrollY >= this.headbarBottom) {
@@ -73,24 +102,64 @@ export default {
       } else {
         this.innerScroll = false
       }
+    },
+    // 获取点赞排行榜的对应级别的排行数据
+    async getListData(levelIndex) {
+      const activityID = this.$route.query.activity_id
+      try {
+        const getUrl = `${API.NEW_RANK}?activity_id=${activityID}&combination_id=${levelIndex}&page=${this.pageIndex}`
+        const rankData = await axios.get(getUrl)
+        if (!rankData.status) {
+          this.$refs['toast'].hideLoadingToast()
+          this.$refs['toast'].showToast(rankData.info)
+          return
+        }
+        this.rankList.push(...rankData.data.list)
+        this.selfRankData = rankData.data.my_work || {}
+        this.hasNext = rankData.data.has_next
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    // 获取排行版页面信息
+    async getRankConfig() {
+      const activityID = this.$route.query.activity_id
+      try {
+        const getUrl = `${API.GET_RANK_CONFIG}?activity_id=${activityID}`
+        const rankConfig = await axios.get(getUrl)
+        if(rankConfig.status) {
+          document.title = rankConfig.data.activity_name
+          this.landiLevels = rankConfig.data.combinations
+          this.landiLevelIndex = rankConfig.data.combinations[0].id
+          this.getListData(this.landiLevelIndex)
+        } else {
+          console.log(rankConfig.info)
+        }
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    // 下拉加载数据
+    onLoad () {
+      if(this.hasNext) {
+        this.pageIndex++
+        this.getListData(this.landiLevelIndex)
+      } else {
+        this.allLoaded = true;// 若数据已全部获取完毕
+        this.$refs.loadmore.onBottomLoaded();
+      }
+    },
+    // 查看排行榜中用户的作品
+    checkProduction (workId) {
+      console.log(workId)
+      window.location = `${process.env.BASE_URL}/presentation/share/?activity_id=${this.$route.query.activity_id}&work_id=${workId}`
     }
   },
   async mounted() {
     this.headbarBottom = this.$refs.headbar.getBoundingClientRect().bottom
     window.addEventListener('scroll', this.handleScroll)
-
     this.$refs['toast'].showLoadingToast()
-    const activityID = this.$route.query.activity_id
-    const data0 = await axios.get(`${API.RANK}?activity_id=${activityID}`)
-    if (!data0.status) {
-      this.$refs['toast'].hideLoadingToast()
-      this.$refs['toast'].showToast(data0.info)
-      return
-    }
-    document.title = data0.data.activity_name
-    this.landiLevels = data0.data.combinations
-    this.listUpdate(0)
-
+    this.getRankConfig()
     this.$refs['toast'].hideLoadingToast()
   }
 }
@@ -188,7 +257,7 @@ $level-height: 90px;
   // height: calc(100vh - #{$level-height} - #{$headbar-height});
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  padding: 0 30px;
+  padding: 0;
 
   &::-webkit-scrollbar {
     display: none;
@@ -201,7 +270,7 @@ $level-height: 90px;
     border-bottom: 1px solid #EBEBEB;
     background: #fff;
     padding: 18.75px 0;
-
+    margin: 0 30px;
     &-left {
       display: flex;
       align-items: center;
@@ -256,6 +325,19 @@ $level-height: 90px;
         color: #B2B2B2;
         font-size: 22px;
       }
+    }
+  }
+  &-self {
+    .rank-division {
+      width: 100%;
+      height: 24px;
+      background: #E6E6E6;
+    }
+    .rank-self-data {
+      font-size: 22px;
+      color: #B2B2B2;
+      letter-spacing: 0;
+      text-align: justify;
     }
   }
 }

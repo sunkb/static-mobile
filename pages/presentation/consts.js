@@ -14,10 +14,23 @@ const API = {
   WORK: '/Mobile/StudentActivityDetail/work',
   LIKE: '/Mobile/StudentActivityDetail/zan',
   UNLIKE: '/Mobile/StudentActivityDetail/unZan',
-  GET_OPENID: '/Mobile/StudentActivityDetail/getOpenid'
+  GET_OPENID: '/Mobile/StudentActivityDetail/getOpenid',
+  GET_RANK_CONFIG: '/Mobile/StudentActivityDetail/getRankConfig', // 学习效果外化第二期的排行版页面参数
+  NEW_RANK: '/Mobile/StudentActivityDetail/rank', // 学习效果外化第二期的排行榜数据接口
+  FROM_TJM: '/Mobile/StudentActivityDetail/changeFromAndTjm', // 学习效果外化第二期的提交转介绍人和渠道接口
+  GET_SIGN_INFO: '/Mobile/StudentActivityDetail/getSignInfo', //  学习效果外化第二期的获取报名的配置信息接口
+  GET_GOOD_WORK: '/Mobile/StudentActivityDetail/getGoodWork', // 学习效果外化第二期的获取优秀作品【分页】
+  CLEAR_CACHE: '/Mobile/StudentActivityDetail/clearCache', // 二期中清空活动缓存（供测试或调试使用）
+  CHECK_LOGIN: '/Mobile/StudentActivity/login', // 自动登录接口
+  GET_ZAN_CONFIG: '/Mobile/StudentActivityDetail/getZanConfig', // 获取点赞配置
+  MY_SID: '/Mobile/StudentActivity/mySid' // 获取当前用户的sid
 }
 
 const SIGNUP_DATA_RULE = {
+  engNumName: {
+    rule: /^[0-9a-zA-Z]+$/,
+    message: '请输入正确的英文名'
+  },
   chnName: {
     rule: /[\u4e00-\u9fa5]{2,}/,
     message: '请输入正确的中文名'

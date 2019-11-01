@@ -42,6 +42,7 @@
     <div class="sharehelp" v-if="showShareHelp" @click="() => { showShareHelp = false }">
       <img class="sharehelp-img" :src="require('~/assets/presentation/img/share-help.png')" />
     </div>
+    <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0"></poster-modal>
     <toast ref="toast"></toast>
   </div>
 </template>
@@ -53,6 +54,7 @@ import { getWXCode, initWX } from '~/pages/presentation/wx'
 import Toast from '~/components/Toast'
 import PrtMixin from '~/pages/presentation/mixin'
 import { videoPlayerEvent } from '~/utils/videoPlay'
+import { PosterModal } from '~/components/presentation'
 import '~/pages/presentation/presentation'
 
 export default {
@@ -64,6 +66,7 @@ export default {
     }
   },
   components: {
+    'poster-modal': PosterModal,
     'toast': Toast
   },
   data() {
@@ -81,12 +84,21 @@ export default {
       liked: false,
       shareStyle: {},
       showShareHelp: false,
+      showPosterModal: false,
+      registerUrl: '', // 注册页面路由地址
+      isShowWindow: false,
+      isEnable: false // 集赞是否在活动时间范围内
     }
   },
   methods: {
     async clickLike() {
       const liked = this.liked;
       const { activity_id, work_id } = this.$route.query
+
+      if (!this.isEnable) {
+        this.$refs['toast'].showToast('集赞活动已结束')
+        return
+      }
 
       if (this.liked) {
         this.stuData.like = this.stuData.like - 1 >= 0 ? this.stuData.like - 1 : 0
@@ -104,12 +116,61 @@ export default {
 
       if (res.status) {
         // await this.initData();
+        this.checkLogin()
       }else{
         this.$refs['toast'].showToast(res.info)
+      }
+
+    },
+    async checkLogin() {
+      try {
+        const loginResult = await axios.get(`${API.CHECK_LOGIN}`)
+        if(!loginResult.status) {
+          console.log(loginResult.info)
+        }
+      } catch (error) {
+        console.log(error)
+        if(error.response.status === 401 && this.isShowWindow) {
+          const windowPicData = window.localStorage.getItem("curTime")
+          if (!windowPicData) {
+            window.localStorage.setItem("curTime", new Date().getTime())
+            this.showPosterModal = true
+          } else {
+            const time = new Date().getTime() - windowPicData
+            if(time > 28800000) {
+              this.showPosterModal = true
+              window.localStorage.setItem("curTime", new Date().getTime())
+              return 
+            }
+            this.showPosterModal = false
+          }
+        }
+      }
+      
+    },
+    // 判断此次活动是否需要显示弹窗
+    async checkWindows() {
+      try {
+        const { activity_id } = this.$route.query 
+        const getZanConfig = await axios.get(`${API.GET_ZAN_CONFIG}?activity_id=${activity_id}&tjm=${window.localStorage.getItem("userSid")}`)
+        if (!getZanConfig.status) {
+          console.log(getZanConfig.info)
+          return
+        }
+        if (getZanConfig.data && getZanConfig.data.is_show_zan_alert == '1'){
+          this.registerUrl = getZanConfig.data.my_url
+          this.isShowWindow = true
+        }
+        this.isEnable = getZanConfig.data.is_enable
+      } catch (err) {
+        console.log(err)
       }
     },
     async initData() {
       const { activity_id, work_id } = this.$route.query
+      if (this.$route.query.sid) {
+        window.localStorage.setItem("userSid", this.$route.query.sid) // 为空不设置
+      }
       // const url = encodeURIComponent(window.location.href)
       // const url = encodeURIComponent(sessionStorage.getItem('lastUrl'))
       // const url = encodeURIComponent('https://release6.landi.com/static-web/mobile/presentation/share/?activity_id=1&work_id=1')
@@ -146,7 +207,8 @@ export default {
       const resWX = await axios.post(`${API.WX_SHARE1}`, {
         activity_id,
         url,
-        work_id
+        work_id,
+        sid: window.localStorage.getItem("userSid") ? window.localStorage.getItem("userSid") : ""
       })
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)
@@ -182,7 +244,7 @@ export default {
       // });
     },
     gotoRegister() {
-      window.location = 'https://www.landi.com/Api/FloorPage/index?from=zcyl&param=_bCOvjKLmiST2qHEDcTOScntrYF3wIzwj_ceg'
+      window.location = this.registerUrl
     },
     async getOpenid(){
       const { code, activity_id, work_id } = this.$route.query
@@ -195,12 +257,22 @@ export default {
       this.showShareHelp = true
     },
     gotoIndex() {
-      window.location = `${process.env.BASE_URL}/presentation/?activity_id=${this.$route.query.activity_id}`
+      window.location = `${process.env.BASE_URL}/presentation/?activity_id=${this.$route.query.activity_id}&sid=${window.localStorage.getItem("userSid")}`
     },
     playFn(name){
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
     },
+    async getSid () {
+      try {
+        const userSidData = await axios.get(`${API.MY_SID}`)
+        if (userSidData.status) {
+          window.localStorage.setItem("userSid", userSidData.data.sid)
+        } 
+      } catch (error) {
+        console.log(error)  
+      }
+    }
   },
   async mounted() {
     if (window.WeixinJSBridge) {
@@ -217,6 +289,8 @@ export default {
     if(code){
       await this.getOpenid()
       await this.initData();
+      await this.checkWindows();
+      await this.getSid()
     }
     this.$refs['toast'].hideLoadingToast()
   }

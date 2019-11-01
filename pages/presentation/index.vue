@@ -3,7 +3,7 @@
     <div v-if="resData">
       <div class="topaction">
         <div class="topaction-rank" @click="gotoPageWithHistory('presentation-rank')">
-          <span v-if="haveWork">点赞排行</span>
+          <span>点赞排行</span>
         </div>
         <div class="topaction-rule" @click="gotoPageWithHistory('presentation-rule')">活动规则</div>
       </div>
@@ -48,6 +48,35 @@
           </div>
         </div>
       </div>
+      <!-- 兰迪学员风采 -->
+      <div class="appearance card" v-if="appearanceShow">
+        <div class="divide-title divide-title-space">
+          <div class="divide-decohr"></div>
+          <div class="divide-title-text">{{goodWorkData.activity_name}}</div>
+          <div class="divide-decohr"></div>
+        </div>
+        <div class="appearance-video">
+          <video
+            preload="auto"
+            style="display: none;"
+            id="appearance1"
+            controls
+            :src="goodWorkData.video_url"
+          />
+          <div class="appearance-video-item" @click="playFn('appearance1')">
+            <div class="content-video-item-video-play"></div>
+            <img class="content-video-item-video-pic" :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'"/>
+          </div>
+        </div>
+        <p class="appearance-english">{{goodWorkData.en_topic_name}}</p>
+        <p class="appearance-chinese">{{goodWorkData.cn_topic_name}}</p>
+        <div class="appearance-info"> 
+          <div>作者：{{goodWorkData.nickname}}</div>
+          <div class="appearance-info-index">推荐指数：<div style="color: red;">★★★★★</div></div>
+        </div>
+        <div class="appearance-cut" @click="cutStudentMien"><p>换一个</p></div>
+      </div>
+      <!-- 兰迪简介 -->
       <div class="description card">
         <div class="divide-title divide-title-space">
           <div class="divide-decohr"></div>
@@ -80,6 +109,7 @@
     </div>
     <toast ref="toast"></toast>
     <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0"></poster-modal>
+    <poster-modal v-model="loginRegistModal" @click="gotoLoginRegister" :poster="2"></poster-modal>
   </div>
 </template>
 
@@ -114,9 +144,15 @@ export default {
       showFloatAction: false,
       centerActionBottom: 0,
       presentationStyle: { },
-      isClassing: false,
+      // isClassing: false,
       showPosterModal: false,
-      isLogin:true
+      loginRegistModal: false,
+      isLogin:true,
+      appearanceShow: true, // 兰迪学员风采模块
+      curUserFrom: '', // 当前用户的渠道来源
+      goodWorkData: {},// 兰迪学员风采模块--学员数据
+      goodWorkPage: 1, // 兰迪学员风采模块--分页页码
+      hasNext: true // 兰迪学员风采模块--判断是否还存在下个数据
     }
   },
   methods: {
@@ -126,36 +162,27 @@ export default {
     },
     signup() {
       if (!this.resData.is_enable) {
-        this.$refs['toast'].showToast('活动已结束')
+        this.$refs['toast'].showToast('报名已截止')
         return 
       }
       this.gotoPage('presentation-signup')
     },
     mainAction() {
-
-      if(!this.isLogin){
-          let redirect_url = window.location.href;
-          redirect_url = removeParam('code',redirect_url);
-          console.log('code',redirect_url);
-          redirect_url = removeParam('state',redirect_url);
-          console.log('state',redirect_url);
-          redirect_url = encodeURIComponent(redirect_url);
-          console.log('loginUrl',redirect_url);
-          const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
-          console.log('loginUrl',loginUrl);
-          window.location.href = loginUrl;
-          return
+      if(!this.isLogin) {
+        this.loginRegistModal = true
+        return
       }
 
       if (this.haveWork) {
         // this.gotoPage('presentation-signup-step5')
         window.location = `${process.env.BASE_URL}/presentation/signup/step5/?activity_id=${this.$route.query.activity_id}`
       } else {
-        if (this.isClassing) {
-          this.signup()
-        } else {
-          this.showPosterModal = true
-        }
+        // if (this.isClassing) {
+        //   this.signup()
+        // } else {
+        //   this.showPosterModal = true
+        // }
+        this.signup()
       }
     },
     handleScroll() {
@@ -191,7 +218,8 @@ export default {
     async updateWXShare() {
       const resWX = await axios.post(`${API.WX_INDEX_SHARE}`, {
         url: window.location.href.split('#')[0],
-        activity_id: this.$route.query.activity_id
+        activity_id: this.$route.query.activity_id,
+        sid: window.localStorage.getItem("userSid")
       })
       if (!resWX.status) {
         this.$refs['toast'].showToast(resWX.info)
@@ -225,6 +253,65 @@ export default {
           console.log(res);
         });
       })
+    },
+    //登录或者注册模式选择
+    async gotoLoginRegister(mode) {
+      let redirect_url = window.location.href;
+      redirect_url = removeParam('code',redirect_url);
+      redirect_url = removeParam('state',redirect_url);
+      redirect_url = encodeURIComponent(redirect_url);
+      if(mode === "register") {
+        const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login?redirect_url='+redirect_url;
+        window.location = loginUrl;
+        return
+      } else {
+        const params = {
+          from: this.curUserFrom,
+          tjm: window.localStorage.getItem("userSid")
+        }
+        try {
+          const resultData = await axios.post(`${API.FROM_TJM}`, params)
+          if(resultData.status) {
+            window.location = process.env.ENV_API+'/mobile/Login#/register';
+          } else {
+            console.log(resultData.info)
+          }
+        } catch (err) {
+          console.log(err)
+        }
+      }
+    },
+    //切换兰迪学员风采
+    async cutStudentMien() {
+      const activityID = this.$route.query.activity_id
+      if(!this.hasNext) {
+        this.hasNext = true
+        this.goodWorkPage = 1
+      }
+      try {
+        const goodWorkData = await axios.get(`${API.GET_GOOD_WORK}?activity_id=${activityID}&page=${this.goodWorkPage}`)
+        if(goodWorkData.status) {
+          this.goodWorkData = goodWorkData.data.work
+          this.hasNext = goodWorkData.data.has_next
+          this.goodWorkPage++
+        } else {
+          this.appearanceShow = false
+          console.log(goodWorkData.info)
+        }
+      } catch (err) {
+        this.appearanceShow = false
+        console.log(err)
+      }
+    },
+    async getSid () {
+      try {
+        const userSidData = await axios.get(`${API.MY_SID}`)
+        if (userSidData.status) {
+          window.localStorage.setItem("userSid", userSidData.data.sid) // 获取当前用户的sid,且在localStorage中存储
+        } 
+      } catch (error) {
+        console.log(error)  
+      }
     }
   },
   created() {
@@ -232,15 +319,20 @@ export default {
     login.autoLogin();
   },
   async mounted() {
+    if (this.$route.query.sid) {
+      window.localStorage.setItem("userSid", this.$route.query.sid) // 为空不设置
+    }
+    await this.cutStudentMien()
+    await this.getSid()
     this.steps = INDEX_STEPS
     const activityID = this.$route.query.activity_id
-
     const res = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityID}`)
     if (res.status) { 
       this.resData = res.data
       document.title = this.resData.name
       this.presentationStyle.background = `url(${this.resData.background_pic_url}) 0 0 / contain local no-repeat`
       this.presentationStyle.backgroundColor = '#fff'
+      this.curUserFrom = this.resData.ad_source_id // 获取当前的渠道来源
     } else {
       this.$refs['toast'].showToast(res.info)
     }
@@ -250,14 +342,15 @@ export default {
         if (mywork.data.id) {
           this.haveWork = true 
         }
-        this.isClassing = mywork.data.is_classing
+        // this.isClassing = mywork.data.is_classing
       } else {
         this.$refs['toast'].showToast(mywork.info)
       }
     } catch (error) {
       console.log(error)
-      if(error.response.status === 401){
-        this.isLogin = false;
+      if(error.response.status === 401){ // 用于判断是否登录过
+        this.isLogin = false
+        console.log(error.response.info)
       }
     }
     await this.updateWXShare()
@@ -507,6 +600,60 @@ function removeParam(key, sourceURL) {
   &-decohr {
     width: 120px;
     border-bottom: 1px solid #E6E6E6;
+  }
+}
+
+// 兰迪学员风采模块样式
+.appearance {
+  margin-top: 37.5px;
+  padding-bottom: 37.5px;
+  .appearance-video {
+    position: relative;
+    &-item {
+      width: 100%;
+      height: 360px;
+    }
+  }
+  &-english {
+    margin-top: 30px;
+    font-size: 26px;
+    color: #333333;
+    letter-spacing: 0;
+    text-align: justify;
+  }
+  &-chinese {
+    margin-top: 10px;
+    font-size: 24px;
+    color: #B2B2B2;
+    letter-spacing: 0;
+    text-align: justify;
+    line-height: 38px;
+  }
+  &-info {
+    display: flex;
+    margin-top: 40px;
+    font-size: 26px;
+    color: #333333;
+    .appearance-info-index {
+      margin-left: 20px;
+      display: flex;
+      align-items: center;
+    }
+  }
+  &-cut {
+    width: 140px;
+    height: 60px;
+    background: #FFFFFF;
+    border: 1px solid #E6E6E6;
+    border-radius: 30px;
+    font-size: 26px;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 11px;
+    margin-left: 520px;
+    
   }
 }
 
