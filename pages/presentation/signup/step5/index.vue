@@ -75,7 +75,16 @@ export default {
       stuEngName: '',
       canReUpload: true,
       showShareHelp: false,
-      mywork: {}
+      mywork: {
+        video_url: '',
+        topic: {
+          cn_topic_name: '',
+          en_topic_name: '',
+        },
+        en_name: '',
+        zan: '',
+        reupload_time: ''
+      }
     }
   },
   methods: {
