@@ -214,6 +214,7 @@ export default {
       }
     },
     playFn(name){
+      window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '优秀案例展示--视频点击']); // 百度统计
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
     },
