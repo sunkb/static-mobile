@@ -244,6 +244,7 @@ export default {
       // });
     },
     gotoRegister() {
+      window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '免费领取大礼包']); // 百度统计
       window.location = this.registerUrl
     },
     async getOpenid(){
@@ -257,6 +258,7 @@ export default {
       this.showShareHelp = true
     },
     gotoIndex() {
+      window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#点击回首页']); // 百度统计
       window.location = `${process.env.BASE_URL}/presentation/?activity_id=${this.$route.query.activity_id}&sid=${window.localStorage.getItem("userSid")}`
     },
     playFn(name){
