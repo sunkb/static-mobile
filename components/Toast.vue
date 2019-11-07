@@ -3,7 +3,7 @@
     <div v-if="show">
       <div v-if="mask" class="toast-mask"></div>
       <div class="toast-content" :style="position">
-        <svg viewBox="25 25 50 50" class="toast-content-loading">
+        <svg v-if="loading" viewBox="25 25 50 50" class="toast-content-loading">
           <circle cx="50" cy="50" r="20" class="toast-content-loading"></circle>
         </svg>
         <div v-if="text && text != '' && loading" class="toast-content-div"></div>
@@ -92,6 +92,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
   &-div {
     height: 10px;
