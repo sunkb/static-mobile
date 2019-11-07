@@ -1,17 +1,31 @@
 <template>
   <div class="container">
-    <div>
+    <!-- <div>
       <h1 class="title">
         abc360前端项目
       </h1>
-      </div>
-    </div>
+    </div> -->
+    <rate v-model="rate" @changeRate="changeRate"></rate>
   </div>
 </template>
 
 <script>
+import Rate from '@/components/Rate'
 
 export default {
+  components: {
+    'rate': Rate
+  },
+  data () {
+    return {
+      rate: 0
+    }
+  },
+  methods: {
+    changeRate (num) {
+      console.log(num)
+    }
+  }
 }
 </script>
 
