@@ -96,6 +96,7 @@ export default {
     },
     shareToFrends() {
       this.showShareHelp = true
+      window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#分享给好友#btn点击']); // 百度统计
     },
     playFn(name){
       let video1 = document.getElementById(name)
