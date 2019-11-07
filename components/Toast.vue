@@ -19,35 +19,47 @@
 </template>
 
 <script>
+
 export default {
   name: 'Toast',
-  data() {
+  data () {
     return {
       show: false,
       text: '',
       position: {},
       mask: true,
-      loading: false
+      loading: false,
+      queue: []
     }
   },
   methods: {
-    showToast(text, mask=true, timeout=1500, position={}) {
+    showToast (text, mask = true, timeout = 1500, position = {}) {
+      if (this.show) {
+        this.queue.push({ text, mask, timeout, position })
+        return
+      } else {
+        this.queue.shift()
+      }
+
       this.text = text
       this.mask = mask
       this.position = position
       this.show = true
       setTimeout(() => {
         this.show = false
-      }, timeout);
+        if (this.queue.length > 0) {
+          this.showToast(this.queue[0].text, this.queue[0].mask, this.queue[0].timeout, this.queue[0].position)
+        }
+      }, timeout)
     },
-    showLoadingToast(text, mask=true, position={}) {
+    showLoadingToast (text, mask = true, position = {}) {
       this.text = text
       this.mask = mask
       this.position = position
       this.loading = true
       this.show = true
     },
-    hideLoadingToast() {
+    hideLoadingToast () {
       this.loading = false
       this.show = false
     }
@@ -81,7 +93,7 @@ export default {
   color: #fff;
   font-size: 28px;
   border-radius: 10px;
-  background: rgba($color: #000000, $alpha: 0.6);
+  background: rgba($color: #000000, $alpha: 0.8);
 
   &-div {
     height: 10px;
