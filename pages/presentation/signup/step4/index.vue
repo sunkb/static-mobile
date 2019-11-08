@@ -26,7 +26,7 @@
       </div>
     </div>
     <submit-area 
-      hint="确认提交之后，活动结束前可重新上传,届时原作品将自动覆盖、点赞保留，详见活动规则" 
+      hint="确认提交之后，2019.11.15 23:59 前可重新上传,届时原作品将自动覆盖、点赞保留，详见活动规则" 
       btnText="确认提交"
       :isClickable="ruleSelected"
       @submit="submit"
