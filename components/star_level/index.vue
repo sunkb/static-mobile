@@ -84,7 +84,7 @@
         type: String,
         default: 'vm-rate-icon-star-full'
       },
-      showText: {
+      showText: { //是否显示文本
         type: Boolean,
         default: false
       },
@@ -92,19 +92,19 @@
         type: String,
         default: ''
       },
-      textTemplate: {
+      textTemplate: { //文本模板
         type: String,
         default: '{value}'
       },
       textColor: {  //分数文本的字体颜色
         type: String,
-        default: '#1f2d3d'
+        default: '#000000'
       },
       textSize: {  //分数文本的字体尺寸
         type: String,
         default: '33px'
       },
-      textType: {
+      textType: { // 文本的数据类型
         type: String,
         default: 'text'
       }
@@ -114,7 +114,7 @@
       return {
         colorMap: {},
         classMap: {},
-        pointerAtLeftHalf: true,
+        pointerAtLeftHalf: true, // 当前鼠标是否是在星星的左半部分
         currentValue: this.value,
         hoverIndex: -1
       }
@@ -133,7 +133,7 @@
         if (this.disabled || this.textType === 'number') {
           result = this.textTemplate.replace(/\{\s*value\s*\}/, `${ '<i>' + this.currentValue + '</i>' }`)
         } else {
-          result = this.texts[Math.ceil(this.currentValue / (this.max / 10)) - 1]
+          result = this.texts[Math.ceil(this.currentValue / (this.max / 5)) - 1]
         }
         return result
       },
