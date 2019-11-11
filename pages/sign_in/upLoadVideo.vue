@@ -4,7 +4,7 @@
             <div class="thisWeekVideo">本周的作品视频录好了吗?</div>
             <div class="quicklyUpLoad">赶快上传班主任老师才能点评哦~</div>
             <nuxt-link to="/sign_in/addComments"><button class="upLoad">上传视频</button></nuxt-link>
-            <div class="videoRules">视频要求:10秒≥时长≥180秒,视频大小≤300M</div>
+            <div class="videoRules">视频要求:10秒≤时长≤180秒,视频大小≤300M</div>
         </div>
     </div>
 </template>
@@ -13,7 +13,6 @@
 export default {
         // name:'upLoadVideo',
         head(){
-            
             return{
                 title:'上传作品'
                 } 

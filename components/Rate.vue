@@ -53,10 +53,11 @@ export default {
 #rate {
   display: flex;
   align-items: center;
+
 }
 
-$star-width: 60px;
-$star-height: 60px;
+$star-width: 40px;
+$star-height: 40px;
 .star {
   width: $star-width;
   height: $star-height;

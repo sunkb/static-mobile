@@ -27,46 +27,63 @@
                 <!-- 请上传<span>{{month}}</span>月<span>{{day}}</span>日作业 -->
                 <div class="thisWeekProcess">
                     <div class="notCompleted">尚未完成</div>
-                    <div>班级已有<span>12{{hasuploaded}}</span>人提交</div>
+                    <div>班级已有<span>12</span>人提交</div>
+                    <!-- {{hasuploaded}}到时候加到12那个位置 -->
                 </div>
                 <button class="thisWeekSignBtn" @click="finSignBtn()" v-if="true">去打卡</button>
                 <!--v-if这里从后台拿值,然后根据枚举值,利用三元表达式去判断,有就true显示,没有就false隐藏 -->
             </div>
-            <div class="signHistory" v-for="(item,index) in videoList " :key="item">
-                <div class="signHistorySpace"></div>
-                <span class="signHistoryMsg">历史打卡记录</span>
-                <div class="signHistoryVideo">
-                    <div class="videodays">X月X日作业</div>
-                    <div class="upLoadTime">提交时间:<span></span></div>
-                    <div class="videoTimes">第<span>{{videoList[index].id}}</span>次打卡</div>
-                    <div class="video">123</div>
-                    <div class="videoGetScore">得分<span class="teacherScore">老师尚未评分</span></div>
-                    <div class="teacherComment">评论
-                        <div>Ann:老师,xxxxx</div>
-                    </div>
-                    <div class="dividingLine"></div>
+            
+            <div class="signHistorySpace"></div>
+            <span class="signHistoryMsg">历史打卡记录</span>
+            <div class="signHistory" v-for="(item,index) in videoList " :key="item.id">
+                    <div class="signHistoryVideo" @click="signHistoryVideo">
+                        <div class="videodays">X月X日作业</div>
+                        <div class="upLoadTime">提交时间:{{upLoadTime}}<span></span></div>
+                        <div class="videoTimes">第<span>{{videoList[index].id}}</span>次打卡</div>
+                        <div class="video">123</div>
+                        <span  class="videoGetScore">得分:</span> 
+                        <rate v-model="rate"  class="changeRate"></rate>
+                        <div class="teacherComment">评论
+                            <div>{{teacherSays}}</div>
+                        </div>
+                        <div class="dividingLine"></div>
+
                 </div>
+
             </div>
         </div>
         <div class="finSign">
-                <span class="finSignMsg">本周作业已有{{thisWeekSigned}}位同班同学打卡</span>
+                <span class="finSignMsg">本周作业已有位同班同学打卡</span>
+                <!-- 到时候加到已有后面{{thisWeekSigned}} -->
                 <button class="finSignBtn" @click="finSignBtn()">去打卡</button>
         </div>
     </div>
 </template>
 
 <script>
+import Rate from '@/components/Rate' 
 export default {
     name:'weeklyHouseWorkSign',
     head(){
         return{
-            title:'周作业打卡'
+            title:'周作业打卡',
+            
         } 
     },
-  data() {
+    components: {
+                'rate': Rate
+    },
+    data() {
     return {
-        name:'123',
+        //五角星参数
+        rate: 1.5,
+        //发表的评论
+        teacherSays:'Ann:说得好',
+        //提交时间
+        upLoadTime:'2018年',
         // list:[1,2,3,4,5],
+        //视频总体列表
         videoList:[
             {id:1,videoTimes:'第一次'},
             {id:2,videoTimes:'第二次'},
@@ -76,9 +93,18 @@ export default {
         ]
     };
   },methods:{
-      finSignBtn:function(){
-       this.$router.replace('/sign_in/upLoadVideo')
-      }
+        /**
+         * 两个去打卡跳转按钮
+         */
+        finSignBtn:function(){
+        this.$router.replace('/sign_in/upLoadVideo')
+        },
+        /**
+         * 点击历史打卡记录跳转到详情页面
+         */
+        signHistoryVideo:function(){
+        this.$router.replace('/sign_in/signInInfom')
+        }
   }
 }
 </script>
@@ -203,21 +229,21 @@ export default {
              
                         }
     }
+    .signHistorySpace{
+            height: 3.1vw;
+            width: 0.8vw;
+            background-color: #ccc;
+            display: inline-block;
+        }
+    .signHistoryMsg{
+            margin-left: 2vw;
+            font-size: 0.35rem;
+            font-weight: 700
+        }
     .signHistory{
             width: 90vw;
             // height: 50vh;
             position: relative;
-                .signHistorySpace{
-                    height: 3.1vw;
-                    width: 0.8vw;
-                    background-color: #ccc;
-                    display: inline-block;
-                }
-                .signHistoryMsg{
-                    margin-left: 2vw;
-                    font-size: 0.35rem;
-                    font-weight: 700
-                }
                 .signHistoryVideo{
                     margin-top: 2vh;
                     background-color: yellow;
@@ -226,28 +252,28 @@ export default {
                       .videodays{
                           position: absolute;
                           left: 3vw;
-                          top:5vh;
+                          top:2vh;
                         font-size: 0.35rem;
                         font-weight: 700;
                       }
                       .upLoadTime{
                           position: absolute;
                           left: 3.5vw;
-                          top:8vh;
+                          top:6vh;
                         font-size: 0.3rem;
                         font-weight: 600;
                       }
                       .videoTimes{
                           position: absolute;
                           left: 69vw;
-                          top:5vh;
+                          top:2vh;
                         font-size: 0.35rem;
                         font-weight: 400;
                       }
                       .video{
                         //   margin-top: 5vh;
                         position: absolute;
-                        top:40%;
+                        top:10vh;
                         left: 5%;
                         width: 80vw;
                         //   height: 12vh;
@@ -257,25 +283,29 @@ export default {
                       .videoGetScore{
                          position: absolute;
                           left: 3vw;
-                          top:27vh;
+                          top:24vh;
                           font-size: 0.35rem;
                           font-weight: 700;
-                            .teacherScore{
-                                padding-left: 1vw
-                            }
+                          display: inline;
+
+                      }
+                      .changeRate{
+                          position: absolute;
+                          left: 12vw;
+                          top:23.9vh;
                       }
                       .teacherComment{
                           position: absolute;
                           left: 3vw;
-                          top:30vh;
+                          top:27vh;
                           font-size: 0.35rem;
                           font-weight: 700;
                       }
                       .dividingLine{
                           position: absolute;
                           left: 3vw;
-                          top:38vh;
-                          height: 1vw;
+                          top:34vh;
+                          height: 0.5vh;
                           width: 83vw;
                           background-color: #999;
                           display: inline-block;
