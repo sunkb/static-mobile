@@ -41,7 +41,7 @@
 
     props: {
       value: {  //当前的评分数值
-        type: Number,
+        type: String,
         default: 0
       },
       size: {  //评分字体大小，默认18
@@ -54,11 +54,11 @@
       },
       disabled: { // 是否为只读
         type: Boolean,
-        default: false
+        default: true
       },
       allowHalf: {  //是否允许半选
         type: Boolean,
-        default: false
+        default: true
       },
       colors: {  //选中的星级颜色值
         type: String,
