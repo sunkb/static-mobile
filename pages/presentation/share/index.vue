@@ -245,9 +245,9 @@ export default {
     },
     gotoRegister(sourceName) {
       if (sourceName === 'text') {
-        window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#免费领取大礼包#来自免费领取按钮']); // 百度统计
+        window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#免费领取大礼包#来自免费领取按钮--来自活动外化']); // 百度统计
       } else {
-        window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#免费领取大礼包#来自免费领取大礼包海报页']); // 百度统计
+        window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#免费领取大礼包#来自免费领取大礼包海报页--来自活动外化']); // 百度统计
       }
       window.location = this.registerUrl
     },
