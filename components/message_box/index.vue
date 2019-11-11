@@ -48,7 +48,7 @@ export default {
     },
     backgroundImag: { // 弹框背景图
       type: String,
-      default: 'https://qn-static.landi.com/uploadtool1607f5931e0aa1553ca368b2478d5d80.png'
+      default: ''
     },
     mode: { // 模式
       type: Number,
@@ -57,16 +57,16 @@ export default {
     // 当模式为1的情况下
     loginImg: { //登录按钮图片地址参数
       type: String,
-      default: 'https://qn-static.landi.com/uploadtool59e39dafc52e9b84414ea1c435d4bc74.png'
+      default: ''
     },
     registerImg: { //注册按钮图片地址参数
       type: String,
-      default: 'https://qn-static.landi.com/uploadtool2c80075256a0afc4d95dab6add8099a7.png'
+      default: ''
     },
     // 当模式为2的情况下
     activityImg: {  //活动按钮参数
       type: String,
-      default: 'https://qn-static.landi.com/uploadtool59e39dafc52e9b84414ea1c435d4bc74.png'
+      default: ''
     }
 
   },
