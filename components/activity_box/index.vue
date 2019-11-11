@@ -1,5 +1,5 @@
 <template>
-  <div class="message-model">
+  <div class="activity-model">
     <div class="fixed-background" v-show="isOpened">
       <div class="model-wrap">
         <div class="content-close">
@@ -86,7 +86,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.message-model {
+.activity-model {
   .fixed-background {
     position: absolute;
     width: 100%;

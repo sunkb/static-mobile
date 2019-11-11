@@ -3,7 +3,7 @@
 ## 组件引入
 
 ```js
-import messageBox from '~/components/message_box'
+import activityBox from '~/components/message_box'
 ```
 
 ## 使用
