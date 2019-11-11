@@ -30,7 +30,7 @@
     </div>
     <div class="action">
       <div class="action-text">
-        <span @click="gotoRegister" class="action-text-accent">免费领取</span>
+        <span @click="gotoRegister('text')" class="action-text-accent">免费领取</span>
         <span>兰迪288元试听课大礼包</span>
       </div>
       <div class="action-content" :style="{ background: themeColor }" @click="gotoIndex">
@@ -42,7 +42,7 @@
     <div class="sharehelp" v-if="showShareHelp" @click="() => { showShareHelp = false }">
       <img class="sharehelp-img" :src="require('~/assets/presentation/img/share-help.png')" />
     </div>
-    <poster-modal v-model="showPosterModal" @click="gotoRegister" :poster="0"></poster-modal>
+    <poster-modal v-model="showPosterModal" @click="gotoRegister('poster')" :poster="0"></poster-modal>
     <toast ref="toast"></toast>
   </div>
 </template>
@@ -243,8 +243,12 @@ export default {
       //   wx.onMenuShareTimeline(shareObj);
       // });
     },
-    gotoRegister() {
-      window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '免费领取大礼包']); // 百度统计
+    gotoRegister(sourceName) {
+      if (sourceName === 'text') {
+        window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#免费领取大礼包#来自免费领取按钮']); // 百度统计
+      } else {
+        window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#免费领取大礼包#来自免费领取大礼包海报页']); // 百度统计
+      }
       window.location = this.registerUrl
     },
     async getOpenid(){
