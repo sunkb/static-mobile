@@ -264,7 +264,7 @@ export default {
       redirect_url = removeParam('state',redirect_url);
       redirect_url = encodeURIComponent(redirect_url);
       if(mode === "register") {
-        window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#注册并参与#btn点击']); // 百度统计
+        window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#注册并参与#btn点击--来自活动外化']); // 百度统计
         const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login?redirect_url='+redirect_url;
         window.location = loginUrl;
         return
@@ -276,7 +276,7 @@ export default {
         try {
           const resultData = await axios.post(`${API.FROM_TJM}`, params)
           if(resultData.status) {
-            window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#已有账号，立即登陆#btn点击']); // 百度统计
+            window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#已有账号，立即登陆#btn点击--来自活动外化']); // 百度统计
             window.location = process.env.ENV_API+'/mobile/Login#/register';
           } else {
             console.log(resultData.info)
