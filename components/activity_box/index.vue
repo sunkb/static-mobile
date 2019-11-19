@@ -32,9 +32,9 @@
 <script>
 
 export default {
-  name: 'messageBox',
+  name: 'activityBox',
 
-  componentName: 'messageBox',
+  componentName: 'activityBox',
 
   data () {
     return {
@@ -91,6 +91,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
+    left: 0px;
     top: 0px;
     background: rgba($color: #080808, $alpha: 0.4);
     z-index: 1000;
