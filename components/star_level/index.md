@@ -15,7 +15,7 @@ import startLevel from '~/components/star_level'
 ```
 
 ## props说明
-value: <Number> 当前星级的评分数值
+value: <String> 当前星级的评分数值
 size: <Number，String> 评分字体大小，默认18
 max: <Number> 最大分值，即几颗星数
 disabled: <Boolean> 是否为只读

@@ -58,7 +58,7 @@
       },
       allowHalf: {  //是否允许半选
         type: Boolean,
-        default: false
+        default: true
       },
       colors: {  //选中的星级颜色值
         type: String,
