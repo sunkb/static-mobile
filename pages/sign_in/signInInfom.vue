@@ -1,168 +1,275 @@
 <template>
-    <div class="signInInfom">
-        <div class="myVideo">
-            <div class="videoTitle">
-               <img src="" alt=""> 我的作品
-            </div>
-            <div class="submissionTime">提交时间:<span></span></div>
-            <div class="studentVideo">
-                这是学生的视频
-            </div>
+  <div class="signInInfom">
+    <!-- <div class="left"></div> -->
+    <div class="myVideo">
+      <div class="videoTitle">
+        X月X日作业
+        <div class="videoTitleTime">第4次打卡</div>
+      </div>
+      <div class="submissionTime">提交时间:</div>
+      <div class="studentVideo">
+        <video
+          preload="auto"
+          class="videoWin"
+          style="display: none;"
+          id="appearance1"
+          controls
+          :src="'https://qn-static.landi.com/uploadtool697ac79509454573ca2a71a610def2fa.mp4'"
+        />
+        <div class="appearance-video-item" @click="playFn('appearance1')">
+          <div class="content-video-item-video-play"></div>
+          <img
+            class="videoWin"
+            :src="'https://qn-static.landi.com/uploadtool697ac79509454573ca2a71a610def2fa.mp4'+ '?vframe/jpg/offset/2/h/960/'"
+          />
+          <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
         </div>
-        <div class="videoScore">
-            <div class="scoreTitle">
-               <img src="" alt="">  作品得分
-            </div>    
-            <div class="fiveStars">
-              <rate v-model="rate" @changeRate="changeRate"></rate>
-            </div>
+      </div>
+      <div class="videoScore">
+        <div class="scoreTitle">得分</div>
+        <div class="fiveStars">
+          <startLevel
+            v-if="getScore"
+            v-model="startLevel"
+            :allowHalf="allowHalf"
+            showText
+            colors="#F0552D"
+          />
+          <!-- <rate v-model="rate" @changeRate="changeRate"></rate> -->
+          <div v-if="!getScore" class="teacherNoScore">老师尚未评分哦</div>
         </div>
-        <div class="videoComment">
-           <div class="commentTitle">
-                <img src="" alt=""> 作品评论
-            </div> 
-            <button @click="openMask" class="addComment">+</button>
-            <dialog-bar v-model="sendVal" type="danger" title="请对作品进行评论"  v-on:cancel="clickCancel()" @danger="clickDanger" dangerText="Ok" >
-            </dialog-bar>
-           <div class="commentContent">
-               <!-- 等有接口了再掉用吧-->
-               <!-- <p v-for="(item) in commentList " :key="item.id">
-                   {{commentList}}
-               </p> -->
-           </div>
+      </div>
+      <div class="videoComment">
+        <div class="commentTitle">评论</div>
+        <div @click="openMask" class="addComment">撰写评论</div>
+        <img class="addPic" src="~/assets/punch_card/img/msg.png" alt />
+        <!-- <dialog-bar
+          v-model="sendVal"
+          type="danger"
+          title="请对作品进行评论"
+          v-on:cancel="clickCancel()"
+          @danger="clickDanger"
+          dangerText="发表"
+        ></dialog-bar>-->
+
+        <div  class="input"  v-if="sendVal">
+          <input @focus="autofocus" class="input" type="text"  placeholder="评论">
         </div>
 
-
+        <div class="commentContent">
+          <!-- 等有接口了再掉用吧-->
+          <div v-if="commentList.length>0">
+            <p v-for="(item) in commentList " :key="item.id">{{item.Lisa}}</p>
+          </div>
+          <div v-if="commentList.length<=0">
+            <div class="commentMsg">有话想对老师说?点击评论按钮留言哦</div>
+            <img class="commentPic" src="~/assets/punch_card/img/comment.png" alt />
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- <div class="right"></div> -->
+  </div>
 </template>
 <script>
-import Rate from '@/components/Rate' 
-import dialogBar from './tankuang'
+import startLevel from "~/components/star_level";
+import dialogBar from "./tankuang";
+import { videoPlayerEvent } from "~/utils/videoPlay";
+
 export default {
-
-        head(){
-            return{
-                title:'打卡详情'
-                } 
-            },
-        components: {
-                'rate': Rate,
-                'dialog-bar': dialogBar,
-        },
-        data(){
-            return{
-                commentList:[{
-                   Lisa:"第一次发言"//模拟老师
-                   //这里应该还有一个用户
-                }],
-                rate: 3.5,
-                sendVal: false,
-            }
-        }, 
-        methods:{
-            openMask(index){
-                this.sendVal = true;
-            },
-            /**
-            * 添加评论的取消
-            */
-            clickCancel(){
-                console.log('我是点了取消的,或者没输入')
-            },
-            /**
-            * 添加评论的确定
-            */
-            clickDanger(textArea){
-                    if(textArea){
-                         console.log('我是输入并点了确定',textArea)
-                        this.commentList.push({
-                            Lisa:textArea
-                            //根据不同登陆者的身份,在判断好的else里去改发起评论人的身份
-                        })
-                    }else{
-                        this.clickCancel()
-                    }
-            },
-            /**
-             * 得分五角星
-             */
-            changeRate (num) {
-                    console.log(num)
-            }
-
-
-        }
-}
+  head() {
+    return {
+      title: "打卡详情"
+    };
+  },
+  components: {
+    startLevel: startLevel,
+    "dialog-bar": dialogBar
+  },
+  data() {
+    return {
+      commentList: [
+        // {
+        //   Lisa: "第一次发言" //模拟老师
+        //   //这里应该还有一个用户
+        // }
+      ],
+      //五角星数值
+      startLevel: "2.8",
+      //是否发表
+      sendVal: false,
+      //五角星允许半分评
+      allowHalf: true,
+      //老师是否评分
+      getScore: true,
+      //点评
+      commentState: false
+    };
+  },
+  methods: {
+    openMask(index) {
+      this.sendVal = true;
+    },
+    autofocus() {
+      window.scrollTo(0, 0);
+      console.log("1111111111111111111", window.scrollY);
+    },
+    /**
+     * 添加评论的取消
+     */
+    clickCancel() {
+      console.log("我是点了取消的,或者没输入");
+    },
+    /**
+     * 添加评论的确定
+     */
+    clickDanger(textArea) {
+      if (textArea) {
+        console.log("我是输入并点了确定", textArea);
+        this.commentList.push({
+          Lisa: textArea
+          //根据不同登陆者的身份,在判断好的else里去改发起评论人的身份
+        });
+      } else {
+        this.clickCancel();
+      }
+    },
+    /**
+     * 视频播放
+     */
+    playFn(name) {
+      event.stopPropagation();
+      console.log("11111111111111111111111111111111111111111111111111111");
+      // window._hmt &&
+      //   window._hmt.push([
+      //     "_trackEvent",
+      //     "div",
+      //     "click",
+      //     "优秀案例展示--视频点击"
+      //   ]); // 百度统计
+      let video1 = document.getElementById(name);
+      videoPlayerEvent(video1);
+    }
+    /**
+     * 得分五角星
+     */
+  }
+};
 </script>
 <style  lang="scss" scoped>
-    .signInInfom{
-        .myVideo{
-            background-color: red;
-            position: absolute;
-            width: 95vw;
-            height: 35vh;
-            top: 2%;
-            left:2%;
-            .videoTitle{
-                font-size: 0.4rem;
-                font-weight: 600;
-                padding-bottom: 2vh;
-            }.submissionTime{
-                font-size: 0.33rem;
-                padding-left: 2vw;
-                padding-bottom: 3vh;
-            }.studentVideo{
-                background-color: yellow;
-                width: 83vw;
-                height: 20vh;
-                margin-left: 4vw;
-            }
-        }.videoScore{
-            background-color: skyblue;
-            position: absolute;          
-            width: 95vw;
-            height: 15vh;
-            top: 40%;
-            left:2%;
-            .scoreTitle{
-                font-size: 0.4rem;
-                font-weight: 600;
-                padding-bottom: 2vh;
-            }.fiveStars{
-                background-color: pink;
-                width: 83vw;
-                height: 7.5vh;
-                margin-left: 4vw;
-            }
-        }.videoComment{
-            background-color: orange;
-            position: absolute;          
-            width: 95vw;
-            height: 35vh;
-            top: 60%;
-            left:2%;
-            .commentTitle{
-                font-size: 0.4rem;
-                font-weight: 600;
-                margin-top: 1vh;
-                padding-bottom: 2vh;
-                display: inline-block;
+.signInInfom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  min-width: 100vw;
 
-            }.addComment{
-                float: right;
-                width: 8vw;
-                height: 4vh;
-                background-color: white;
-                font-size: 0.55rem;
-                font-weight: 600;
-
-            }.commentContent{
-                background-color: pink;
-                width: 83vw;
-                height: 25vh;
-                margin-left: 4vw;
-            }
-        }
+  .myVideo {
+    background-color: white;
+    margin-top: 20px;
+    width: 660px;
+    height: 100%;
+    .videoTitle {
+      padding-top: 30px;
+      padding-left: 30px;
+      font-size: 28px;
+      font-weight: 600;
+      padding-bottom: 10px;
+      .videoTitleTime {
+        //   display: inline-block;
+        float: right;
+        font-size: 24px;
+        color: #999999;
+      }
     }
+    .submissionTime {
+      margin-left: 15px;
+      color: #999999;
+      font-size: 24px;
+      padding-left: 2vw;
+      padding-bottom: 20px;
+    }
+    .studentVideo {
+      width: 600px;
+      height: 355px;
+      margin-left: 30px;
+      margin-bottom: 30px;
+      .videoWin {
+        padding-right: 30px;
+        width: 630px;
+        height: 355px;
+      }
+    }
+  }
+  .videoScore {
+    margin-top: 30px;
+    height: 110px;
 
+    .scoreTitle {
+      font-size: 28px;
+      color: #333333;
+      font-weight: 600;
+      padding-bottom: 10px;
+      margin-left: 30px;
+    }
+    .fiveStars {
+      width: 83vw;
+      height: 35px;
+      margin-left: 30px;
+      .teacherNoScore {
+        font-size: 28px;
+        color: #999999;
+      }
+    }
+  }
+  .videoComment {
+    // background-color: orange;
+    width: 600px;
+    height: 45vh;
+    margin-left: 30px;
+    .commentTitle {
+      font-size: 28px;
+      font-weight: 500;
+      padding-bottom: 2vh;
+      display: inline-block;
+    }
+    .addComment {
+      float: right;
+      background-color: white;
+      color: #666666;
+      font-size: 24px;
+    }
+    .addPic {
+      float: right;
+      margin-right: 10px;
+      width: 40.62px;
+      height: 39.81px;
+    }
+    .input {
+      width: 300px;
+      background-color: yellow;
+      height: 50px;
+      // position: fixed;
+      // bottom: 50px;
+    }
+    .commentContent {
+      width: 600px;
+      height: 25vh;
+      position: relative;
+      .commentMsg {
+        float: left;
+        font-size: 28px;
+        color: #999999;
+      }
+      .commentPic {
+        position: absolute;
+        left: 19%;
+        margin-top: 13%;
+        width: 383.64px;
+        height: 334.89px;
+      }
+    }
+  }
+}
 </style>

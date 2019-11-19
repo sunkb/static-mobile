@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import Rate from '@/components/Rate'
+// import Rate from '@/components/Rate'
 
 export default {
   components: {
-    'rate': Rate
+    // 'rate': Rate
   },
   data () {
     return {

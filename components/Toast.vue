@@ -80,7 +80,7 @@ export default {
 
 .toast-content {
   position: fixed;
-  top: 50%;
+  top: 30%;
   left: 50%;
   max-width: 400px;
   transform: translate(-50%, -50%);

@@ -1,337 +1,508 @@
 <template>
-    <div class="weeklyHouseWorkSign">
-        <div class="signTop">
-            <span class="signTopMsg">开启打开提醒,每周作业不健忘</span>
-            <button class="signTopBtn">去开启</button>
+  <div class="weeklyHouseWorkSign">
+    <div class="signContent">
+      <div class="scoreStatistics">
+        <!-- <div class="signContentSpace"></div> -->
+        <div class="completed">
+          <div class="div1">
+            <img class="signIn1" src="~/assets/punch_card/img/signIn1.png" alt />
+            <div class="scoreMsg">您已打卡</div>
+          </div>
+          <span class="scoreNum">16</span>
+          <span class="scoreNumMsg">次</span>
+          <!-- <span class="scoreNum">{{completedTime}}</span>次 -->
         </div>
-        <div class="signContent">
-            <div class="scoreStatistics">
-                <div class="signContentSpace"></div>
-                <span class="scoreStatisticsMsg">成绩统计</span>
-                <div class="completed">
-                    <span class="scoreNum">16</span>次
-                    <!-- <span class="scoreNum">{{completedTime}}</span>次 -->
-                    <div class="scoreMsg">已完成</div>
-                </div>
-                <div class="completedSpace"></div>
-                <div class="averageScore">
-                    <span class="scoreNum">4.75</span>分
-                    <!-- <span class="scoreNum">{{getScoreNum}}</span>分 -->
-                    <div class="scoreMsg">平均得分</div>
-                </div>
-            </div>
-            <div class="thisWeek">
-                <div class="thisWeekSpace"></div>
-                <span class="scoreStatisticsMsg">本周进度</span>
-                <span class="upLoadHw">请上传12月5日作业</span>
-                <!-- 请上传<span>{{month}}</span>月<span>{{day}}</span>日作业 -->
-                <div class="thisWeekProcess">
-                    <div class="notCompleted">尚未完成</div>
-                    <div>班级已有<span>12</span>人提交</div>
-                    <!-- {{hasuploaded}}到时候加到12那个位置 -->
-                </div>
-                <button class="thisWeekSignBtn" @click="finSignBtn()" v-if="true">去打卡</button>
-                <!--v-if这里从后台拿值,然后根据枚举值,利用三元表达式去判断,有就true显示,没有就false隐藏 -->
-            </div>
-            
-            <div class="signHistorySpace"></div>
-            <span class="signHistoryMsg">历史打卡记录</span>
-            <div class="signHistory" v-for="(item,index) in videoList " :key="item.id">
-                    <div class="signHistoryVideo" @click="signHistoryVideo">
-                        <div class="videodays">X月X日作业</div>
-                        <div class="upLoadTime">提交时间:{{upLoadTime}}<span></span></div>
-                        <div class="videoTimes">第<span>{{videoList[index].id}}</span>次打卡</div>
-                        <div class="video">123</div>
-                        <span  class="videoGetScore">得分:</span> 
-                        <rate v-model="rate"  class="changeRate"></rate>
-                        <div class="teacherComment">评论
-                            <div>{{teacherSays}}</div>
-                        </div>
-                        <div class="dividingLine"></div>
+        <!-- <div class="completedSpace"></div> -->
+        <div class="averageScore">
+          <div class="div1">
+            <img class="signIn1" src="~/assets/punch_card/img/signIn2.png" alt />
+            <div class="scoreMsg">平均得分</div>
+          </div>
+          <span class="scoreNum">4.75</span>
+          <span class="scoreNumMsg">分</span>
+          <!-- <span class="scoreNum">{{getScoreNum}}</span>分 -->
+        </div>
+      </div>
+      <!-- <div class="signTop">
+        <div class="signTopCon">
+          <div class="signTopMsg">开启打开提醒,每周作业不健忘</div>
+          <button class="signTopBtn">去开启</button>
+        </div>
+      </div>-->
+      <div class="thisWeek">
+        <div class="thisWeeKTop">
+          <div class="signContentSpace"></div>
+          <!-- <img class="signIn1" src="~/assets/punch_card/img/signIn3.png" alt /> -->
+          <div class="scoreStatisticsMsg">本周进度</div>
+          <div class="upLoadHw">请上传12月5日作业</div>
+        </div>
 
-                </div>
+        <!-- 请上传<span>{{month}}</span>月<span>{{day}}</span>日作业 -->
+        <div class="thisWeekProcess" v-if="this.hasSigned==='A'">
+          <img class="signIn5" src="~/assets/punch_card/img/signIn5.png" alt />
+          <div class="notCompleted">尚未完成哦</div>
+          <div class="hasCompleted">
+            班级已有
+            <span>12</span>人提交
+          </div>
+          <!-- {{hasuploaded}}到时候加到12那个位置 -->
+          <div class="thisWeekSignBtn" @click="finSignBtn()" v-if="true">去打卡</div>
+        </div>
+        <div class="thisWeekProcess" v-if="this.hasSigned==='B'">
+          <div class="hasCompleted">太棒了,已经完成打卡任务哦</div>
+          <img class="goodjob" src="~/assets/punch_card/img/goodjob.png" alt />
+        </div>
+        <div class="thisWeekProcess" v-if="this.hasSigned==='C'">
+          <div class="hasCompleted">本周无打卡任务哦</div>
+          <img class="nojob" src="~/assets/punch_card/img/nojob.png" alt />
+        </div>
+        <!--v-if这里从后台拿值,然后根据枚举值,利用三元表达式去判断,有就true显示,没有就false隐藏 -->
+      </div>
 
+      <div class="AllsignHistory">
+        <div class="AllsignHistoryTop">
+          <div class="signContentSpace"></div>
+          <!-- <img src="~/assets/punch_card/img/signIn4.png" alt class="signIn4" /> -->
+          <span class="signHistoryMsg">历史打卡记录</span>
+        </div>
+
+        <div class="signHistory" v-for="(item,index) in videoList " :key="item.id">
+          <div class="signHistoryVideo" @click="signHistoryVideo" v-if="historyShow==='A'">
+            <div class="videodays">
+              X月X日作业
+              <span class="videoTimes">
+                第
+                <span>{{videoList[index].id}}</span>次打卡
+              </span>
             </div>
+            <div class="upLoadTime">提交时间:{{upLoadTime}}</div>
+
+            <div class="video">
+              <video
+                preload="auto"
+                class="videoWin"
+                style="display: none;"
+                id="appearance1"
+                controls
+                :src="'https://qn-static.landi.com/uploadtool7b921d8d27fffee64eb879bcbb2d6796.mp4'"
+              />
+              <div class="appearance-video-item" @click="playFn('appearance1')">
+                <div class="content-video-item-video-play"></div>
+                <img
+                  class="videoWin"
+                  :src="'https://qn-static.landi.com/uploadtool7b921d8d27fffee64eb879bcbb2d6796.mp4'+ '?vframe/jpg/offset/2/h/960/'"
+                />
+                <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
+              </div>
+            </div>
+            <span class="videoGetScore">得分:</span>
+            <startLevel v-model="startLevel" :allowHalf="allowHalf" class="changeRate" showText />
+            <div class="teacherComment">
+              评论
+              <!-- <span v-if="getComment" id="getComment">{}</span> -->
+              <div class="commentMsg">{{teacherSays}}</div>
+            </div>
+            <div class="dividingLine"></div>
+          </div>
         </div>
-        <div class="finSign">
-                <span class="finSignMsg">本周作业已有位同班同学打卡</span>
-                <!-- 到时候加到已有后面{{thisWeekSigned}} -->
-                <button class="finSignBtn" @click="finSignBtn()">去打卡</button>
+        <div class="signHistory" v-if="historyShow==='B'">
+          <div class="signHistoryVideo">
+            <div class="noHistory">
+              暂无打卡作品,要加油哦~
+              <img class="fight" src="~/assets/punch_card/img/fight.png" alt />
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="finSign" v-if="historyShow==='A'">
+        <div class="finSignMsg">本周作业已有X个同学提交哦</div>
+        <!-- 到时候加到已有后面{{thisWeekSigned}} -->
+        <div class="finSignBtn" @click="finSignBtn()">去打卡</div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-import Rate from '@/components/Rate' 
+import startLevel from "~/components/star_level";
+import { videoPlayerEvent } from "~/utils/videoPlay";
 export default {
-    name:'weeklyHouseWorkSign',
-    head(){
-        return{
-            title:'周作业打卡',
-            
-        } 
-    },
-    components: {
-                'rate': Rate
-    },
-    data() {
+  name: "weeklyHouseWorkSign",
+  head() {
     return {
-        //五角星参数
-        rate: 1.5,
-        //发表的评论
-        teacherSays:'Ann:说得好',
-        //提交时间
-        upLoadTime:'2018年',
-        // list:[1,2,3,4,5],
-        //视频总体列表
-        videoList:[
-            {id:1,videoTimes:'第一次'},
-            {id:2,videoTimes:'第二次'},
-            {id:3,videoTimes:'第三次'},
-            {id:4,videoTimes:'第四次'},
-            {id:5,videoTimes:'第五次'}, 
-        ]
+      title: "周作业打卡"
     };
-  },methods:{
-        /**
-         * 两个去打卡跳转按钮
-         */
-        finSignBtn:function(){
-        this.$router.replace('/sign_in/upLoadVideo')
-        },
-        /**
-         * 点击历史打卡记录跳转到详情页面
-         */
-        signHistoryVideo:function(){
-        this.$router.replace('/sign_in/signInInfom')
-        }
+  },
+  components: {
+    startLevel: startLevel
+  },
+  data() {
+    return {
+      historyShow: "A", //没有后端前,A为有打卡记录,B为无打卡记录
+      hasSigned: "A", //没有后端前,A为尚未打卡,B为完成打卡,C为无打卡任务
+      //五角星参数
+      startLevel: "1.6",
+      //发表的评论
+      teacherSays: "Ann:说得好",
+      //提交时间
+      upLoadTime: "2018年",
+      // list:[1,2,3,4,5],
+      //视频总体列表
+      videoList: [
+        { id: 1, videoTimes: "第一次" },
+        { id: 2, videoTimes: "第二次" },
+        { id: 3, videoTimes: "第三次" },
+        { id: 4, videoTimes: "第四次" },
+        { id: 5, videoTimes: "第五次" }
+      ],
+      allowHalf: true
+    };
+  },
+  methods: {
+    /**
+     * 两个去打卡跳转按钮
+     */
+    finSignBtn: function() {
+      window.location = "http://192.168.29.119:3000/sign_in/upLoadVideo";
+      // this.$router.replace('/sign_in/upLoadVideo')
+    },
+    /**
+     * 点击历史打卡记录跳转到详情页面
+     */
+    signHistoryVideo: function() {
+      // this.$router.replace('/sign_in/signInInfom')
+      window.location = "http://192.168.29.119:3000/sign_in/signInInfom";
+    },
+    playFn(name) {
+      event.stopPropagation();
+      console.log("11111111111111111111111111111111111111111111111111111");
+      window._hmt &&
+        window._hmt.push([
+          "_trackEvent",
+          "div",
+          "click",
+          "优秀案例展示--视频点击"
+        ]); // 百度统计
+      let video1 = document.getElementById(name);
+      videoPlayerEvent(video1);
+    }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-    .signTop{
-         margin-top:1vw;
-         margin-left: 3vw;
-         background-color: #ccc;
-         border-radius: 999px; 
-         width:93vw;
-         height: 7vw;
-         line-height: 7vw;
-             .signTopMsg{
-                padding-left:5vw;
-            }
-            .signTopBtn{
-                background-color: #ccc;
-                margin-top: 0.5vh;
-                margin-right: 3vw;
-                float: right;
-            }
+@import "~/assets/presentation/css/main.scss";
+
+.weeklyHouseWorkSign {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+
+  .signContent {
+    .scoreStatistics {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 192px;
+      background-color: white;
+
+      .completed {
+        margin-right: 140px;
+        text-align: center;
+        .div1 {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .scoreNum {
+          font-size: 60px;
+          font-weight: 500;
+        }
+        .scoreNumMsg {
+          font-size: 24px;
+        }
+        .scoreMsg {
+          font-size: 24px;
+          color: #999999;
+          display: inline-block;
+        }
+      }
+      .signIn1 {
+        width: 30px;
+        height: 30px;
+
+        margin-right: 8px;
+      }
+
+      .completedSpace {
+        height: 30px;
+        width: 2px;
+        background-color: #ccc;
+        display: inline-block;
+      }
+      .averageScore {
+        text-align: center;
+        .div1 {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .scoreNum {
+          font-size: 60px;
+          font-weight: 500;
+        }
+        .scoreNumMsg {
+          font-size: 24px;
+        }
+        .scoreMsg {
+          font-size: 24px;
+          color: #999999;
+          display: inline-block;
+        }
+      }
+    }
+    .signTop {
+      height: 90px;
+      background-color: white;
+      margin-top: 15px;
+      .signTopCon {
+        margin-left: 30px;
+        font-size: 28px;
+        // padding-bottom: 25px;
+        // height: 40px;
+        .signTopMsg {
+          margin-top: 25px;
+          display: inline-block;
+          color: #666666;
+          // padding-right: 48px;
+        }
+        .signTopBtn {
+          margin-top: 15px;
+          margin-right: 30px;
+          width: 180px;
+          height: 60px;
+          float: right;
+          background-color: #ffd750;
+          border-radius: 45px;
+        }
+      }
+    }
+    .thisWeek {
+      background-color: #fff;
+      margin-top: 20px;
+
+      .thisWeeKTop {
+        display: flex;
+        // margin-left: 30px;
+        // float: left;
+        // justify-content: center;
+        align-items: center;
+        width: 500px;
+        height: 80px;
+        .signContentSpace {
+          height: 30px;
+          width: 6px;
+          background-color: #ffd750;
+          display: inline-block;
+          margin-right: 30px;
+          // margin-right: -20px;
+        }
+        // .signIn1 {
+        //   margin-left: 30px;
+        //   width: 34px;
+        //   height: 34px;
+        //   margin-right: 10px;
+        // }
+        .scoreStatisticsMsg {
+          font-size: 34px;
+          font-weight: 700;
+          margin-right: 20px;
+        }
+        .upLoadHw {
+          // padding-top: 1px;
+          font-size: 24px;
+          color: #999999;
+        }
+      }
+
+      .thisWeekProcess {
+        text-align: center;
+        height: 250px;
+        .signIn5 {
+          // margin-left: 45%;
+          width: 30px;
+          height: 40px;
+        }
+        .goodjob {
+          width: 400px;
+          height: 190px;
+        }
+        .nojob {
+          width: 400px;
+          height: 190px;
+        }
+        .notCompleted {
+          display: inline-block;
+          // padding-top: 39px;
+          color: #ff5050;
+          text-align: center;
+          font-size: 0.4rem;
+          font-weight: 700;
+          padding-bottom: 10px;
+        }
+        .hasCompleted {
+          text-align: center;
+          color: #999999;
+          font-size: 24px;
+          padding-bottom: 30px;
+        }
+        .thisWeekSignBtn {
+          margin-left: 20px;
+          border-radius: 45px;
+          color: #333333;
+          font-weight: 600;
+          font-size: 28px;
+          text-align: center;
+          line-height: 80px;
+          width: 623px;
+          height: 80px;
+          background-color: #ffd750;
+          // margin-bottom: 31px;
+        }
+      }
     }
 
-    .signContent{
-         margin-top:3vw;
-         margin-left: 5vw;
-                .scoreStatistics{
-                    height: 22vh;
-                    width: 90vw;
-                    position: relative;
-                        .signContentSpace{
-                            height: 3.1vw;
-                            width: 0.8vw;
-                            background-color: #ccc;
-                            display: inline-block;
-                        }
-                        .scoreStatisticsMsg{
-                            margin-left: 2vw;
-                            font-size: 0.35rem;
-                            font-weight: 700
-                        }
-                        .completed{
-                            position: absolute;
-                            left: 25%;
-                            top:40%;
-                            text-align: center;
-                                .scoreNum{
-                                    margin-bottom: 5vw;
-                                    font-size: 0.5rem;;
-                                    font-weight: 500;
-                                }
-                                .scoreMsg{
-                                    padding-top: 1vh
-                                }
-                        }
-                        .completedSpace{
-                            position: absolute;
-                            left: 50%;
-                            top:35%;
-                            height: 20vw;
-                            width: 0.5vw;
-                            background-color: #ccc;
-                            display: inline-block;
-                        }
-                        .averageScore{
-                            position: absolute;
-                            left: 65%;
-                            top:40%;
-                            text-align: center;
-                                .scoreNum{
-                                    font-size: 0.5rem;;
-                                    font-weight: 500;
-                                }
-                                .scoreMsg{
-                                    padding-top:1vh
-                                }
-                        }
+    .AllsignHistory {
+      background-color: #fff;
+      margin-top: 20px;
+      .AllsignHistoryTop {
+        padding-top: 30px;
+        display: flex;
+        align-items: center;
+        .signContentSpace {
+          height: 30px;
+          width: 6px;
+          background-color: #ffd750;
+          display: inline-block;
+          margin-right: 30px;
+          // margin-right: -20px;
         }
-       
-    }
-    .thisWeek{
-            height: 30vw;
-            width: 90vw;
-            position: relative;
-                .thisWeekSpace{
-                    height: 3.1vw;
-                    width: 0.8vw;
-                    background-color: #ccc;
-                    display: inline-block;
-                }
-                .scoreStatisticsMsg{
-                    margin-left: 2vw;
-                    font-size: 0.35rem;
-                    font-weight: 700
-                }
-                .upLoadHw{
-                    margin-left: 2vw;
-                    font-size: 0.28rem;
-                    font-weight: 500
-                }
-                .thisWeekProcess{
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                    transform: translate(-50%,-50%);
-                        .notCompleted{
-                            text-align: center;
-                            font-size: 0.4rem;
-                            font-weight: 700;
-                            padding-bottom: 1.5vh;
-                        }
-                }
-                .thisWeekSignBtn{
-                            position: absolute;
-                            // float: right;
-                            left: 75vw;
-                            top: 10vw;
-                            width: 15vw;
-                            height: 3vh;
-                            border-radius: 9px;
-             
-                        }
-    }
-    .signHistorySpace{
-            height: 3.1vw;
-            width: 0.8vw;
-            background-color: #ccc;
+        .signIn4 {
+          width: 34px;
+          height: 34px;
+        }
+        .signHistoryMsg {
+          font-size: 34px;
+          font-weight: 700;
+        }
+      }
+
+      .signHistory {
+        // height: 606px;
+        .signHistoryVideo {
+          margin-top: 10px;
+          // background-color: yellow;
+
+          .videodays {
+            margin-left: 30px;
+            padding-top: 40px;
+            font-size: 28px;
+            font-weight: 600;
+          }
+          .noHistory {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 28px;
+            color: #999999;
+          }
+          .fight {
+            width: 486.81px;
+            height: 260.66px;
+            margin-top: 147px;
+          }
+          .upLoadTime {
+            margin-left: 30px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            font-size: 24px;
+            color: #999999;
+          }
+          .videoTimes {
+            float: right;
+            margin-right: 40px;
+            font-size: 24px;
+            color: #999999;
+          }
+          .video {
+            margin-left: 30px;
+            margin-bottom: 30px;
+            width: 600px;
+            height: 355px;
+            .videoWin {
+              padding-right: 30px;
+              width: 630px;
+              height: 355px;
+            }
+          }
+          .videoGetScore {
+            margin-left: 30px;
+            font-size: 28px;
+            font-weight: 700;
+            display: inline;
+          }
+          .changeRate {
+            margin-left: 30px;
+            margin-top: 10px;
+          }
+          .teacherComment {
+            margin-top: 30px;
+            margin-left: 30px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #333333;
+            .commentMsg {
+              padding-top: 10px;
+              color: #666666;
+            }
+          }
+          .dividingLine {
+            margin-left: 30px;
+            height: 2px;
+            width: 630px;
+            background-color: #eeeeee;
             display: inline-block;
+          }
         }
-    .signHistoryMsg{
-            margin-left: 2vw;
-            font-size: 0.35rem;
-            font-weight: 700
-        }
-    .signHistory{
-            width: 90vw;
-            // height: 50vh;
-            position: relative;
-                .signHistoryVideo{
-                    margin-top: 2vh;
-                    background-color: yellow;
-                      border-radius: 20px; 
-                      height: 35vh;;
-                      .videodays{
-                          position: absolute;
-                          left: 3vw;
-                          top:2vh;
-                        font-size: 0.35rem;
-                        font-weight: 700;
-                      }
-                      .upLoadTime{
-                          position: absolute;
-                          left: 3.5vw;
-                          top:6vh;
-                        font-size: 0.3rem;
-                        font-weight: 600;
-                      }
-                      .videoTimes{
-                          position: absolute;
-                          left: 69vw;
-                          top:2vh;
-                        font-size: 0.35rem;
-                        font-weight: 400;
-                      }
-                      .video{
-                        //   margin-top: 5vh;
-                        position: absolute;
-                        top:10vh;
-                        left: 5%;
-                        width: 80vw;
-                        //   height: 12vh;
-                          background-color: red;
-                          opacity : 0.4;
-                      }
-                      .videoGetScore{
-                         position: absolute;
-                          left: 3vw;
-                          top:24vh;
-                          font-size: 0.35rem;
-                          font-weight: 700;
-                          display: inline;
-
-                      }
-                      .changeRate{
-                          position: absolute;
-                          left: 12vw;
-                          top:23.9vh;
-                      }
-                      .teacherComment{
-                          position: absolute;
-                          left: 3vw;
-                          top:27vh;
-                          font-size: 0.35rem;
-                          font-weight: 700;
-                      }
-                      .dividingLine{
-                          position: absolute;
-                          left: 3vw;
-                          top:34vh;
-                          height: 0.5vh;
-                          width: 83vw;
-                          background-color: #999;
-                          display: inline-block;
-                      }
-                }
+      }
     }
-    .finSign{
-            margin-top: 1vh;
-            width: 90vw;
-            height: 4vh;
-            line-height: 4vh;
-            position: relative;
-            background-color: #ccc;
-            margin-left:5vw;
-            border-radius: 9px;
-            .finSignMsg{
-               padding-left:5vw;
-             
-            }
-            .finSignBtn{
-                float: right;
-                margin-top: 0.5vh;
-                border-radius: 9px;
-                height: 3vh;
-                line-height: 3vh;
-                width: 16vw
-            }
+    .finSign {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      background-color: #fff;
+      padding-left: 30px;
+      font-size: 28px;
+      // width: 690px;
+      height: 90px;
+      .finSignMsg {
+        margin-top: 25px;
+        margin-left: 30px;
+        display: inline-block;
+      }
+      .finSignBtn {
+        font-weight: 60px;
+        margin-top: 15px;
+        margin-right: 30px;
+        margin-bottom: 15px;
+        text-align: center;
+        line-height: 60px;
+        float: right;
+        width: 180px;
+        height: 60px;
+        background-color: #ffd750;
+        border-radius: 45px;
+      }
     }
+  }
+}
 </style>
