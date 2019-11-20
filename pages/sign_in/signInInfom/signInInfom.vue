@@ -73,7 +73,7 @@
 </template>
 <script>
 import startLevel from "~/components/star_level";
-import dialogBar from "./tankuang";
+import dialogBar from "../tankuang";
 import { videoPlayerEvent } from "~/utils/videoPlay";
 
 export default {

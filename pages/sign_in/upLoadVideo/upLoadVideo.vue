@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     upLoad() {
-      window.location = "http://192.168.29.119:3000/sign_in/addComments";
+      window.location = "http://192.168.29.119:3000/sign_in/addComments/addComments";
     }
   }
 };

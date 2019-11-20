@@ -4,15 +4,14 @@
       <textarea class="comMsg" type="text" v-model="comMsg" placeholder="有什么想对班主任说的吗?"></textarea>
       <div class="comMsgLength">{{comMsg.length}}/400字符</div>
     </div>
-      <img
-        class="isShow"
-        v-show="isShow"
-        src="~/assets/punch_card/img/upload.png"
-        alt
-        @click="hasBeenVideo"
-      />
+    <img
+      class="isShow"
+      v-show="isShow"
+      src="~/assets/punch_card/img/upload.png"
+      alt
+      @click="hasBeenVideo"
+    />
     <div @click="btn" v-if="!isShow">
-
       <img class="del" src="~/assets/punch_card/img/del.png" alt />
     </div>
     <video
@@ -21,15 +20,11 @@
       style="display: none;"
       id="appearance1"
       controls
-      :src="'https://qn-static.landi.com/uploadtool7b921d8d27fffee64eb879bcbb2d6796.mp4'"
+      :src="videoUrl"
     />
     <div class="appearance-video-item" @click="playFn('appearance1')">
-      <div ></div>
-      <img
-        v-if="!isShow"
-        class="videoWin"
-        :src="'https://qn-static.landi.com/uploadtool7b921d8d27fffee64eb879bcbb2d6796.mp4'+ '?vframe/jpg/offset/2/h/960/'"
-      />
+      <div></div>
+      <img v-if="!isShow" class="videoWin" :src="videoUrl + '?vframe/jpg/offset/2/h/960/'" />
     </div>
     <button class="release" id="release" @click="release" :disabled="btnDisabled">发布</button>
     <toast class="toast" ref="toast"></toast>
@@ -45,8 +40,11 @@
 </template>
 <script>
 import Toast from "~/components/Toast";
-import dialogBar from "./tishi";
+import dialogBar from "../tishi";
 import { videoPlayerEvent } from "~/utils/videoPlay";
+import { API } from "../consts";
+import axios from "~/utils/axios";
+
 export default {
   // name:'addComments',
   head() {
@@ -65,7 +63,9 @@ export default {
       isShow: false,
       btnDisabled: false,
       comMsg: "",
-      hasBeenVideos: "100"
+      hasBeenVideos: "",
+      videoUrl: "", //上传的视频地址,
+      homeworkId: "132"
     };
   },
   mounted() {
@@ -80,10 +80,14 @@ export default {
   // },
   methods: {
     forbidback(index) {
-      if (this.hasBeenVideos === "100") {
+      if (this.hasBeenVideos !== "") {
         this.sendVal = true;
         this.isShow = true;
+      } else {
+        window.location =
+          "http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo";
       }
+
       //回退按钮点击处理
     },
     clickCancel() {
@@ -91,22 +95,26 @@ export default {
     },
     clickDanger(textArea) {
       window.location =
-        "http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign";
-      // this.$router.replace('/sign_in/weeklyHouseWorkSign')
+        "http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign";
+      // this.$router.replace('/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign')
       console.log("我是点了确定的");
     },
     hasBeenVideo() {
-      if (this.hasBeenVideos === "100") {
+      console.log("this.hasBeenVideos0", this.hasBeenVideos);
+
+      if (this.hasBeenVideos == "") {
+        console.log("this.hasBeenVideos1", this.hasBeenVideos);
         this.btnDisabled = true;
         this.hasBeenVideos = "+";
         this.isShow = false;
         document.getElementById("release").style.backgroundColor = "#EEEEEE";
       } else {
+        console.log("this.hasBeenVideos2", this.hasBeenVideos);
         this.isShow = false;
         this.btnDisabled = false;
         document.getElementById("release").style.backgroundColor = "#FFD750";
-        this.hasBeenVideos = "100";
-        if (this.hasBeenVideos === "100") {
+        this.hasBeenVideos !== "";
+        if (this.hasBeenVideos !== "") {
           this.$refs["toast"].showToast("上传成功");
         }
       }
@@ -121,11 +129,7 @@ export default {
     },
     release() {
       this.$refs["toast"].showToast("发布成功");
-      setTimeout(() => {
-        window.location =
-          "http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign";
-        // this.$router.replace('/sign_in/weeklyHouseWorkSign')
-      }, 1000);
+      this.videoOK();
     },
     playFn(name) {
       event.stopPropagation();
@@ -138,6 +142,35 @@ export default {
       //   ]); // 百度统计
       let video1 = document.getElementById(name);
       videoPlayerEvent(video1);
+    },
+    async videoOK() {
+      const data = {
+        homework_id: this.homeworkId,
+        content: this.comMsg
+      };
+        // if(this.comMsg.length>0){
+
+        // }
+      const addSuccess = await axios.post(API.add_Comment, data);
+      console.log("addSuccess.success", addSuccess.success);
+      // this.comMsg=addSuccess.content;
+      // this.homeworkId=addSuccess.homework_id;
+      if (addSuccess.success) {
+        const videoData = {
+          video_url: this.videoUrl,
+          id:this.homeworkId
+        };
+        const addSuccess = await axios.post(API.submit_Work, videoData);
+
+
+        // setTimeout(() => {
+        //   window.location =
+        //     "http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign";
+        //   // this.$router.replace('/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign')
+        // }, 1000);
+      } else {
+        console.log("errMsg", addSuccess.msg);
+      }
     }
   },
   watch: {

@@ -6,9 +6,9 @@
         <div class="completed">
           <div class="div1">
             <img class="signIn1" src="~/assets/punch_card/img/signIn1.png" alt />
-            <div class="scoreMsg">您已打卡</div>
+            <div class="scoreMsg">打卡次数</div>
           </div>
-          <span class="scoreNum">16</span>
+          <span class="scoreNum">{{scoreNumTime}}</span>
           <span class="scoreNumMsg">次</span>
           <!-- <span class="scoreNum">{{completedTime}}</span>次 -->
         </div>
@@ -18,7 +18,7 @@
             <img class="signIn1" src="~/assets/punch_card/img/signIn2.png" alt />
             <div class="scoreMsg">平均得分</div>
           </div>
-          <span class="scoreNum">4.75</span>
+          <span class="scoreNum">{{scoreNum}}</span>
           <span class="scoreNumMsg">分</span>
           <!-- <span class="scoreNum">{{getScoreNum}}</span>分 -->
         </div>
@@ -34,19 +34,16 @@
           <div class="signContentSpace"></div>
           <!-- <img class="signIn1" src="~/assets/punch_card/img/signIn3.png" alt /> -->
           <div class="scoreStatisticsMsg">本周进度</div>
-          <div class="upLoadHw">请上传12月5日作业</div>
+          <div class="upLoadHw">{{upLoadHw}}</div>
         </div>
 
         <!-- 请上传<span>{{month}}</span>月<span>{{day}}</span>日作业 -->
         <div class="thisWeekProcess" v-if="this.hasSigned==='A'">
           <img class="signIn5" src="~/assets/punch_card/img/signIn5.png" alt />
           <div class="notCompleted">尚未完成哦</div>
-          <div class="hasCompleted">
-            班级已有
-            <span>12</span>人提交
-          </div>
+          <div class="hasCompleted">班级已有{{hasCompleted}}人提交</div>
           <!-- {{hasuploaded}}到时候加到12那个位置 -->
-          <div class="thisWeekSignBtn" @click="finSignBtn()" v-if="true">去打卡</div>
+          <div class="thisWeekSignBtn" @click="finSignBtn()" >去打卡</div>
         </div>
         <div class="thisWeekProcess" v-if="this.hasSigned==='B'">
           <div class="hasCompleted">太棒了,已经完成打卡任务哦</div>
@@ -69,10 +66,9 @@
         <div class="signHistory" v-for="(item,index) in videoList " :key="item.id">
           <div class="signHistoryVideo" @click="signHistoryVideo" v-if="historyShow==='A'">
             <div class="videodays">
-              X月X日作业
+              {{videodays}}作业
               <span class="videoTimes">
-                第
-                <span>{{videoList[index].id}}</span>次打卡
+                第{{videoList[index].id}}次打卡
               </span>
             </div>
             <div class="upLoadTime">提交时间:{{upLoadTime}}</div>
@@ -84,13 +80,13 @@
                 style="display: none;"
                 id="appearance1"
                 controls
-                :src="'https://qn-static.landi.com/uploadtool7b921d8d27fffee64eb879bcbb2d6796.mp4'"
+                :src="videoUrl"
               />
               <div class="appearance-video-item" @click="playFn('appearance1')">
                 <div class="content-video-item-video-play"></div>
                 <img
                   class="videoWin"
-                  :src="'https://qn-static.landi.com/uploadtool7b921d8d27fffee64eb879bcbb2d6796.mp4'+ '?vframe/jpg/offset/2/h/960/'"
+                  :src="videoUrl + '?vframe/jpg/offset/2/h/960/'"
                 />
                 <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
               </div>
@@ -126,6 +122,9 @@
 <script>
 import startLevel from "~/components/star_level";
 import { videoPlayerEvent } from "~/utils/videoPlay";
+import { API } from "../consts";
+import axios from "~/utils/axios";
+import { async } from 'q';
 export default {
   name: "weeklyHouseWorkSign",
   head() {
@@ -136,16 +135,26 @@ export default {
   components: {
     startLevel: startLevel
   },
+  mounted() {
+    this.submit();
+    this.history();
+  },
   data() {
     return {
-      historyShow: "A", //没有后端前,A为有打卡记录,B为无打卡记录
-      hasSigned: "A", //没有后端前,A为尚未打卡,B为完成打卡,C为无打卡任务
+      videoUrl:'',//视频地址
+      videodays:'',//历史记录中某天得作业
+      hasCompleted:'',//班级已提交人数
+      scoreNumTime: "", //打卡次数
+      scoreNum: "", //平均得分
+      upLoadHw: "", //上传该次作业
+      historyShow: "", //没有后端前,A为有打卡记录,B为无打卡记录
+      hasSigned: "", //没有后端前,A为尚未打卡,B为完成打卡,C为无打卡任务
       //五角星参数
-      startLevel: "1.6",
+      startLevel: "",
       //发表的评论
       teacherSays: "Ann:说得好",
       //提交时间
-      upLoadTime: "2018年",
+      upLoadTime: "",
       // list:[1,2,3,4,5],
       //视频总体列表
       videoList: [
@@ -163,28 +172,68 @@ export default {
      * 两个去打卡跳转按钮
      */
     finSignBtn: function() {
-      window.location = "http://192.168.29.119:3000/sign_in/upLoadVideo";
-      // this.$router.replace('/sign_in/upLoadVideo')
+      window.location =
+        "http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo";
+      // this.$router.replace('/sign_in/upLoadVideo/upLoadVideo')
     },
     /**
      * 点击历史打卡记录跳转到详情页面
      */
     signHistoryVideo: function() {
-      // this.$router.replace('/sign_in/signInInfom')
-      window.location = "http://192.168.29.119:3000/sign_in/signInInfom";
+      // this.$router.replace('/sign_in/signInInfom/signInInfom')
+      window.location =
+        "http://192.168.29.119:3000/sign_in/signInInfom/signInInfom";
     },
     playFn(name) {
       event.stopPropagation();
       console.log("11111111111111111111111111111111111111111111111111111");
-      window._hmt &&
-        window._hmt.push([
-          "_trackEvent",
-          "div",
-          "click",
-          "优秀案例展示--视频点击"
-        ]); // 百度统计
+      window._hmt && window._hmt.push([]); // 百度统计
       let video1 = document.getElementById(name);
       videoPlayerEvent(video1);
+    },
+    async submit() {
+      const res = await axios.get(API.weekly_Work);
+      console.log("我是res.data,", res.data);
+      if (res.success) {
+        this.scoreNumTime = res.data.achievement.synced;
+        this.scoreNum = res.data.achievement.avg_score;
+        //判断是否有打卡任务或者是否完成
+        if (res.data.homework == null) {
+          this.hasSigned = "A"; //无任务
+        }else{
+          if (res.data.homework.is_submit) {
+            if(res.data.homework.is_submit===1){
+                this.hasSigned = "B";//已提交
+            }else{
+              this.hasSigned = "A";//未提交
+              this.upLoadHw = '请上传'+res.data.homework+'作业';
+              this.hasCompleted=res.data.submit_total 
+            }
+          }
+        }
+      } else {
+        console.log('errMsg',res.msg);
+      }
+    },
+    async history(){
+       const historyList=await axios.get(API.history_List) 
+       if(historyList.success){
+         if(historyList.data.list>0){
+           console.log('有历史打卡记录')
+           this.historyShow='A'
+           this.videodays=historyList.data.list.homework_time//第一行的时间
+           this.videoUrl=historyList.data.list.video_url//视频地址
+           this.startLevel=historyList.data.list.score//视频得分
+           this.upLoadTime=historyList.data.create_time//提交时间
+         }else{
+           console.log('无历史打卡记录')
+           this.historyShow='B'
+
+
+         }
+       }else{
+        console.log('errMsg',res.msg);
+       }
     }
   }
 };
@@ -358,7 +407,7 @@ export default {
           padding-bottom: 30px;
         }
         .thisWeekSignBtn {
-          margin-left: 20px;
+          display: inline-block;
           border-radius: 45px;
           color: #333333;
           font-weight: 600;
