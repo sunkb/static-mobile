@@ -3,10 +3,10 @@
     <!-- <div class="left"></div> -->
     <div class="myVideo">
       <div class="videoTitle">
-        X月X日作业
-        <div class="videoTitleTime">第4次打卡</div>
+        {{detailData.work_time}}作业
+        <div class="videoTitleTime">第{{detailData.rank}}次打卡</div>
       </div>
-      <div class="submissionTime">提交时间:</div>
+      <div class="submissionTime">提交时间:{{detailData.submit_time}}</div>
       <div class="studentVideo">
         <video
           preload="auto"
@@ -14,13 +14,13 @@
           style="display: none;"
           id="appearance1"
           controls
-          :src="'https://qn-static.landi.com/uploadtool697ac79509454573ca2a71a610def2fa.mp4'"
+          :src="detailData.video_url"
         />
         <div class="appearance-video-item" @click="playFn('appearance1')">
           <div class="content-video-item-video-play"></div>
           <img
             class="videoWin"
-            :src="'https://qn-static.landi.com/uploadtool697ac79509454573ca2a71a610def2fa.mp4'+ '?vframe/jpg/offset/2/h/960/'"
+            :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'"
           />
           <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
         </div>
@@ -30,7 +30,7 @@
         <div class="fiveStars">
           <startLevel
             v-if="getScore"
-            v-model="startLevel"
+            :value="detailData.startLevelData"
             :allowHalf="allowHalf"
             showText
             colors="#F0552D"
@@ -66,6 +66,9 @@
             <img class="commentPic" src="~/assets/punch_card/img/comment.png" alt />
           </div>
         </div>
+        <div>
+          
+        </div>
       </div>
     </div>
     <!-- <div class="right"></div> -->
@@ -75,6 +78,8 @@
 import startLevel from "~/components/star_level";
 import dialogBar from "../tankuang";
 import { videoPlayerEvent } from "~/utils/videoPlay";
+import axios from "~/utils/axios";
+import { API } from "../consts";
 
 export default {
   head() {
@@ -94,25 +99,42 @@ export default {
         //   //这里应该还有一个用户
         // }
       ],
-      //五角星数值
-      startLevel: "2.8",
-      //是否发表
-      sendVal: false,
-      //五角星允许半分评
-      allowHalf: true,
-      //老师是否评分
-      getScore: true,
-      //点评
-      commentState: false
+      sendVal: false, //是否发表
+      allowHalf: true, //五角星允许半分评
+      getScore: true, //老师是否评分
+      commentState: false, //点评
+      detailData: {} // 打卡详情
+
     };
   },
   methods: {
+    // 初始化页面
+    async initData () {
+      const id = this.$route.query.id || ''
+      try {
+        const detailData = await axios.get(API.production_detail + '?id=' + id);
+        if (!detailData.success) {
+          console.log(detailData.msg)
+          return ;
+        }
+        const result = detailData.data
+        this.detailData = {
+          work_time: result.work_time || '',
+          rank: result.rank || 0,
+          submit_time: result.submit_time || '',
+          startLevelData: result.score || '4.0',
+          video_url: 'https://qn-static.landi.com/uploadtool697ac79509454573ca2a71a610def2fa.mp4' || result.video_url
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    },
     openMask(index) {
       this.sendVal = true;
     },
     autofocus() {
       window.scrollTo(0, 0);
-      console.log("1111111111111111111", window.scrollY);
+      console.log("1111111111111111111", window.scrollY)
     },
     /**
      * 添加评论的取消
@@ -125,7 +147,7 @@ export default {
      */
     clickDanger(textArea) {
       if (textArea) {
-        console.log("我是输入并点了确定", textArea);
+        console.log("我是输入并点了确定", textArea)
         this.commentList.push({
           Lisa: textArea
           //根据不同登陆者的身份,在判断好的else里去改发起评论人的身份
@@ -138,21 +160,13 @@ export default {
      * 视频播放
      */
     playFn(name) {
-      event.stopPropagation();
-      console.log("11111111111111111111111111111111111111111111111111111");
-      // window._hmt &&
-      //   window._hmt.push([
-      //     "_trackEvent",
-      //     "div",
-      //     "click",
-      //     "优秀案例展示--视频点击"
-      //   ]); // 百度统计
-      let video1 = document.getElementById(name);
-      videoPlayerEvent(video1);
+      event.stopPropagation()
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
     }
-    /**
-     * 得分五角星
-     */
+  },
+  async created() {
+    await this.initData()
   }
 };
 </script>
