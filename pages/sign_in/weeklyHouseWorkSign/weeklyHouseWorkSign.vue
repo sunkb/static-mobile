@@ -193,7 +193,7 @@ export default {
     },
     async submit() {
       const res = await axios.get(API.weekly_Work);
-      console.log("我是res.data,", res.data);
+      console.log("我是res,", res);
       if (res.success) {
         this.scoreNumTime = res.data.achievement.synced;
         this.scoreNum = res.data.achievement.avg_score;

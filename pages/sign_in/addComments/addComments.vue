@@ -73,6 +73,15 @@ export default {
     history.pushState(null, null, document.URL);
     console.log("我是history", history);
     window.addEventListener("popstate", this.forbidback);
+    if (this.hasBeenVideos == "") {
+      document.getElementById("release").style.backgroundColor = "#EEEEEE";
+      this.btnDisabled = true;
+      this.isShow = true;
+    } else {
+      this.isShow = false;
+      this.btnDisabled = false;
+      document.getElementById("release").style.backgroundColor = "#FFD750";
+    }
   },
   // beforeDestroy(){
   //         //销毁
@@ -80,6 +89,7 @@ export default {
   // },
   methods: {
     forbidback(index) {
+      console.log("1", this.hasBeenVideos);
       if (this.hasBeenVideos !== "") {
         this.sendVal = true;
         this.isShow = true;
@@ -101,22 +111,33 @@ export default {
     },
     hasBeenVideo() {
       console.log("this.hasBeenVideos0", this.hasBeenVideos);
+      // if (this.hasBeenVideos == "") {
+      //   console.log("this.hasBeenVideos1", this.hasBeenVideos);
+      //   this.btnDisabled = false;
+      //   this.hasBeenVideos = "+";
+      //   this.isShow = false;
+      //   document.getElementById("release").style.backgroundColor = "#FFD750";
+      //   if (this.hasBeenVideos !== "") {
+      //     this.$refs["toast"].showToast("上传成功");
+      //   }
 
-      if (this.hasBeenVideos == "") {
-        console.log("this.hasBeenVideos1", this.hasBeenVideos);
-        this.btnDisabled = true;
-        this.hasBeenVideos = "+";
-        this.isShow = false;
-        document.getElementById("release").style.backgroundColor = "#EEEEEE";
-      } else {
-        console.log("this.hasBeenVideos2", this.hasBeenVideos);
-        this.isShow = false;
-        this.btnDisabled = false;
-        document.getElementById("release").style.backgroundColor = "#FFD750";
-        this.hasBeenVideos !== "";
-        if (this.hasBeenVideos !== "") {
-          this.$refs["toast"].showToast("上传成功");
-        }
+      // } else {
+      //   console.log("this.hasBeenVideos2", this.hasBeenVideos);
+      //   this.isShow = false;
+      //   this.btnDisabled = false;
+      //   document.getElementById("release").style.backgroundColor = "#FFD750";
+      //   this.hasBeenVideos ='+';
+      //   if (this.hasBeenVideos !== "") {
+      //     this.$refs["toast"].showToast("上传成功");
+      //   }
+      // }
+      console.log("this.hasBeenVideos1", this.hasBeenVideos);
+      this.btnDisabled = false;
+      this.hasBeenVideos = "+";
+      this.isShow = false;
+      document.getElementById("release").style.backgroundColor = "#FFD750";
+      if (this.hasBeenVideos !== "") {
+        this.$refs["toast"].showToast("上传成功");
       }
     },
     btn() {
@@ -128,18 +149,16 @@ export default {
       document.getElementById("release").style.backgroundColor = "#EEEEEE";
     },
     release() {
+      if (this.comMsg.length === 0) {
+        this.$refs["toast"].showToast("请添加评论");
+        return;
+      }
       this.$refs["toast"].showToast("发布成功");
       this.videoOK();
     },
     playFn(name) {
       event.stopPropagation();
-      // window._hmt &&
-      //   window._hmt.push([
-      //     "_trackEvent",
-      //     "div",
-      //     "click",
-      //     "优秀案例展示--视频点击"
-      //   ]); // 百度统计
+
       let video1 = document.getElementById(name);
       videoPlayerEvent(video1);
     },
@@ -148,20 +167,15 @@ export default {
         homework_id: this.homeworkId,
         content: this.comMsg
       };
-        // if(this.comMsg.length>0){
 
-        // }
       const addSuccess = await axios.post(API.add_Comment, data);
       console.log("addSuccess.success", addSuccess.success);
-      // this.comMsg=addSuccess.content;
-      // this.homeworkId=addSuccess.homework_id;
       if (addSuccess.success) {
         const videoData = {
           video_url: this.videoUrl,
-          id:this.homeworkId
+          id: this.homeworkId
         };
         const addSuccess = await axios.post(API.submit_Work, videoData);
-
 
         // setTimeout(() => {
         //   window.location =
@@ -238,7 +252,7 @@ export default {
     margin-left: 30px;
     width: 690px;
     height: 80px;
-    background-color: #ffd750;
+    background-color: #eeeeee;
     font-size: 28px;
   }
 }
