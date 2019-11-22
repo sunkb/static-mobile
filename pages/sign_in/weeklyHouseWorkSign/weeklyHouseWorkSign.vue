@@ -96,9 +96,9 @@
               <span class="videoGetScore">得分:</span>
               <startLevel :value="item.score" :allowHalf="allowHalf" class="changeRate" showText />
               <div class="teacherComment">
-                <!-- {{'评论('+ item.comment.length +')'}} -->
+                {{'评论('+ item.comment.length +')'}}
                 <!-- <span v-if="getComment" id="getComment">{}</span> -->
-                <div class="" :class="item.moreFlag ? 'watchMore': 'watchSingle' ">
+                <div class :class="item.moreFlag ? 'watchMore': 'watchSingle' ">
                   <div
                     class="commentMsg"
                     v-for="(commentItem, index) in item.comment"
@@ -128,10 +128,10 @@
           </div>
         </div>
       </div>
-      <div class="finSign" v-if="this.hasSigned==='A'" >
+      <div class="finSign" v-if="this.hasSigned==='A'">
         <div class="finSignMsg">本周作业已有X个同学提交哦</div>
         <!-- 到时候加到已有后面{{thisWeekSigned}} -->
-        <div class="finSignBtn"  @click="finSignBtn()">去打卡</div>
+        <div class="finSignBtn" @click="finSignBtn()">去打卡</div>
       </div>
     </div>
   </div>
@@ -146,7 +146,7 @@ import { Loadmore } from "mint-ui";
 import addComments from "../addComments/addComments";
 export default {
   name: "weeklyHouseWorkSign",
-  head() {
+  head () {
     return {
       title: "周作业打卡"
     };
@@ -155,11 +155,11 @@ export default {
     startLevel: startLevel,
     "mt-loadmore": Loadmore
   },
-  mounted() {
+  mounted () {
     this.submit();
     this.history();
   },
-  data() {
+  data () {
     return {
       homeworkId: "",
       videoUrl: "", //视频地址
@@ -184,7 +184,7 @@ export default {
     /**
      * 两个去打卡跳转按钮
      */
-    finSignBtn: function() {
+    finSignBtn: function () {
       window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`
       // this.$router.push({
       //   path: "/sign_in/upLoadVideo/upLoadVideo",
@@ -194,7 +194,7 @@ export default {
     /**
      * 点击历史打卡记录跳转到详情页面
      */
-    async signHistoryVideo(itemObj) {
+    async signHistoryVideo (itemObj) {
       const res = await axios.get(API.weekly_Work);
       const studentId = res.data.homework.id;
       // this.$router.push({
@@ -205,7 +205,14 @@ export default {
       window.location = `http://192.168.120.184:50261/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
     },
     // 下拉加载数据
-    onLoad() {
+    onLoad () {
+      if (this.hasNext) {
+        this.page++
+        this.history()
+      } else {
+        this.allLoaded = true;// 若数据已全部获取完毕
+        this.$refs.loadmore.onBottomLoaded();
+      }
       // if(this.hasNext) {
       //   this.pageIndex++
       //   this.getListData(this.landiLevelIndex)
@@ -215,7 +222,7 @@ export default {
       // }
       console.log(11111111);
     },
-    async submit() {
+    async submit () {
       const res = await axios.get(API.weekly_Work);
       console.log("我是res,", res);
       if (res.success) {
@@ -240,7 +247,7 @@ export default {
         console.log("errMsg", res.msg);
       }
     },
-    async history() {
+    async history () {
       try {
         const listResult = await axios.get(
           API.history_List + `?page=${this.page}&limit=${this.limit}`
@@ -250,8 +257,9 @@ export default {
           console.log(listResult.meg);
           return;
         }
+        this.hasNext = listResult.data.hasNext
         listResult.data.list.forEach(element => {
-          this.videoList.push(Object.assign(element, { moreFlag: false}))
+          this.videoList.push(Object.assign(element, { moreFlag: false }))
         })
       } catch (err) {
         console.log(err);
@@ -585,11 +593,11 @@ export default {
   }
 }
 .watchMore {
-  max-height:1000px; 
+  max-height: 1000px;
   overflow: hidden;
 }
 .watchSingle {
-  max-height:45px; 
+  max-height: 45px;
   overflow: hidden;
 }
 </style>
