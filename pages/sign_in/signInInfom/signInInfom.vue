@@ -39,18 +39,6 @@
         <div class="commentTitle">评论</div>
         <div @click="openMask" class="addComment">撰写评论</div>
         <img class="addPic" src="~/assets/punch_card/img/msg.png" alt />
-        <!-- <dialog-bar
-          v-model="sendVal"
-          type="danger"
-          title="请对作品进行评论"
-          v-on:cancel="clickCancel()"
-          @danger="clickDanger"
-          dangerText="发表"
-        ></dialog-bar>-->
-
-        <div class="input" v-if="sendVal">
-          <input @focus="autofocus" class="input" type="text" placeholder="评论" />
-        </div>
 
         <div class="commentContent">
           <!-- 等有接口了再掉用吧 -->
@@ -68,6 +56,10 @@
         <div></div>
       </div>
     </div>
+    <div class='comment-content' v-show="buttonShow">
+      <input class="content-input" placeholder="请输入内容" v-focus="focusState"/>
+      <div class="content-button" @click="submitContent"><div class="content-button-text">发布</div></div>
+    </div>
   </div>
 </template>
 <script>
@@ -76,9 +68,8 @@ import dialogBar from "../tankuang";
 import { videoPlayerEvent } from "~/utils/videoPlay";
 import axios from "~/utils/axios";
 import { API } from "../consts";
-
 export default {
-  head() {
+  head () {
     return {
       title: "打卡详情"
     };
@@ -87,18 +78,20 @@ export default {
     startLevel: startLevel,
     "dialog-bar": dialogBar
   },
-  data() {
+  data () {
     return {
       commentList: [],
       sendVal: false, //是否发表
       allowHalf: true, //五角星允许半分评
       getScore: true, //老师是否评分
       commentState: false, //点评
-      detailData: {} // 打卡详情
+      detailData: {}, // 打卡详情
+      buttonShow: false,
+      focusState: false
     };
   },
-  mounted() {
-    this.getComment();
+  mounted () {
+    this.getComment()
   },
   methods: {
     // 初始化页面
@@ -107,7 +100,7 @@ export default {
       try {
         const detailData = await axios.get(API.production_detail + "?id=" + id);
         if (!detailData.success) {
-          console.log(detailData.msg);
+          console.log(detailData.msg)
           return;
         }
         const result = detailData.data;
@@ -140,23 +133,24 @@ export default {
       this.commentList = getCommentList.data;
       console.log("拿到的数据", getCommentList);
     },
-    openMask(index) {
-      this.sendVal = true;
+    openMask (index) {
+      this.buttonShow = true
+      this.focusState = true
     },
-    autofocus() {
+    autofocus () {
       window.scrollTo(0, 0);
       console.log("1111111111111111111", window.scrollY);
     },
     /**
      * 添加评论的取消
      */
-    clickCancel() {
+    clickCancel () {
       console.log("我是点了取消的,或者没输入");
     },
     /**
      * 添加评论的确定
      */
-    clickDanger(textArea) {
+    clickDanger (textArea) {
       if (textArea) {
         console.log("我是输入并点了确定", textArea);
         this.commentList.push({
@@ -170,27 +164,39 @@ export default {
     /**
      * 视频播放
      */
-    playFn(name) {
-      event.stopPropagation();
-      let video1 = document.getElementById(name);
-      videoPlayerEvent(video1);
+    playFn (name) {
+      event.stopPropagation()
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
+    },
+    submitContent () {
+      this.buttonShow = false
+      this.focusState = false
+      window.scrollTo(0, 0);
     }
   },
-  async created() {
-    await this.initData();
+  async created () {
+    await this.initData()
+  },
+  directives: {
+    focus: {
+      //根据focusState的状态改变是否聚焦focus
+      update: function (el, value) {    //第二个参数传进来的是个json
+        if (value) {
+          el.focus()
+        }
+      }
+    }
   }
 };
 </script>
 <style  lang="scss" scoped>
 .signInInfom {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: #f9f9f9;
   min-height: 100vh;
   min-width: 100vw;
-
   .myVideo {
+    margin: 0 auto;
     background-color: white;
     margin-top: 20px;
     width: 660px;
@@ -202,7 +208,7 @@ export default {
       font-weight: 600;
       padding-bottom: 10px;
       .videoTitleTime {
-        //   display: inline-block;
+        margin-right: 20px;
         float: right;
         font-size: 24px;
         color: #999999;
@@ -251,7 +257,6 @@ export default {
   .videoComment {
     // background-color: orange;
     width: 600px;
-    height: 45vh;
     margin-left: 30px;
     .commentTitle {
       font-size: 28px;
@@ -280,7 +285,6 @@ export default {
     }
     .commentContent {
       width: 600px;
-      height: 25vh;
       position: relative;
       .commentList{
         font-size: 28px;
@@ -303,6 +307,34 @@ export default {
         margin-top: 13%;
         width: 383.64px;
         height: 334.89px;
+      }
+    }
+  }
+  .comment-content {
+    display: flex;
+    min-height: 100px;
+    width: 100%;
+    padding: 10px 0;
+    background:rgba(238,238,238,1);
+    position: fixed;
+    bottom: 193px;
+    .content-input {
+      width: 520px;
+      margin-left: 30px;
+    }
+    .content-button {
+      width: 150px;
+      height: 80px;
+      margin-left: 20px;
+      background:rgba(255,215,80,1);
+      border-radius:2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .content-button-text {
+        font-size:28px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
       }
     }
   }
