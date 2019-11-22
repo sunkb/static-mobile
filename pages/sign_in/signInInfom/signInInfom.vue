@@ -107,6 +107,9 @@ export default {
 
     };
   },
+  mounted(){
+    this.getComment()
+  },
   methods: {
     // 初始化页面
     async initData () {
@@ -128,6 +131,15 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    async getComment(){
+      const getId ={
+        homework_id:this.$route.query.homework_Id
+      };
+      // const getId=this.$route.query.id 
+      console.log('getId',this.$route.query.homework_Id)
+      const getCommentList =await axios.get(API.comment_List + `?homework_id=${this.$route.query.homework_Id}`)
+      console.log('拿到的数据',getCommentList)
     },
     openMask(index) {
       this.sendVal = true;

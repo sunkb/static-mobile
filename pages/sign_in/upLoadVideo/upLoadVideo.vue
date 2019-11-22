@@ -35,7 +35,9 @@ export default {
     toast: Toast
   },
   data() {
-    return {};
+    return {
+      homeworkId:this.$route.query.homeworkId || ''
+    };
   },
   methods: {
     async videoUpload() {
@@ -43,6 +45,7 @@ export default {
       const fileUploader = new FileUploader();
       await fileUploader.init();
       this.videoSrc = fileUploader.domain;
+      console.log(this.videoSrc,'222')
       const uploadReturn = fileUploader.upload(
         this.$refs["videoUploadInput"].files[0],
         FILE_TYPE.VIDEO,
@@ -55,7 +58,11 @@ export default {
         this.$refs["toast"].showToast(uploadReturn.error);
         return;
       }
-      this.videoStatus = VIDEO_STATUS_TYPE.UPLOADING;
+      // this.videoStatus = VIDEO_STATUS_TYPE.UPLOADING;
+      localStorage.setItem('videoUrl',this.videoSrc)
+      window.location = `http://192.168.29.119:3000/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
+      // this.$router.push({path:'/sign_in/addComments/addComments',query:{homeworkId:this.homeworkId}})
+      console.log('1111111111111111111',this.homeworkId)
     }
     // upLoad() {
     //   window.location = "http://192.168.29.119:3000/sign_in/addComments/addComments";

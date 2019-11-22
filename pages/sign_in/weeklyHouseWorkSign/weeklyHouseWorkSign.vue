@@ -63,7 +63,14 @@
           <span class="signHistoryMsg">历史打卡记录</span>
         </div>
 
-        <mt-loadmore :bottom-method="onLoad" ref="loadmore" :bottom-all-loaded="allLoaded" bottomPullText="" bottomDropText="" :auto-fill="false">
+        <mt-loadmore
+          :bottom-method="onLoad"
+          ref="loadmore"
+          :bottom-all-loaded="allLoaded"
+          bottomPullText
+          bottomDropText
+          :auto-fill="false"
+        >
           <div class="signHistory" v-for="item in videoList " :key="item.id">
             <div class="signHistoryVideo" v-if="historyShow==='A'">
               <div class="videodays">
@@ -72,7 +79,7 @@
               </div>
               <div class="upLoadTime">提交时间:{{item.submit_time}}</div>
 
-              <div class="video" @click="signHistoryVideo(item.id)">
+              <div class="video" @click="signHistoryVideo(item)">
                 <video
                   preload="auto"
                   class="videoWin"
@@ -90,7 +97,7 @@
               <span class="videoGetScore">得分:</span>
               <startLevel :value="item.score" :allowHalf="allowHalf" class="changeRate" showText />
               <div class="teacherComment">
-                {{'评论('+ item.comment.length +')'}}
+                <!-- {{'评论('+ item.comment.length +')'}} -->
                 <!-- <span v-if="getComment" id="getComment">{}</span> -->
                 <div class="commentMsg">{{teacherSays}}</div>
               </div>
@@ -121,27 +128,29 @@ import startLevel from "~/components/star_level";
 import { videoPlayerEvent } from "~/utils/videoPlay";
 import { API } from "../consts";
 import axios from "~/utils/axios";
-import { Loadmore } from 'mint-ui'
+import { Loadmore } from "mint-ui";
+import addComments from "../addComments/addComments";
 export default {
   name: "weeklyHouseWorkSign",
-  head () {
+  head() {
     return {
       title: "周作业打卡"
     };
   },
   components: {
     startLevel: startLevel,
-    'mt-loadmore': Loadmore
+    "mt-loadmore": Loadmore
   },
-  mounted () {
+  mounted() {
     this.submit();
     this.history();
   },
-  data () {
+  data() {
     return {
-      videoUrl: '',//视频地址
-      videodays: '',//历史记录中某天得作业
-      hasCompleted: '',//班级已提交人数
+      homeworkId: "",
+      videoUrl: "", //视频地址
+      videodays: "", //历史记录中某天得作业
+      hasCompleted: "", //班级已提交人数
       scoreNumTime: "", //打卡次数
       scoreNum: "", //平均得分
       upLoadHw: "", //上传该次作业
@@ -164,16 +173,25 @@ export default {
     /**
      * 两个去打卡跳转按钮
      */
-    finSignBtn: function () {
-      window.location =
-        "http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo";
-      // this.$router.replace('/sign_in/upLoadVideo/upLoadVideo')
+    finSignBtn: function() {
+      window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`
+      // this.$router.push({
+      //   path: "/sign_in/upLoadVideo/upLoadVideo",
+      //   query: { homeworkId: this.homeworkId }
+      // });
     },
     /**
      * 点击历史打卡记录跳转到详情页面
      */
-    async signHistoryVideo (id) {
-      window.location = `http://192.168.120.184:62070/sign_in/signInInfom/signInInfom?id=${id}`    // 此路由需要设置
+    async signHistoryVideo(itemObj) {
+      const res = await axios.get(API.weekly_Work);
+      const studentId = res.data.homework.id;
+      // this.$router.push({
+      //   path: "/sign_in/signInInfom/signInInfom",
+      //   query: { id: studentId ,homework_Id: itemObj.id }
+      // });
+
+      window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
     },
     // playFn (name) {
     //   event.stopPropagation();
@@ -182,7 +200,7 @@ export default {
     //   videoPlayerEvent(video1);
     // },
     // 下拉加载数据
-    onLoad () {
+    onLoad() {
       // if(this.hasNext) {
       //   this.pageIndex++
       //   this.getListData(this.landiLevelIndex)
@@ -190,42 +208,46 @@ export default {
       //   this.allLoaded = true;// 若数据已全部获取完毕
       //   this.$refs.loadmore.onBottomLoaded();
       // }
-      console.log(11111111)
+      console.log(11111111);
     },
-    async submit () {
+    async submit() {
       const res = await axios.get(API.weekly_Work);
       console.log("我是res,", res);
       if (res.success) {
         this.scoreNumTime = res.data.achievement.synced;
         this.scoreNum = res.data.achievement.avg_score;
         //判断是否有打卡任务或者是否完成
-        if (res.data.homework == null) {
-          this.hasSigned = "A"; //无任务
+        if (!res.data.homework.is_submit) {
+          this.hasSigned = "C"; //无任务
         } else {
-          if (res.data.homework.is_submit) {
-            if (res.data.homework.is_submit === 1) {
-              this.hasSigned = "B";//已提交
-            } else {
-              this.hasSigned = "A";//未提交
-              this.upLoadHw = '请上传' + res.data.homework + '作业';
-              this.hasCompleted = res.data.submit_total
-            }
+          // if (res.data.homework.is_submit) {
+          if (res.data.homework.is_submit == 1) {
+            this.hasSigned = "B"; //已提交
+          } else {
+            this.hasSigned = "A"; //未提交
+            this.upLoadHw = "请上传" + res.data.homework.end_work_time + "作业";
+            this.homeworkId = res.data.homework.id;
+            this.hasCompleted = res.data.submit_total;
           }
+          // }
         }
       } else {
-        console.log('errMsg', res.msg);
+        console.log("errMsg", res.msg);
       }
     },
-    async history () {
+    async history() {
       try {
-        const listResult = await axios.get(API.history_List + `?page=${this.page}&limit=${this.limit}`)
+        const listResult = await axios.get(
+          API.history_List + `?page=${this.page}&limit=${this.limit}`
+        );
+        console.log("我是详情的listResult", listResult);
         if (!listResult.success) {
-          console.log(listResult.meg)
+          console.log(listResult.meg);
           return;
         }
-        this.videoList.push(...listResult.data.list)
+        this.videoList.push(...listResult.data.list);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     }
   }
@@ -483,7 +505,7 @@ export default {
             height: 355px;
             .videoWin {
               padding-right: 30px;
-              width: 630px;
+              width: 600px;
               height: 355px;
             }
           }

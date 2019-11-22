@@ -4,13 +4,25 @@
       <textarea class="comMsg" type="text" v-model="comMsg" placeholder="有什么想对班主任说的吗?"></textarea>
       <div class="comMsgLength">{{comMsg.length}}/400字符</div>
     </div>
-    <img
-      class="isShow"
-      v-show="isShow"
-      src="~/assets/punch_card/img/upload.png"
-      alt
-      @click="hasBeenVideo"
+    <input
+      id="video-upload-input"
+      class="video-upload-input"
+      type="file"
+      accept="video/*"
+      ref="videoUploadInput"
+      @change="videoUpload"
+      style="display:none"
     />
+    <label for="video-upload-input">
+      <img
+        class="isShow"
+        v-show="isShow"
+        src="~/assets/punch_card/img/upload.png"
+        alt
+        @click="hasBeenVideo"
+      />
+    </label>
+
     <div @click="btn" v-if="!isShow">
       <img class="del" src="~/assets/punch_card/img/del.png" alt />
     </div>
@@ -44,6 +56,7 @@ import dialogBar from "../tishi";
 import { videoPlayerEvent } from "~/utils/videoPlay";
 import { API } from "../consts";
 import axios from "~/utils/axios";
+import FileUploader, { FILE_TYPE } from "~/utils/upload.js";
 
 export default {
   // name:'addComments',
@@ -65,22 +78,27 @@ export default {
       comMsg: "",
       hasBeenVideos: "",
       videoUrl: "", //上传的视频地址,
-      homeworkId: "132"
+      homeworkId:this.$route.query.homeworkId || ""
     };
   },
   mounted() {
+    this.videoUrl = window.localStorage.getItem("videoUrl");
     //监测回退
     history.pushState(null, null, document.URL);
     console.log("我是history", history);
+    let get = localStorage.getItem("videoUrl");
+    console.log(get, "localStorage.getItem");
     window.addEventListener("popstate", this.forbidback);
-    if (this.hasBeenVideos == "") {
-      document.getElementById("release").style.backgroundColor = "#EEEEEE";
-      this.btnDisabled = true;
-      this.isShow = true;
-    } else {
+    if (this.videoUrl) {
+      console.log("this.hasBeenVideos2", this.hasBeenVideos);
       this.isShow = false;
       this.btnDisabled = false;
       document.getElementById("release").style.backgroundColor = "#FFD750";
+    } else {
+      console.log("this.hasBeenVideos1", this.hasBeenVideos);
+      document.getElementById("release").style.backgroundColor = "#EEEEEE";
+      this.btnDisabled = true;
+      this.isShow = true;
     }
   },
   // beforeDestroy(){
@@ -90,7 +108,7 @@ export default {
   methods: {
     forbidback(index) {
       console.log("1", this.hasBeenVideos);
-      if (this.hasBeenVideos !== "") {
+      if (!this.hasBeenVideos) {
         this.sendVal = true;
         this.isShow = true;
       } else {
@@ -106,34 +124,34 @@ export default {
     clickDanger(textArea) {
       window.location =
         "http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign";
-      // this.$router.replace('/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign')
       console.log("我是点了确定的");
     },
     hasBeenVideo() {
-      console.log("this.hasBeenVideos0", this.hasBeenVideos);
-      // if (this.hasBeenVideos == "") {
-      //   console.log("this.hasBeenVideos1", this.hasBeenVideos);
-      //   this.btnDisabled = false;
-      //   this.hasBeenVideos = "+";
-      //   this.isShow = false;
-      //   document.getElementById("release").style.backgroundColor = "#FFD750";
-      //   if (this.hasBeenVideos !== "") {
-      //     this.$refs["toast"].showToast("上传成功");
-      //   }
-
-      // } else {
-      //   console.log("this.hasBeenVideos2", this.hasBeenVideos);
-      //   this.isShow = false;
-      //   this.btnDisabled = false;
-      //   document.getElementById("release").style.backgroundColor = "#FFD750";
-      //   this.hasBeenVideos ='+';
-      //   if (this.hasBeenVideos !== "") {
-      //     this.$refs["toast"].showToast("上传成功");
-      //   }
-      // }
       console.log("this.hasBeenVideos1", this.hasBeenVideos);
       this.btnDisabled = false;
       this.hasBeenVideos = "+";
+      this.videoUpload();
+    },
+    async videoUpload() {
+      this.$refs["toast"].showLoadingToast();
+      const fileUploader = new FileUploader();
+      await fileUploader.init();
+      this.videoSrc = fileUploader.domain;
+      console.log(this.videoSrc, "222");
+      const uploadReturn = fileUploader.upload(
+        this.$refs["videoUploadInput"].files[0],
+        FILE_TYPE.VIDEO,
+        this.fileUploadNext,
+        this.fileUploadError,
+        this.fileUploadComplete
+      );
+      this.$refs["toast"].hideLoadingToast();
+      if (uploadReturn.error) {
+        this.$refs["toast"].showToast(uploadReturn.error);
+        return;
+      }
+      localStorage.setItem("videoUrl", this.videoUrl);
+      console.log("1111111111111111111", this.homeworkId);
       this.isShow = false;
       document.getElementById("release").style.backgroundColor = "#FFD750";
       if (this.hasBeenVideos !== "") {
@@ -158,7 +176,6 @@ export default {
     },
     playFn(name) {
       event.stopPropagation();
-
       let video1 = document.getElementById(name);
       videoPlayerEvent(video1);
     },
@@ -169,19 +186,21 @@ export default {
       };
 
       const addSuccess = await axios.post(API.add_Comment, data);
+      console.log("我是data", data);
       console.log("addSuccess.success", addSuccess.success);
       if (addSuccess.success) {
         const videoData = {
           video_url: this.videoUrl,
           id: this.homeworkId
-        };
+        }; 
         const addSuccess = await axios.post(API.submit_Work, videoData);
+        console.log("我是videoData", videoData);
 
-        // setTimeout(() => {
-        //   window.location =
-        //     "http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign";
-        //   // this.$router.replace('/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign')
-        // }, 1000);
+        setTimeout(() => {
+          window.location =
+            "http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign";
+          // this.$router.replace('/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign')
+        }, 1000);
       } else {
         console.log("errMsg", addSuccess.msg);
       }
