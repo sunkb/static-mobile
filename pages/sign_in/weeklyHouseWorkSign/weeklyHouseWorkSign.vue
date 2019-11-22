@@ -202,7 +202,7 @@ export default {
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
 
-      window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
+      window.location = `http://192.168.120.184:50261/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
     },
     // 下拉加载数据
     onLoad() {
