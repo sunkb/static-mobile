@@ -280,7 +280,7 @@ export default {
     }
     .commentContent {
       width: 600px;
-      height: 25vh;
+      // height: 25vh;
       position: relative;
       .commentList{
         font-size: 28px;

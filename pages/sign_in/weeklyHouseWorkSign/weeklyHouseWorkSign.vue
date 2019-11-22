@@ -128,10 +128,10 @@
           </div>
         </div>
       </div>
-      <div class="finSign" v-if="historyShow==='A'">
+      <div class="finSign" v-if="this.hasSigned==='A'" >
         <div class="finSignMsg">本周作业已有X个同学提交哦</div>
         <!-- 到时候加到已有后面{{thisWeekSigned}} -->
-        <div class="finSignBtn" @click="finSignBtn()">去打卡</div>
+        <div class="finSignBtn"  @click="finSignBtn()">去打卡</div>
       </div>
     </div>
   </div>
