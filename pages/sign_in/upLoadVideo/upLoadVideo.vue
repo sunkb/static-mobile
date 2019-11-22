@@ -24,6 +24,7 @@
 <script>
 import Toast from "~/components/Toast";
 import FileUploader, { FILE_TYPE } from "~/utils/upload.js";
+import { VIDEO_STATUS_TYPE } from '~/pages/presentation/consts'
 export default {
   // name:'upLoadVideo',
   head() {
@@ -36,7 +37,8 @@ export default {
   },
   data() {
     return {
-      homeworkId:this.$route.query.homeworkId || ''
+      homeworkId:this.$route.query.homeworkId || '',
+      videoSrc: ''
     };
   },
   methods: {
@@ -51,22 +53,39 @@ export default {
         FILE_TYPE.VIDEO,
         this.fileUploadNext,
         this.fileUploadError,
-        this.fileUploadComplete
+        this.fileUploadComplete,
       );
       this.$refs["toast"].hideLoadingToast();
       if (uploadReturn.error) {
         this.$refs["toast"].showToast(uploadReturn.error);
         return;
       }
-      // this.videoStatus = VIDEO_STATUS_TYPE.UPLOADING;
+      this.videoStatus = VIDEO_STATUS_TYPE.UPLOADING;
+
+
+    },
+    fileUploadNext(res) {
+      console.log(this.videoStatus,'this.video')
+      this.videoStatus.progress = Math.round(res.total.percent * 100) / 100
+      this.$refs['toast'].showToast( '上传进度'+this.videoStatus.progress+'%')
+    },
+    fileUploadError(res) {
+      console.log(res)
+      this.videoStatus = VIDEO_STATUS_TYPE.ERROR
+      this.$refs['toast'].showToast(res.message)
+    },
+    fileUploadComplete(res) {
+      this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
+      this.videoSrc = `${this.videoSrc}${res.key}`
+      console.log(this.videoSrc)
       localStorage.setItem('videoUrl',this.videoSrc)
-      window.location = `http://192.168.29.119:3000/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
-      // this.$router.push({path:'/sign_in/addComments/addComments',query:{homeworkId:this.homeworkId}})
-      console.log('1111111111111111111',this.homeworkId)
-    }
-    // upLoad() {
-    //   window.location = "http://192.168.29.119:3000/sign_in/addComments/addComments";
-    // }
+      this.$refs['toast'].showToast('上传成功')
+      setTimeout(() => {
+       window.location = `http://192.168.29.119:3000/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
+
+        }, 6000);
+    },
+    
   }
 };
 </script>

@@ -57,6 +57,7 @@ import { videoPlayerEvent } from "~/utils/videoPlay";
 import { API } from "../consts";
 import axios from "~/utils/axios";
 import FileUploader, { FILE_TYPE } from "~/utils/upload.js";
+import { VIDEO_STATUS_TYPE } from '~/pages/presentation/consts'
 
 export default {
   // name:'addComments',
@@ -72,6 +73,7 @@ export default {
   },
   data() {
     return {
+      videoSrc: '',
       sendVal: false,
       isShow: false,
       btnDisabled: false,
@@ -150,13 +152,35 @@ export default {
         this.$refs["toast"].showToast(uploadReturn.error);
         return;
       }
+      this.videoStatus = VIDEO_STATUS_TYPE.UPLOADING;
       localStorage.setItem("videoUrl", this.videoUrl);
-      console.log("1111111111111111111", this.homeworkId);
-      this.isShow = false;
-      document.getElementById("release").style.backgroundColor = "#FFD750";
-      if (this.hasBeenVideos !== "") {
-        this.$refs["toast"].showToast("上传成功");
-      }
+      // console.log("1111111111111111111", this.homeworkId);
+      // this.isShow = false;
+      // document.getElementById("release").style.backgroundColor = "#FFD750";
+      // if (this.hasBeenVideos !== "") {
+      //   this.$refs["toast"].showToast("上传成功");
+      // }
+    },
+        fileUploadNext(res) {
+      console.log(this.videoStatus,'this.video')
+      this.videoStatus.progress = Math.round(res.total.percent * 100) / 100
+      this.$refs['toast'].showToast( '上传进度'+this.videoStatus.progress+'%')
+    },
+    fileUploadError(res) {
+      console.log(res)
+      this.videoStatus = VIDEO_STATUS_TYPE.ERROR
+      this.$refs['toast'].showToast(res.message)
+    },
+    fileUploadComplete(res) {
+      this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
+      this.videoSrc = `${this.videoSrc}${res.key}`
+      console.log(this.videoSrc)
+      localStorage.setItem('videoUrl',this.videoSrc)
+      this.$refs['toast'].showToast('上传成功')
+      setTimeout(() => {
+       window.location = `http://192.168.29.119:3000/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
+
+        }, 6000);
     },
     btn() {
       this.hasBeenVideos = "+";
@@ -195,7 +219,6 @@ export default {
         }; 
         const addSuccess = await axios.post(API.submit_Work, videoData);
         console.log("我是videoData", videoData);
-
         setTimeout(() => {
           window.location =
             "http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign";
