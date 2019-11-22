@@ -1,6 +1,5 @@
 <template>
   <div class="signInInfom">
-    <!-- <div class="left"></div> -->
     <div class="myVideo">
       <div class="videoTitle">
         {{detailData.work_time}}作业
@@ -18,10 +17,7 @@
         />
         <div class="appearance-video-item" @click="playFn('appearance1')">
           <div class="content-video-item-video-play"></div>
-          <img
-            class="videoWin"
-            :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'"
-          />
+          <img class="videoWin" :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'" />
           <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
         </div>
       </div>
@@ -52,26 +48,26 @@
           dangerText="发表"
         ></dialog-bar>-->
 
-        <div  class="input"  v-if="sendVal">
-          <input @focus="autofocus" class="input" type="text"  placeholder="评论">
+        <div class="input" v-if="sendVal">
+          <input @focus="autofocus" class="input" type="text" placeholder="评论" />
         </div>
 
         <div class="commentContent">
-          <!-- 等有接口了再掉用吧-->
+          <!-- 等有接口了再掉用吧 -->
           <div v-if="commentList.length>0">
-            <p v-for="(item) in commentList " :key="item.id">{{item.Lisa}}</p>
+            <div class="commentList" v-for="item in commentList" :key="item.id">
+              <p>{{item.name + ': ' + item.content}}</p>
+              <p class="commentListTime">{{item.create_time}}</p>
+            </div>
           </div>
           <div v-if="commentList.length<=0">
             <div class="commentMsg">有话想对老师说?点击评论按钮留言哦</div>
             <img class="commentPic" src="~/assets/punch_card/img/comment.png" alt />
           </div>
         </div>
-        <div>
-          
-        </div>
+        <div></div>
       </div>
     </div>
-    <!-- <div class="right"></div> -->
   </div>
 </template>
 <script>
@@ -93,60 +89,63 @@ export default {
   },
   data() {
     return {
-      commentList: [
-        // {
-        //   Lisa: "第一次发言" //模拟老师
-        //   //这里应该还有一个用户
-        // }
-      ],
+      commentList: [],
       sendVal: false, //是否发表
       allowHalf: true, //五角星允许半分评
       getScore: true, //老师是否评分
       commentState: false, //点评
       detailData: {} // 打卡详情
-
     };
   },
-  mounted(){
-    this.getComment()
+  mounted() {
+    this.getComment();
   },
   methods: {
     // 初始化页面
-    async initData () {
-      const id = this.$route.query.id || ''
+    async initData() {
+      const id = this.$route.query.id || "";
       try {
-        const detailData = await axios.get(API.production_detail + '?id=' + id);
+        const detailData = await axios.get(API.production_detail + "?id=" + id);
         if (!detailData.success) {
-          console.log(detailData.msg)
-          return ;
+          console.log(detailData.msg);
+          return;
         }
-        const result = detailData.data
+        const result = detailData.data;
         this.detailData = {
-          work_time: result.work_time || '',
+          work_time: result.work_time || "",
           rank: result.rank || 0,
-          submit_time: result.submit_time || '',
-          startLevelData: result.score || '4.0',
-          video_url: 'https://qn-static.landi.com/uploadtool697ac79509454573ca2a71a610def2fa.mp4' || result.video_url
-        }
+          submit_time: result.submit_time || "",
+          startLevelData: result.score || "4.0",
+          video_url:
+            "https://qn-static.landi.com/uploadtool697ac79509454573ca2a71a610def2fa.mp4" ||
+            result.video_url
+        };
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
-    async getComment(){
-      const getId ={
-        homework_id:this.$route.query.homework_Id
+    async getComment() {
+      const getId = {
+        homework_id: this.$route.query.homework_Id
       };
-      // const getId=this.$route.query.id 
-      console.log('getId',this.$route.query.homework_Id)
-      const getCommentList =await axios.get(API.comment_List + `?homework_id=${this.$route.query.homework_Id}`)
-      console.log('拿到的数据',getCommentList)
+      // const getId=this.$route.query.id
+      console.log("getId", this.$route.query.homework_Id);
+      const getCommentList = await axios.get(
+        API.comment_List + `?homework_id=${this.$route.query.homework_Id}`
+      );
+      if (!getCommentList.success) {
+        console.log(getCommentList.msg);
+        return;
+      }
+      this.commentList = getCommentList.data;
+      console.log("拿到的数据", getCommentList);
     },
     openMask(index) {
       this.sendVal = true;
     },
     autofocus() {
       window.scrollTo(0, 0);
-      console.log("1111111111111111111", window.scrollY)
+      console.log("1111111111111111111", window.scrollY);
     },
     /**
      * 添加评论的取消
@@ -159,7 +158,7 @@ export default {
      */
     clickDanger(textArea) {
       if (textArea) {
-        console.log("我是输入并点了确定", textArea)
+        console.log("我是输入并点了确定", textArea);
         this.commentList.push({
           Lisa: textArea
           //根据不同登陆者的身份,在判断好的else里去改发起评论人的身份
@@ -172,13 +171,13 @@ export default {
      * 视频播放
      */
     playFn(name) {
-      event.stopPropagation()
-      let video1 = document.getElementById(name)
-      videoPlayerEvent(video1)
+      event.stopPropagation();
+      let video1 = document.getElementById(name);
+      videoPlayerEvent(video1);
     }
   },
   async created() {
-    await this.initData()
+    await this.initData();
   }
 };
 </script>
@@ -283,6 +282,16 @@ export default {
       width: 600px;
       height: 25vh;
       position: relative;
+      .commentList{
+        font-size: 28px;
+        color: #333333;
+        padding-bottom: 73px;
+        .commentListTime{
+          float: right;
+          font-size: 24px;
+          color: #999999;
+        }
+      }
       .commentMsg {
         float: left;
         font-size: 28px;
