@@ -91,7 +91,6 @@
                 <div class="appearance-video-item">
                   <div class="content-video-item-video-play"></div>
                   <img class="videoWin" :src="item.video_url + '?vframe/jpg/offset/2/h/960/'" />
-                  <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
                 </div>
               </div>
               <span class="videoGetScore">得分:</span>
@@ -99,7 +98,22 @@
               <div class="teacherComment">
                 <!-- {{'评论('+ item.comment.length +')'}} -->
                 <!-- <span v-if="getComment" id="getComment">{}</span> -->
-                <div class="commentMsg">{{teacherSays}}</div>
+                <div class="" :class="item.moreFlag ? 'watchMore': 'watchSingle' ">
+                  <div
+                    class="commentMsg"
+                    v-for="(commentItem, index) in item.comment"
+                    :key="commentItem.id"
+                  >
+                    <div class="singleComment">
+                      <p>{{commentItem.name+'：' + commentItem.content}}</p>
+                      <div
+                        @click="watchMore(item)"
+                        style="position:absolute;right:24px;font-size:12px;color:rgba(153,153,153,1);"
+                        v-if="index === 0"
+                      >{{item.moreFlag ? '收起隐藏' : '显示更多'}}</div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="dividingLine"></div>
             </div>
@@ -156,11 +170,8 @@ export default {
       upLoadHw: "", //上传该次作业
       historyShow: "A", //没有后端前,A为有打卡记录,B为无打卡记录
       hasSigned: "", //没有后端前,A为尚未打卡,B为完成打卡,C为无打卡任务
-      //发表的评论
-      teacherSays: "Ann:说得好",
-      //提交时间
-      upLoadTime: "",
-      //视频总体列表
+      teacherSays: "Ann:说得好", //发表的评论
+      upLoadTime: "", //提交时间
       videoList: [], // 历史打卡记录数据集
       allowHalf: true,
       page: 1,
@@ -193,12 +204,6 @@ export default {
 
       window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
     },
-    // playFn (name) {
-    //   event.stopPropagation();
-    //   window._hmt && window._hmt.push([]); // 百度统计
-    //   let video1 = document.getElementById(name);
-    //   videoPlayerEvent(video1);
-    // },
     // 下拉加载数据
     onLoad() {
       // if(this.hasNext) {
@@ -245,10 +250,16 @@ export default {
           console.log(listResult.meg);
           return;
         }
-        this.videoList.push(...listResult.data.list);
+        listResult.data.list.forEach(element => {
+          this.videoList.push(Object.assign(element, { moreFlag: false}))
+        })
       } catch (err) {
         console.log(err);
       }
+    },
+    //查看和隐藏更多评论
+    watchMore (itemObj) {
+      itemObj.moreFlag = !itemObj.moreFlag;
     }
   }
 };
@@ -262,7 +273,7 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: #f9f9f9;
-
+  padding-top: 20px;
   .signContent {
     .scoreStatistics {
       display: flex;
@@ -528,6 +539,10 @@ export default {
             .commentMsg {
               padding-top: 10px;
               color: #666666;
+              .singleComment {
+                display: flex;
+                position: relative;
+              }
             }
           }
           .dividingLine {
@@ -568,5 +583,13 @@ export default {
       }
     }
   }
+}
+.watchMore {
+  max-height:1000px; 
+  overflow: hidden;
+}
+.watchSingle {
+  max-height:45px; 
+  overflow: hidden;
 }
 </style>
