@@ -16,7 +16,7 @@
           :src="detailData.video_url"
         />
         <div class="appearance-video-item" @click="playFn('appearance1')">
-          <div class="content-video-item-video-play"></div>
+          <div class="videoPlay"></div>
           <img class="videoWin" :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'" />
           <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
         </div>
@@ -226,6 +226,16 @@ export default {
       height: 355px;
       margin-left: 30px;
       margin-bottom: 30px;
+      position: relative;
+      .videoPlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 76px;
+        height: 76px;
+        background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+      }
       .videoWin {
         padding-right: 30px;
         width: 630px;

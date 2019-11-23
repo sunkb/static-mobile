@@ -89,7 +89,7 @@
                   :src="item.video_url"
                 />
                 <div class="appearance-video-item">
-                  <div class="content-video-item-video-play"></div>
+                  <div class="videoPlay"></div>
                   <img class="videoWin" :src="item.video_url + '?vframe/jpg/offset/2/h/960/'" />
                 </div>
               </div>
@@ -202,7 +202,7 @@ export default {
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
 
-      window.location = `http://192.168.120.184:50261/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
+      window.location = `http://192.168.120.184:64492/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
     },
     // 下拉加载数据
     onLoad () {
@@ -213,14 +213,6 @@ export default {
         this.allLoaded = true;// 若数据已全部获取完毕
         this.$refs.loadmore.onBottomLoaded();
       }
-      // if(this.hasNext) {
-      //   this.pageIndex++
-      //   this.getListData(this.landiLevelIndex)
-      // } else {
-      //   this.allLoaded = true;// 若数据已全部获取完毕
-      //   this.$refs.loadmore.onBottomLoaded();
-      // }
-      console.log(11111111);
     },
     async submit () {
       const res = await axios.get(API.weekly_Work);
@@ -522,6 +514,16 @@ export default {
             margin-bottom: 30px;
             width: 600px;
             height: 355px;
+            position: relative;
+            .videoPlay {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 76px;
+              height: 76px;
+              background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+            }
             .videoWin {
               padding-right: 30px;
               width: 600px;
