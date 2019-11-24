@@ -297,6 +297,7 @@ export default {
           return
         }
         this.$refs['toast'].showToast('成功删除当前评论!')
+        window.location.reload()
       } catch (err) {
         console.log(err)
         this.$refs['toast'].showToast('无法删除当前评论!')
