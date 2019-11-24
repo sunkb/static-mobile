@@ -81,7 +81,7 @@ export default {
       localStorage.setItem('videoUrl',this.videoSrc)
       this.$refs['toast'].showToast('上传成功')
       setTimeout(() => {
-       window.location = `http://192.168.29.119:3000/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
+       window.location = `${process.env.BASE_URL}/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
 
         }, 6000);
     },

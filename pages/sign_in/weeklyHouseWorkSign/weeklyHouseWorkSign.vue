@@ -104,7 +104,11 @@
                     v-for="(commentItem, index) in item.comment"
                     :key="commentItem.id"
                   >
-                    <div class="singleComment">
+                    <div
+                      class="singleComment"
+                      @touchstart="gtouchstart(commentItem)"
+                      @touchend="gtouchend()"
+                    >
                       <p>{{commentItem.name+'：' + commentItem.content}}</p>
                       <div
                         @click="watchMore(item)"
@@ -134,6 +138,15 @@
         <div class="finSignBtn" @click="finSignBtn()">去打卡</div>
       </div>
     </div>
+    <van-dialog
+      v-model="dialogShow"
+      title="删除评论"
+      message="是否要删除该条评论？"
+      show-cancel-button
+      @confirm="confirmOption"
+      @cancel="cancelOption"
+    ></van-dialog>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
@@ -144,6 +157,9 @@ import { API } from "../consts";
 import axios from "~/utils/axios";
 import { Loadmore } from "mint-ui";
 import addComments from "../addComments/addComments";
+import { Dialog } from 'vant';
+import Toast from '~/components/Toast';
+import 'vant/lib/index.css';
 export default {
   name: "weeklyHouseWorkSign",
   head () {
@@ -154,6 +170,8 @@ export default {
   components: {
     startLevel: startLevel,
     "mt-loadmore": Loadmore,
+    [Dialog.Component.name]: Dialog.Component,
+    'toast': Toast,
   },
   mounted () {
     this.submit();
@@ -177,7 +195,10 @@ export default {
       page: 1,
       limit: 4,
       hasNext: false, // 是否还有下一页
-      allLoaded: false
+      allLoaded: false,
+      timeOutEvent: null,
+      dialogShow: false,
+      curCommentId: '' // 当前的评论id
     };
   },
   methods: {
@@ -193,8 +214,8 @@ export default {
     async signHistoryVideo (itemObj) {
       const res = await axios.get(API.weekly_Work);
       const studentId = res.data.homework.id;
-      // window.location = `${process.env.BASE_URL}/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
-      window.location = `http://192.168.120.184:63821/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
+      window.location = `${process.env.BASE_URL}/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
+      // window.location = `http://192.168.120.184:63821/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
     },
     // 下拉加载数据
     onLoad () {
@@ -250,6 +271,39 @@ export default {
     //查看和隐藏更多评论
     watchMore (itemObj) {
       itemObj.moreFlag = !itemObj.moreFlag;
+    },
+    gtouchstart (commentItem) {
+      this.curCommentId = commentItem.id || ''
+      const that = this
+      this.timeOutEvent = setTimeout(function () {
+        that.dialogShow = true
+      }, 500);//这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
+      return false;
+    },
+    //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
+    gtouchend () {
+      clearTimeout(this.timeOutEvent);//清除定时器
+      if (this.timeOutEvent != 0) {
+        //这里写要执行的内容（尤如onclick事件）
+      }
+      return false;
+    },
+    async confirmOption () {
+      try {
+        const deleteResult = await axios.post(API.delete_comment, { id: this.curCommentId })
+        if (!deleteResult.success) {
+          console.log(this.msg)
+          this.$refs['toast'].showToast('无法删除当前评论!')
+          return
+        }
+        this.$refs['toast'].showToast('成功删除当前评论!')
+      } catch (err) {
+        console.log(err)
+        this.$refs['toast'].showToast('无法删除当前评论!')
+      }
+    },
+    cancelOption () {
+      this.dialogShow = false
     }
   }
 };

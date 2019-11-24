@@ -4,7 +4,8 @@ const API= {
     add_Comment:'/mobile/StudentWeekHomework/addComment',//添加评论
     submit_Work:'/mobile/StudentWeekHomework/submitWork',//提交作业
     production_detail: '/mobile/StudentWeekHomework/detail', //作品详情
-    comment_List:'/mobile/StudentWeekHomework/commentList' //作品评论
+    comment_List:'/mobile/StudentWeekHomework/commentList', //作品评论
+    delete_comment: '/mobile/StudentWeekHomework/delComment' //删除评论
 }
 export {
     API,
