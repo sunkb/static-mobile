@@ -153,7 +153,7 @@ export default {
   },
   components: {
     startLevel: startLevel,
-    "mt-loadmore": Loadmore
+    "mt-loadmore": Loadmore,
   },
   mounted () {
     this.submit();
@@ -185,11 +185,7 @@ export default {
      * 两个去打卡跳转按钮
      */
     finSignBtn: function () {
-      window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`
-      // this.$router.push({
-      //   path: "/sign_in/upLoadVideo/upLoadVideo",
-      //   query: { homeworkId: this.homeworkId }
-      // });
+      window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`
     },
     /**
      * 点击历史打卡记录跳转到详情页面
@@ -197,12 +193,8 @@ export default {
     async signHistoryVideo (itemObj) {
       const res = await axios.get(API.weekly_Work);
       const studentId = res.data.homework.id;
-      // this.$router.push({
-      //   path: "/sign_in/signInInfom/signInInfom",
-      //   query: { id: studentId ,homework_Id: itemObj.id }
-      // });
-
-      window.location = `http://192.168.120.184:64492/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
+      // window.location = `${process.env.BASE_URL}/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
+      window.location = `http://192.168.120.184:63821/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
     },
     // 下拉加载数据
     onLoad () {
@@ -216,7 +208,6 @@ export default {
     },
     async submit () {
       const res = await axios.get(API.weekly_Work);
-      console.log("我是res,", res);
       if (res.success) {
         this.scoreNumTime = res.data.achievement.synced;
         this.scoreNum = res.data.achievement.avg_score;
@@ -244,7 +235,6 @@ export default {
         const listResult = await axios.get(
           API.history_List + `?page=${this.page}&limit=${this.limit}`
         );
-        console.log("我是详情的listResult", listResult);
         if (!listResult.success) {
           console.log(listResult.meg);
           return;
@@ -522,7 +512,8 @@ export default {
               transform: translate(-50%, -50%);
               width: 76px;
               height: 76px;
-              background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+              background: url("~assets/presentation/img/playbtn.png") 50% 50% /
+                contain no-repeat;
             }
             .videoWin {
               padding-right: 30px;

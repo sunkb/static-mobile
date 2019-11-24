@@ -56,10 +56,18 @@
         <div></div>
       </div>
     </div>
-    <div class='comment-content' v-show="buttonShow">
-      <input class="content-input" placeholder="请输入内容" v-focus="focusState"/>
-      <div class="content-button" @click="submitContent"><div class="content-button-text">发布</div></div>
+    <div class="comment-content" v-show="buttonShow">
+      <textarea
+        class="content-input"
+        placeholder="请输入内容"
+        v-focus="focusState"
+        v-model="commentData"
+      />
+      <div class="content-button" @click="submitContent">
+        <div class="content-button-text">发布</div>
+      </div>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 <script>
@@ -68,6 +76,7 @@ import dialogBar from "../tankuang";
 import { videoPlayerEvent } from "~/utils/videoPlay";
 import axios from "~/utils/axios";
 import { API } from "../consts";
+import Toast from '~/components/Toast'
 export default {
   head () {
     return {
@@ -76,7 +85,8 @@ export default {
   },
   components: {
     startLevel: startLevel,
-    "dialog-bar": dialogBar
+    "dialog-bar": dialogBar,
+    'toast': Toast,
   },
   data () {
     return {
@@ -87,7 +97,8 @@ export default {
       commentState: false, //点评
       detailData: {}, // 打卡详情
       buttonShow: false,
-      focusState: false
+      focusState: false,
+      commentData: '' // 提交的评论内容
     };
   },
   mounted () {
@@ -95,7 +106,7 @@ export default {
   },
   methods: {
     // 初始化页面
-    async initData() {
+    async initData () {
       const id = this.$route.query.id || "";
       try {
         const detailData = await axios.get(API.production_detail + "?id=" + id);
@@ -109,15 +120,13 @@ export default {
           rank: result.rank || 0,
           submit_time: result.submit_time || "",
           startLevelData: result.score || "4.0",
-          video_url:
-            "https://qn-static.landi.com/uploadtool697ac79509454573ca2a71a610def2fa.mp4" ||
-            result.video_url
+          video_url: result.video_url || ''
         };
       } catch (err) {
         console.log(err);
       }
     },
-    async getComment() {
+    async getComment () {
       const getId = {
         homework_id: this.$route.query.homework_Id
       };
@@ -133,13 +142,12 @@ export default {
       this.commentList = getCommentList.data;
       console.log("拿到的数据", getCommentList);
     },
-    openMask (index) {
+    openMask () {
       this.buttonShow = true
       this.focusState = true
     },
     autofocus () {
       window.scrollTo(0, 0);
-      console.log("1111111111111111111", window.scrollY);
     },
     /**
      * 添加评论的取消
@@ -169,10 +177,27 @@ export default {
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
     },
-    submitContent () {
+    async submitContent () {
       this.buttonShow = false
       this.focusState = false
-      window.scrollTo(0, 0);
+      const params = {
+        homework_id: this.$route.query.homework_Id || '',
+        content: this.commentData
+      }
+      try {
+        const submitResult = await axios.post(API.add_Comment, params)
+        if (!submitResult.success) {
+          this.$refs['toast'].showToast('提交评论失败!')
+          console.log(submitResult.msg)
+          return;
+        }
+        this.$refs['toast'].showToast('成功提交评论!')
+        this.commentData = ''
+        this.getComment()
+      } catch (err) {
+        this.$refs['toast'].showToast('提交评论失败!')
+        console.log(err)
+      }
     }
   },
   async created () {
@@ -234,7 +259,8 @@ export default {
         transform: translate(-50%, -50%);
         width: 76px;
         height: 76px;
-        background: url('~assets/presentation/img/playbtn.png') 50% 50% / contain no-repeat;
+        background: url("~assets/presentation/img/playbtn.png") 50% 50% /
+          contain no-repeat;
       }
       .videoWin {
         padding-right: 30px;
@@ -296,11 +322,11 @@ export default {
     .commentContent {
       width: 600px;
       position: relative;
-      .commentList{
+      .commentList {
         font-size: 28px;
         color: #333333;
         padding-bottom: 73px;
-        .commentListTime{
+        .commentListTime {
           float: right;
           font-size: 24px;
           color: #999999;
@@ -325,26 +351,30 @@ export default {
     min-height: 100px;
     width: 100%;
     padding: 10px 0;
-    background:rgba(238,238,238,1);
+    background: rgba(238, 238, 238, 1);
     position: fixed;
-    bottom: 193px;
+    bottom: 0px;
+    // bottom: 193px;
     .content-input {
       width: 520px;
       margin-left: 30px;
+      textarea {
+        width: 100%;
+      }
     }
     .content-button {
       width: 150px;
       height: 80px;
       margin-left: 20px;
-      background:rgba(255,215,80,1);
-      border-radius:2px;
+      background: rgba(255, 215, 80, 1);
+      border-radius: 2px;
       display: flex;
       justify-content: center;
       align-items: center;
       .content-button-text {
-        font-size:28px;
-        font-weight:400;
-        color:rgba(51,51,51,1);
+        font-size: 28px;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
       }
     }
   }
