@@ -260,7 +260,7 @@ export default {
           console.log(listResult.meg);
           return;
         }
-        this.hasNext = listResult.data.hasNext
+        this.hasNext = listResult.data.has_next
         listResult.data.list.forEach(element => {
           this.videoList.push(Object.assign(element, { moreFlag: false }))
         })
@@ -318,7 +318,7 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: #f9f9f9;
-  padding-top: 20px;
+  padding: 20px 30px 0 30px;
   .signContent {
     .scoreStatistics {
       display: flex;

@@ -57,14 +57,22 @@
       </div>
     </div>
     <div class="comment-content" v-show="buttonShow">
-      <textarea
-        class="content-input"
-        placeholder="请输入内容"
-        v-focus="focusState"
-        v-model="commentData"
-      />
+      <div class="content-input">
+        <van-field
+          style="font-size: 14px;"
+          v-model="commentData"
+          rows="2"
+          autosize
+          type="textarea"
+          size="50px"
+          ref="sssss"
+          placeholder="请输入评语"
+          maxlength="200"
+          show-word-limit
+        />
+      </div>
       <div class="content-button" @click="submitContent">
-        <div class="content-button-text">发布</div>
+        <div class="content-button-text">发送</div>
       </div>
     </div>
     <toast ref="toast"></toast>
@@ -77,6 +85,8 @@ import { videoPlayerEvent } from "~/utils/videoPlay";
 import axios from "~/utils/axios";
 import { API } from "../consts";
 import Toast from '~/components/Toast'
+import { Field } from 'vant';
+import 'vant/lib/index.css';
 export default {
   head () {
     return {
@@ -87,6 +97,7 @@ export default {
     startLevel: startLevel,
     "dialog-bar": dialogBar,
     'toast': Toast,
+    'van-field': Field
   },
   data () {
     return {
@@ -130,8 +141,6 @@ export default {
       const getId = {
         homework_id: this.$route.query.homework_Id
       };
-      // const getId=this.$route.query.id
-      console.log("getId", this.$route.query.homework_Id);
       const getCommentList = await axios.get(
         API.comment_List + `?homework_id=${this.$route.query.homework_Id}`
       );
@@ -140,14 +149,11 @@ export default {
         return;
       }
       this.commentList = getCommentList.data;
-      console.log("拿到的数据", getCommentList);
     },
     openMask () {
       this.buttonShow = true
       this.focusState = true
-    },
-    autofocus () {
-      window.scrollTo(0, 0);
+      this.$refs.sssss.focus()
     },
     /**
      * 添加评论的取消
@@ -348,7 +354,7 @@ export default {
   }
   .comment-content {
     display: flex;
-    min-height: 100px;
+    // min-height: 100px;
     width: 100%;
     padding: 10px 0;
     background: rgba(238, 238, 238, 1);
@@ -358,13 +364,10 @@ export default {
     .content-input {
       width: 520px;
       margin-left: 30px;
-      textarea {
-        width: 100%;
-      }
     }
     .content-button {
       width: 150px;
-      height: 80px;
+      height: 84px;
       margin-left: 20px;
       background: rgba(255, 215, 80, 1);
       border-radius: 2px;
