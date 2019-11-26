@@ -77,7 +77,7 @@
         <div class="appearance-cut" @click="cutStudentMien"><p>换一个</p></div>
       </div>
       <!-- 兰迪简介 -->
-      <div class="description card">
+      <div class="description card" >
         <div class="divide-title divide-title-space">
           <div class="divide-decohr"></div>
           <div class="divide-title-text">兰迪简介</div>
@@ -363,6 +363,9 @@ export default {
 
     this.centerActionBottom = this.$refs.centerAction.getBoundingClientRect().bottom
     window.addEventListener('scroll', this.handleScroll)
+
+    // 定位到学员风采的模块位置
+    window.scrollTo(0,900)
   }
 }
 
