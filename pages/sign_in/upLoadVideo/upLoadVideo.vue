@@ -67,7 +67,7 @@ export default {
     fileUploadNext(res) {
       console.log(this.videoStatus,'this.video')
       this.videoStatus.progress = Math.round(res.total.percent * 100) / 100
-      this.$refs['toast'].showToast( '上传进度'+this.videoStatus.progress+'%')
+      this.$refs['toast'].showLoadingToast( this.videoStatus.progress)
     },
     fileUploadError(res) {
       console.log(res)
@@ -80,10 +80,7 @@ export default {
       console.log(this.videoSrc)
       localStorage.setItem('videoUrl',this.videoSrc)
       this.$refs['toast'].showToast('上传成功')
-      setTimeout(() => {
        window.location = `http://192.168.29.119:3000/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
-
-        }, 6000);
     },
     
   }

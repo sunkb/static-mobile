@@ -202,7 +202,7 @@ export default {
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
 
-      window.location = `http://192.168.120.184:50261/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
+      window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
     },
     // 下拉加载数据
     onLoad() {
@@ -222,7 +222,7 @@ export default {
         this.scoreNumTime = res.data.achievement.synced;
         this.scoreNum = res.data.achievement.avg_score;
         //判断是否有打卡任务或者是否完成
-        if (!res.data.homework.is_submit) {
+        if (res.data.homework && !res.data.homework.is_submit) {
           this.hasSigned = "C"; //无任务
         } else {
           // if (res.data.homework.is_submit) {
