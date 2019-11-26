@@ -89,22 +89,26 @@
                   :src="item.video_url"
                 />
                 <div class="appearance-video-item">
-                  <div class="content-video-item-video-play"></div>
+                  <div class="videoPlay"></div>
                   <img class="videoWin" :src="item.video_url + '?vframe/jpg/offset/2/h/960/'" />
                 </div>
               </div>
               <span class="videoGetScore">得分:</span>
               <startLevel :value="item.score" :allowHalf="allowHalf" class="changeRate" showText />
               <div class="teacherComment">
-                <!-- {{'评论('+ item.comment.length +')'}} -->
+                {{'评论('+ item.comment.length +')'}}
                 <!-- <span v-if="getComment" id="getComment">{}</span> -->
-                <div class="" :class="item.moreFlag ? 'watchMore': 'watchSingle' ">
+                <div class :class="item.moreFlag ? 'watchMore': 'watchSingle' ">
                   <div
                     class="commentMsg"
                     v-for="(commentItem, index) in item.comment"
                     :key="commentItem.id"
                   >
-                    <div class="singleComment">
+                    <div
+                      class="singleComment"
+                      @touchstart="gtouchstart(commentItem)"
+                      @touchend="gtouchend()"
+                    >
                       <p>{{commentItem.name+'：' + commentItem.content}}</p>
                       <div
                         @click="watchMore(item)"
@@ -128,12 +132,21 @@
           </div>
         </div>
       </div>
-      <div class="finSign" v-if="this.hasSigned==='A'" >
+      <div class="finSign" v-if="this.hasSigned==='A'">
         <div class="finSignMsg">本周作业已有X个同学提交哦</div>
         <!-- 到时候加到已有后面{{thisWeekSigned}} -->
-        <div class="finSignBtn"  @click="finSignBtn()">去打卡</div>
+        <div class="finSignBtn" @click="finSignBtn()">去打卡</div>
       </div>
     </div>
+    <van-dialog
+      v-model="dialogShow"
+      title="删除评论"
+      message="是否要删除该条评论？"
+      show-cancel-button
+      @confirm="confirmOption"
+      @cancel="cancelOption"
+    ></van-dialog>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
@@ -144,22 +157,27 @@ import { API } from "../consts";
 import axios from "~/utils/axios";
 import { Loadmore } from "mint-ui";
 import addComments from "../addComments/addComments";
+import { Dialog } from 'vant';
+import Toast from '~/components/Toast';
+import 'vant/lib/index.css';
 export default {
   name: "weeklyHouseWorkSign",
-  head() {
+  head () {
     return {
       title: "周作业打卡"
     };
   },
   components: {
     startLevel: startLevel,
-    "mt-loadmore": Loadmore
+    "mt-loadmore": Loadmore,
+    [Dialog.Component.name]: Dialog.Component,
+    'toast': Toast,
   },
-  mounted() {
+  mounted () {
     this.submit();
     this.history();
   },
-  data() {
+  data () {
     return {
       homeworkId: "",
       videoUrl: "", //视频地址
@@ -177,24 +195,23 @@ export default {
       page: 1,
       limit: 4,
       hasNext: false, // 是否还有下一页
-      allLoaded: false
+      allLoaded: false,
+      timeOutEvent: null,
+      dialogShow: false,
+      curCommentId: '' // 当前的评论id
     };
   },
   methods: {
     /**
      * 两个去打卡跳转按钮
      */
-    finSignBtn: function() {
-      window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`
-      // this.$router.push({
-      //   path: "/sign_in/upLoadVideo/upLoadVideo",
-      //   query: { homeworkId: this.homeworkId }
-      // });
+    finSignBtn: function () {
+      window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`
     },
     /**
      * 点击历史打卡记录跳转到详情页面
      */
-    async signHistoryVideo(itemObj) {
+    async signHistoryVideo (itemObj) {
       const res = await axios.get(API.weekly_Work);
       const studentId = res.data.homework.id;
       // this.$router.push({
@@ -205,19 +222,17 @@ export default {
       window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
     },
     // 下拉加载数据
-    onLoad() {
-      // if(this.hasNext) {
-      //   this.pageIndex++
-      //   this.getListData(this.landiLevelIndex)
-      // } else {
-      //   this.allLoaded = true;// 若数据已全部获取完毕
-      //   this.$refs.loadmore.onBottomLoaded();
-      // }
-      console.log(11111111);
+    onLoad () {
+      if (this.hasNext) {
+        this.page++
+        this.history()
+      } else {
+        this.allLoaded = true;// 若数据已全部获取完毕
+        this.$refs.loadmore.onBottomLoaded();
+      }
     },
-    async submit() {
+    async submit () {
       const res = await axios.get(API.weekly_Work);
-      console.log("我是res,", res);
       if (res.success) {
         this.scoreNumTime = res.data.achievement.synced;
         this.scoreNum = res.data.achievement.avg_score;
@@ -240,18 +255,18 @@ export default {
         console.log("errMsg", res.msg);
       }
     },
-    async history() {
+    async history () {
       try {
         const listResult = await axios.get(
           API.history_List + `?page=${this.page}&limit=${this.limit}`
         );
-        console.log("我是详情的listResult", listResult);
         if (!listResult.success) {
           console.log(listResult.meg);
           return;
         }
+        this.hasNext = listResult.data.has_next
         listResult.data.list.forEach(element => {
-          this.videoList.push(Object.assign(element, { moreFlag: false}))
+          this.videoList.push(Object.assign(element, { moreFlag: false }))
         })
       } catch (err) {
         console.log(err);
@@ -260,6 +275,40 @@ export default {
     //查看和隐藏更多评论
     watchMore (itemObj) {
       itemObj.moreFlag = !itemObj.moreFlag;
+    },
+    gtouchstart (commentItem) {
+      this.curCommentId = commentItem.id || ''
+      const that = this
+      this.timeOutEvent = setTimeout(function () {
+        that.dialogShow = true
+      }, 500);//这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
+      return false;
+    },
+    //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
+    gtouchend () {
+      clearTimeout(this.timeOutEvent);//清除定时器
+      if (this.timeOutEvent != 0) {
+        //这里写要执行的内容（尤如onclick事件）
+      }
+      return false;
+    },
+    async confirmOption () {
+      try {
+        const deleteResult = await axios.post(API.delete_comment, { id: this.curCommentId })
+        if (!deleteResult.success) {
+          console.log(this.msg)
+          this.$refs['toast'].showToast('无法删除当前评论!')
+          return
+        }
+        this.$refs['toast'].showToast('成功删除当前评论!')
+        window.location.reload()
+      } catch (err) {
+        console.log(err)
+        this.$refs['toast'].showToast('无法删除当前评论!')
+      }
+    },
+    cancelOption () {
+      this.dialogShow = false
     }
   }
 };
@@ -273,7 +322,7 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: #f9f9f9;
-  padding-top: 20px;
+  padding: 20px 30px 0 30px;
   .signContent {
     .scoreStatistics {
       display: flex;
@@ -514,6 +563,17 @@ export default {
             margin-bottom: 30px;
             width: 600px;
             height: 355px;
+            position: relative;
+            .videoPlay {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 76px;
+              height: 76px;
+              background: url("~assets/presentation/img/playbtn.png") 50% 50% /
+                contain no-repeat;
+            }
             .videoWin {
               padding-right: 30px;
               width: 600px;
@@ -585,11 +645,11 @@ export default {
   }
 }
 .watchMore {
-  max-height:1000px; 
+  max-height: 1000px;
   overflow: hidden;
 }
 .watchSingle {
-  max-height:45px; 
+  max-height: 45px;
   overflow: hidden;
 }
 </style>

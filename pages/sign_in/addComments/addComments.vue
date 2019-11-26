@@ -61,7 +61,7 @@ import { VIDEO_STATUS_TYPE } from '~/pages/presentation/consts'
 
 export default {
   // name:'addComments',
-  head() {
+  head () {
     return {
       title: "添加评论"
     };
@@ -71,7 +71,7 @@ export default {
     toast: Toast,
     "dialog-bar": dialogBar
   },
-  data() {
+  data () {
     return {
       videoSrc: '',
       sendVal: false,
@@ -80,10 +80,10 @@ export default {
       comMsg: "",
       hasBeenVideos: "",
       videoUrl: "", //上传的视频地址,
-      homeworkId:this.$route.query.homeworkId || ""
+      homeworkId: this.$route.query.homeworkId || ""
     };
   },
-  mounted() {
+  mounted () {
     this.videoUrl = window.localStorage.getItem("videoUrl");
     //监测回退
     history.pushState(null, null, document.URL);
@@ -108,33 +108,33 @@ export default {
   //         window.removeEventListener('popstate',this.forbidback);
   // },
   methods: {
-    forbidback(index) {
+    forbidback (index) {
       console.log("1", this.hasBeenVideos);
       if (!this.hasBeenVideos) {
         this.sendVal = true;
         this.isShow = true;
       } else {
         window.location =
-          "http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo";
+          `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo`;
       }
 
       //回退按钮点击处理
     },
-    clickCancel() {
+    clickCancel () {
       console.log("我是取消的");
     },
-    clickDanger(textArea) {
+    clickDanger (textArea) {
       window.location =
-        "http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign";
+        `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
       console.log("我是点了确定的");
     },
-    hasBeenVideo() {
+    hasBeenVideo () {
       console.log("this.hasBeenVideos1", this.hasBeenVideos);
       this.btnDisabled = false;
       this.hasBeenVideos = "+";
       this.videoUpload();
     },
-    async videoUpload() {
+    async videoUpload () {
       this.$refs["toast"].showLoadingToast();
       const fileUploader = new FileUploader();
       await fileUploader.init();
@@ -154,40 +154,31 @@ export default {
       }
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADING;
       localStorage.setItem("videoUrl", this.videoUrl);
-      // console.log("1111111111111111111", this.homeworkId);
-      // this.isShow = false;
-      // document.getElementById("release").style.backgroundColor = "#FFD750";
-      // if (this.hasBeenVideos !== "") {
-      //   this.$refs["toast"].showToast("上传成功");
-      // }
     },
-        fileUploadNext(res) {
-      console.log(this.videoStatus,'this.video')
+    fileUploadNext (res) {
+      console.log(this.videoStatus, 'this.video')
       this.videoStatus.progress = Math.round(res.total.percent * 100) / 100
-      this.$refs['toast'].showLoadingToast( this.videoStatus.progress)
+      this.$refs['toast'].showToast('上传进度' + this.videoStatus.progress + '%')
     },
-    fileUploadError(res) {
-      console.log(res)
+    fileUploadError (res) {
       this.videoStatus = VIDEO_STATUS_TYPE.ERROR
       this.$refs['toast'].showToast(res.message)
     },
-    fileUploadComplete(res) {
+    fileUploadComplete (res) {
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
       this.videoSrc = `${this.videoSrc}${res.key}`
-      console.log(this.videoSrc)
-      localStorage.setItem('videoUrl',this.videoSrc)
+      localStorage.setItem('videoUrl', this.videoSrc)
       this.$refs['toast'].showToast('上传成功')
        window.location = `http://192.168.29.119:3000/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
     },
-    btn() {
+    btn () {
       this.hasBeenVideos = "+";
-      console.log("删除了");
       this.btnDisabled = true;
       this.hasBeenVideos = "+";
       this.isShow = true;
       document.getElementById("release").style.backgroundColor = "#EEEEEE";
     },
-    release() {
+    release () {
       if (this.comMsg.length === 0) {
         this.$refs["toast"].showToast("请添加评论");
         return;
@@ -195,31 +186,28 @@ export default {
       this.$refs["toast"].showToast("发布成功");
       this.videoOK();
     },
-    playFn(name) {
+    playFn (name) {
       event.stopPropagation();
       let video1 = document.getElementById(name);
       videoPlayerEvent(video1);
     },
-    async videoOK() {
+    async videoOK () {
       const data = {
         homework_id: this.homeworkId,
         content: this.comMsg
       };
 
       const addSuccess = await axios.post(API.add_Comment, data);
-      console.log("我是data", data);
-      console.log("addSuccess.success", addSuccess.success);
       if (addSuccess.success) {
         const videoData = {
           video_url: this.videoUrl,
           id: this.homeworkId
-        }; 
+        };
         const addSuccess = await axios.post(API.submit_Work, videoData);
         console.log("我是videoData", videoData);
         setTimeout(() => {
           window.location =
-            "http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign";
-          // this.$router.replace('/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign')
+            `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
         }, 1000);
       } else {
         console.log("errMsg", addSuccess.msg);
@@ -230,7 +218,7 @@ export default {
     /**
      * 评论输入框
      */
-    comMsg(newvalue, oldvalue) {
+    comMsg (newvalue, oldvalue) {
       if (newvalue.length <= 400) {
         this.comMsg = newvalue;
       } else {
