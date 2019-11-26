@@ -248,9 +248,9 @@ export default {
       const res = await axios.get(API.weekly_Work);
       if (res.success) {
         this.scoreNumTime = res.data.achievement.synced;
-        this.scoreNum = res.data.achievement.avg_score;
+        this.scoreNum = res.data.achievement.avg_score || 0;
         //判断是否有打卡任务或者是否完成
-        if (res.data.homework && res.data.homework.is_submit == null) {
+        if (res.data.homework == null) {
           this.hasSigned = "C"; //无任务
         } else {
           // if (res.data.homework.is_submit) {
