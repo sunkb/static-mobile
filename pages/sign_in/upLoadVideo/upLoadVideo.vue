@@ -13,7 +13,7 @@
         @change="videoUpload"
         style="display:none"
       />
-      <div class="videoRules">视频要求:10秒≤时长≤180秒,视频大小≤300M</div>
+      <div class="videoRules">视频要求:10秒≤视频时长,视频大小≤100M</div>
       <img class="img" src="~/assets/punch_card/img/teacher.png" alt />
 
     </div>

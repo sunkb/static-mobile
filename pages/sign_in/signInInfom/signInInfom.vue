@@ -44,7 +44,7 @@
           <!-- 等有接口了再掉用吧 -->
           <div v-if="commentList.length>0">
             <div class="commentList" v-for="item in commentList" :key="item.id">
-              <p>{{item.name + ': ' + item.content}}</p>
+              <p class="commentListInfo">{{item.name + ': ' + item.content}}</p>
               <p class="commentListTime">{{item.create_time}}</p>
             </div>
           </div>
@@ -69,6 +69,7 @@
           placeholder="请输入评语"
           maxlength="200"
           show-word-limit
+          autofocus="autofocus"
         />
       </div>
       <div class="content-button" @click="submitContent">
@@ -84,11 +85,11 @@ import dialogBar from "../tankuang";
 import { videoPlayerEvent } from "~/utils/videoPlay";
 import axios from "~/utils/axios";
 import { API } from "../consts";
-import Toast from '~/components/Toast'
-import { Field } from 'vant';
-import 'vant/lib/index.css';
+import Toast from "~/components/Toast";
+import { Field } from "vant";
+import "vant/lib/index.css";
 export default {
-  head () {
+  head() {
     return {
       title: "打卡详情"
     };
@@ -96,10 +97,13 @@ export default {
   components: {
     startLevel: startLevel,
     "dialog-bar": dialogBar,
-    'toast': Toast,
-    'van-field': Field
+    toast: Toast,
+    "van-field": Field
   },
-  data () {
+  created() {
+    console.log("我是2的");
+  },
+  data() {
     return {
       commentList: [],
       sendVal: false, //是否发表
@@ -109,24 +113,26 @@ export default {
       detailData: {}, // 打卡详情
       buttonShow: false,
       focusState: false,
-      commentData: '' // 提交的评论内容
+      commentData: "" // 提交的评论内容
     };
   },
-  mounted () {
-    this.getComment()
+  mounted() {
+    this.getComment();
   },
   methods: {
     // 初始化页面
-    async initData () {
+    async initData() {
       const id = this.$route.query.id || "";
-      const hid =this.$route.query.homework_Id;
-      console.log('id',id)
-      console.log('hid',hid)
+      const hid = this.$route.query.homework_Id;
+      console.log("id", id);
+      console.log("hid", hid);
       try {
-        const detailData = await axios.get(API.production_detail + "?id=" + hid);
-        console.log('111111111111111111111111',detailData)
+        const detailData = await axios.get(
+          API.production_detail + "?id=" + hid
+        );
+        console.log("111111111111111111111111", detailData);
         if (!detailData.success) {
-          console.log(detailData.msg)
+          console.log(detailData.msg);
           return;
         }
         const result = detailData.data;
@@ -135,13 +141,13 @@ export default {
           rank: result.rank || 0,
           submit_time: result.submit_time || "",
           startLevelData: result.score || "4.0",
-          video_url: result.video_url || ''
+          video_url: result.video_url || ""
         };
       } catch (err) {
         console.log(err);
       }
     },
-    async getComment () {
+    async getComment() {
       const getId = {
         homework_id: this.$route.query.homework_Id
       };
@@ -154,21 +160,21 @@ export default {
       }
       this.commentList = getCommentList.data;
     },
-    openMask () {
-      this.buttonShow = true
-      this.focusState = true
-      this.$refs.sssss.focus()
+    openMask() {
+      this.buttonShow = true;
+      this.focusState = true;
+      // this.$refs.sssss.focus()
     },
     /**
      * 添加评论的取消
      */
-    clickCancel () {
+    clickCancel() {
       console.log("我是点了取消的,或者没输入");
     },
     /**
      * 添加评论的确定
      */
-    clickDanger (textArea) {
+    clickDanger(textArea) {
       if (textArea) {
         console.log("我是输入并点了确定", textArea);
         this.commentList.push({
@@ -182,43 +188,44 @@ export default {
     /**
      * 视频播放
      */
-    playFn (name) {
-      event.stopPropagation()
-      let video1 = document.getElementById(name)
-      videoPlayerEvent(video1)
+    playFn(name) {
+      event.stopPropagation();
+      let video1 = document.getElementById(name);
+      videoPlayerEvent(video1);
     },
-    async submitContent () {
-      this.buttonShow = false
-      this.focusState = false
+    async submitContent() {
+      this.buttonShow = false;
+      this.focusState = false;
       const params = {
-        homework_id: this.$route.query.homework_Id || '',
+        homework_id: this.$route.query.homework_Id || "",
         content: this.commentData
-      }
+      };
       try {
-        const submitResult = await axios.post(API.add_Comment, params)
+        const submitResult = await axios.post(API.add_Comment, params);
         if (!submitResult.success) {
-          this.$refs['toast'].showToast('提交评论失败!')
-          console.log(submitResult.msg)
+          this.$refs["toast"].showToast("提交评论失败!");
+          console.log(submitResult.msg);
           return;
         }
-        this.$refs['toast'].showToast('成功提交评论!')
-        this.commentData = ''
-        this.getComment()
+        this.$refs["toast"].showToast("成功提交评论!");
+        this.commentData = "";
+        this.getComment();
       } catch (err) {
-        this.$refs['toast'].showToast('提交评论失败!')
-        console.log(err)
+        this.$refs["toast"].showToast("提交评论失败!");
+        console.log(err);
       }
     }
   },
-  async created () {
-    await this.initData()
+  async created() {
+    await this.initData();
   },
   directives: {
     focus: {
       //根据focusState的状态改变是否聚焦focus
-      update: function (el, value) {    //第二个参数传进来的是个json
+      update: function(el, value) {
+        //第二个参数传进来的是个json
         if (value) {
-          el.focus()
+          el.focus();
         }
       }
     }
@@ -336,6 +343,12 @@ export default {
         font-size: 28px;
         color: #333333;
         padding-bottom: 73px;
+        .commentListInfo {
+          word-break: normal;
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          width: 600px;
+        }
         .commentListTime {
           float: right;
           font-size: 24px;

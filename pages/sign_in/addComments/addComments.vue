@@ -124,8 +124,9 @@ export default {
       console.log("我是取消的");
     },
     clickDanger (textArea) {
-      window.location =
-        `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
+      // window.location =`${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
+      window.location =`http://192.168.29.119:3000//sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
+
       console.log("我是点了确定的");
     },
     hasBeenVideo () {
@@ -206,8 +207,9 @@ export default {
         const addSuccess = await axios.post(API.submit_Work, videoData);
         console.log("我是videoData", videoData);
         setTimeout(() => {
-          window.location =
-            `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
+          // window.location =  `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
+      window.location =`http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
+
         }, 1000);
       } else {
         console.log("errMsg", addSuccess.msg);

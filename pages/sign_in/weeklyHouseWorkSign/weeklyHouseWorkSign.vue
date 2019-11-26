@@ -109,7 +109,7 @@
                       @touchstart="gtouchstart(commentItem)"
                       @touchend="gtouchend()"
                     >
-                      <p>{{commentItem.name+'：' + commentItem.content}}</p>
+                      <p class="singleComment2">{{commentItem.name+'：' + commentItem.content}}</p>
                       <div
                         @click="watchMore(item)"
                         style="position:absolute;right:24px;font-size:12px;color:rgba(153,153,153,1);"
@@ -157,27 +157,30 @@ import { API } from "../consts";
 import axios from "~/utils/axios";
 import { Loadmore } from "mint-ui";
 import addComments from "../addComments/addComments";
-import { Dialog } from 'vant';
-import Toast from '~/components/Toast';
-import 'vant/lib/index.css';
+import { Dialog } from "vant";
+import Toast from "~/components/Toast";
+import "vant/lib/index.css";
 export default {
   name: "weeklyHouseWorkSign",
-  head () {
+  head() {
     return {
       title: "周作业打卡"
     };
+  },
+  created() {
+    console.log("我是首页的");
   },
   components: {
     startLevel: startLevel,
     "mt-loadmore": Loadmore,
     [Dialog.Component.name]: Dialog.Component,
-    'toast': Toast,
+    toast: Toast
   },
-  mounted () {
+  mounted() {
     this.submit();
     this.history();
   },
-  data () {
+  data() {
     return {
       homeworkId: "",
       videoUrl: "", //视频地址
@@ -198,20 +201,23 @@ export default {
       allLoaded: false,
       timeOutEvent: null,
       dialogShow: false,
-      curCommentId: '' // 当前的评论id
+      curCommentId: "" // 当前的评论id
     };
   },
   methods: {
     /**
      * 两个去打卡跳转按钮
      */
-    finSignBtn: function () {
-      window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`
+    finSignBtn: function() {
+      // http://192.168.29.119:3000/
+      // window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
+      window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
+
     },
     /**
      * 点击历史打卡记录跳转到详情页面
      */
-    async signHistoryVideo (itemObj) {
+    async signHistoryVideo(itemObj) {
       const res = await axios.get(API.weekly_Work);
       const studentId = res.data.homework.id;
       // this.$router.push({
@@ -219,19 +225,19 @@ export default {
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
 
-      window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`    // 此路由需要设置
+      window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
     },
     // 下拉加载数据
-    onLoad () {
+    onLoad() {
       if (this.hasNext) {
-        this.page++
-        this.history()
+        this.page++;
+        this.history();
       } else {
-        this.allLoaded = true;// 若数据已全部获取完毕
+        this.allLoaded = true; // 若数据已全部获取完毕
         this.$refs.loadmore.onBottomLoaded();
       }
     },
-    async submit () {
+    async submit() {
       const res = await axios.get(API.weekly_Work);
       if (res.success) {
         this.scoreNumTime = res.data.achievement.synced;
@@ -255,7 +261,7 @@ export default {
         console.log("errMsg", res.msg);
       }
     },
-    async history () {
+    async history() {
       try {
         const listResult = await axios.get(
           API.history_List + `?page=${this.page}&limit=${this.limit}`
@@ -264,51 +270,53 @@ export default {
           console.log(listResult.meg);
           return;
         }
-        this.hasNext = listResult.data.has_next
+        this.hasNext = listResult.data.has_next;
         listResult.data.list.forEach(element => {
-          this.videoList.push(Object.assign(element, { moreFlag: false }))
-        })
+          this.videoList.push(Object.assign(element, { moreFlag: false }));
+        });
       } catch (err) {
         console.log(err);
       }
     },
     //查看和隐藏更多评论
-    watchMore (itemObj) {
+    watchMore(itemObj) {
       itemObj.moreFlag = !itemObj.moreFlag;
     },
-    gtouchstart (commentItem) {
-      this.curCommentId = commentItem.id || ''
-      const that = this
-      this.timeOutEvent = setTimeout(function () {
-        that.dialogShow = true
-      }, 500);//这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
+    gtouchstart(commentItem) {
+      this.curCommentId = commentItem.id || "";
+      const that = this;
+      this.timeOutEvent = setTimeout(function() {
+        that.dialogShow = true;
+      }, 500); //这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
       return false;
     },
     //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
-    gtouchend () {
-      clearTimeout(this.timeOutEvent);//清除定时器
+    gtouchend() {
+      clearTimeout(this.timeOutEvent); //清除定时器
       if (this.timeOutEvent != 0) {
         //这里写要执行的内容（尤如onclick事件）
       }
       return false;
     },
-    async confirmOption () {
+    async confirmOption() {
       try {
-        const deleteResult = await axios.post(API.delete_comment, { id: this.curCommentId })
+        const deleteResult = await axios.post(API.delete_comment, {
+          id: this.curCommentId
+        });
         if (!deleteResult.success) {
-          console.log(this.msg)
-          this.$refs['toast'].showToast('无法删除当前评论!')
-          return
+          console.log(this.msg);
+          this.$refs["toast"].showToast("无法删除当前评论!");
+          return;
         }
-        this.$refs['toast'].showToast('成功删除当前评论!')
-        window.location.reload()
+        this.$refs["toast"].showToast("成功删除当前评论!");
+        window.location.reload();
       } catch (err) {
-        console.log(err)
-        this.$refs['toast'].showToast('无法删除当前评论!')
+        console.log(err);
+        this.$refs["toast"].showToast("无法删除当前评论!");
       }
     },
-    cancelOption () {
-      this.dialogShow = false
+    cancelOption() {
+      this.dialogShow = false;
     }
   }
 };
@@ -596,12 +604,19 @@ export default {
             font-size: 28px;
             font-weight: 700;
             color: #333333;
+
             .commentMsg {
               padding-top: 10px;
               color: #666666;
               .singleComment {
                 display: flex;
                 position: relative;
+                .singleComment2 {
+                  width:430px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                }
               }
             }
           }
