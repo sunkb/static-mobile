@@ -167,8 +167,9 @@ export default {
       title: "周作业打卡"
     };
   },
-  created() {
+  async created() {
     console.log("我是首页的");
+    this.userStatus()
   },
   components: {
     startLevel: startLevel,
@@ -205,6 +206,14 @@ export default {
     };
   },
   methods: {
+    async userStatus () {
+      const res = await axios.post(API.work_url, { sid: '514954', sign: '397AF506DEBA106723F2A628C6910A820C3DD56B'})
+      if(!res.success) {
+        console.log(res.msg)
+        return 
+      }
+      console.log(res.msg)
+    },
     /**
      * 两个去打卡跳转按钮
      */
