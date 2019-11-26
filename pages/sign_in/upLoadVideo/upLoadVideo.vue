@@ -13,6 +13,7 @@
         @change="videoUpload"
         style="display:none"
       />
+      <!-- <video src=""></video> -->
       <div class="videoRules">视频要求:10秒≤视频时长,视频大小≤100M</div>
       <img class="img" src="~/assets/punch_card/img/teacher.png" alt />
 
@@ -38,11 +39,14 @@ export default {
   data() {
     return {
       homeworkId:this.$route.query.homeworkId || '',
-      videoSrc: ''
+      videoSrc: '',
+      myVid:''
     };
   },
   methods: {
     async videoUpload() {
+      // this.myVid=document.getElementById("video-upload-input");
+      // console.log('myVid',this.myVid.duration)
       this.$refs["toast"].showLoadingToast();
       const fileUploader = new FileUploader();
       await fileUploader.init();
@@ -50,7 +54,7 @@ export default {
       console.log(this.videoSrc,'222')
       const uploadReturn = fileUploader.upload(
         this.$refs["videoUploadInput"].files[0],
-        FILE_TYPE.VIDEO,
+        FILE_TYPE.VIDEO2,
         this.fileUploadNext,
         this.fileUploadError,
         this.fileUploadComplete,
@@ -76,11 +80,11 @@ export default {
     },
     fileUploadComplete(res) {
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
-      this.videoSrc = `${this.videoSrc}${res.key}`
+      this.videoSrc = `${this.videoSrc}${res.key}`||`${res.key}`
       console.log(this.videoSrc)
       localStorage.setItem('videoUrl',this.videoSrc)
       this.$refs['toast'].showToast('上传成功')
-       window.location = `http://192.168.29.119:3000/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
+      //  window.location = `http://192.168.29.119:3000/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
     },
     
   }

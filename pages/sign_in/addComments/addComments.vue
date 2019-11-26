@@ -125,7 +125,7 @@ export default {
     },
     clickDanger (textArea) {
       // window.location =`${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
-      window.location =`http://192.168.29.119:3000//sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
+      window.location =`http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
 
       console.log("我是点了确定的");
     },

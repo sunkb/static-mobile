@@ -130,7 +130,6 @@ export default {
         const detailData = await axios.get(
           API.production_detail + "?id=" + hid
         );
-        console.log("111111111111111111111111", detailData);
         if (!detailData.success) {
           console.log(detailData.msg);
           return;

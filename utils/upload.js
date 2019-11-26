@@ -13,10 +13,23 @@ const TYPE = {
       "application/vnd.rn-realmedia-vbr"
     ],
     limit: 300
+  },
+  'video2':{
+    mimeType: [
+      "video/mp4",
+      "video/mpeg",
+      "video/quicktime",
+      "video/x-msvideo",
+      "video/ogg",
+      "video/webm",
+      "application/vnd.rn-realmedia-vbr"
+    ],
+    limit: 100
   }
 }
 const FILE_TYPE = {
-  VIDEO: 'video'
+  VIDEO: 'video',
+  VIDEO2:'video2'
 }
 
 export default class FileUploader {

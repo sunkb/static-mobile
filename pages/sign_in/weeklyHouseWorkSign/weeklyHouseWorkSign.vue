@@ -89,15 +89,15 @@
                   :src="item.video_url"
                 />
                 <div class="appearance-video-item">
+                   <img class="videoWin" :src="item.video_url + '?vframe/jpg/offset/2/h/960/'" />
                   <div class="videoPlay"></div>
-                  <img class="videoWin" :src="item.video_url + '?vframe/jpg/offset/2/h/960/'" />
+                 
                 </div>
               </div>
               <span class="videoGetScore">得分:</span>
               <startLevel :value="item.score" :allowHalf="allowHalf" class="changeRate" showText />
               <div class="teacherComment">
                 {{'评论('+ item.comment.length +')'}}
-                <!-- <span v-if="getComment" id="getComment">{}</span> -->
                 <div class :class="item.moreFlag ? 'watchMore': 'watchSingle' ">
                   <div
                     class="commentMsg"
@@ -186,10 +186,10 @@ export default {
       videoUrl: "", //视频地址
       videodays: "", //历史记录中某天得作业
       hasCompleted: "", //班级已提交人数
-      scoreNumTime: "", //打卡次数
-      scoreNum: "", //平均得分
+      scoreNumTime: 0, //打卡次数
+      scoreNum: 0, //平均得分
       upLoadHw: "", //上传该次作业
-      historyShow: "A", //没有后端前,A为有打卡记录,B为无打卡记录
+      historyShow: "", //没有后端前,A为有打卡记录,B为无打卡记录
       hasSigned: "", //没有后端前,A为尚未打卡,B为完成打卡,C为无打卡任务
       teacherSays: "Ann:说得好", //发表的评论
       upLoadTime: "", //提交时间
@@ -212,7 +212,6 @@ export default {
       // http://192.168.29.119:3000/
       // window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
       window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
-
     },
     /**
      * 点击历史打卡记录跳转到详情页面
@@ -224,7 +223,6 @@ export default {
       //   path: "/sign_in/signInInfom/signInInfom",
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
-
       window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
     },
     // 下拉加载数据
@@ -243,7 +241,7 @@ export default {
         this.scoreNumTime = res.data.achievement.synced;
         this.scoreNum = res.data.achievement.avg_score;
         //判断是否有打卡任务或者是否完成
-        if (res.data.homework && !res.data.homework.is_submit) {
+        if (res.data.homework && res.data.homework.is_submit == null) {
           this.hasSigned = "C"; //无任务
         } else {
           // if (res.data.homework.is_submit) {
@@ -269,6 +267,11 @@ export default {
         if (!listResult.success) {
           console.log(listResult.meg);
           return;
+        }
+        if (listResult.data.list.length==0) {
+          this.historyShow = "B";
+        } else {
+          this.historyShow = "A";
         }
         this.hasNext = listResult.data.has_next;
         listResult.data.list.forEach(element => {
@@ -572,7 +575,9 @@ export default {
             width: 600px;
             height: 355px;
             position: relative;
+             background-color: black;
             .videoPlay {
+             
               position: absolute;
               top: 50%;
               left: 50%;
@@ -583,8 +588,12 @@ export default {
                 contain no-repeat;
             }
             .videoWin {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
               padding-right: 30px;
-              width: 600px;
+              // width: 600px;
               height: 355px;
             }
           }
@@ -612,7 +621,7 @@ export default {
                 display: flex;
                 position: relative;
                 .singleComment2 {
-                  width:430px;
+                  width: 430px;
                   overflow: hidden;
                   white-space: nowrap;
                   text-overflow: ellipsis;
