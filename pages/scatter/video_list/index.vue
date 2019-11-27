@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <div class="content-item" v-for="(item, index) in videoList" :key="index">
+      <p class="video-title">{{item.text}}</p>
       <video controls :poster="item.image_url">
         <source :src="item.video_url" type="video/mp4" />
       </video>
-      <p class="video-title">{{item.text}}</p>
     </div>
   </div>
 </template>

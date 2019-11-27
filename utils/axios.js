@@ -34,16 +34,16 @@ function removeParam(key, sourceURL) {
   return rtn;
 }
 
-function judgeProtocol () {
-  const protocolData = document.location.protocol
-  if (protocolData === 'http:' ) {
-    return process.env.ENV_API
-  }
-  return process.env.ENV_API
-}
+// function judgeProtocol () {
+//   const protocolData = document.location.protocol
+//   if (protocolData === 'http:' ) {
+//     return process.env.ENV_API
+//   }
+//   return process.env.ENV_API
+// }
 
 const Axios = axios.create({
-  baseURL: judgeProtocol(),
+  baseURL: process.env.ENV_API,
   // 请求前的数据处理
   transformRequest: [function (data) {
     return Qs.stringify(data)
