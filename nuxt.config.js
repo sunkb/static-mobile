@@ -12,7 +12,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: 'teacher-recommendation',
+    title: '',
     meta: [{
         charset: 'utf-8'
       },
