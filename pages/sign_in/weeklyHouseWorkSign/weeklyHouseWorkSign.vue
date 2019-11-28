@@ -219,7 +219,7 @@ export default {
      */
     finSignBtn: function() {
       // http://192.168.29.119:3000/
-      window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
+      window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/?homeworkId=${this.homeworkId}`;
       // window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
     },
     /**
@@ -232,7 +232,7 @@ export default {
       //   path: "/sign_in/signInInfom/signInInfom",
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
-      window.location = `${process.env.BASE_URL}/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
+      window.location = `${process.env.BASE_URL}/sign_in/signInInfom/signInInfom/?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
     },
     // 下拉加载数据
     onLoad() {
