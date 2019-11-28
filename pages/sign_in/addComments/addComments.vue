@@ -115,7 +115,7 @@ export default {
         this.isShow = true;
       } else {
         window.location =
-          `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo`;
+          `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/`;
       }
 
       //回退按钮点击处理
@@ -124,7 +124,7 @@ export default {
       console.log("我是取消的");
     },
     clickDanger (textArea) {
-      window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
+      window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
       // window.location =`http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
 
       console.log("我是点了确定的");
@@ -170,7 +170,7 @@ export default {
       this.videoSrc = `${this.videoSrc}${res.key}`
       localStorage.setItem('videoUrl', this.videoSrc)
       this.$refs['toast'].showToast('上传成功')
-      window.location = `${process.env.BASE_URL}/sign_in/addComments/addComments?homeworkId=${this.homeworkId}`
+      window.location = `${process.env.BASE_URL}/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
     },
     btn () {
       this.hasBeenVideos = "+";
@@ -207,7 +207,7 @@ export default {
         const addSuccess = await axios.post(API.submit_Work, videoData);
         console.log("我是videoData", videoData);
         setTimeout(() => {
-          window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
+          window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
           // window.location =`http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
 
         }, 1000);
