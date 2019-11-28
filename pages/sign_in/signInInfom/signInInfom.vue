@@ -50,7 +50,7 @@
           </div>
           <div v-if="commentList.length<=0">
             <div class="commentMsg">有话想对老师说?点击评论按钮留言哦</div>
-            <img class="commentPic" src="~/assets/punch_card/img/comment.png" alt />
+            <img class="commentPic" src="https://qn-static.landi.com/uploadtool34833716da1aea1decec2681bdaefd50.png" alt />
           </div>
         </div>
         <div></div>

@@ -47,11 +47,11 @@
         </div>
         <div class="thisWeekProcess" v-if="this.hasSigned==='B'">
           <div class="hasCompleted">太棒了,已经完成打卡任务哦</div>
-          <img class="goodjob" src="~/assets/punch_card/img/goodjob.png" alt />
+          <img class="goodjob" src="https://qn-static.landi.com/uploadtoolb9b4e1f5dcf1ca92a4e1249ff2020710.png" alt />
         </div>
         <div class="thisWeekProcess" v-if="this.hasSigned==='C'">
           <div class="hasCompleted">本周无打卡任务哦</div>
-          <img class="nojob" src="~/assets/punch_card/img/nojob.png" alt />
+          <img class="nojob" src="https://qn-static.landi.com/uploadtool85138f62d1ea923566ee642fe0a513d3.png" alt />
         </div>
         <!--v-if这里从后台拿值,然后根据枚举值,利用三元表达式去判断,有就true显示,没有就false隐藏 -->
       </div>
@@ -127,7 +127,7 @@
           <div class="signHistoryVideo">
             <div class="noHistory">
               暂无打卡作品,要加油哦~
-              <img class="fight" src="~/assets/punch_card/img/fight.png" alt />
+              <img class="fight" src="https://qn-static.landi.com/uploadtool86d23247578d9ce742555f54982d2474.png" alt />
             </div>
           </div>
         </div>

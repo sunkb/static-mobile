@@ -17,7 +17,7 @@
       <img
         class="isShow"
         v-show="isShow"
-        src="~/assets/punch_card/img/upload.png"
+        src="https://qn-static.landi.com/uploadtool48287fd617dd00d4903d7607388e57c1.png"
         alt
         @click="hasBeenVideo"
       />

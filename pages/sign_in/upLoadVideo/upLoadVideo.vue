@@ -15,7 +15,7 @@
       />
       <!-- <video src=""></video> -->
       <div class="videoRules">视频要求:10秒≤视频时长,视频大小≤100M</div>
-      <img class="img" src="~/assets/punch_card/img/teacher.png" alt />
+      <img class="img" src="https://qn-static.landi.com/uploadtool964fda54b98513378231d7284da7e59b.png" alt />
 
     </div>
     <toast ref="toast"></toast>
