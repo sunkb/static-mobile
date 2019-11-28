@@ -16,8 +16,9 @@
           :src="detailData.video_url"
         />
         <div class="appearance-video-item" @click="playFn('appearance1')">
-          <div class="videoPlay"></div>
+         
           <img class="videoWin" :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'" />
+           <div class="videoPlay"></div>
           <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
         </div>
       </div>
@@ -130,6 +131,7 @@ export default {
         const detailData = await axios.get(
           API.production_detail + "?id=" + hid
         );
+        console.log('我是数据',detailData)
         if (!detailData.success) {
           console.log(detailData.msg);
           return;
@@ -142,6 +144,12 @@ export default {
           startLevelData: result.score || "4.0",
           video_url: result.video_url || ""
         };
+        //得分同步在这里!!!
+        if(detailData.data.is_sync=0){
+          this.getScore=true
+        }else{
+          this.getScore=false
+        }
       } catch (err) {
         console.log(err);
       }
@@ -153,6 +161,7 @@ export default {
       const getCommentList = await axios.get(
         API.comment_List + `?homework_id=${this.$route.query.homework_Id}`
       );
+
       if (!getCommentList.success) {
         console.log(getCommentList.msg);
         return;
@@ -263,6 +272,7 @@ export default {
       padding-bottom: 20px;
     }
     .studentVideo {
+      background-color: black;
       width: 600px;
       height: 355px;
       margin-left: 30px;
@@ -279,8 +289,12 @@ export default {
           contain no-repeat;
       }
       .videoWin {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         padding-right: 30px;
-        width: 630px;
+        // width: 630px;
         height: 355px;
       }
     }
