@@ -1,5 +1,5 @@
-import axios from 'axios';
-import Qs from 'qs';
+import axios from 'axios'
+import Qs from 'qs'
 
 // const getBaseURL = () => {
 //   switch (process.env.NODE_ENV) {
@@ -14,40 +14,44 @@ import Qs from 'qs';
 //   }
 // }
 
-console.log('process.env.ENV_API',process.env.ENV_API)
+console.log('process.env.ENV_API', process.env.ENV_API)
 
-function removeParam(key, sourceURL) {
-  var rtn = sourceURL.split("?")[0],
-      param,
-      params_arr = [],
-      queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
-  if (queryString !== "") {
-      params_arr = queryString.split("&");
-      for (var i = params_arr.length - 1; i >= 0; i -= 1) {
-          param = params_arr[i].split("=")[0];
-          if (param === key) {
-              params_arr.splice(i, 1);
-          }
+function removeParam (key, sourceURL) {
+  var rtn = sourceURL.split('?')[0],
+    param,
+    params_arr = [],
+    queryString = sourceURL.indexOf('?') !== -1 ? sourceURL.split('?')[1] : ''
+  if (queryString !== '') {
+    params_arr = queryString.split('&')
+    for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+      param = params_arr[i].split('=')[0]
+      if (param === key) {
+        params_arr.splice(i, 1)
       }
-      rtn = rtn + "?" + params_arr.join("&");
+    }
+    rtn = rtn + '?' + params_arr.join('&')
   }
-  return rtn;
+  return rtn
 }
 
 function judgeProtocol () {
-  const protocolData = document.location.protocol
-  if (protocolData === 'http:' ) {
-    return process.env.ENV_API.replace('https', 'http')
+  if (process.client) {
+    const protocolData = document.location.protocol
+    if (protocolData === 'http:') {
+      return process.env.ENV_API.replace('https', 'http')
+    }
+    return process.env.ENV_API
   }
-  return process.env.ENV_API
 }
 
 const Axios = axios.create({
   baseURL: judgeProtocol(),
   // 请求前的数据处理
-  transformRequest: [function (data) {
-    return Qs.stringify(data)
-  }],
+  transformRequest: [
+    function (data) {
+      return Qs.stringify(data)
+    }
+  ],
   headers: {
     // 'Content-Type': 'application/json;charset=UTF-8' //数据格式
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -56,8 +60,6 @@ const Axios = axios.create({
   //request timeout
   timeout: 50000
 })
-
-
 
 //请求拦截器
 Axios.interceptors.request.use(
@@ -70,17 +72,18 @@ Axios.interceptors.request.use(
   error => {
     //请求错误时
     console.log(error)
-    return Promise.reject(error);
-  })
+    return Promise.reject(error)
+  }
+)
 
 // 响应拦截器
 Axios.interceptors.response.use(
   res => {
     // 状态码为200，接口请求成功
     if (res.status === 200) {
-      return Promise.resolve(res.data);
+      return Promise.resolve(res.data)
     } else {
-      return Promise.reject(res);
+      return Promise.reject(res)
     }
   },
   error => {
@@ -97,19 +100,20 @@ Axios.interceptors.response.use(
           // const loginUrl = process.env.ENV_API+'Mobile/Login/index?redirect_url='+redirect_url;
           // console.log('loginUrl',loginUrl);
           // window.location.href = loginUrl;
-          
-          break;
+
+          break
         case 404:
-          error.message = '请求错误,未找到该资源';
-          break;
+          error.message = '请求错误,未找到该资源'
+          break
         case 500:
-          error.message = '服务器端出错';
-          break;
+          error.message = '服务器端出错'
+          break
         default:
-          error.message = `连接错误${error.response.status}`;
+          error.message = `连接错误${error.response.status}`
       }
     }
     return Promise.reject(error)
-  })
+  }
+)
 
 export default Axios
