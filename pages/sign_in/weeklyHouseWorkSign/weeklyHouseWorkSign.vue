@@ -219,8 +219,8 @@ export default {
      */
     finSignBtn: function() {
       // http://192.168.29.119:3000/
-      // window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
-      window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
+      window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
+      // window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
     },
     /**
      * 点击历史打卡记录跳转到详情页面
@@ -232,7 +232,7 @@ export default {
       //   path: "/sign_in/signInInfom/signInInfom",
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
-      window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
+      window.location = `${process.env.BASE_URL}/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
     },
     // 下拉加载数据
     onLoad() {
@@ -248,9 +248,9 @@ export default {
       const res = await axios.get(API.weekly_Work);
       if (res.success) {
         this.scoreNumTime = res.data.achievement.synced;
-        this.scoreNum = res.data.achievement.avg_score;
+        this.scoreNum = res.data.achievement.avg_score || 0;
         //判断是否有打卡任务或者是否完成
-        if (res.data.homework && res.data.homework.is_submit == null) {
+        if (res.data.homework == null) {
           this.hasSigned = "C"; //无任务
         } else {
           // if (res.data.homework.is_submit) {
