@@ -33,8 +33,12 @@ const FILE_TYPE = {
 }
 
 export default class FileUploader {
-  async init() {
-    const res = await axios.get(`/Mobile/StudentActivity/token`)
+  async init(type) { // type类型为1，表示周作业打卡所使用的七牛接口地址
+    const qiniuApi = '/Mobile/StudentActivity/token'
+    if(type === 1) {
+      qiniuApi = '/mobile/StudentWeekHomework/token'
+    }
+    const res = await axios.get(qiniuApi)
     if (res.status) {
       this.domain = res.data.domain
       this.token = res.data.uptoken

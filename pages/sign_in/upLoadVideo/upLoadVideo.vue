@@ -49,7 +49,7 @@ export default {
       // console.log('myVid',this.myVid.duration)
       this.$refs["toast"].showLoadingToast();
       const fileUploader = new FileUploader();
-      await fileUploader.init();
+      await fileUploader.init(1);
       this.videoSrc = fileUploader.domain;
       console.log(this.videoSrc,'222')
       const uploadReturn = fileUploader.upload(
