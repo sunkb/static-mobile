@@ -109,12 +109,14 @@
                       @touchstart="gtouchstart(commentItem)"
                       @touchend="gtouchend()"
                     >
-                      <p class="singleComment2">{{commentItem.name+'：' + commentItem.content}}</p>
-                      <div
-                        @click="watchMore(item)"
-                        style="position:absolute;right:24px;font-size:12px;color:rgba(153,153,153,1);"
-                        v-if="index === 0"
-                      >{{item.moreFlag ? '收起隐藏' : '显示更多'}}</div>
+                      <p   class="singleComment2">{{commentItem.name+'：' + commentItem.content}}</p>
+                      <div v-if="index === 0 && commentItem.content.length >7  ">
+                        <div
+                          @click="watchMore(item)"
+                          style="position:absolute;right:24px;font-size:12px;color:rgba(153,153,153,1);"
+                          v-if="item.comment.length == 0 || item.comment.length >= 1 "
+                        >{{item.moreFlag ? '收起隐藏' :    '...  显示更多'}}</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -133,7 +135,7 @@
         </div>
       </div>
       <div class="finSign" v-if="this.hasSigned==='A'">
-        <div class="finSignMsg">本周作业已有X个同学提交哦</div>
+        <div class="finSignMsg">本周作业已有{{hasCompleted}}位同班同学提交哦</div>
         <!-- 到时候加到已有后面{{thisWeekSigned}} -->
         <div class="finSignBtn" @click="finSignBtn()">去打卡</div>
       </div>
@@ -232,7 +234,7 @@ export default {
       //   path: "/sign_in/signInInfom/signInInfom",
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
-      window.location = `${process.env.BASE_URL}/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
+      window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
     },
     // 下拉加载数据
     onLoad() {
@@ -258,7 +260,7 @@ export default {
             this.hasSigned = "B"; //已提交
           } else {
             this.hasSigned = "A"; //未提交
-            this.upLoadHw = "请上传" + res.data.homework.end_work_time + "作业";
+            this.upLoadHw = "请上传" + res.data.homework.work_time + "作业";
             this.homeworkId = res.data.homework.id;
             this.hasCompleted = res.data.submit_total;
           }
@@ -631,9 +633,12 @@ export default {
                 position: relative;
                 .singleComment2 {
                   width: 430px;
-                  overflow: hidden;
-                  white-space: nowrap;
-                  text-overflow: ellipsis;
+                  word-break: normal;
+                  white-space: pre-wrap;
+                  word-wrap: break-word;
+                  // overflow: hidden;
+                  // white-space: nowrap;
+                  // text-overflow: ellipsis;
                 }
               }
             }
