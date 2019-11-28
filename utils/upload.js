@@ -34,7 +34,7 @@ const FILE_TYPE = {
 
 export default class FileUploader {
   async init(type) { // type类型为1，表示周作业打卡所使用的七牛接口地址
-    const qiniuApi = '/Mobile/StudentActivity/token'
+    let qiniuApi = '/Mobile/StudentActivity/token'
     if(type === 1) {
       qiniuApi = '/mobile/StudentWeekHomework/token'
     }
