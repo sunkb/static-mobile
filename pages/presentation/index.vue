@@ -365,7 +365,7 @@ export default {
     window.addEventListener('scroll', this.handleScroll)
 
     // 定位到学员风采的模块位置
-    window.scrollTo(0,900)
+    // window.scrollTo(0,900)
   }
 }
 
