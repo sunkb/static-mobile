@@ -117,7 +117,7 @@
                       @touchend="gtouchend()"
                     >
                       <p class="singleComment2">{{commentItem.name+'：' + commentItem.content}}</p>
-                      <div v-if="index === 0 && commentItem.content.length >7  ">
+                      <div v-if="index === 0">
                         <div
                           @click="watchMore(item)"
                           style="position:absolute;right:24px;font-size:12px;color:rgba(153,153,153,1);"
