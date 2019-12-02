@@ -150,6 +150,7 @@ export default {
         }else{
           this.getScore=true
         }
+        console.log(this.getScore)
       } catch (err) {
         console.log(err);
       }
