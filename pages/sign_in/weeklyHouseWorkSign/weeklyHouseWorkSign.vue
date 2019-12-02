@@ -102,7 +102,14 @@
                 </div>
               </div>
               <span class="videoGetScore">得分:</span>
-              <startLevel :value="item.score" :allowHalf="allowHalf" class="changeRate" showText />
+              <startLevel
+                v-if="item.is_sync == 0 ? false : true"
+                :value="item.score"
+                :allowHalf="allowHalf"
+                class="changeRate"
+                showText
+              />
+              <div v-if="item.is_sync == 0 ? true : false" class="teacherNoScore">老师尚未评分哦</div>
               <div class="teacherComment">
                 {{'评论('+ item.comment.length +')'}}
                 <div class :class="item.moreFlag ? 'watchMore': 'watchSingle' ">
@@ -231,7 +238,7 @@ export default {
      */
     async signHistoryVideo (itemObj) {
       const res = await axios.get(API.weekly_Work);
-      const studentId = res.data.homework.id;
+      const studentId = res.data.homework ? res.data.homework.id : '';
       // this.$router.push({
       //   path: "/sign_in/signInInfom/signInInfom",
       //   query: { id: studentId ,homework_Id: itemObj.id }
@@ -621,6 +628,12 @@ export default {
           .changeRate {
             margin-left: 30px;
             margin-top: 10px;
+          }
+          .teacherNoScore {
+            margin-left: 30px;
+            margin-top: 10px;
+            font-size: 28px;
+            color: #999999;
           }
           .teacherComment {
             margin-top: 30px;

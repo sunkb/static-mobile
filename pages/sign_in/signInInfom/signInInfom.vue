@@ -145,10 +145,10 @@ export default {
           video_url: result.video_url || ""
         };
         //得分同步在这里!!!
-        if(detailData.data.is_sync=0){
-          this.getScore=true
-        }else{
+        if(detailData.data.is_sync == 0){
           this.getScore=false
+        }else{
+          this.getScore=true
         }
       } catch (err) {
         console.log(err);
