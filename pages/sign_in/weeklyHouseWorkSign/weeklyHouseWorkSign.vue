@@ -47,11 +47,19 @@
         </div>
         <div class="thisWeekProcess" v-if="this.hasSigned==='B'">
           <div class="hasCompleted">太棒了,已经完成打卡任务哦</div>
-          <img class="goodjob" src="https://qn-static.landi.com/uploadtoolb9b4e1f5dcf1ca92a4e1249ff2020710.png" alt />
+          <img
+            class="goodjob"
+            src="https://qn-static.landi.com/uploadtoolb9b4e1f5dcf1ca92a4e1249ff2020710.png"
+            alt
+          />
         </div>
         <div class="thisWeekProcess" v-if="this.hasSigned==='C'">
           <div class="hasCompleted">本周无打卡任务哦</div>
-          <img class="nojob" src="https://qn-static.landi.com/uploadtool85138f62d1ea923566ee642fe0a513d3.png" alt />
+          <img
+            class="nojob"
+            src="https://qn-static.landi.com/uploadtool85138f62d1ea923566ee642fe0a513d3.png"
+            alt
+          />
         </div>
         <!--v-if这里从后台拿值,然后根据枚举值,利用三元表达式去判断,有就true显示,没有就false隐藏 -->
       </div>
@@ -89,9 +97,8 @@
                   :src="item.video_url"
                 />
                 <div class="appearance-video-item">
-                   <img class="videoWin" :src="item.video_url + '?vframe/jpg/offset/2/h/960/'" />
+                  <img class="videoWin" :src="item.video_url + '?vframe/jpg/offset/2/h/960/'" />
                   <div class="videoPlay"></div>
-                 
                 </div>
               </div>
               <span class="videoGetScore">得分:</span>
@@ -109,13 +116,13 @@
                       @touchstart="gtouchstart(commentItem)"
                       @touchend="gtouchend()"
                     >
-                      <p   class="singleComment2">{{commentItem.name+'：' + commentItem.content}}</p>
+                      <p class="singleComment2">{{commentItem.name+'：' + commentItem.content}}</p>
                       <div v-if="index === 0 && commentItem.content.length >7  ">
                         <div
                           @click="watchMore(item)"
                           style="position:absolute;right:24px;font-size:12px;color:rgba(153,153,153,1);"
                           v-if="item.comment.length == 0 || item.comment.length >= 1 "
-                        >{{item.moreFlag ? '收起隐藏' :    '...  显示更多'}}</div>
+                        >{{item.moreFlag ? '收起隐藏' : '... 显示更多'}}</div>
                       </div>
                     </div>
                   </div>
@@ -129,7 +136,11 @@
           <div class="signHistoryVideo">
             <div class="noHistory">
               暂无打卡作品,要加油哦~
-              <img class="fight" src="https://qn-static.landi.com/uploadtool86d23247578d9ce742555f54982d2474.png" alt />
+              <img
+                class="fight"
+                src="https://qn-static.landi.com/uploadtool86d23247578d9ce742555f54982d2474.png"
+                alt
+              />
             </div>
           </div>
         </div>
@@ -164,12 +175,12 @@ import Toast from "~/components/Toast";
 import "vant/lib/index.css";
 export default {
   name: "weeklyHouseWorkSign",
-  head() {
+  head () {
     return {
       title: "周作业打卡"
     };
   },
-  async created() {
+  async created () {
     console.log("我是首页的");
   },
   components: {
@@ -178,11 +189,11 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
     toast: Toast
   },
-  mounted() {
+  mounted () {
     this.submit();
     this.history();
   },
-  data() {
+  data () {
     return {
       homeworkId: "",
       videoUrl: "", //视频地址
@@ -210,7 +221,7 @@ export default {
     /**
      * 两个去打卡跳转按钮
      */
-    finSignBtn: function() {
+    finSignBtn: function () {
       // http://192.168.29.119:3000/
       window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/?homeworkId=${this.homeworkId}`;
       // window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
@@ -218,7 +229,7 @@ export default {
     /**
      * 点击历史打卡记录跳转到详情页面
      */
-    async signHistoryVideo(itemObj) {
+    async signHistoryVideo (itemObj) {
       const res = await axios.get(API.weekly_Work);
       const studentId = res.data.homework.id;
       // this.$router.push({
@@ -228,7 +239,7 @@ export default {
       window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom/?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
     },
     // 下拉加载数据
-    onLoad() {
+    onLoad () {
       if (this.hasNext) {
         this.page++;
         this.history();
@@ -237,7 +248,7 @@ export default {
         this.$refs.loadmore.onBottomLoaded();
       }
     },
-    async submit() {
+    async submit () {
       const res = await axios.get(API.weekly_Work);
       if (res.success) {
         this.scoreNumTime = res.data.achievement.synced;
@@ -261,7 +272,7 @@ export default {
         console.log("errMsg", res.msg);
       }
     },
-    async history() {
+    async history () {
       try {
         const listResult = await axios.get(
           API.history_List + `?page=${this.page}&limit=${this.limit}`
@@ -270,7 +281,7 @@ export default {
           console.log(listResult.meg);
           return;
         }
-        if (listResult.data.list.length==0) {
+        if (listResult.data.list.length == 0) {
           this.historyShow = "B";
         } else {
           this.historyShow = "A";
@@ -284,26 +295,26 @@ export default {
       }
     },
     //查看和隐藏更多评论
-    watchMore(itemObj) {
+    watchMore (itemObj) {
       itemObj.moreFlag = !itemObj.moreFlag;
     },
-    gtouchstart(commentItem) {
+    gtouchstart (commentItem) {
       this.curCommentId = commentItem.id || "";
       const that = this;
-      this.timeOutEvent = setTimeout(function() {
+      this.timeOutEvent = setTimeout(function () {
         that.dialogShow = true;
       }, 500); //这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
       return false;
     },
     //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
-    gtouchend() {
+    gtouchend () {
       clearTimeout(this.timeOutEvent); //清除定时器
       if (this.timeOutEvent != 0) {
         //这里写要执行的内容（尤如onclick事件）
       }
       return false;
     },
-    async confirmOption() {
+    async confirmOption () {
       try {
         const deleteResult = await axios.post(API.delete_comment, {
           id: this.curCommentId
@@ -320,7 +331,7 @@ export default {
         this.$refs["toast"].showToast("无法删除当前评论!");
       }
     },
-    cancelOption() {
+    cancelOption () {
       this.dialogShow = false;
     }
   }
@@ -577,9 +588,11 @@ export default {
             width: 600px;
             height: 355px;
             position: relative;
-             background-color: black;
+            //  background-color: black;
+            // .appearance-video-item {
+            //   position: relative;
+            // }
             .videoPlay {
-             
               position: absolute;
               top: 50%;
               left: 50%;
