@@ -30,7 +30,6 @@
             :value="detailData.startLevelData"
             :allowHalf="allowHalf"
             showText
-            colors="#F0552D"
           />
           <!-- <rate v-model="rate" @changeRate="changeRate"></rate> -->
           <div v-if="!getScore" class="teacherNoScore">老师尚未评分哦</div>
