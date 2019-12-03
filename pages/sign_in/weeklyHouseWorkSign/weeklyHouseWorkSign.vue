@@ -590,7 +590,7 @@ export default {
             margin-top: 30px;
             margin-left: 30px;
             font-size: 28px;
-            font-weight: 700;
+            font-weight: 600;
             color: #333333;
 
             .commentMsg {
