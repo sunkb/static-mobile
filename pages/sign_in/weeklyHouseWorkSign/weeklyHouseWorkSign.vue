@@ -118,8 +118,6 @@
                   >
                     <div
                       class="singleComment"
-                      @touchstart="gtouchstart(commentItem)"
-                      @touchend="gtouchend()"
                     >
                       <p class="singleComment2">{{commentItem.name+'：' + commentItem.content}}</p>
                       <div v-if="index === 0">
@@ -156,14 +154,6 @@
         <div class="finSignBtn" @click="finSignBtn()">去打卡</div>
       </div>
     </div>
-    <van-dialog
-      v-model="dialogShow"
-      title="删除评论"
-      message="是否要删除该条评论？"
-      show-cancel-button
-      @confirm="confirmOption"
-      @cancel="cancelOption"
-    ></van-dialog>
     <toast ref="toast"></toast>
   </div>
 </template>
@@ -175,7 +165,6 @@ import { API } from "../consts";
 import axios from "~/utils/axios";
 import { Loadmore } from "mint-ui";
 import addComments from "../addComments/addComments";
-import { Dialog } from "vant";
 import Toast from "~/components/Toast";
 import "vant/lib/index.css";
 export default {
@@ -191,7 +180,6 @@ export default {
   components: {
     startLevel: startLevel,
     "mt-loadmore": Loadmore,
-    [Dialog.Component.name]: Dialog.Component,
     toast: Toast
   },
   mounted () {
@@ -302,42 +290,6 @@ export default {
     //查看和隐藏更多评论
     watchMore (itemObj) {
       itemObj.moreFlag = !itemObj.moreFlag;
-    },
-    gtouchstart (commentItem) {
-      this.curCommentId = commentItem.id || "";
-      const that = this;
-      this.timeOutEvent = setTimeout(function () {
-        that.dialogShow = true;
-      }, 500); //这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
-      return false;
-    },
-    //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
-    gtouchend () {
-      clearTimeout(this.timeOutEvent); //清除定时器
-      if (this.timeOutEvent != 0) {
-        //这里写要执行的内容（尤如onclick事件）
-      }
-      return false;
-    },
-    async confirmOption () {
-      try {
-        const deleteResult = await axios.post(API.delete_comment, {
-          id: this.curCommentId
-        });
-        if (!deleteResult.success) {
-          console.log(this.msg);
-          this.$refs["toast"].showToast("无法删除当前评论!");
-          return;
-        }
-        this.$refs["toast"].showToast("成功删除当前评论!");
-        window.location.reload();
-      } catch (err) {
-        console.log(err);
-        this.$refs["toast"].showToast("无法删除当前评论!");
-      }
-    },
-    cancelOption () {
-      this.dialogShow = false;
     }
   }
 };
@@ -605,7 +557,7 @@ export default {
               transform: translate(-50%, -50%);
               width: 76px;
               height: 76px;
-              background: url("~assets/presentation/img/playbtn.png") 50% 50% /
+              background: url("~assets/punch_card/img/playbtn.png") 50% 50% /
                 contain no-repeat;
             }
             .videoWin {
