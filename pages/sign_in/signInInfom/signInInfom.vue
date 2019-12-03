@@ -374,7 +374,7 @@ export default {
   }
   .videoComment {
     // background-color: orange;
-    width: 640px;
+    width: 635px;
     margin-left: 30px;
     .commentTitle {
       font-size: 28px;
