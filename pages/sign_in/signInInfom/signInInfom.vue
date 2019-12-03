@@ -45,8 +45,10 @@
           <!-- 等有接口了再掉用吧 -->
           <div v-if="commentList.length>0">
             <div class="commentList" v-for="item in commentList" :key="item.id">
-              <p class="commentListInfo">{{item.name + ': ' + item.content}}</p>
-              <p class="commentListTime">{{item.create_time}}</p>
+              <div @touchstart="gtouchstart(item)" @touchend="gtouchend()">
+                <p class="commentListInfo">{{item.name + ': ' + item.content}}</p>
+                <p class="commentListTime">{{item.create_time}}</p>
+              </div>
             </div>
           </div>
           <div v-if="commentList.length<=0">
@@ -78,6 +80,14 @@
       </div>
     </div>
     <toast ref="toast"></toast>
+    <van-dialog
+      v-model="dialogShow"
+      title="删除评论"
+      message="是否要删除该条评论？"
+      show-cancel-button
+      @confirm="confirmOption"
+      @cancel="cancelOption"
+    ></van-dialog>
   </div>
 </template>
 <script>
@@ -87,7 +97,7 @@ import { videoPlayerEvent } from "~/utils/videoPlay";
 import axios from "~/utils/axios";
 import { API } from "../consts";
 import Toast from "~/components/Toast";
-import { Field } from "vant";
+import { Field, Dialog } from "vant";
 import "vant/lib/index.css";
 export default {
   head() {
@@ -99,7 +109,8 @@ export default {
     startLevel: startLevel,
     "dialog-bar": dialogBar,
     toast: Toast,
-    "van-field": Field
+    "van-field": Field,
+    [Dialog.Component.name]: Dialog.Component
   },
   created() {
     console.log("我是2的");
@@ -114,7 +125,8 @@ export default {
       detailData: {}, // 打卡详情
       buttonShow: false,
       focusState: false,
-      commentData: "" // 提交的评论内容
+      commentData: "", // 提交的评论内容
+      dialogShow: false
     };
   },
   mounted() {
@@ -125,8 +137,6 @@ export default {
     async initData() {
       const id = this.$route.query.id || "";
       const hid = this.$route.query.homework_Id;
-      console.log("id", id);
-      console.log("hid", hid);
       try {
         const detailData = await axios.get(
           API.production_detail + "?id=" + hid
@@ -223,6 +233,42 @@ export default {
         this.$refs["toast"].showToast("提交评论失败!");
         console.log(err);
       }
+    },
+    gtouchstart (commentItem) {
+      this.curCommentId = commentItem.id || "";
+      const that = this;
+      this.timeOutEvent = setTimeout(function () {
+        that.dialogShow = true;
+      }, 500); //这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
+      return false;
+    },
+    //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
+    gtouchend () {
+      clearTimeout(this.timeOutEvent); //清除定时器
+      if (this.timeOutEvent != 0) {
+        //这里写要执行的内容（尤如onclick事件）
+      }
+      return false;
+    },
+    async confirmOption () {
+      try {
+        const deleteResult = await axios.post(API.delete_comment, {
+          id: this.curCommentId
+        });
+        if (!deleteResult.success) {
+          console.log(this.msg);
+          this.$refs["toast"].showToast("无法删除当前评论!");
+          return;
+        }
+        this.$refs["toast"].showToast("成功删除当前评论!");
+        window.location.reload();
+      } catch (err) {
+        console.log(err);
+        this.$refs["toast"].showToast("无法删除当前评论!");
+      }
+    },
+    cancelOption () {
+      this.dialogShow = false;
     }
   },
   async created() {
