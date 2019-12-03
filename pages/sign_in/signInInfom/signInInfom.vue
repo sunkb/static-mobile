@@ -14,6 +14,7 @@
           id="appearance1"
           controls
           :src="detailData.video_url"
+          autoplay
         />
         <div class="appearance-video-item" @click="playFn('appearance1')">
          
@@ -37,7 +38,7 @@
       </div>
       <div class="videoComment">
         <div class="commentTitle">评论</div>
-        <div @click="openMask" class="addComment">撰写评论</div>
+        <div @click="openMask" class="addComment">添加评论</div>
         <img class="addPic" src="~/assets/punch_card/img/msg.png" alt />
 
         <div class="commentContent">
@@ -272,7 +273,6 @@ export default {
       padding-bottom: 20px;
     }
     .studentVideo {
-      background-color: black;
       width: 600px;
       height: 355px;
       margin-left: 30px;

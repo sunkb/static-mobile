@@ -1,7 +1,7 @@
 <template>
   <div class="upLoadVideo">
     <div class="content">
-      <div class="thisWeekVideo">本周的作业视频录制完成啦</div>
+      <div class="thisWeekVideo">本周的作业视频录好了吗？</div>
       <div class="quicklyUpLoad">赶快上传班主任老师才能点评哦~</div>
       <label class="upLoadSpan" for="video-upload-input">上传视频</label>
       <input
