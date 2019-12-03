@@ -119,7 +119,7 @@
                     <div
                       class="singleComment"
                     >
-                      <p class="singleComment2">{{commentItem.name+'：' + commentItem.content}}</p>
+                      <p class="singleComment2"><span class="commentName">{{commentItem.name + "："}}</span><span class="commentContent">{{commentItem.content}}</span></p>
                       <div v-if="index === 0">
                         <div
                           @click="watchMore(item)"
@@ -604,7 +604,14 @@ export default {
                   word-break: normal;
                   white-space: pre-wrap;
                   word-wrap: break-word;
-                  color: #333333;
+                  .commentName {
+                    color:rgba(51,51,51,1);
+                    font-size:28px;
+                  }
+                  .commentContent {
+                    color:rgba(102,102,102,1);
+                    font-size:28px;
+                  }
                   // overflow: hidden;
                   // white-space: nowrap;
                   // text-overflow: ellipsis;
