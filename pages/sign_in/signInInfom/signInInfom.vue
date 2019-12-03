@@ -246,11 +246,11 @@ export default {
   background-color: #f9f9f9;
   min-height: 100vh;
   min-width: 100vw;
+  padding-top: 20px;
   .myVideo {
-    margin: 0 auto;
+    margin: 0 30px;
     background-color: white;
-    margin-top: 20px;
-    width: 660px;
+    // width: 660px;
     height: 100%;
     .videoTitle {
       padding-top: 30px;
@@ -276,6 +276,7 @@ export default {
       width: 600px;
       height: 355px;
       margin-left: 30px;
+      // margin-right: 30px;
       margin-bottom: 30px;
       position: relative;
       .videoPlay {

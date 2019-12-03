@@ -9,8 +9,7 @@
             <div class="scoreMsg">打卡次数</div>
           </div>
           <span class="scoreNum">{{scoreNumTime}}</span>
-          <span class="scoreNumMsg">次</span>
-          <!-- <span class="scoreNum">{{completedTime}}</span>次 -->
+          <!-- <span class="scoreNumMsg">次</span> -->
         </div>
         <!-- <div class="completedSpace"></div> -->
         <div class="averageScore">
@@ -19,8 +18,7 @@
             <div class="scoreMsg">平均得分</div>
           </div>
           <span class="scoreNum">{{scoreNum}}</span>
-          <span class="scoreNumMsg">分</span>
-          <!-- <span class="scoreNum">{{getScoreNum}}</span>分 -->
+          <!-- <span class="scoreNumMsg">分</span> -->
         </div>
       </div>
       <!-- <div class="signTop">
@@ -243,7 +241,7 @@ export default {
       //   path: "/sign_in/signInInfom/signInInfom",
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
-      window.location = `${process.env.BASE_URL}/sign_in/signInInfom/signInInfom/?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
+      window.location = `http://192.168.29.119:3000/sign_in/signInInfom/signInInfom/?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
     },
     // 下拉加载数据
     onLoad () {
@@ -371,8 +369,9 @@ export default {
           align-items: center;
         }
         .scoreNum {
-          font-size: 60px;
+          font-size: 70px;
           font-weight: 500;
+          margin-top: 10px;
         }
         .scoreNumMsg {
           font-size: 24px;
@@ -653,6 +652,7 @@ export default {
                   word-break: normal;
                   white-space: pre-wrap;
                   word-wrap: break-word;
+                  color: #333333;
                   // overflow: hidden;
                   // white-space: nowrap;
                   // text-overflow: ellipsis;
@@ -662,7 +662,8 @@ export default {
           }
           .dividingLine {
             margin-left: 30px;
-            height: 2px;
+            margin-right: 30px;
+            height: 1px;
             width: 630px;
             background-color: #eeeeee;
             display: inline-block;

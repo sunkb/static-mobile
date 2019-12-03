@@ -62,7 +62,7 @@
       },
       colors: {  //选中的星级颜色值
         type: String,
-        default: '#F7BA2A'
+        default: '#F0552D'
       },
       voidColor: {  //未选中的星级颜色值
         type: String,
