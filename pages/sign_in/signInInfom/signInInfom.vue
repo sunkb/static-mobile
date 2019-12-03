@@ -331,7 +331,7 @@ export default {
         transform: translate(-50%, -50%);
         width: 76px;
         height: 76px;
-        background: url("~assets/presentation/img/playbtn.png") 50% 50% /
+        background: url("~assets/punch_card/img/playbtn.png") 50% 50% /
           contain no-repeat;
       }
       .videoWin {
