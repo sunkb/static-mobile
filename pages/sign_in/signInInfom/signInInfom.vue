@@ -17,9 +17,8 @@
           autoplay
         />
         <div class="appearance-video-item" @click="playFn('appearance1')">
-         
           <img class="videoWin" :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'" />
-           <div class="videoPlay"></div>
+          <div class="videoPlay"></div>
           <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
         </div>
       </div>
@@ -53,7 +52,11 @@
           </div>
           <div v-if="commentList.length<=0">
             <div class="commentMsg">有话想对老师说?点击评论按钮留言哦</div>
-            <img class="commentPic" src="https://qn-static.landi.com/uploadtool34833716da1aea1decec2681bdaefd50.png" alt />
+            <img
+              class="commentPic"
+              src="https://qn-static.landi.com/uploadtool34833716da1aea1decec2681bdaefd50.png"
+              alt
+            />
           </div>
         </div>
         <div></div>
@@ -75,8 +78,10 @@
           autofocus="autofocus"
         />
       </div>
-      <div class="content-button" @click="submitContent">
-        <div class="content-button-text">发送</div>
+      <div class="button-div">
+        <div class="content-button" @click="submitContent">
+          <div class="content-button-text">发送</div>
+        </div>
       </div>
     </div>
     <toast ref="toast"></toast>
@@ -100,7 +105,7 @@ import Toast from "~/components/Toast";
 import { Field, Dialog } from "vant";
 import "vant/lib/index.css";
 export default {
-  head() {
+  head () {
     return {
       title: "打卡详情"
     };
@@ -112,10 +117,10 @@ export default {
     "van-field": Field,
     [Dialog.Component.name]: Dialog.Component
   },
-  created() {
+  created () {
     console.log("我是2的");
   },
-  data() {
+  data () {
     return {
       commentList: [],
       sendVal: false, //是否发表
@@ -129,19 +134,19 @@ export default {
       dialogShow: false
     };
   },
-  mounted() {
+  mounted () {
     this.getComment();
   },
   methods: {
     // 初始化页面
-    async initData() {
+    async initData () {
       const id = this.$route.query.id || "";
       const hid = this.$route.query.homework_Id;
       try {
         const detailData = await axios.get(
           API.production_detail + "?id=" + hid
         );
-        console.log('我是数据',detailData)
+        console.log('我是数据', detailData)
         if (!detailData.success) {
           console.log(detailData.msg);
           return;
@@ -155,17 +160,17 @@ export default {
           video_url: result.video_url || ""
         };
         //得分同步在这里!!!
-        if(detailData.data.is_sync == 0){
-          this.getScore=false
-        }else{
-          this.getScore=true
+        if (detailData.data.is_sync == 0) {
+          this.getScore = false
+        } else {
+          this.getScore = true
         }
         console.log(this.getScore)
       } catch (err) {
         console.log(err);
       }
     },
-    async getComment() {
+    async getComment () {
       const getId = {
         homework_id: this.$route.query.homework_Id
       };
@@ -179,7 +184,7 @@ export default {
       }
       this.commentList = getCommentList.data;
     },
-    openMask() {
+    openMask () {
       this.buttonShow = true;
       this.focusState = true;
       // this.$refs.sssss.focus()
@@ -187,13 +192,13 @@ export default {
     /**
      * 添加评论的取消
      */
-    clickCancel() {
+    clickCancel () {
       console.log("我是点了取消的,或者没输入");
     },
     /**
      * 添加评论的确定
      */
-    clickDanger(textArea) {
+    clickDanger (textArea) {
       if (textArea) {
         console.log("我是输入并点了确定", textArea);
         this.commentList.push({
@@ -207,12 +212,12 @@ export default {
     /**
      * 视频播放
      */
-    playFn(name) {
+    playFn (name) {
       event.stopPropagation();
       let video1 = document.getElementById(name);
       videoPlayerEvent(video1);
     },
-    async submitContent() {
+    async submitContent () {
       this.buttonShow = false;
       this.focusState = false;
       const params = {
@@ -271,13 +276,13 @@ export default {
       this.dialogShow = false;
     }
   },
-  async created() {
+  async created () {
     await this.initData();
   },
   directives: {
     focus: {
       //根据focusState的状态改变是否聚焦focus
-      update: function(el, value) {
+      update: function (el, value) {
         //第二个参数传进来的是个json
         if (value) {
           el.focus();
@@ -332,8 +337,8 @@ export default {
         transform: translate(-50%, -50%);
         width: 76px;
         height: 76px;
-        background: url("~assets/punch_card/img/playbtn.png") 50% 50% /
-          contain no-repeat;
+        background: url("~assets/punch_card/img/playbtn.png") 50% 50% / contain
+          no-repeat;
       }
       .videoWin {
         position: absolute;
@@ -369,7 +374,7 @@ export default {
   }
   .videoComment {
     // background-color: orange;
-    width: 600px;
+    width: 640px;
     margin-left: 30px;
     .commentTitle {
       font-size: 28px;
@@ -441,20 +446,27 @@ export default {
     .content-input {
       width: 520px;
       margin-left: 30px;
+      textarea {
+        margin-top: 5px;
+      }
     }
-    .content-button {
-      width: 150px;
-      height: 84px;
-      margin-left: 20px;
-      background: rgba(255, 215, 80, 1);
-      border-radius: 2px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .content-button-text {
-        font-size: 28px;
-        font-weight: 400;
-        color: rgba(51, 51, 51, 1);
+    .button-div {
+      .content-button {
+        width: 150px;
+        height: 84px;
+        margin-left: 20px;
+        background: rgba(255, 215, 80, 1);
+        border-radius: 2px;
+        position: absolute;
+        bottom: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .content-button-text {
+          font-size: 28px;
+          font-weight: 400;
+          color: rgba(51, 51, 51, 1);
+        }
       }
     }
   }
