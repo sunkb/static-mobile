@@ -19,20 +19,18 @@ if (process.client) {
 import apiPoster from "@/api/danyue-diy-poster.js";
 import one from "./_component/one.vue";
 // import two from './two.vue';
-import three from './_component/three.vue';
+import three from "./_component/three.vue";
 
 export default {
   components: {
     one
   },
-	head: {
-	    script: [
-	      { src: 'https://html2canvas.hertzen.com/dist/html2canvas.min.js' }
-	    ]
-	},
+  head: {
+    script: [{ src: "https://html2canvas.hertzen.com/dist/html2canvas.min.js" }]
+  },
   data() {
     return {
-      currentTabComponent: [one,three],
+      currentTabComponent: [one, three],
       currentPage: 0,
       posterUrl: "",
       posterData: {},
@@ -42,20 +40,20 @@ export default {
   methods: {
     changeType(page) {
       this.currentPage = page;
-    }
+    },
     // 选择相册或者拍照
-    // chooseImage(currentPage) {
-    //   wx.chooseImage({
-    //     count: 1, // 默认9
-    //     sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
-    //     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-    //     success: (res) => {
-    //       this.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-    //       console.log('res------->', res);
-    //       this.changeType(currentPage);
-    //     },
-    //   });
-    // },
+    chooseImage(currentPage) {
+      wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ["compressed"], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+        success: res => {
+          this.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          console.log("res------->", res);
+          this.changeType(currentPage);
+        }
+      });
+    }
   },
   created() {
     if (process.client) {
@@ -66,28 +64,29 @@ export default {
       );
       apiPoster.posterIndex(urlLink).then(res => {
         console.log("res", res);
-        // if (!res.status) return;
-        // res = res.data;
-        // this.posterData = res;
-      // wxApi.wxConfig(res.wx_config, ['updateAppMessageShareData',
-      //   'updateTimelineShareData',
-      //   'onMenuShareAppMessage',
-      //   'onMenuShareTimeline',
-      //   'chooseImage',
-      //   'uploadImage'], false);
-      // const shareObj = {
-      //   title: res.wx_data.share_title,
-      //   desc: res.wx_data.share_desc, // 分享描述
-      //   link: res.wx_data.share_link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-      //   imgUrl: res.wx_data.share_img_url, // 分享图标
-      // };
-      // wx.ready(() => {
-      //   wxApi.onMenuShareAppMessage(shareObj);
-      //   wxApi.onMenuShareTimeline(shareObj);
-      // });
-      // wx.error((err) => {
-      //   console.log(err);
-      // });
+        if (!res.status) return;
+        res = res.data;
+        wxApi.wxConfig(
+          res.wx_config,
+          [
+            "chooseImage",
+            "uploadImage"
+          ],
+          false
+        );
+        // const shareObj = {
+        //   title: res.wx_data.share_title,
+        //   desc: res.wx_data.share_desc, // 分享描述
+        //   link: res.wx_data.share_link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        //   imgUrl: res.wx_data.share_img_url // 分享图标
+        // };
+        // wx.ready(() => {
+        //   wxApi.onMenuShareAppMessage(shareObj);
+        //   wxApi.onMenuShareTimeline(shareObj);
+        // });
+        wx.error(err => {
+          console.log(err);
+        });
       });
     }
   }

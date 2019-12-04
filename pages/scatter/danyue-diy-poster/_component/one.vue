@@ -31,7 +31,7 @@
       </div>
       <div class="btn-box">
         <input v-show="false" type="file" id="chooseFile" accept="image/*" />
-        <div class="default-btn btn" @click="chooseImage">选择照片</div>
+        <div class="default-btn btn" @click="$parent.chooseImage(0)">选择照片</div>
         <div class="primary-btn btn" @click="uploadImage">生成海报</div>
       </div>
     </div>
@@ -76,11 +76,6 @@ export default {
     };
   },
   methods: {
-    // chooseImage() {
-    //   if (process.client) {
-    //     document.getElementById("chooseFile").click();
-    //   }
-    // },
     makePoster() {
       if (process.client) {
         const posterElement = document.getElementById("clip-box");
