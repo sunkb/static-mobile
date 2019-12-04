@@ -66,14 +66,12 @@ export default {
         console.log("res", res);
         if (!res.status) return;
         res = res.data;
-        wxApi.wxConfig(
-          res.wx_config,
-          [
-            "chooseImage",
-            "uploadImage"
-          ],
-          false
-        );
+        const wxConfig = res.wx_config;
+        wx.config({
+          ...wxConfig,
+          debug:true,
+          jsApiList: ["chooseImage","uploadImage"]
+        })
         // const shareObj = {
         //   title: res.wx_data.share_title,
         //   desc: res.wx_data.share_desc, // 分享描述
