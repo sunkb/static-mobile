@@ -83,7 +83,7 @@ export default {
       console.log(this.videoSrc)
       localStorage.setItem('videoUrl',this.videoSrc)
       this.$refs['toast'].showToast('上传成功')
-       window.location = `${process.env.BASE_URL}/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
+       window.location = `http://192.168.216.37:57725/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
     },
     
   }

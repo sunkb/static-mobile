@@ -38,7 +38,7 @@
       <div></div>
       <img v-if="!isShow" class="videoWin" :src="videoUrl + '?vframe/jpg/offset/2/h/960/'" />
     </div>
-    <button class="release" id="release" @click="release" :disabled="btnDisabled">发布</button>
+    <button class="release" id="release" @click="videoOK" :disabled="btnDisabled">发布</button>
     <toast class="toast" ref="toast"></toast>
     <dialog-bar
       v-model="sendVal"
@@ -80,11 +80,12 @@ export default {
       comMsg: "",
       hasBeenVideos: "",
       videoUrl: "", //上传的视频地址,
-      homeworkId: this.$route.query.homeworkId || ""
+      homeworkId: this.$route.query.homeworkId || "",
+      videoFirstImg: '' // 视频首帧图片
     };
   },
   mounted () {
-    this.videoUrl = window.localStorage.getItem("videoUrl");
+    this.videoUrl = window.localStorage.getItem("videoUrl")
     //监测回退
     history.pushState(null, null, document.URL);
     console.log("我是history", history);
@@ -115,7 +116,7 @@ export default {
         this.isShow = true;
       } else {
         window.location =
-          `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/`;
+          `http://192.168.216.37:57725/sign_in/upLoadVideo/upLoadVideo/`;
       }
 
       //回退按钮点击处理
@@ -124,9 +125,8 @@ export default {
       console.log("我是取消的");
     },
     clickDanger (textArea) {
-      window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
-      // window.location =`http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
-
+      // window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
+      window.location =`http://192.168.216.37:57725/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
       console.log("我是点了确定的");
     },
     hasBeenVideo () {
@@ -136,11 +136,9 @@ export default {
       this.videoUpload();
     },
     async videoUpload () {
-      this.$refs["toast"].showLoadingToast();
       const fileUploader = new FileUploader();
       await fileUploader.init(1);
       this.videoSrc = fileUploader.domain;
-      console.log(this.videoSrc, "222");
       const uploadReturn = fileUploader.upload(
         this.$refs["videoUploadInput"].files[0],
         FILE_TYPE.VIDEO,
@@ -148,7 +146,6 @@ export default {
         this.fileUploadError,
         this.fileUploadComplete
       );
-      this.$refs["toast"].hideLoadingToast();
       if (uploadReturn.error) {
         this.$refs["toast"].showToast(uploadReturn.error);
         return;
@@ -167,10 +164,12 @@ export default {
     },
     fileUploadComplete (res) {
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
-      this.videoSrc = `${res.key}`
+      // this.videoFirstImg = `${this.videoSrc}${res.key}`
+      this.videoSrc = `${this.videoSrc}${res.key}`
+      console.log(this.videoSrc)
       localStorage.setItem('videoUrl', this.videoSrc)
       this.$refs['toast'].showToast('上传成功')
-      window.location = `${process.env.BASE_URL}/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
+      window.location = `http://192.168.216.37:57725/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
     },
     btn () {
       this.hasBeenVideos = "+";
@@ -179,36 +178,31 @@ export default {
       this.isShow = true;
       document.getElementById("release").style.backgroundColor = "#EEEEEE";
     },
-    release () {
-      if (this.comMsg.length === 0) {
-        this.$refs["toast"].showToast("请添加评论");
-        return;
-      }
-      this.$refs["toast"].showToast("发布成功");
-      this.videoOK();
-    },
+    // release () {
+    //   if (this.comMsg.length === 0) {
+    //     this.$refs["toast"].showToast("请添加评论");
+    //     return;
+    //   }
+    //   this.$refs["toast"].showToast("发布成功");
+    //   this.videoOK();
+    // },
     playFn (name) {
       event.stopPropagation();
       let video1 = document.getElementById(name);
       videoPlayerEvent(video1);
     },
     async videoOK () {
-      const data = {
-        homework_id: this.homeworkId,
-        content: this.comMsg
-      };
-
-      const addSuccess = await axios.post(API.add_Comment, data);
-      if (addSuccess.success) {
-        const videoData = {
+      const videoData = {
           video_url: this.videoUrl,
-          id: this.homeworkId
+          id: this.homeworkId,
+          content: this.comMsg || ''
         };
-        const addSuccess = await axios.post(API.submit_Work, videoData);
-        console.log("我是videoData", videoData);
+      const addSuccess = await axios.post(API.submit_Work, videoData);
+      if (addSuccess.success) {
+        this.$refs["toast"].showToast("发布成功");
         setTimeout(() => {
-          window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
-          // window.location =`http://192.168.29.119:3000/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign`;
+          // window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
+          window.location =`http://192.168.216.37:57725/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
 
         }, 1000);
       } else {
