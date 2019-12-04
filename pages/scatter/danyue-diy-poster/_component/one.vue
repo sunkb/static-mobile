@@ -3,6 +3,10 @@
     <div class="clip-wrapper">
       <canvas v-show="false" id="canvas"></canvas>
       <div id="clip-box" class="clip-box" ref="clip-box">
+        <div class="p-info">
+          <p class="name">{{this.p_name}}</p>
+          <p class="date">{{this.p_date}}</p>
+        </div>
         <img id="temp-img" ref="temp-img" :src="currentImg" alt />
         <img
           v-if="isDev"
@@ -35,11 +39,18 @@
         <div class="primary-btn btn" @click="uploadImage">生成海报</div>
       </div>
     </div>
-    <div class="poster-model" v-if="modelShow" @click="modelShow = false">
-      <div class="tip-image-box">
-        <img :src="require('../posterImages/tips.png')" alt class="not-allow-selected" />
+    <div class="poster-model" v-if="modelShow">
+      <div class="modal">
+        <div class="tip-image-box">
+          <h3>基本信息</h3>
+          <h4>填写正确信息后,即可生成海报</h4>
+          <div class="input-wrap">
+            <input class="input-area" v-model="p_name" type="text" placeholder="请填写名字" />
+            <input class="input-area" v-model="p_date" type="text" placeholder="请填写入职日期" />
+          </div>
+          <div v-on:click="submitInfo" class="btn">提交信息</div>
+        </div>
       </div>
-      <img class="know-btn" :src="require('../posterImages/i-know-btn.png')" alt />
     </div>
     <make-poster-model v-show="makePosterShow"></make-poster-model>
   </div>
@@ -73,10 +84,16 @@ export default {
       modelShow: true,
       makePosterShow: false,
       clipImgUrl: "",
-      mediaId:''
+      mediaId: "",
+      p_name:"",
+      p_date:"",
     };
   },
   methods: {
+    submitInfo(){
+      console.log('sss',this.p_name,this.p_date);
+      this.modelShow = false;
+    },
     // 选择相册或者拍照
     chooseImage() {
       wx.chooseImage({
@@ -85,7 +102,7 @@ export default {
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
         success: res => {
           this.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          console.log("res3333------->this.mediaId",this.mediaId);
+          console.log("res3333------->this.mediaId", this.mediaId);
         }
       });
     },
@@ -105,94 +122,32 @@ export default {
           });
       }
     },
-    // makePoster() {
-    //   const that = this;
-    //   that.makePosterShow = true;
-    //   const pr = poster.pixelRatio();
-    //   const longUrl = that.posterData.url;
-    //   const $clipBox = $("#clip-box"); // 裁剪框
-    //   const $clipImg = $("#clip-img"); // 用户选择的图片
-    //   const $tempBox = $("#temp-box"); // 模板盒子
-    //   const $tempImg = $("#temp-img"); // 模板dom
-    //   //const $qrCode = $("#qr-code");
-    //   $tempImg.data("width", $tempImg[0].naturalWidth);
-    //   $tempImg.data("height", $tempImg[0].naturalHeight);
-    //   const canvas = document.createElement("canvas");
-    //   // const canvas = document.getElementById('canvas');
-    //   canvas.width = $clipBox.width() * pr;
-    //   canvas.height = $clipBox.height() * pr;
-    //   const ctx = canvas.getContext("2d");
-    //   ctx.fillStyle = "#fff";
-    //   ctx.fillRect(0, 0, canvas.width, canvas.height);
-    //   const clipImg = new Image();
-    //   clipImg.src = that.clipImgUrl;
-    //   // clipImg.setAttribute('crossOriginigin', 'Anonymous');
-    //   clipImg.crossOriginigin = "anonymous";
-    //   clipImg.onload = function() {
-    //     console.log(this.width, this.height);
-    //     $clipImg.data("width", this.width);
-    //     $clipImg.data("height", this.height);
-    //     console.log('$clipImg',$clipImg)
-    //     poster.drawImage(ctx, clipImg, poster.intersect($clipBox, $clipImg));
-    //     poster.drawImage(ctx, $tempImg, poster.intersect($clipBox, $tempImg));
-    //     console.log("canvas---->", canvas);
-    //     // const imgBase64 = jrQrcode.getQrBase64(longUrl, {
-    //     //   padding: 10,
-    //     //   correctLevel: QRErrorCorrectLevel.L, // 二维码容错level
-    //     //   width: 800,
-    //     //   height: 800
-    //     // });
-    //     // // console.log(imgBase64);
-    //     // const img = new Image();
-    //     // img.src = imgBase64;
-    //     // img.onload = function() {
-    //     //   // $qrCode.data("width", this.width);
-    //     //   // $qrCode.data("height", this.height);
-    //     //   // poster.drawImage(ctx, img, poster.intersect($clipBox, $qrCode));
-    //     //   const arr = that.currentImg.split("/");
-    //     //   console.log("--------base64-------");
-    //     //   const base64 = canvas.toDataURL("image/jpeg");
-    //     //   // console.log('base64------->', base64);
-    //     //   that.$emit("update:posterUrl", base64);
-    //     //   that.$emit("changeType", 2);
-    //     //   that.makePosterShow = false;
-    //     // };
-    //     const base64 = canvas.toDataURL("image/jpeg");
-    //     console.log('base64------->', base64);
-    //               that.$emit("update:posterUrl", base64);
-    //       that.$emit("changeType", 1);
-    //       that.makePosterShow = false;
-    //   };
-    //   clipImg.onerror = function() {
-    //     that.makePosterShow = false;
-    //     that.$Toast("图片加载失败~");
-    //   };
-    // },
+
     // 上传图片
     uploadImage() {
-      //this.makePoster();
+      this.makePoster();
 
-      if (process.env.NODE_ENV === "development") {
-        this.clipImgUrl = require("../posterImages/avatar.jpg");
-        this.makePoster();
-        return;
-      } else {
-        const that = this;
-        that.makePosterShow = true;
-        wx.uploadImage({
-          localId: that.mediaId, // 需要上传的图片的本地ID，由chooseImage接口获得
-          isShowProgressTips: 1, // 默认为1，显示进度提示
-          success(res) {
-            //res.serverId; // 返回图片的服务器端ID
-              apiPoster.getPosterImage(res.serverId).then((data) => {
-                if (!data.status) return;
-                that.mediaId = data.data;
-                that.makePosterShow = false;
-                that.makePoster();
-              });
-          }
-        });
-      }
+      // if (process.env.NODE_ENV === "development") {
+      //   this.clipImgUrl = require("../posterImages/avatar.jpg");
+      //   this.makePoster();
+      //   return;
+      // } else {
+      //   const that = this;
+      //   that.makePosterShow = true;
+      //   wx.uploadImage({
+      //     localId: that.mediaId, // 需要上传的图片的本地ID，由chooseImage接口获得
+      //     isShowProgressTips: 1, // 默认为1，显示进度提示
+      //     success(res) {
+      //       //res.serverId; // 返回图片的服务器端ID
+      //         apiPoster.getPosterImage(res.serverId).then((data) => {
+      //           if (!data.status) return;
+      //           that.mediaId = data.data;
+      //           that.makePosterShow = false;
+      //           that.makePoster();
+      //         });
+      //     }
+      //   });
+      // }
     },
     chooseFileChange() {
       const chooseFile = document.getElementById("chooseFile");
@@ -289,6 +244,22 @@ export default {
       margin: 0 auto;
       position: relative;
       overflow: hidden;
+      .p-info{
+        position:absolute;
+        z-index: 99;
+        top:52px;
+        left: 120px;
+        color:#fff;
+        .name{
+          font-size: 28px;
+          font-weight: 700;
+          margin-left: -20px;
+        }
+        .date{
+          font-size: 28px;
+          font-weight: 700;
+        }
+      }
       #temp-img {
         width: 600px;
         height: 770px;
@@ -372,16 +343,61 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    .tip-image-box {
-      margin-top: 88px;
-      img {
-        width: 414px;
+    justify-content: center;
+    .modal {
+      width: 550px;
+      height: 626px;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+      h3{
+        font-size:34px;
+        color:#333333;
+        text-align: center;
       }
-    }
-    .know-btn {
-      width: 200px;
-      height: 70px;
-      margin-top: 60px;
+      h4{
+        color:#808080;
+        font-size: 26px;
+        text-align: center;
+        margin-top: 16px;
+      }
+      .input-wrap{
+        margin-top: 60px;
+      }
+      .input-area{
+        margin-bottom:40px;
+        width: 450px;
+        height:90px;
+        border: 1px solid #D9D9D9;
+        font-size: 28px;
+        color: #333333;
+      }
+      .btn{
+        background-color: #FB9253;
+        color: #fff;
+        width: 450px;
+        height: 90px;
+        border-radius:44px;
+        text-align: center;
+        line-height: 90px;
+        font-size: 32px;
+      }
+      .input-area::placeholder{
+        color: #B2B2B2;
+        font-size: 28px;
+      }
+      .tip-image-box {
+        img {
+          width: 414px;
+        }
+      }
+      .know-btn {
+        width: 200px;
+        height: 70px;
+        margin-top: 60px;
+      }
     }
   }
 }
