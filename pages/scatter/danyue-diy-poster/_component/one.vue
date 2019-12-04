@@ -47,7 +47,7 @@
 
 <script>
 if (process.client) {
-  var wx = require("weixin-js-sdk");
+  //var wx = require("weixin-js-sdk");
   var touch = require("../js/touch.js");
 }
 import poster from "../js/poster.js";

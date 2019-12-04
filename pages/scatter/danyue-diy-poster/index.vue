@@ -13,9 +13,9 @@
 <script>
 // import wx from 'weixin-js-sdk';
 // import * as wxApi from '@/common/wx.js';
-if (process.client) {
-  var wx = require("weixin-js-sdk");
-}
+// if (process.client) {
+//   var wx = require("weixin-js-sdk");
+// }
 import apiPoster from "@/api/danyue-diy-poster.js";
 import one from "./_component/one.vue";
 // import two from './two.vue';
@@ -26,7 +26,7 @@ export default {
     one
   },
   head: {
-    script: [{ src: "https://html2canvas.hertzen.com/dist/html2canvas.min.js" }]
+    script: [{ src: "https://res.wx.qq.com/open/js/jweixin-1.2.0.js"}]
   },
   data() {
     return {
