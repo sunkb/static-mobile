@@ -169,25 +169,27 @@ export default {
     // },
     // 上传图片
     uploadImage() {
-      if (process.env.NODE_ENV === "development") {
-        this.clipImgUrl = require("../posterImages/avatar.jpg");
-        this.makePoster();
-        return;
-      } else {
-        const that = this;
-        wx.uploadImage({
-          localId: that.mediaId, // 需要上传的图片的本地ID，由chooseImage接口获得
-          isShowProgressTips: 1, // 默认为1，显示进度提示
-          success(res) {
-            // res.serverId; // 返回图片的服务器端ID
-            //   api.poster.getPosterImage(res.serverId).then((data) => {
-            //     if (!data.status) return;
-            //     that.clipImgUrl = data.data;
-            //     that.makePoster();
-            //   });
-          }
-        });
-      }
+      this.makePoster();
+
+      // if (process.env.NODE_ENV === "development") {
+      //   this.clipImgUrl = require("../posterImages/avatar.jpg");
+      //   this.makePoster();
+      //   return;
+      // } else {
+      //   const that = this;
+      //   wx.uploadImage({
+      //     localId: that.mediaId, // 需要上传的图片的本地ID，由chooseImage接口获得
+      //     isShowProgressTips: 1, // 默认为1，显示进度提示
+      //     success(res) {
+      //       // res.serverId; // 返回图片的服务器端ID
+      //       //   api.poster.getPosterImage(res.serverId).then((data) => {
+      //       //     if (!data.status) return;
+      //       //     that.clipImgUrl = data.data;
+      //       //     that.makePoster();
+      //       //   });
+      //     }
+      //   });
+      // }
     },
     chooseFileChange() {
       const chooseFile = document.getElementById("chooseFile");
