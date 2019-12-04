@@ -26,7 +26,13 @@ export default {
     one
   },
   head: {
-    script: [{ src: "https://res.wx.qq.com/open/js/jweixin-1.2.0.js"}]
+    script: [
+      {
+        src:
+          "https://qn-static.landi.com/uploadtoold47d092f9d9f1ab9d577a6a21fa85c0e.js"
+      },
+      { src: "https://res.wx.qq.com/open/js/jweixin-1.2.0.js" }
+    ]
   },
   data() {
     return {
@@ -56,9 +62,9 @@ export default {
         const wxConfig = res.wx_config;
         wx.config({
           ...wxConfig,
-          debug:true,
-          jsApiList: ["chooseImage","uploadImage"]
-        })
+          debug: true,
+          jsApiList: ["chooseImage", "uploadImage"]
+        });
         // const shareObj = {
         //   title: res.wx_data.share_title,
         //   desc: res.wx_data.share_desc, // 分享描述
