@@ -36,7 +36,7 @@
         </div>
 
         <!-- 请上传<span>{{month}}</span>月<span>{{day}}</span>日作业 -->
-        <div class="thisWeekProcess" v-if="this.hasSigned==='A'">
+        <div class="thisWeekProcess" v-if="this.hasSigned==='A'" ref="centerAction">
           <img class="signIn5" src="~/assets/punch_card/img/signIn5.png" alt />
           <div class="notCompleted">尚未完成哦</div>
           <div class="hasCompleted">班级已有{{hasCompleted}}人提交</div>
@@ -124,7 +124,7 @@
                         <div
                           @click="watchMore(item)"
                           style="position:absolute;right:24px;font-size:12px;color:rgba(153,153,153,1);"
-                          v-if="item.comment.length == 0 || item.comment.length >= 1 "
+                          v-if="(item.comment.length == 1 && commentItem.content.lenght>8) || item.comment.length > 1 "
                         >{{item.moreFlag ? '收起隐藏' : '... 显示更多'}}</div>
                       </div>
                     </div>
@@ -148,7 +148,7 @@
           </div>
         </div>
       </div>
-      <div class="finSign" v-if="this.hasSigned==='A'">
+      <div class="finSign" v-show="this.hasSigned==='A' && showFloatAction">
         <div class="finSignMsg">本周作业已有{{hasCompleted}}位同班同学提交哦</div>
         <!-- 到时候加到已有后面{{thisWeekSigned}} -->
         <div class="finSignBtn" @click="finSignBtn()">去打卡</div>
@@ -185,6 +185,8 @@ export default {
   mounted () {
     this.submit();
     this.history();
+    this.centerActionBottom = this.$refs.centerAction.getBoundingClientRect().bottom
+    window.addEventListener('scroll', this.handleScroll)
   },
   data () {
     return {
@@ -207,7 +209,9 @@ export default {
       allLoaded: false,
       timeOutEvent: null,
       dialogShow: false,
-      curCommentId: "" // 当前的评论id
+      curCommentId: "", // 当前的评论id
+      showFloatAction: false,
+      centerActionBottom: 0
     };
   },
   methods: {
@@ -216,8 +220,8 @@ export default {
      */
     finSignBtn: function () {
       // http://192.168.29.119:3000/
-      window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/?homeworkId=${this.homeworkId}`;
-      // window.location = `http://192.168.29.119:3000/sign_in/upLoadVideo/upLoadVideo?homeworkId=${this.homeworkId}`;
+      // window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/?homeworkId=${this.homeworkId}`;
+      window.location = `http://192.168.216.37:53109/sign_in/upLoadVideo/upLoadVideo/?homeworkId=${this.homeworkId}`;
     },
     /**
      * 点击历史打卡记录跳转到详情页面
@@ -229,7 +233,7 @@ export default {
       //   path: "/sign_in/signInInfom/signInInfom",
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
-      window.location = `http://192.168.216.37:64000/sign_in/signInInfom/signInInfom/?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
+      window.location = `http://192.168.216.37:53109/sign_in/signInInfom/signInInfom/?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
     },
     // 下拉加载数据
     onLoad () {
@@ -290,7 +294,14 @@ export default {
     //查看和隐藏更多评论
     watchMore (itemObj) {
       itemObj.moreFlag = !itemObj.moreFlag;
-    }
+    },
+    handleScroll() {
+      if (window.scrollY > this.centerActionBottom) {
+        this.showFloatAction = true
+      } else {
+        this.showFloatAction = false
+      }
+    },
   }
 };
 </script>

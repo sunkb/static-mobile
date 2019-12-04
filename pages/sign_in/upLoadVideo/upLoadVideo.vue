@@ -51,7 +51,6 @@ export default {
       const fileUploader = new FileUploader();
       await fileUploader.init(1);
       this.videoSrc = fileUploader.domain;
-      console.log(this.videoSrc,'222')
       const uploadReturn = fileUploader.upload(
         this.$refs["videoUploadInput"].files[0],
         FILE_TYPE.VIDEO2,
@@ -71,7 +70,7 @@ export default {
     fileUploadNext(res) {
       console.log(this.videoStatus,'this.video')
       this.videoStatus.progress = Math.round(res.total.percent * 100) / 100
-      this.$refs['toast'].showLoadingToast( this.videoStatus.progress)
+      this.$refs['toast'].showLoadingToast( this.videoStatus.progress + '%')
     },
     fileUploadError(res) {
       console.log(res)
