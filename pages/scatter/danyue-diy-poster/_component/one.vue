@@ -64,6 +64,7 @@ if (process.client) {
 import apiPoster from "@/api/danyue-diy-poster.js";
 import poster from "../js/poster.js";
 import makePosterModel from "./model.vue";
+import image1 from './image'
 
 export default {
   components: {
@@ -79,8 +80,8 @@ export default {
       // tempList: [
       //   "https://qn-static.landi.com/uploadtool5778fc7f59e388f5fb69c1a32a62513a.png"
       // ],
-      tempList: [require("../posterImages/1.png")],
-      currentImg: require("../posterImages/1.png"),
+      tempList: [image1],
+      currentImg: image1,
       modelShow: true,
       makePosterShow: false,
       clipImgUrl: "",
@@ -91,7 +92,6 @@ export default {
   },
   methods: {
     submitInfo(){
-      console.log('sss',this.p_name,this.p_date);
       this.modelShow = false;
     },
     // 选择相册或者拍照
