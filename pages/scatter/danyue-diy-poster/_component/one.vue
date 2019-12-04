@@ -1,7 +1,7 @@
 <template>
   <div class="poster-two">
     <div class="clip-wrapper">
-      <!-- <canvas id="canvas"></canvas> -->
+      <canvas v-show="false" id="canvas"></canvas>
       <div id="clip-box" class="clip-box" ref="clip-box">
         <img id="temp-img" ref="temp-img" :src="currentImg" alt />
         <img
@@ -30,7 +30,8 @@
         </div>
       </div>
       <div class="btn-box">
-        <div class="default-btn btn" @click="$parent.chooseImage(1)">选择照片</div>
+        <input v-show="false" type="file" id="chooseFile" accept="image/*" />
+        <div class="default-btn btn" @click="chooseImage">选择照片</div>
         <div class="primary-btn btn" @click="uploadImage">生成海报</div>
       </div>
     </div>
@@ -71,10 +72,15 @@ export default {
       currentImg: require("../posterImages/1.png"),
       modelShow: true,
       makePosterShow: false,
-      clipImgUrl: require("../posterImages/avatar.jpg")
+      clipImgUrl: ""
     };
   },
   methods: {
+    // chooseImage() {
+    //   if (process.client) {
+    //     document.getElementById("chooseFile").click();
+    //   }
+    // },
     makePoster() {
       if (process.client) {
         const posterElement = document.getElementById("clip-box");
@@ -156,7 +162,7 @@ export default {
     // },
     // 上传图片
     uploadImage() {
-      if (process.env.NODE_ENV !== "development") {
+      if (process.env.NODE_ENV === "development") {
         this.clipImgUrl = require("../posterImages/avatar.jpg");
         this.makePoster();
         return;
@@ -175,10 +181,52 @@ export default {
           }
         });
       }
+    },
+    chooseFileChange() {
+      const chooseFile = document.getElementById("chooseFile");
+      chooseFile.onchange = () => {
+        var file = chooseFile.files[0];
+        var reader = new FileReader();
+        reader.onload = e => {
+          var dataURL = e.target.result,
+            // this.clipImgUrl =
+            // console.log('dataURL',dataURL)
+            canvas = document.querySelector("canvas"), // see Example 4
+            ctx = canvas.getContext("2d"),
+            img = new Image();
+
+          var exif = EXIF.readFromBinaryFile(new BinaryFile(file));
+
+          switch (exif.Orientation) {
+            case 8:
+              ctx.rotate((90 * Math.PI) / 180);
+              break;
+            case 3:
+              ctx.rotate((180 * Math.PI) / 180);
+              break;
+            case 6:
+              ctx.rotate((-90 * Math.PI) / 180);
+              break;
+          }
+          img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            console.log(canvas.toDataURL("image/png"));
+
+            this.clipImgUrl = canvas.toDataURL("image/png");
+          };
+
+          img.src = dataURL;
+        };
+
+        reader.readAsDataURL(file);
+      };
     }
   },
   mounted() {
     touch.default(this.$refs["clip-box"], this.$refs["clip-img"]);
+    //this.chooseFileChange();
   },
   created() {}
 };
