@@ -185,7 +185,8 @@ export default {
   mounted () {
     this.submit();
     this.history();
-    this.centerActionBottom = this.$refs.centerAction.getBoundingClientRect().bottom
+    console.log(this.$refs)
+    // this.centerActionBottom = this.$refs.centerAction.getBoundingClientRect().bottom
     window.addEventListener('scroll', this.handleScroll)
   },
   data () {
@@ -211,7 +212,7 @@ export default {
       dialogShow: false,
       curCommentId: "", // 当前的评论id
       showFloatAction: false,
-      centerActionBottom: 0
+      centerActionBottom: 250
     };
   },
   methods: {
@@ -303,6 +304,13 @@ export default {
       }
     },
   }
+  // beforeRouteEnter(to, from, next) {
+  //   const token = to.query.token || '';
+  //   api.login.verifyToken(token).then((d) => {
+  //     if (!d.success) return alert(d.msg);
+  //     next();
+  //   });
+  // },
 };
 </script>
 
@@ -642,13 +650,15 @@ export default {
       }
     }
     .finSign {
-      margin-top: 20px;
-      margin-bottom: 20px;
+      // margin-top: 20px;
+      // margin-bottom: 20px;
       background-color: #fff;
       padding-left: 30px;
       font-size: 28px;
       // width: 690px;
       height: 90px;
+      position: fixed;
+      bottom: 0;
       .finSignMsg {
         margin-top: 25px;
         margin-left: 30px;
