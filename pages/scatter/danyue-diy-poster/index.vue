@@ -64,8 +64,8 @@ export default {
       const urlLink = decodeURIComponent(
         document.URL.split("#")[0].split("?")[0]
       );
-      apiPoster.posterIndex(urlLink).then(res => {
-        console.log("res", res);
+      //apiPoster.posterIndex(urlLink).then(res => {
+        //console.log("res", res);
         // if (!res.status) return;
         // res = res.data;
         // this.posterData = res;
@@ -88,7 +88,7 @@ export default {
       // wx.error((err) => {
       //   console.log(err);
       // });
-      });
+      //});
     }
   }
 };
