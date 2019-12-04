@@ -117,7 +117,7 @@ export default {
         this.isShow = true;
       } else {
         window.location =
-          `http://192.168.216.37:57725/sign_in/upLoadVideo/upLoadVideo/`;
+          `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/`;
       }
 
       //回退按钮点击处理
@@ -127,7 +127,7 @@ export default {
     },
     clickDanger (textArea) {
       // window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
-      window.location =`http://192.168.216.37:57725/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
+      window.location =`${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
       console.log("我是点了确定的");
     },
     hasBeenVideo () {
@@ -167,11 +167,10 @@ export default {
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
       this.videoFirstImg = `${this.videoSrc}${res.key}`
       this.videoSrc = `${res.key}`
-      console.log(this.videoSrc)
       localStorage.setItem('videoUrl', this.videoSrc)
       localStorage.setItem('videoFirstImg', this.videoFirstImg)
       this.$refs['toast'].showToast('上传成功')
-      window.location = `http://192.168.216.37:57725/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
+      window.location = `${process.env.BASE_URL}/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
     },
     btn () {
       this.hasBeenVideos = "+";
@@ -204,7 +203,7 @@ export default {
         this.$refs["toast"].showToast("发布成功");
         setTimeout(() => {
           // window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
-          window.location =`http://192.168.216.37:57725/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
+          window.location =`${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
 
         }, 1000);
       } else {

@@ -40,7 +40,8 @@ export default {
     return {
       homeworkId:this.$route.query.homeworkId || '',
       videoSrc: '',
-      myVid:''
+      myVid:'',
+      videoFirstImg: '' // 视频首帧图片
     };
   },
   methods: {
@@ -79,11 +80,12 @@ export default {
     },
     fileUploadComplete(res) {
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
+      this.videoFirstImg = `${this.videoSrc}${res.key}`
       this.videoSrc = `${res.key}`
-      console.log(this.videoSrc)
       localStorage.setItem('videoUrl',this.videoSrc)
+      localStorage.setItem('videoFirstImg',this.videoFirstImg)
       this.$refs['toast'].showToast('上传成功')
-       window.location = `http://192.168.216.37:57725/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
+       window.location = `${process.env.BASE_URL}/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
     },
     
   }
