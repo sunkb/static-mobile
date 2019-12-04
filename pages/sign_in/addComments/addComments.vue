@@ -36,7 +36,7 @@
     />
     <div class="appearance-video-item" @click="playFn('appearance1')">
       <div></div>
-      <img v-if="!isShow" class="videoWin" :src="videoUrl + '?vframe/jpg/offset/2/h/960/'" />
+      <img v-if="!isShow" class="videoWin" :src="videoFirstImg + '?vframe/jpg/offset/2/h/960/'" />
     </div>
     <button class="release" id="release" @click="videoOK" :disabled="btnDisabled">发布</button>
     <toast class="toast" ref="toast"></toast>
@@ -86,6 +86,7 @@ export default {
   },
   mounted () {
     this.videoUrl = window.localStorage.getItem("videoUrl")
+    this.videoFirstImg = window.localStorage.getItem("videoFirstImg")
     //监测回退
     history.pushState(null, null, document.URL);
     console.log("我是history", history);
@@ -164,10 +165,11 @@ export default {
     },
     fileUploadComplete (res) {
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADED
-      // this.videoFirstImg = `${this.videoSrc}${res.key}`
-      this.videoSrc = `${this.videoSrc}${res.key}`
+      this.videoFirstImg = `${this.videoSrc}${res.key}`
+      this.videoSrc = `${res.key}`
       console.log(this.videoSrc)
       localStorage.setItem('videoUrl', this.videoSrc)
+      localStorage.setItem('videoFirstImg', this.videoFirstImg)
       this.$refs['toast'].showToast('上传成功')
       window.location = `http://192.168.216.37:57725/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
     },
