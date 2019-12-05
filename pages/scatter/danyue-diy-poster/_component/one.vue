@@ -61,7 +61,7 @@ import poster from "../_js/poster.js";
 import makePosterModel from "./model.vue";
 import image1 from "./image";
 import image2 from "./image2";
-import image3 from "./tempimage";
+//import image3 from "./tempimage";
 
 export default {
   components: {
@@ -81,7 +81,7 @@ export default {
       currentImg: image2,
       modelShow: true,
       makePosterShow: false,
-      clipImgUrl: image3,
+      clipImgUrl: "",
       mediaId: "",
       p_name: " ",
       p_date: "",
