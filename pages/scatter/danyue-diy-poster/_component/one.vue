@@ -64,7 +64,8 @@ if (process.client) {
 import apiPoster from "@/api/danyue-diy-poster.js";
 import poster from "../js/poster.js";
 import makePosterModel from "./model.vue";
-import image1 from './image'
+import image1 from "./image";
+import image2 from "./image2";
 
 export default {
   components: {
@@ -80,18 +81,18 @@ export default {
       // tempList: [
       //   "https://qn-static.landi.com/uploadtool5778fc7f59e388f5fb69c1a32a62513a.png"
       // ],
-      tempList: [image1],
-      currentImg: image1,
+      tempList: [image2,image1],
+      currentImg: image2,
       modelShow: true,
       makePosterShow: false,
       clipImgUrl: "",
       mediaId: "",
-      p_name:"",
-      p_date:"",
+      p_name: "",
+      p_date: ""
     };
   },
   methods: {
-    submitInfo(){
+    submitInfo() {
       this.modelShow = false;
     },
     // 选择相册或者拍照
@@ -244,18 +245,18 @@ export default {
       margin: 0 auto;
       position: relative;
       overflow: hidden;
-      .p-info{
-        position:absolute;
+      .p-info {
+        position: absolute;
         z-index: 99;
-        top:52px;
+        top: 52px;
         left: 120px;
-        color:#fff;
-        .name{
+        color: #fff;
+        .name {
           font-size: 28px;
           font-weight: 700;
           margin-left: -20px;
         }
-        .date{
+        .date {
           font-size: 28px;
           font-weight: 700;
         }
@@ -352,40 +353,43 @@ export default {
       flex-direction: column;
       align-items: center;
       padding: 50px;
-      h3{
-        font-size:34px;
-        color:#333333;
+      h3 {
+        font-size: 34px;
+        color: #333333;
         text-align: center;
       }
-      h4{
-        color:#808080;
+      h4 {
+        color: #808080;
         font-size: 26px;
         text-align: center;
         margin-top: 16px;
       }
-      .input-wrap{
+      .input-wrap {
         margin-top: 60px;
       }
-      .input-area{
-        margin-bottom:40px;
+      .input-area {
+        margin-bottom: 40px;
         width: 450px;
-        height:90px;
-        border: 1px solid #D9D9D9;
+        height: 90px;
+        border: 1px solid #d9d9d9;
         font-size: 28px;
         color: #333333;
       }
-      .btn{
-        background-color: #FB9253;
+      .input-area:focus {
+        border: none;
+      }
+      .btn {
+        background-color: #fb9253;
         color: #fff;
         width: 450px;
         height: 90px;
-        border-radius:44px;
+        border-radius: 44px;
         text-align: center;
         line-height: 90px;
         font-size: 32px;
       }
-      .input-area::placeholder{
-        color: #B2B2B2;
+      .input-area::placeholder {
+        color: #b2b2b2;
         font-size: 28px;
       }
       .tip-image-box {

@@ -5,7 +5,7 @@
     </div>
     <img
       class="tips-text"
-      src="https://qn-static.landi.com/uploadtool5297355d935881eea8a75e2332465317.png"
+      src="https://qn-static.landi.com/uploadtool3663b9ed245223f942c1f9a86b23eefc.jpg"
       alt
     />
   </div>
@@ -59,8 +59,8 @@ export default {
     }
   }
   .tips-text {
-    width: 560px;
-    margin-top: 60px;
+    width:720px;
+    margin-top:20px;
   }
   .bottoms {
     width: 100%;
