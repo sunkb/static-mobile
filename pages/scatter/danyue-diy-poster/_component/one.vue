@@ -15,7 +15,7 @@
           :src="require('../posterImages/avatar.jpg')"
           alt
         />
-        <img v-else id="clip-img" ref="clip-img" :src="mediaId" alt />
+        <img v-else id="clip-img" ref="clip-img" :src="clipImgUrl" alt />
       </div>
     </div>
     <div class="temp-container">
@@ -135,75 +135,34 @@ export default {
 
     // 上传图片
     uploadImage() {
-      this.makePoster();
+      //this.makePoster();
 
-      // if (process.env.NODE_ENV === "development") {
-      //   this.clipImgUrl = require("../posterImages/avatar.jpg");
-      //   this.makePoster();
-      //   return;
-      // } else {
-      //   const that = this;
-      //   that.makePosterShow = true;
-      //   wx.uploadImage({
-      //     localId: that.mediaId, // 需要上传的图片的本地ID，由chooseImage接口获得
-      //     isShowProgressTips: 1, // 默认为1，显示进度提示
-      //     success(res) {
-      //       //res.serverId; // 返回图片的服务器端ID
-      //         apiPoster.getPosterImage(res.serverId).then((data) => {
-      //           if (!data.status) return;
-      //           that.mediaId = data.data;
-      //           that.makePosterShow = false;
-      //           that.makePoster();
-      //         });
-      //     }
-      //   });
-      // }
-    },
-    chooseFileChange() {
-      const chooseFile = document.getElementById("chooseFile");
-      chooseFile.onchange = () => {
-        var file = chooseFile.files[0];
-        var reader = new FileReader();
-        reader.onload = e => {
-          var dataURL = e.target.result,
-            // this.clipImgUrl =
-            // console.log('dataURL',dataURL)
-            canvas = document.querySelector("canvas"), // see Example 4
-            ctx = canvas.getContext("2d"),
-            img = new Image();
-
-          var exif = EXIF.readFromBinaryFile(new BinaryFile(file));
-
-          switch (exif.Orientation) {
-            case 8:
-              ctx.rotate((90 * Math.PI) / 180);
-              break;
-            case 3:
-              ctx.rotate((180 * Math.PI) / 180);
-              break;
-            case 6:
-              ctx.rotate((-90 * Math.PI) / 180);
-              break;
+      if (process.env.NODE_ENV === "development") {
+        this.clipImgUrl = this.mediaId
+        this.makePoster();
+        return;
+      } else {
+        const that = this;
+        that.makePosterShow = true;
+        wx.uploadImage({
+          localId: that.mediaId, // 需要上传的图片的本地ID，由chooseImage接口获得
+          isShowProgressTips: 1, // 默认为1，显示进度提示
+          success(res) {
+            //res.serverId; // 返回图片的服务器端ID
+              apiPoster.getPosterImage(res.serverId).then((data) => {
+                if (!data.status) return;
+                that.clipImgUrl = data.data;
+                console.log('that.clipImgUrl',that.clipImgUrl)
+                that.makePosterShow = false;
+                that.makePoster();
+              });
           }
-          img.onload = () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-            console.log(canvas.toDataURL("image/png"));
-
-            this.clipImgUrl = canvas.toDataURL("image/png");
-          };
-
-          img.src = dataURL;
-        };
-
-        reader.readAsDataURL(file);
-      };
+        });
+      }
     }
   },
   mounted() {
     touch.default(this.$refs["clip-box"], this.$refs["clip-img"]);
-    //this.chooseFileChange();
   },
   created() {}
 };

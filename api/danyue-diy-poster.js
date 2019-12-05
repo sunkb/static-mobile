@@ -13,7 +13,7 @@ export default {
     },
     // 获取微信上传图片
     async getPosterImage(mediaId) {
-        const url = `/Mobile/DiyPoster/getPosterImage?mediaId=${mediaId}`;
+        const url = `//Mobile/Wx/getImage?mediaId=${mediaId}`;
         const res = await axios.get(url);
         return res;
     },
