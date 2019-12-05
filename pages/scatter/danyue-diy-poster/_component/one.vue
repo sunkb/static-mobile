@@ -8,14 +8,14 @@
           <p class="date">{{this.p_date}}</p>
         </div>
         <img id="temp-img" ref="temp-img" :src="currentImg" alt />
-        <img
+        <!-- <img
           v-if="isDev"
           id="clip-img"
           ref="clip-img"
           :src="require('../posterImages/avatar.jpg')"
           alt
-        />
-        <img v-else id="clip-img" ref="clip-img" :src="clipImgUrl" alt />
+        /> -->
+        <img id="clip-img" ref="clip-img" :src="clipImgUrl" alt />
       </div>
     </div>
     <div class="temp-container">
@@ -68,6 +68,7 @@ import poster from "../_js/poster.js";
 import makePosterModel from "./model.vue";
 import image1 from "./image";
 import image2 from "./image2";
+import image3 from "./tempimage";
 
 export default {
   components: {
@@ -87,7 +88,7 @@ export default {
       currentImg: image2,
       modelShow: true,
       makePosterShow: false,
-      clipImgUrl: "",
+      clipImgUrl: image3,
       mediaId: "",
       p_name: "",
       p_date: ""
@@ -120,7 +121,7 @@ export default {
               success: function(res) {
                 var localData = res.localData;
                 this.clipImgUrl = "data:image/jpg;base64," + localData;
-                console.log("本地base64数据", res);
+                console.log("本地base64数据", this.clipImgUrl);
               }
             });
           } else {
