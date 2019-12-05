@@ -2,7 +2,7 @@
   <div id="bruin">
     <div class="bruin-background">
       <div class="bruin-header">
-        <img class="bruin-header-ways" src="../../../assets/bruin/img/ways.png" />
+        <img class="bruin-header-ways" src="../../../assets/bruin/img/ways.png" @click="goToRule" />
         <img class="bruin-header-work" src="../../../assets/bruin/img/work.png" />
       </div>
       <div class="bruin-first">
@@ -30,10 +30,7 @@
         <img class="rule-content-img" src="../../../assets/bruin/img/activity_rule.png" />
       </div>
     </div>
-    <Abstract
-        :abstractShow="abstractShow"
-        @fcancelShow="cancelShow"
-    ></Abstract>
+    <Abstract :abstractShow="abstractShow" @fcancelShow="cancelShow"></Abstract>
   </div>
 </template>
 <script>
@@ -53,15 +50,19 @@ export default {
     }
   },
   components: {
-      'Abstract': Abstract
+    'Abstract': Abstract
   },
   methods: {
-      abstractAction() {
-          this.abstractShow = true
-      },
-      cancelShow () {
-          this.abstractShow = false
-      }
+    // 跳转规则页面
+    goToRule () {
+      window.location = `http://192.168.216.37:54338/bruin/rule/`
+    },
+    abstractAction () {
+      this.abstractShow = true
+    },
+    cancelShow () {
+      this.abstractShow = false
+    }
   }
 }
 </script>

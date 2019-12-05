@@ -2,8 +2,12 @@
   <div class="home">
     <div class="home-background">
       <div class="home-header">
-        <img class="home-header-ways" src="../../assets/bruin/img/ways.png" />
-        <img class="home-header-work" src="../../assets/bruin/img/home_bruin.png" />
+        <img class="home-header-ways" src="../../assets/bruin/img/ways.png" @click="goToRule" />
+        <img
+          class="home-header-work"
+          src="../../assets/bruin/img/home_bruin.png"
+          @click="goToMyBruin"
+        />
       </div>
       <div class="home-pitch">
         <div class="home-pitch-first">
@@ -27,7 +31,25 @@
 </template>
 <script>
 export default {
+  name: "home",
+  data () {
+    return {
 
+    }
+  },
+  methods: {
+    // 跳转规则页面
+    goToRule () {
+      window.location = `http://192.168.216.37:54338/bruin/rule/`
+    },
+    // 跳转到我的熊库
+    goToMyBruin () {
+      window.location = `http://192.168.216.37:54338/bruin/my_bruin/`
+    }
+  },
+  created () {
+
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -35,6 +57,7 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
+  height: 123vh;
   .home-background {
     width: 100vw;
     height: 100%;
@@ -85,10 +108,10 @@ export default {
       }
     }
     .home-entrance {
-    margin-top: 45px;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
+      margin-top: 45px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       &-invite {
         width: 630px;
         height: 241px;

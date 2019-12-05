@@ -5,14 +5,26 @@
       src="https://qn-static.landi.com/uploadtool268ec3eea4bf92331eeea6314e4b4df3.png"
     />
     <div class="home-header">
-      <img class="home-header-back" src="../../../assets/bruin/img/back_home_button.png" />
+      <img class="home-header-back" src="../../../assets/bruin/img/back_home_button.png" @click="goToHome"/>
       <img class="home-header-work" src="../../../assets/bruin/img/home_bruin.png" />
     </div>
   </div>
 </template>
 <script>
 export default {
+  name: 'rule',
+  data () {
+    return {
 
+    }
+  },
+  methods: {
+    // 跳转规则页面
+    goToHome (){
+      window.location = `http://192.168.216.37:54338/bruin/`
+    }
+  },
+  created () { }
 }
 </script>
 <style lang="scss" scoped>
