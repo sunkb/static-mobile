@@ -4,7 +4,7 @@
     <div class="abstract-stage">
       <div class="abstract-stage-button">
         <div class="abstract-stage-button-swipe">
-          <van-swipe :autoplay="300">
+          <van-swipe :autoplay="300" indicator-color="white" >
             <van-swipe-item>
               <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
                 <img style="width: 139px;height: 150px;" src="../../../assets/bruin/img/test11/test.png"/>
