@@ -14,7 +14,6 @@
           id="appearance1"
           controls
           :src="detailData.video_url"
-          autoplay
         />
         <div class="appearance-video-item" @click="playFn('appearance1')">
           <img class="videoWin" :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'" />
@@ -36,9 +35,11 @@
         </div>
       </div>
       <div class="videoComment">
-        <div class="commentTitle">评论</div>
-        <div @click="openMask" class="addComment">添加评论</div>
-        <img class="addPic" src="~/assets/punch_card/img/msg.png" alt />
+        <div class="commentAction">
+          <div class="commentTitle">评论</div>
+          <img class="addPic" src="~/assets/punch_card/img/msg.png" alt />
+          <div @click="openMask" class="addComment">添加评论</div>
+        </div>
 
         <div class="commentContent">
           <!-- 等有接口了再掉用吧 -->
@@ -50,7 +51,7 @@
               </div>
             </div>
           </div>
-          <div v-if="commentList.length<=0">
+          <div class="noComment" v-if="commentList.length<=0">
             <div class="commentMsg">有话想对老师说?点击评论按钮留言哦</div>
             <img
               class="commentPic"
@@ -127,7 +128,9 @@ export default {
       allowHalf: true, //五角星允许半分评
       getScore: true, //老师是否评分
       commentState: false, //点评
-      detailData: {}, // 打卡详情
+      detailData: {
+        startLevelData: '0'
+      }, // 打卡详情
       buttonShow: false,
       focusState: false,
       commentData: "", // 提交的评论内容
@@ -213,7 +216,8 @@ export default {
      * 视频播放
      */
     playFn (name) {
-      event.stopPropagation();
+      // event.stopPropagation();
+      console.log('chenjiafan')
       let video1 = document.getElementById(name);
       videoPlayerEvent(video1);
     },
@@ -376,23 +380,26 @@ export default {
     // background-color: orange;
     width: 635px;
     margin-left: 30px;
-    .commentTitle {
-      font-size: 28px;
-      font-weight: 500;
-      padding-bottom: 2vh;
-      display: inline-block;
-    }
-    .addComment {
-      float: right;
-      background-color: white;
-      color: #666666;
-      font-size: 24px;
-    }
-    .addPic {
-      float: right;
-      margin-right: 10px;
-      width: 40.62px;
-      height: 39.81px;
+    .commentAction {
+      display: flex;
+      align-items: center;
+      padding-bottom: 10px;
+      .commentTitle {
+        font-size: 28px;
+        font-weight: 500;
+        display: inline-block;
+      }
+      .addComment {
+        background-color: white;
+        color: #666666;
+        font-size: 24px;
+      }
+      .addPic {
+        margin-right: 10px;
+        width: 41px;
+        height: 40px;
+        margin-left: 427px;
+      }
     }
     .input {
       width: 300px;
@@ -419,6 +426,10 @@ export default {
           font-size: 24px;
           color: #999999;
         }
+      }
+      .noComment {
+        // width: 383.64px;
+        height: 510px;
       }
       .commentMsg {
         float: left;

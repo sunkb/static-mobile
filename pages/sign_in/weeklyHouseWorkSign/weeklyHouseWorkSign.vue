@@ -222,7 +222,7 @@ export default {
     finSignBtn: function () {
       // http://192.168.29.119:3000/
       window.location = `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/?homeworkId=${this.homeworkId}`;
-      // window.location = `http://192.168.216.37:57725/sign_in/upLoadVideo/upLoadVideo/?homeworkId=${this.homeworkId}`;
+      // window.location = `http://192.168.216.37:59185/sign_in/upLoadVideo/upLoadVideo/?homeworkId=${this.homeworkId}`;
     },
     /**
      * 点击历史打卡记录跳转到详情页面
