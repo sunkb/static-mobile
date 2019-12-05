@@ -5,16 +5,9 @@
       <div id="clip-box" class="clip-box" ref="clip-box">
         <div class="p-info">
           <p class="name">{{this.p_name}}</p>
-          <p class="date">{{this.p_date}}</p>
+          <p class="date">{{this.p_date_string}}</p>
         </div>
         <img id="temp-img" ref="temp-img" :src="currentImg" alt />
-        <!-- <img
-          v-if="isDev"
-          id="clip-img"
-          ref="clip-img"
-          :src="require('../posterImages/avatar.jpg')"
-          alt
-        /> -->
         <img id="clip-img" ref="clip-img" :src="clipImgUrl" alt />
       </div>
     </div>
@@ -90,21 +83,23 @@ export default {
       makePosterShow: false,
       clipImgUrl: image3,
       mediaId: "",
-      p_name: "",
-      p_date: ""
+      p_name: " ",
+      p_date: "",
+      p_date_string:""
     };
   },
-  computed: {
-    // 计算属性的 getter
-    p_date_string: function() {
-      // `this` 指向 vm 实例
-      console.log("p_date", p_date);
-      return p_date;
-    }
-  },
   methods: {
+    getDateDay(){
+      const date = new Date(this.p_date);
+      console.log("p_date", date);
+      const today = new Date();
+      var diff = Math.abs(today.getTime() - date.getTime());
+      var result = parseInt(diff / (1000 * 60 * 60 * 24));
+      return result+"天";
+    },
     submitInfo() {
       this.modelShow = false;
+      this.p_date_string = this.getDateDay();
       this.chooseImage();
     },
     // 选择相册或者拍照
@@ -117,12 +112,14 @@ export default {
         success: res => {
           that.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           if (isAndroid) {
+            that.makePosterShow = true;
             wx.getLocalImgData({
               localId: res.localIds[0], // 图片的localID
               success: function(res) {
                 var localData = res.localData;
                 that.clipImgUrl = "data:image/jpg;base64," + localData;
                 console.log("本地base64数据", that.clipImgUrl);
+                that.makePosterShow = false;
               }
             });
           } else {
@@ -152,7 +149,7 @@ export default {
     uploadImage() {
       if (!isAndroid) {
         this.makePoster();
-      }else{
+      } else {
         this.makePoster();
       }
 

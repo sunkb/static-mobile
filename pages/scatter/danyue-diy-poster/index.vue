@@ -62,7 +62,7 @@ export default {
         const wxConfig = res.wx_config;
         wx.config({
           ...wxConfig,
-          debug:true,
+          debug:false,
           jsApiList: ["chooseImage", "uploadImage"]
         });
         // const shareObj = {
