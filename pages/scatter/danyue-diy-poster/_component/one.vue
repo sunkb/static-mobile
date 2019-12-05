@@ -234,7 +234,7 @@ export default {
       .p-info {
         position: absolute;
         z-index: 99;
-        top: 52px;
+        top: 54px;
         left: 120px;
         color: #fff;
         .name {
@@ -243,7 +243,8 @@ export default {
           margin-left: -20px;
         }
         .date {
-          font-size: 28px;
+          margin-top: -6px;
+          font-size: 32px;
           font-weight: 700;
         }
       }
