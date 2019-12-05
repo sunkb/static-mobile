@@ -35,7 +35,6 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
-  height: 123vh;
   .home-background {
     width: 100vw;
     height: 100%;
