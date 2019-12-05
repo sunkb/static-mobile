@@ -109,23 +109,24 @@ export default {
     },
     // 选择相册或者拍照
     chooseImage() {
+      const that = this;
       wx.chooseImage({
         count: 1, // 默认9
         sizeType: ["compressed"], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
         success: res => {
-          this.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          that.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           if (isAndroid) {
             wx.getLocalImgData({
               localId: res.localIds[0], // 图片的localID
               success: function(res) {
                 var localData = res.localData;
-                this.clipImgUrl = "data:image/jpg;base64," + localData;
-                console.log("本地base64数据", this.clipImgUrl);
+                that.clipImgUrl = "data:image/jpg;base64," + localData;
+                console.log("本地base64数据", that.clipImgUrl);
               }
             });
           } else {
-            this.clipImgUrl = this.mediaId;
+            that.clipImgUrl = that.mediaId;
           }
         }
       });
