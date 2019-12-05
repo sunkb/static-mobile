@@ -59,10 +59,10 @@
 <script>
 if (process.client) {
   //var wx = require("weixin-js-sdk");
-  var touch = require("../js/touch.js");
+  var touch = require("../_js/touch.js");
 }
 import apiPoster from "@/api/danyue-diy-poster.js";
-import poster from "../js/poster.js";
+import poster from "../_js/poster.js";
 import makePosterModel from "./model.vue";
 import image1 from "./image";
 import image2 from "./image2";
