@@ -150,6 +150,8 @@ export default {
     uploadImage() {
       if (!isAndroid) {
         this.makePoster();
+      }else{
+        this.makePoster();
       }
 
       //   if (process.env.NODE_ENV === "development") {
