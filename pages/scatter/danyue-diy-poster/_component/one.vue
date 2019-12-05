@@ -119,7 +119,7 @@ export default {
               localId: res.localIds[0], // 图片的localID
               success: function(res) {
                 var localData = res.localData;
-                this.clipImgUrl = "data:image/jpeg;base64," + localData;
+                this.clipImgUrl = "data:image/jpg;base64," + localData;
                 console.log("本地base64数据", res);
               }
             });
