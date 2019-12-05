@@ -60,6 +60,8 @@
 if (process.client) {
   //var wx = require("weixin-js-sdk");
   var touch = require("../_js/touch.js");
+  var u = navigator.userAgent;
+  var isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1;
 }
 import apiPoster from "@/api/danyue-diy-poster.js";
 import poster from "../_js/poster.js";
@@ -112,15 +114,18 @@ export default {
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
         success: res => {
           this.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          //this.clipImgUrl = this.mediaId;
-          wx.getLocalImgData({
-            localId:res.localIds[0], // 图片的localID
-            success: function(res) {
-              var localData = res.localData;
-              this.clipImgUrl = 'data:image/jpeg;base64,'+localData;
-              console.log('本地base64数据',res);
-            }
-          });
+          if (isAndroid) {
+            wx.getLocalImgData({
+              localId: res.localIds[0], // 图片的localID
+              success: function(res) {
+                var localData = res.localData;
+                this.clipImgUrl = "data:image/jpeg;base64," + localData;
+                console.log("本地base64数据", res);
+              }
+            });
+          } else {
+            this.clipImgUrl = this.mediaId;
+          }
         }
       });
     },
@@ -143,30 +148,32 @@ export default {
 
     // 上传图片
     uploadImage() {
-      this.makePoster();
+      if (!isAndroid) {
+        this.makePoster();
+      }
 
-    //   if (process.env.NODE_ENV === "development") {
-    //     this.clipImgUrl = this.mediaId;
-    //     this.makePoster();
-    //     return;
-    //   } else {
-    //     const that = this;
-    //     that.makePosterShow = true;
-    //     wx.uploadImage({
-    //       localId: that.mediaId, // 需要上传的图片的本地ID，由chooseImage接口获得
-    //       isShowProgressTips: 1, // 默认为1，显示进度提示
-    //       success(res) {
-    //         //res.serverId; // 返回图片的服务器端ID
-    //         apiPoster.getPosterImage(res.serverId).then(data => {
-    //           if (!data.status) return;
-    //           that.clipImgUrl = data.data;
-    //           console.log("that.clipImgUrl", that.clipImgUrl);
-    //           that.makePosterShow = false;
-    //           that.makePoster();
-    //         });
-    //       }
-    //     });
-    //   }
+      //   if (process.env.NODE_ENV === "development") {
+      //     this.clipImgUrl = this.mediaId;
+      //     this.makePoster();
+      //     return;
+      //   } else {
+      //     const that = this;
+      //     that.makePosterShow = true;
+      //     wx.uploadImage({
+      //       localId: that.mediaId, // 需要上传的图片的本地ID，由chooseImage接口获得
+      //       isShowProgressTips: 1, // 默认为1，显示进度提示
+      //       success(res) {
+      //         //res.serverId; // 返回图片的服务器端ID
+      //         apiPoster.getPosterImage(res.serverId).then(data => {
+      //           if (!data.status) return;
+      //           that.clipImgUrl = data.data;
+      //           console.log("that.clipImgUrl", that.clipImgUrl);
+      //           that.makePosterShow = false;
+      //           that.makePoster();
+      //         });
+      //       }
+      //     });
+      //   }
     }
   },
   mounted() {
