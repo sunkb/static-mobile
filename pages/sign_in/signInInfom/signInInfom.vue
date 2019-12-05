@@ -409,7 +409,7 @@ export default {
       // bottom: 50px;
     }
     .commentContent {
-      width: 600px;
+      // width: 600px;
       position: relative;
       .commentList {
         font-size: 28px;

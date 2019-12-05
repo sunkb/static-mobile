@@ -116,10 +116,11 @@
                     v-for="(commentItem, index) in item.comment"
                     :key="commentItem.id"
                   >
-                    <div
-                      class="singleComment"
-                    >
-                      <p class="singleComment2"><span class="commentName">{{commentItem.name + "："}}</span><span class="commentContent">{{commentItem.content}}</span></p>
+                    <div class="singleComment">
+                      <p class="singleComment2">
+                        <span class="commentName">{{commentItem.name + "："}}</span>
+                        <span class="commentContent">{{commentItem.content}}</span>
+                      </p>
                       <div v-if="index === 0">
                         <div
                           @click="watchMore(item)"
@@ -296,21 +297,27 @@ export default {
     watchMore (itemObj) {
       itemObj.moreFlag = !itemObj.moreFlag;
     },
-    handleScroll() {
+    handleScroll () {
       if (window.scrollY > this.centerActionBottom) {
         this.showFloatAction = true
       } else {
         this.showFloatAction = false
       }
     },
-  }
-  // beforeRouteEnter(to, from, next) {
-  //   const token = to.query.token || '';
-  //   api.login.verifyToken(token).then((d) => {
-  //     if (!d.success) return alert(d.msg);
-  //     next();
-  //   });
-  // },
+    async verifyToken (token) {
+      // const token = md5(`${mobile}Jw*gjw12sp>Dd$2s`);
+      const url = `/mobile/public/verifyToken?token=${token}`;
+      const res = await axios.get(url);
+      return res;
+    },
+  },
+  beforeRouteEnter (to, from, next) {
+    const token = to.query.token || '';
+    this.verifyToken(token).then((d) => {
+      if (!d.success) return alert(d.msg);
+      next();
+    });
+  },
 };
 </script>
 
@@ -624,12 +631,12 @@ export default {
                   white-space: pre-wrap;
                   word-wrap: break-word;
                   .commentName {
-                    color:rgba(51,51,51,1);
-                    font-size:28px;
+                    color: rgba(51, 51, 51, 1);
+                    font-size: 28px;
                   }
                   .commentContent {
-                    color:rgba(102,102,102,1);
-                    font-size:28px;
+                    color: rgba(102, 102, 102, 1);
+                    font-size: 28px;
                   }
                   // overflow: hidden;
                   // white-space: nowrap;
