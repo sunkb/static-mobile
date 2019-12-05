@@ -81,7 +81,7 @@ export default {
       // tempList: [
       //   "https://qn-static.landi.com/uploadtool5778fc7f59e388f5fb69c1a32a62513a.png"
       // ],
-      tempList: [image2,image1],
+      tempList: [image2, image1],
       currentImg: image2,
       modelShow: true,
       makePosterShow: false,
@@ -93,10 +93,10 @@ export default {
   },
   computed: {
     // 计算属性的 getter
-    p_date_string: function () {
+    p_date_string: function() {
       // `this` 指向 vm 实例
-      console.log('p_date',p_date)
-      return p_date
+      console.log("p_date", p_date);
+      return p_date;
     }
   },
   methods: {
@@ -112,8 +112,13 @@ export default {
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
         success: res => {
           this.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          this.clipImgUrl = this.mediaId
-          console.log("res3333------->this.mediaId", this.clipImgUrl);
+          this.clipImgUrl = this.mediaId;
+          wx.getLocalImgData({
+            localId:res.localIds[0], // 图片的localID
+            success: function(res) {
+              console.log('本地base64数据',res);
+            }
+          });
         }
       });
     },
@@ -136,30 +141,30 @@ export default {
 
     // 上传图片
     uploadImage() {
-      //this.makePoster();
+      this.makePoster();
 
-      if (process.env.NODE_ENV === "development") {
-        this.clipImgUrl = this.mediaId
-        this.makePoster();
-        return;
-      } else {
-        const that = this;
-        that.makePosterShow = true;
-        wx.uploadImage({
-          localId: that.mediaId, // 需要上传的图片的本地ID，由chooseImage接口获得
-          isShowProgressTips: 1, // 默认为1，显示进度提示
-          success(res) {
-            //res.serverId; // 返回图片的服务器端ID
-              apiPoster.getPosterImage(res.serverId).then((data) => {
-                if (!data.status) return;
-                that.clipImgUrl = data.data;
-                console.log('that.clipImgUrl',that.clipImgUrl)
-                that.makePosterShow = false;
-                that.makePoster();
-              });
-          }
-        });
-      }
+    //   if (process.env.NODE_ENV === "development") {
+    //     this.clipImgUrl = this.mediaId;
+    //     this.makePoster();
+    //     return;
+    //   } else {
+    //     const that = this;
+    //     that.makePosterShow = true;
+    //     wx.uploadImage({
+    //       localId: that.mediaId, // 需要上传的图片的本地ID，由chooseImage接口获得
+    //       isShowProgressTips: 1, // 默认为1，显示进度提示
+    //       success(res) {
+    //         //res.serverId; // 返回图片的服务器端ID
+    //         apiPoster.getPosterImage(res.serverId).then(data => {
+    //           if (!data.status) return;
+    //           that.clipImgUrl = data.data;
+    //           console.log("that.clipImgUrl", that.clipImgUrl);
+    //           that.makePosterShow = false;
+    //           that.makePoster();
+    //         });
+    //       }
+    //     });
+    //   }
     }
   },
   mounted() {
