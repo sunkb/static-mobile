@@ -93,7 +93,9 @@ export default {
       const date = new Date(this.p_date);
       console.log("p_date", date);
       const today = new Date();
+      console.log("today", today);
       var diff = Math.abs(today.getTime() - date.getTime());
+      console.log("diff", diff);
       var result = parseInt(diff / (1000 * 60 * 60 * 24));
       return result+"天";
     },
