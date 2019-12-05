@@ -38,7 +38,7 @@
           <h3>基本信息</h3>
           <h4>请填写姓名和入职日期</h4>
           <div class="input-wrap">
-            <input class="input-area" v-model="p_name" type="text" placeholder="请填写名字" />
+            <input class="input-area" v-model="p_name" type="text" placeholder="请填写名字"/>
             <input class="input-area" v-model="p_date" type="date" placeholder="请填写入职日期" />
           </div>
           <div v-on:click="submitInfo" class="btn">提交信息</div>
@@ -83,7 +83,7 @@ export default {
       makePosterShow: false,
       clipImgUrl: "",
       mediaId: "",
-      p_name: " ",
+      p_name: "",
       p_date: "",
       p_date_string:""
     };
@@ -359,9 +359,9 @@ export default {
         font-size: 28px;
         color: #333333;
       }
-      .input-area:focus {
-        border: none;
-      }
+      // .input-area:focus {
+      //   border: none;
+      // }
       .btn {
         background-color: #fb9253;
         color: #fff;
