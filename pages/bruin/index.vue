@@ -26,33 +26,91 @@
           <img class="home-entrance-renew-img" src="../../assets/bruin/img/renew_button.png" />
         </div>
       </div>
+      <div class="sharehelp" v-show="showShareHelp" @click="() => { showShareHelp = false }">
+        <img class="sharehelp-img" :src="require('~/assets/presentation/img/share-help.png')" />
+      </div>
+      <toast ref="toast"></toast>
     </div>
   </div>
 </template>
 <script>
+import { API } from '~/pages/bruin/consts'
+import axios from '~/utils/axios'
+import Toast from '~/components/Toast'
+import { initWX } from '~/pages/presentation/wx'
 export default {
   name: "home",
   data () {
     return {
-
+      showShareHelp: false
     }
+  },
+  components: {
+    'toast': Toast
   },
   methods: {
     // 跳转规则页面
     goToRule () {
-      window.location = `http://192.168.216.37:54338/bruin/rule/`
+      window.location = `http://192.168.216.37:54972/bruin/rule/`
     },
     // 跳转到我的熊库
     goToMyBruin () {
-      window.location = `http://192.168.216.37:54338/bruin/my_bruin/`
+      window.location = `http://192.168.216.37:54972/bruin/my_bruin/`
     },
     // 邀请好友
     inviteAction () {
-      
+      this.showShareHelp = true
+    },
+    // 用于微信分享的数据的接口请求
+    async wxShare () {
+      const curUrl = encodeURIComponent(window.location.href)
+      const activityID = 1
+      try {
+        const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
+        if (!res.status) {
+          this.$refs['toast'].hideLoadingToast()
+          this.$refs['toast'].showToast(res.info)
+          console.log(res.info)
+          return
+        }
+        const wxConfig = res.data.wx_config;
+        const wx_data = res.data.wx_data;
+        const wx = initWX({
+          appId: wxConfig.appId,
+          timestamp: wxConfig.timestamp,
+          nonceStr: wxConfig.nonceStr,
+          signature: wxConfig.signature,
+        })
+        const shareObj = {
+          title: wx_data.share_title,
+          desc: wx_data.share_desc,
+          link: wx_data.share_link,
+          imgUrl: wx_data.share_img_url,
+        }
+        wx.ready(() => {
+          wx.updateAppMessageShareData(shareObj)
+          wx.updateTimelineShareData(shareObj)
+          wx.onMenuShareAppMessage(shareObj);
+          wx.onMenuShareTimeline(shareObj);
+          wx.error(function (res) {
+            console.log(res);
+          });
+        })
+        this.$refs['toast'].hideLoadingToast()
+        console.log(res.data)
+      } catch (err) {
+        console.log(err)
+        return
+      }
+
     }
   },
   created () {
 
+  },
+  mounted () {
+    this.$refs['toast'].showLoadingToast()
+    this.wxShare()
   }
 }
 </script>
@@ -133,6 +191,21 @@ export default {
         }
       }
     }
+  }
+}
+.sharehelp {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba($color: #000000, $alpha: 0.6);
+
+  &-img {
+    width: 540px;
+    position: fixed;
+    left: 135px;
+    top: 0;
   }
 }
 </style>

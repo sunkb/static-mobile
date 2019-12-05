@@ -55,7 +55,7 @@ export default {
   methods: {
     // 跳转规则页面
     goToRule () {
-      window.location = `http://192.168.216.37:54338/bruin/rule/`
+      window.location = `http://192.168.216.37:54972/bruin/rule/`
     },
     abstractAction () {
       this.abstractShow = true

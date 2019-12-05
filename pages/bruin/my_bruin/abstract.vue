@@ -4,25 +4,37 @@
     <div class="abstract-stage">
       <div class="abstract-stage-button">
         <div class="abstract-stage-button-swipe">
-          <van-swipe :autoplay="300" indicator-color="white" >
+          <van-swipe :autoplay="swipeTime" :show-indicators="indicators">
             <van-swipe-item>
               <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-                <img style="width: 139px;height: 150px;" src="../../../assets/bruin/img/test11/test.png"/>
+                <img
+                  style="width: 139px;height: 150px;"
+                  src="../../../assets/bruin/img/test11/test.png"
+                />
               </div>
             </van-swipe-item>
             <van-swipe-item>
               <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-                <img style="width: 139px;height: 150px;" src="../../../assets/bruin/img/test11/test.png"/>
+                <img
+                  style="width: 139px;height: 150px;"
+                  src="../../../assets/bruin/img/test11/test.png"
+                />
               </div>
             </van-swipe-item>
             <van-swipe-item>
               <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-                <img style="width: 139px;height: 150px;" src="../../../assets/bruin/img/test11/test.png"/>
+                <img
+                  style="width: 139px;height: 150px;"
+                  src="../../../assets/bruin/img/test11/test.png"
+                />
               </div>
             </van-swipe-item>
             <van-swipe-item>
               <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-                <img style="width: 139px;height: 150px;" src="../../../assets/bruin/img/test11/test.png"/>
+                <img
+                  style="width: 139px;height: 150px;"
+                  src="../../../assets/bruin/img/test11/test.png"
+                />
               </div>
             </van-swipe-item>
           </van-swipe>
@@ -43,9 +55,12 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
-      isShowIndicators: false
+      isShowIndicators: false,
+      indicators: false, // 指示器显隐
+      swipeTime: 300,
+      swipeObj: null
     }
   },
   components: {
@@ -53,14 +68,23 @@ export default {
     'van-swipe-item': SwipeItem
   },
   created () {
-    console.log(1111111111)
+  },
+  mounted () {
+    this.swipeObj = setInterval(() => {
+      if (this.swipeTime > 1800) {
+        clearInterval(this.swipeObj)
+        this.swipeTime = 30000
+      }
+      this.swipeTime += 100
+      console.log(this.swipeTime)
+    }, 2000)
   },
   methods: {
     cancelShow () {
       this.$emit('fcancelShow')
     },
-    ssss() {
-      console.log(111111111)
+    ssss () {
+
     }
   }
 }

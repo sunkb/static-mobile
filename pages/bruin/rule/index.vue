@@ -6,7 +6,7 @@
     />
     <div class="home-header">
       <img class="home-header-back" src="../../../assets/bruin/img/back_home_button.png" @click="goToHome"/>
-      <img class="home-header-work" src="../../../assets/bruin/img/home_bruin.png" />
+      <img class="home-header-work" src="../../../assets/bruin/img/home_bruin.png" @click="goToMyBruin"/>
     </div>
   </div>
 </template>
@@ -21,8 +21,12 @@ export default {
   methods: {
     // 跳转规则页面
     goToHome (){
-      window.location = `http://192.168.216.37:54338/bruin/`
-    }
+      window.location = `http://192.168.216.37:54972/bruin/`
+    },
+    // 跳转到我的熊库
+    goToMyBruin () {
+      window.location = `http://192.168.216.37:54972/bruin/my_bruin/`
+    },
   },
   created () { }
 }
