@@ -113,7 +113,7 @@ export default {
         success: res => {
           this.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           this.clipImgUrl = this.mediaId
-          console.log("res3333------->this.mediaId", this.mediaId);
+          console.log("res3333------->this.mediaId", this.clipImgUrl);
         }
       });
     },
