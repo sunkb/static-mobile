@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="home-entrance">
-        <div class="home-entrance-invite">
+        <div class="home-entrance-invite" @click="inviteAction">
           <img class="home-entrance-invite-img" src="../../assets/bruin/img/invite_button.png" />
         </div>
         <div class="home-entrance-renew">
@@ -45,6 +45,10 @@ export default {
     // 跳转到我的熊库
     goToMyBruin () {
       window.location = `http://192.168.216.37:54338/bruin/my_bruin/`
+    },
+    // 邀请好友
+    inviteAction () {
+      
     }
   },
   created () {
