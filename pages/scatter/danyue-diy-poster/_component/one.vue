@@ -35,7 +35,7 @@
       </div>
       <div class="btn-box">
         <input v-show="false" type="file" id="chooseFile" accept="image/*" />
-        <div class="default-btn btn" @click="chooseImage">选择照片</div>
+        <div class="default-btn btn" @click="chooseImage">重选照片</div>
         <div class="primary-btn btn" @click="uploadImage">生成海报</div>
       </div>
     </div>
@@ -43,10 +43,10 @@
       <div class="modal">
         <div class="tip-image-box">
           <h3>基本信息</h3>
-          <h4>填写正确信息后,即可生成海报</h4>
+          <h4>请填写姓名和入职日期</h4>
           <div class="input-wrap">
             <input class="input-area" v-model="p_name" type="text" placeholder="请填写名字" />
-            <input class="input-area" v-model="p_date" type="text" placeholder="请填写入职日期" />
+            <input class="input-area" v-model="p_date" type="date" placeholder="请填写入职日期" />
           </div>
           <div v-on:click="submitInfo" class="btn">提交信息</div>
         </div>
@@ -91,9 +91,18 @@ export default {
       p_date: ""
     };
   },
+  computed: {
+    // 计算属性的 getter
+    p_date_string: function () {
+      // `this` 指向 vm 实例
+      console.log('p_date',p_date)
+      return p_date
+    }
+  },
   methods: {
     submitInfo() {
       this.modelShow = false;
+      this.chooseImage();
     },
     // 选择相册或者拍照
     chooseImage() {
