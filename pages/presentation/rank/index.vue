@@ -68,6 +68,7 @@ export default {
   head() {
     return {
       title: '点赞排行榜'
+     
     }
   },
   components: {

@@ -3,14 +3,9 @@
     <div v-if="show">
       <div v-if="mask" class="toast-mask"></div>
       <div class="toast-content" :style="position">
-        <div v-if="loading" class="toast-content-loading">
-          <div class="toast-content-loading-content">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
+        <svg v-if="loading" viewBox="25 25 50 50" class="toast-content-loading">
+          <circle cx="50" cy="50" r="20" class="toast-content-loading"></circle>
+        </svg>
         <div v-if="text && text != '' && loading" class="toast-content-div"></div>
         <div v-if="text && text != ''" class="toast-content-text">{{ text }}</div>
       </div>
@@ -19,35 +14,47 @@
 </template>
 
 <script>
+
 export default {
   name: 'Toast',
-  data() {
+  data () {
     return {
       show: false,
       text: '',
       position: {},
       mask: true,
-      loading: false
+      loading: false,
+      queue: []
     }
   },
   methods: {
-    showToast(text, mask=true, timeout=1500, position={}) {
+    showToast (text, mask = true, timeout = 1500, position = {}) {
+      if (this.show) {
+        this.queue.push({ text, mask, timeout, position })
+        return
+      } else {
+        this.queue.shift()
+      }
+
       this.text = text
       this.mask = mask
       this.position = position
       this.show = true
       setTimeout(() => {
         this.show = false
-      }, timeout);
+        if (this.queue.length > 0) {
+          this.showToast(this.queue[0].text, this.queue[0].mask, this.queue[0].timeout, this.queue[0].position)
+        }
+      }, timeout)
     },
-    showLoadingToast(text, mask=true, position={}) {
+    showLoadingToast (text, mask = true, position = {}) {
       this.text = text
       this.mask = mask
       this.position = position
       this.loading = true
       this.show = true
     },
-    hideLoadingToast() {
+    hideLoadingToast () {
       this.loading = false
       this.show = false
     }
@@ -73,7 +80,7 @@ export default {
 
 .toast-content {
   position: fixed;
-  top: 50%;
+  top: 30%;
   left: 50%;
   max-width: 400px;
   transform: translate(-50%, -50%);
@@ -81,52 +88,52 @@ export default {
   color: #fff;
   font-size: 28px;
   border-radius: 10px;
-  background: rgba($color: #000000, $alpha: 0.6);
+  background: rgba($color: #000000, $alpha: 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
   &-div {
     height: 10px;
   }
-
-  &-loading {
-    display: flex;
-    justify-content: center;
-  }
 }
 
-$color: #fff;
-$lds-size: 80px;
-.toast-content-loading-content {
+.toast-content-loading {
+  width: 80px;
+  transform-origin: center;
+  animation: rotate 2s linear infinite;
   position: relative;
-  width: $lds-size;
-  height: $lds-size;
 
-  div {
-    box-sizing: border-box;
-    position: absolute;
-    width: $lds-size;
-    height: $lds-size;
-    border: 1vw solid $color;
-    border-radius: 50%;
-    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: $color transparent transparent transparent;
-
-    &:nth-child(1) {
-      animation-delay: -0.45s;
-    }
-    &:nth-child(2) {
-      animation-delay: -0.3s;
-    }
-    &:nth-child(3) {
-      animation-delay: -0.15s;
-    }
+  circle {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 4;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
   }
 }
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
+
+@keyframes rotate {
   100% {
     transform: rotate(360deg);
   }
 }
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -25px;
+  }
+  100% {
+    stroke-dashoffset: -125px;
+  }
+}
+
 </style>

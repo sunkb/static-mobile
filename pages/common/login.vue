@@ -9,6 +9,7 @@
         placeholder="+86 请输入手机号码"
         type="number"
         v-model="mobile"
+        
       />
     </div>
     <div>
