@@ -8,11 +8,21 @@
       <div class="bruin-first">
         <div class="bruin-first-div" v-for="(item, index) in firstDiv" :key="index">
           <img class="bruin-first-img" src="../../../assets/bruin/img/bruin_div.png" />
+          <img class="bruin-first-view" src="../../../assets/bruin/img/bruin_view/1.png" />
+          <div class="bruin-first-own">
+            <img class="bruin-first-own-light" src="../../../assets/bruin/img/light.png" />
+            <div :id="'bruin-keys' + (index +1)"></div>
+          </div>
         </div>
       </div>
       <div class="bruin-second">
         <div class="bruin-second-div" v-for="(item, index) in secondDiv" :key="index">
           <img class="bruin-second-img" src="../../../assets/bruin/img/bruin_div.png" />
+          <img class="bruin-second-view" src="../../../assets/bruin/img/bruin_view/1.png" />
+          <div class="bruin-second-own">
+            <img class="bruin-second-own-light" src="../../../assets/bruin/img/light.png" />
+            
+          </div>
         </div>
       </div>
       <div class="button-div">
@@ -99,9 +109,26 @@ export default {
       .bruin-first-div {
         width: 227px;
         height: 331px;
+        position: relative;
         .bruin-first-img {
           width: 227px;
           height: 331px;
+        }
+        .bruin-first-view {
+          width: 165px;
+          height: 248px;
+          position: absolute;
+          top: 30px;
+          left: 15px;
+        }
+        .bruin-first-own {
+          &-light {
+            width: 228px;
+            height: 340px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+          }
         }
       }
     }
@@ -112,9 +139,26 @@ export default {
       .bruin-second-div {
         width: 227px;
         height: 331px;
+        position: relative;
         .bruin-second-img {
           width: 227px;
           height: 331px;
+        }
+        .bruin-second-view {
+          width: 165px;
+          height: 248px;
+          position: absolute;
+          top: 30px;
+          left: 15px;
+        }
+        .bruin-second-own {
+          &-light {
+            width: 228px;
+            height: 340px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+          }
         }
       }
     }
@@ -186,6 +230,78 @@ export default {
         height: 775px;
       }
     }
+  }
+}
+#bruin-keys1 {
+  animation-name: rainbow1;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  width: 197px;
+  height: 268px;
+  position: absolute;
+  top: 40px;
+  left: 10px;
+}
+#bruin-keys2 {
+  animation-name: rainbow2;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  width: 197px;
+  height: 268px;
+  position: absolute;
+  top: 40px;
+  left: 10px;
+}
+#bruin-keys3 {
+  animation-name: rainbow3;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  width: 197px;
+  height: 268px;
+  position: absolute;
+  top: 40px;
+  left: 10px;
+}
+@keyframes rainbow1 {
+  from {
+    background: url("../../../assets/bruin/img/keys/11.png") no-repeat;
+    background-size: 100%;
+  }
+  50% {
+    background: url("../../../assets/bruin/img/keys/12.png") no-repeat;
+    background-size: 100%;
+  }
+  to {
+    background: url("../../../assets/bruin/img/keys/13.png") no-repeat;
+    background-size: 100%;
+  }
+}
+@keyframes rainbow2 {
+  from {
+    background: url("../../../assets/bruin/img/keys/21.png") no-repeat;
+    background-size: 100%;
+  }
+  50% {
+    background: url("../../../assets/bruin/img/keys/22.png") no-repeat;
+    background-size: 100%;
+  }
+  to {
+    background: url("../../../assets/bruin/img/keys/23.png") no-repeat;
+    background-size: 100%;
+  }
+}
+@keyframes rainbow3 {
+  from {
+    background: url("../../../assets/bruin/img/keys/31.png") no-repeat;
+    background-size: 100%;
+  }
+  50% {
+    background: url("../../../assets/bruin/img/keys/32.png") no-repeat;
+    background-size: 100%;
+  }
+  to {
+    background: url("../../../assets/bruin/img/keys/33.png") no-repeat;
+    background-size: 100%;
   }
 }
 </style>

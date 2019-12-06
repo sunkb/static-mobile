@@ -1,6 +1,7 @@
 <template>
   <div class="abstract" v-show="abstractShow">
     <div class="abstract-background" @click="cancelShow"></div>
+
     <div class="abstract-stage">
       <div class="abstract-stage-button">
         <div class="abstract-stage-button-swipe">
@@ -60,7 +61,8 @@ export default {
       isShowIndicators: false,
       indicators: false, // 指示器显隐
       swipeTime: 300,
-      swipeObj: null
+      swipeObj: null,
+      timeParam: 1
     }
   },
   components: {
@@ -71,16 +73,18 @@ export default {
   },
   mounted () {
     this.swipeObj = setInterval(() => {
-      if (this.swipeTime > 1800) {
+      if (this.swipeTime > 2601) {
         clearInterval(this.swipeObj)
-        this.swipeTime = 30000
+        this.timeParam = 300000
       }
-      this.swipeTime += 100
+      this.swipeTime = this.swipeTime + (this.timeParam++) * 75
       console.log(this.swipeTime)
     }, 2000)
   },
   methods: {
     cancelShow () {
+      clearInterval(this.swipeObj)
+      this.swipeTime = 300
       this.$emit('fcancelShow')
     },
     ssss () {
