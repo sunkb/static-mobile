@@ -7,36 +7,42 @@
       </div>
       <div class="bruin-first">
         <div class="bruin-first-div" v-for="(item, index) in firstDiv" :key="index">
-          <div>
-            <div></div>
+          <div class="bruin-first-name">
+            <div v-if="item.num > 0" class="bruin-first-name-content">{{item.name + " x" + item.num}}</div>
+            <div v-else class="bruin-first-name-content1">{{item.name}}</div>
           </div>
           <img class="bruin-first-img" src="../../../assets/bruin/img/bruin_div.png" />
-          <img v-if="item.num > 0 ? false : true" class="bruin-first-view" src="../../../assets/bruin/img/bruin_view/1.png" />
+          <img v-if="item.num > 0 ? false : true" class="bruin-first-view" :src="'../../../assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
           <div v-if="item.num > 0 ? true : false" class="bruin-first-own">
             <img class="bruin-first-own-light" src="../../../assets/bruin/img/light.png" />
-            <div :id="'bruin-keys' + (index +1)"></div>
+            <div :id="'bruin-keys' + item.card_no"></div>
           </div>
         </div>
       </div>
       <div class="bruin-second">
         <div class="bruin-second-div" v-for="(item, index) in secondDiv" :key="index">
+          <div class="bruin-second-name">
+            <div v-if="item.num > 0" class="bruin-second-name-content">{{item.name + " x" + item.num}}</div>
+            <div v-else class="bruin-second-name-content1">{{item.name}}</div>
+          </div>
           <img class="bruin-second-img" src="../../../assets/bruin/img/bruin_div.png" />
-          <img v-if="item.num > 0 ? false : true" class="bruin-second-view" src="../../../assets/bruin/img/bruin_view/1.png" />
+          <img v-if="item.num > 0 ? false : true" class="bruin-second-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
           <div v-if="item.num > 0 ? true : false" v-else class="bruin-second-own">
             <img class="bruin-second-own-light" src="../../../assets/bruin/img/light.png" />
-            <div :id="'bruin-keys' + (index +4)"></div>
+            <div :id="'bruin-keys' + item.card_no"></div>
           </div>
         </div>
       </div>
       <div class="button-div">
         <div class="button-div-first">
-          <div class="button-div-first-content">获取小熊</div>
+          <div class="button-div-first-content" @click="goToHome">获取小熊</div>
         </div>
         <div class="button-div-second" @click="abstractAction">
           <div class="button-div-second-content">开始抽取</div>
         </div>
         <div class="abstract-time">
-          <div class="abstract-time-content">当前可抽取0次</div>
+          当前可抽取
+          <div :class="awardChange > 0 ? 'abstract-time-content1' : 'abstract-time-content'">{{awardChange}}</div>次
         </div>
       </div>
       <div class="rule-content">
@@ -62,7 +68,8 @@ export default {
     return {
       firstDiv: [],
       secondDiv: [],
-      abstractShow: false
+      abstractShow: false,
+      awardChange: 0, // 可以抓熊的次数
     }
   },
   components: {
@@ -72,6 +79,10 @@ export default {
     // 跳转规则页面
     goToRule () {
       window.location = `http://192.168.216.37:54972/bruin/rule/`
+    },
+    // 跳转至首页
+    goToHome (){
+      window.location = `http://192.168.216.37:54972/bruin/`
     },
     abstractAction () {
       this.abstractShow = true
@@ -88,28 +99,34 @@ export default {
         //   console.log(res.info)
         //   return
         // }
+        // this.awardChange = res.data.lucky_num
+        this.awardChange = 1
         this.myBruinData = {
-          lucky_num: 1,
           cards: [
             {
               card_no: 1,
-              num: 0
+              num: 1,
+              name: '乐学熊'
             },
             {
-              card_no: 1,
-              num: 2
+              card_no: 2,
+              num: 0,
+              name: '聪慧熊'
             },
             {
-              card_no: 1,
-              num: 2
+              card_no: 3,
+              num: 4,
+              name: '健康熊'
             },
             {
-              card_no: 1,
-              num: 1
+              card_no: 4,
+              num: 1,
+              name: '勤奋熊'
             },
             {
-              card_no: 1,
-              num: 1
+              card_no: 5,
+              num: 1,
+              name: '勇敢熊'
             }
           ],
           is_enable: false
@@ -167,6 +184,30 @@ export default {
         width: 227px;
         height: 331px;
         position: relative;
+        .bruin-first-name {
+          position: absolute;
+          bottom: 10px;
+          left: 50%;
+          margin-left: -58px;
+          &-content {
+            text-align: center;
+            width: 124px;
+            font-size:26px;
+            font-family:PingFang SC;
+            font-weight:600;
+            color:rgba(255,235,167,1);
+            line-height:24px;
+          }
+          &-content1 {
+            text-align: center;
+            width: 124px;
+            font-size:26px;
+            font-family:PingFang SC;
+            font-weight:600;
+            color:rgba(130,42,180,1);
+            line-height:24px;
+          }
+        }
         .bruin-first-img {
           width: 227px;
           height: 331px;
@@ -197,6 +238,30 @@ export default {
         width: 227px;
         height: 331px;
         position: relative;
+        .bruin-second-name {
+          position: absolute;
+          bottom: 10px;
+          left: 50%;
+          margin-left: -58px;
+          &-content {
+            text-align: center;
+            width: 124px;
+            font-size:26px;
+            font-family:PingFang SC;
+            font-weight:600;
+            color:rgba(255,235,167,1);
+            line-height:24px;
+          }
+          &-content1 {
+            text-align: center;
+            width: 124px;
+            font-size:26px;
+            font-family:PingFang SC;
+            font-weight:600;
+            color:rgba(130,42,180,1);
+            line-height:24px;
+          }
+        }
         .bruin-second-img {
           width: 227px;
           height: 331px;
@@ -269,10 +334,19 @@ export default {
         background-size: 100%;
         display: flex;
         align-items: center;
+        font-size: 28px;
+        font-weight: 600;
+        color: rgba(125, 125, 125, 1);
         &-content {
           font-size: 28px;
           font-weight: 600;
-          color: rgba(125, 125, 125, 1);
+          color: red;
+          text-align: center;
+        }
+        &-content1 {
+          font-size: 28px;
+          font-weight: 600;
+          color: green;
           text-align: center;
         }
       }

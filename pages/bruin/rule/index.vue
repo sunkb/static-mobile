@@ -19,7 +19,7 @@ export default {
     }
   },
   methods: {
-    // 跳转规则页面
+    // 跳转至首页
     goToHome (){
       window.location = `http://192.168.216.37:54972/bruin/`
     },
