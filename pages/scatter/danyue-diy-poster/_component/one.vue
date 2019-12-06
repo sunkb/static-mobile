@@ -5,7 +5,11 @@
       <div id="clip-box" class="clip-box" ref="clip-box">
         <div class="p-info">
           <p class="name">{{this.p_name}}</p>
-          <p class="date">{{this.p_date_string}}</p>
+          <p class="date" v-show="this.p_date_string !==''">
+            <span class="date1">{{this.p_date_string}}</span>
+            <span class="date2">天</span>
+          </p>
+          <!-- <span class="date">{{this.p_date_string}}</span><span class="date2">天</span> -->
         </div>
         <img id="temp-img" ref="temp-img" :src="currentImg" alt />
         <img id="clip-img" ref="clip-img" :src="clipImgUrl" alt />
@@ -90,6 +94,7 @@ export default {
   },
   methods: {
     getDateDay(){
+      console.log('this.p_date',this.p_date)
       const date = new Date(this.p_date);
       console.log("p_date", date);
       const today = new Date();
@@ -97,12 +102,12 @@ export default {
       var diff = Math.abs(today.getTime() - date.getTime());
       console.log("diff", diff);
       var result = parseInt(diff / (1000 * 60 * 60 * 24));
-      return result+"天";
+      return result;
     },
     submitInfo() {
       this.modelShow = false;
       this.p_date_string = this.getDateDay();
-      this.chooseImage();
+      //this.chooseImage();
     },
     // 选择相册或者拍照
     chooseImage() {
@@ -234,17 +239,27 @@ export default {
       .p-info {
         position: absolute;
         z-index: 99;
-        top: 54px;
+        top:32px;
         left: 120px;
-        color: #fff;
         .name {
-          font-size: 28px;
+          color: #C64E24;
+          font-size: 26px;
           font-weight: 700;
           margin-left: -20px;
         }
         .date {
-          margin-top: -6px;
-          font-size: 32px;
+          margin-top: 17px;
+        }
+        .date1{
+          font-size: 44px;
+          font-weight: 700;
+          color: #fff;
+          -webkit-text-stroke: 2px #C64E24;
+        }
+        .date2{
+          color: #C64E24;
+          margin-top: -10px;
+          font-size: 26px;
           font-weight: 700;
         }
       }
