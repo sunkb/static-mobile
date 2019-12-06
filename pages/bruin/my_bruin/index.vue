@@ -254,7 +254,7 @@ export default {
 }
 #bruin-keys3 {
   animation-name: rainbow3;
-  animation-duration: 1s;
+  animation-duration: 0.5s;
   animation-iteration-count: infinite;
   width: 197px;
   height: 268px;
@@ -263,16 +263,24 @@ export default {
   left: 10px;
 }
 @keyframes rainbow1 {
-  from {
+  0% {
     background: url("../../../assets/bruin/img/keys/11.png") no-repeat;
     background-size: 100%;
   }
-  50% {
+  25% {
     background: url("../../../assets/bruin/img/keys/12.png") no-repeat;
     background-size: 100%;
   }
-  to {
+  50% {
     background: url("../../../assets/bruin/img/keys/13.png") no-repeat;
+    background-size: 100%;
+  }
+  75% {
+    background: url("../../../assets/bruin/img/keys/12.png") no-repeat;
+    background-size: 100%;
+  }
+  100% {
+    background: url("../../../assets/bruin/img/keys/11.png") no-repeat;
     background-size: 100%;
   }
 }
