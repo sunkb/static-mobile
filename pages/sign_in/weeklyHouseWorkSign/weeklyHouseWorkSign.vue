@@ -177,6 +177,13 @@ export default {
   },
   async created () {
     console.log("我是首页的");
+    const token = this.$route.query.token || '';
+    const url = `/mobile/public/verifyToken?token=${token}`;
+    const res = await axios.get(url);
+    if(!res.success) {
+      console.log(res.msg)
+      return
+    }
   },
   components: {
     startLevel: startLevel,
@@ -311,19 +318,19 @@ export default {
     //   return res;
     // }
   },
-  async beforeRouteEnter (to, from, next) {
-    const token = to.query.token || '';
-    const url = `/mobile/public/verifyToken?token=${token}`;
-    const res = await axios.get(url);
-    if(!res.success) {
-      return
-    }
-    next();
-    // this.verifyToken(token).then((d) => {
-    //   if (!d.success) return alert(d.msg);
-      // next();
-    // });
-  }
+  // async beforeRouteEnter (to, from, next) {
+  //   const token = to.query.token || '';
+  //   const url = `/mobile/public/verifyToken?token=${token}`;
+  //   const res = await axios.get(url);
+  //   // if(!res.success) {
+  //   //   return
+  //   // }
+  //   next();
+  //   // this.verifyToken(token).then((d) => {
+  //   //   if (!d.success) return alert(d.msg);
+  //     // next();
+  //   // });
+  // }
 };
 </script>
 
