@@ -117,7 +117,7 @@ export default {
         sizeType: ["compressed"], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
         success: res => {
-          that.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          //this.mediaId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           if (isAndroid) {
             that.makePosterShow = true;
             wx.getLocalImgData({
@@ -130,7 +130,7 @@ export default {
               }
             });
           } else {
-            that.clipImgUrl = that.mediaId;
+            this.clipImgUrl = res.localIds[0]
           }
         }
       });
@@ -253,8 +253,8 @@ export default {
         .date1{
           font-size: 44px;
           font-weight: 700;
-          color: #fff;
-          -webkit-text-stroke: 2px #C64E24;
+          color: #C64E24;
+          //-webkit-text-stroke: 2px #C64E24;
         }
         .date2{
           color: #C64E24;
