@@ -136,7 +136,7 @@ export default {
           return;
         },
         fail:function(err){
-          alert('err',err)
+          //alert('err',err)
           console.log('err',err)
         },
         complete:function(){
@@ -248,16 +248,23 @@ export default {
       .p-info {
         position: absolute;
         z-index: 99;
-        top:32px;
+        // top:32px;
         left: 120px;
+        height:160px;
+        display: flex;
+        flex-direction: column;
+        //justify-items: center;
+        justify-content: center;
+        padding-top:20px;
         .name {
           color: #C64E24;
           font-size: 26px;
           font-weight: 700;
           margin-left: -20px;
+          height:60px;
         }
         .date {
-          margin-top: 17px;
+          // margin-top:20px;
         }
         .date1{
           font-size: 44px;
@@ -267,7 +274,6 @@ export default {
         }
         .date2{
           color: #C64E24;
-          margin-top: -10px;
           font-size: 26px;
           font-weight: 700;
         }
