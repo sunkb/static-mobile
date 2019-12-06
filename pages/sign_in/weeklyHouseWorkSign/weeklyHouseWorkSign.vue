@@ -304,19 +304,25 @@ export default {
         this.showFloatAction = false
       }
     },
-    async verifyToken (token) {
-      // const token = md5(`${mobile}Jw*gjw12sp>Dd$2s`);
-      const url = `/mobile/public/verifyToken?token=${token}`;
-      const res = await axios.get(url);
-      return res;
-    }
+    // async verifyToken (token) {
+    //   // const token = md5(`${mobile}Jw*gjw12sp>Dd$2s`);
+    //   const url = `/mobile/public/verifyToken?token=${token}`;
+    //   const res = await axios.get(url);
+    //   return res;
+    // }
   },
-  beforeRouteEnter (to, from, next) {
+  async beforeRouteEnter (to, from, next) {
     const token = to.query.token || '';
-    this.verifyToken(token).then((d) => {
-      if (!d.success) return alert(d.msg);
-      next();
-    });
+    const url = `/mobile/public/verifyToken?token=${token}`;
+    const res = await axios.get(url);
+    if(!res.success) {
+      return
+    }
+    next();
+    // this.verifyToken(token).then((d) => {
+    //   if (!d.success) return alert(d.msg);
+      // next();
+    // });
   }
 };
 </script>
