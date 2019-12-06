@@ -136,6 +136,7 @@ export default {
           return;
         },
         fail:function(err){
+          alert('err',err)
           console.log('err',err)
         },
         complete:function(){
