@@ -7,9 +7,12 @@
       </div>
       <div class="bruin-first">
         <div class="bruin-first-div" v-for="(item, index) in firstDiv" :key="index">
+          <div>
+            <div></div>
+          </div>
           <img class="bruin-first-img" src="../../../assets/bruin/img/bruin_div.png" />
-          <img class="bruin-first-view" src="../../../assets/bruin/img/bruin_view/1.png" />
-          <div class="bruin-first-own">
+          <img v-if="item.num > 0 ? false : true" class="bruin-first-view" src="../../../assets/bruin/img/bruin_view/1.png" />
+          <div v-if="item.num > 0 ? true : false" class="bruin-first-own">
             <img class="bruin-first-own-light" src="../../../assets/bruin/img/light.png" />
             <div :id="'bruin-keys' + (index +1)"></div>
           </div>
@@ -18,10 +21,10 @@
       <div class="bruin-second">
         <div class="bruin-second-div" v-for="(item, index) in secondDiv" :key="index">
           <img class="bruin-second-img" src="../../../assets/bruin/img/bruin_div.png" />
-          <img class="bruin-second-view" src="../../../assets/bruin/img/bruin_view/1.png" />
-          <div class="bruin-second-own">
+          <img v-if="item.num > 0 ? false : true" class="bruin-second-view" src="../../../assets/bruin/img/bruin_view/1.png" />
+          <div v-if="item.num > 0 ? true : false" v-else class="bruin-second-own">
             <img class="bruin-second-own-light" src="../../../assets/bruin/img/light.png" />
-            
+            <div :id="'bruin-keys' + (index +4)"></div>
           </div>
         </div>
       </div>
@@ -45,17 +48,20 @@
 </template>
 <script>
 import Abstract from './abstract'
+import { API } from '~/pages/bruin/consts'
+import axios from '~/utils/axios'
 export default {
   name: 'myBruin',
   head () {
     return {
-      titile: '集五熊，赢千万课时'
+      titile: '集五熊，赢千万课时',
+      myBruinData: {}
     }
   },
   data () {
     return {
-      firstDiv: [1, 2, 3],
-      secondDiv: [1, 2],
+      firstDiv: [],
+      secondDiv: [],
       abstractShow: false
     }
   },
@@ -72,7 +78,58 @@ export default {
     },
     cancelShow () {
       this.abstractShow = false
+    },
+    // 我的熊包的数据请求
+    async getMyBruinData () {
+      const activityID = 1
+      try {
+        // const res = await axios.get(`${API.MY_BRUIN}?activity_id=${activityID}`)
+        // if(!res.status) {
+        //   console.log(res.info)
+        //   return
+        // }
+        this.myBruinData = {
+          lucky_num: 1,
+          cards: [
+            {
+              card_no: 1,
+              num: 0
+            },
+            {
+              card_no: 1,
+              num: 2
+            },
+            {
+              card_no: 1,
+              num: 2
+            },
+            {
+              card_no: 1,
+              num: 1
+            },
+            {
+              card_no: 1,
+              num: 1
+            }
+          ],
+          is_enable: false
+        }
+        this.myBruinData.cards.forEach((element, index) => {
+          if(index > 2) {
+            this.secondDiv.push(element)
+          } else {
+            this.firstDiv.push(element)
+          }
+        })
+      } catch (err) {
+        console.log(err)
+        return
+      }
+      
     }
+  },
+  created(){
+    this.getMyBruinData()
   }
 }
 </script>
@@ -254,7 +311,27 @@ export default {
 }
 #bruin-keys3 {
   animation-name: rainbow3;
-  animation-duration: 0.5s;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  width: 197px;
+  height: 268px;
+  position: absolute;
+  top: 40px;
+  left: 10px;
+}
+#bruin-keys4 {
+  animation-name: rainbow4;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  width: 197px;
+  height: 268px;
+  position: absolute;
+  top: 40px;
+  left: 10px;
+}
+#bruin-keys5 {
+  animation-name: rainbow5;
+  animation-duration: 0.75s;
   animation-iteration-count: infinite;
   width: 197px;
   height: 268px;
@@ -285,30 +362,90 @@ export default {
   }
 }
 @keyframes rainbow2 {
-  from {
+  0% {
     background: url("../../../assets/bruin/img/keys/21.png") no-repeat;
     background-size: 100%;
   }
-  50% {
+  25% {
     background: url("../../../assets/bruin/img/keys/22.png") no-repeat;
     background-size: 100%;
   }
-  to {
+  50% {
     background: url("../../../assets/bruin/img/keys/23.png") no-repeat;
+    background-size: 100%;
+  }
+  75% {
+    background: url("../../../assets/bruin/img/keys/22.png") no-repeat;
+    background-size: 100%;
+  }
+  100% {
+    background: url("../../../assets/bruin/img/keys/21.png") no-repeat;
     background-size: 100%;
   }
 }
 @keyframes rainbow3 {
-  from {
+  0% {
     background: url("../../../assets/bruin/img/keys/31.png") no-repeat;
     background-size: 100%;
   }
-  50% {
+  25% {
     background: url("../../../assets/bruin/img/keys/32.png") no-repeat;
     background-size: 100%;
   }
-  to {
+  50% {
     background: url("../../../assets/bruin/img/keys/33.png") no-repeat;
+    background-size: 100%;
+  }
+  75% {
+    background: url("../../../assets/bruin/img/keys/32.png") no-repeat;
+    background-size: 100%;
+  }
+  100% {
+    background: url("../../../assets/bruin/img/keys/31.png") no-repeat;
+    background-size: 100%;
+  }
+}
+@keyframes rainbow4 {
+  0% {
+    background: url("../../../assets/bruin/img/keys/41.png") no-repeat;
+    background-size: 100%;
+  }
+  25% {
+    background: url("../../../assets/bruin/img/keys/42.png") no-repeat;
+    background-size: 100%;
+  }
+  50% {
+    background: url("../../../assets/bruin/img/keys/43.png") no-repeat;
+    background-size: 100%;
+  }
+  75% {
+    background: url("../../../assets/bruin/img/keys/42.png") no-repeat;
+    background-size: 100%;
+  }
+  100% {
+    background: url("../../../assets/bruin/img/keys/41.png") no-repeat;
+    background-size: 100%;
+  }
+}
+@keyframes rainbow5 {
+  0% {
+    background: url("../../../assets/bruin/img/keys/51.png") no-repeat;
+    background-size: 100%;
+  }
+  25% {
+    background: url("../../../assets/bruin/img/keys/52.png") no-repeat;
+    background-size: 100%;
+  }
+  50% {
+    background: url("../../../assets/bruin/img/keys/53.png") no-repeat;
+    background-size: 100%;
+  }
+  75% {
+    background: url("../../../assets/bruin/img/keys/52.png") no-repeat;
+    background-size: 100%;
+  }
+  100% {
+    background: url("../../../assets/bruin/img/keys/51.png") no-repeat;
     background-size: 100%;
   }
 }
