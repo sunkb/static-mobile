@@ -11,8 +11,8 @@
       <div class="bruin-first">
         <div class="bruin-first-div" v-for="(item, index) in firstDiv" :key="index">
           <div class="bruin-first-name">
-            <div v-if="item.num > 0" class="bruin-first-name-content">{{item.name + " x" + item.num}}</div>
-            <div v-else class="bruin-first-name-content1">{{item.name}}</div>
+            <div v-if="item.num > 0 ? true : false" class="bruin-first-name-content">{{item.name + " x" + item.num}}</div>
+            <div v-if="item.num > 0 ? false : true " class="bruin-first-name-content1">{{item.name}}</div>
           </div>
           <img class="bruin-first-img" src="../../../assets/bruin/img/bruin_div.png" />
           <img v-if="item.num > 0 ? false : true" class="bruin-first-view" :src="'../../../assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
@@ -25,12 +25,12 @@
       <div class="bruin-second">
         <div class="bruin-second-div" v-for="(item, index) in secondDiv" :key="index">
           <div class="bruin-second-name">
-            <div v-if="item.num > 0" class="bruin-second-name-content">{{item.name + " x" + item.num}}</div>
-            <div v-else class="bruin-second-name-content1">{{item.name}}</div>
+            <div v-if="item.num > 0 ? true : false" class="bruin-second-name-content">{{item.name + " x" + item.num}}</div>
+            <div v-if="item.num > 0 ? false : true " class="bruin-second-name-content1">{{item.name}}</div>
           </div>
           <img class="bruin-second-img" src="../../../assets/bruin/img/bruin_div.png" />
           <img v-if="item.num > 0 ? false : true" class="bruin-second-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
-          <div v-if="item.num > 0 ? true : false" v-else class="bruin-second-own">
+          <div v-if="item.num > 0 ? true : false" class="bruin-second-own">
             <img class="bruin-second-own-light" src="../../../assets/bruin/img/light.png" />
             <div :id="'bruin-keys' + item.card_no"></div>
           </div>
@@ -52,7 +52,7 @@
         <img class="rule-content-img" src="../../../assets/bruin/img/activity_rule.png" />
       </div>
     </div>
-    <Abstract :abstractShow="abstractShow" @fcancelShow="cancelShow"></Abstract>
+    <Abstract :awardBruinNumber="awardBruinNumber" :abstractShow="abstractShow" @fcancelShow="cancelShow"></Abstract>
   </div>
 </template>
 <script>
@@ -73,6 +73,7 @@ export default {
       secondDiv: [],
       abstractShow: false,
       awardChange: 0, // 可以抓熊的次数
+      awardBruinNumber: 0 // 点击抓熊按钮后，出现的熊的编号
     }
   },
   components: {
@@ -87,8 +88,20 @@ export default {
     goToHome (){
       window.location = `http://192.168.216.37:54972/bruin/`
     },
-    abstractAction () {
+    async abstractAction () {
       this.abstractShow = true
+      try {
+        const activityId = 1
+        const res = await axios.post(API.MY_BRUIN, {activity_id: activityId})
+        if (!res.status) {
+          console.log(res.info)
+          return 
+        }
+        this.awardBruinNumber = res.data
+      } catch (err) {
+        console.log(err) 
+        return 
+      }
     },
     cancelShow () {
       this.abstractShow = false
@@ -113,7 +126,7 @@ export default {
             },
             {
               card_no: 2,
-              num: 0,
+              num: 1,
               name: '聪慧熊'
             },
             {

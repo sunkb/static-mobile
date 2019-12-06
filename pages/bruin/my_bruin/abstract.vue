@@ -10,7 +10,7 @@
               <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
                 <img
                   style="width: 139px;height: 150px;"
-                  src="../../../assets/bruin/img/test11/test.png"
+                  src="../../../assets/bruin/img/bruin_view/1.png"
                 />
               </div>
             </van-swipe-item>
@@ -18,7 +18,7 @@
               <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
                 <img
                   style="width: 139px;height: 150px;"
-                  src="../../../assets/bruin/img/test11/test.png"
+                  src="../../../assets/bruin/img/bruin_view/2.png"
                 />
               </div>
             </van-swipe-item>
@@ -26,7 +26,7 @@
               <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
                 <img
                   style="width: 139px;height: 150px;"
-                  src="../../../assets/bruin/img/test11/test.png"
+                  src="../../../assets/bruin/img/bruin_view/3.png"
                 />
               </div>
             </van-swipe-item>
@@ -34,7 +34,15 @@
               <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
                 <img
                   style="width: 139px;height: 150px;"
-                  src="../../../assets/bruin/img/test11/test.png"
+                  src="../../../assets/bruin/img/bruin_view/4.png"
+                />
+              </div>
+            </van-swipe-item>
+            <van-swipe-item>
+              <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
+                <img
+                  style="width: 139px;height: 150px;"
+                  src="../../../assets/bruin/img/bruin_view/5.png"
                 />
               </div>
             </van-swipe-item>
@@ -54,6 +62,10 @@ export default {
     abstractShow: {
       type: Boolean,
       default: false
+    },
+    awardBruinNumber: {
+      type: Number,
+      default: 0
     }
   },
   data () {
