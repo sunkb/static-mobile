@@ -45,7 +45,7 @@
             <input class="input-area" v-model="p_name" type="text" placeholder="请填写名字"/>
             <input class="input-area" v-model="p_date" type="date" placeholder="请填写入职日期" />
           </div>
-          <div v-on:click="submitInfo" class="btn">提交信息</div>
+          <div @click="submitInfo" class="btn">提交信息</div>
         </div>
       </div>
     </div>
@@ -108,6 +108,7 @@ export default {
       this.modelShow = false;
       this.p_date_string = this.getDateDay();
       this.chooseImage();
+      return;
     },
     // 选择相册或者拍照
     chooseImage() {
