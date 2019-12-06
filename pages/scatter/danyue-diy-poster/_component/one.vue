@@ -133,6 +133,7 @@ export default {
           } else {
             this.clipImgUrl = res.localIds[0]
           }
+          return;
         },
         fail:function(err){
           console.log('err',err)
