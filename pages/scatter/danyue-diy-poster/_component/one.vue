@@ -132,6 +132,12 @@ export default {
           } else {
             this.clipImgUrl = res.localIds[0]
           }
+        },
+        fail:function(err){
+          console.log('err',err)
+        },
+        complete:function(){
+          return;
         }
       });
     },
