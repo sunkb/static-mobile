@@ -175,25 +175,18 @@ export default {
       title: "周作业打卡"
     };
   },
-  async created () {
+  created () {
     console.log("我是首页的");
-    const token = this.$route.query.token || '';
-    const url = `/mobile/public/verifyToken?token=${token}`;
-    const res = await axios.get(url);
-    if(!res.success) {
-      console.log(res.msg)
-      return
-    }
   },
   components: {
     startLevel: startLevel,
     "mt-loadmore": Loadmore,
     toast: Toast
   },
-  mounted () {
-    this.submit();
-    this.history();
-    console.log(this.$refs)
+  async mounted () {
+    await this.postToken()
+    await this.submit()
+    await this.history()
     // this.centerActionBottom = this.$refs.centerAction.getBoundingClientRect().bottom
     window.addEventListener('scroll', this.handleScroll)
   },
@@ -224,6 +217,15 @@ export default {
     };
   },
   methods: {
+    async postToken() {
+      const token = this.$route.query.token || '';
+      const url = `/mobile/public/verifyToken?token=${token}`;
+      const res = await axios.get(url);
+      if(!res.success) {
+        console.log(res.msg)
+        return
+      }
+    },
     /**
      * 两个去打卡跳转按钮
      */
