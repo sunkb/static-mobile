@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <div class="home-background">
+      <div class="home-marquee">
+        恭喜用户xxxxxxxxxxx获得勇敢熊一只
+      </div>
       <div class="home-header">
         <img class="home-header-ways" src="../../assets/bruin/img/ways.png" @click="goToRule" />
         <img
@@ -42,7 +45,8 @@ export default {
   name: "home",
   data () {
     return {
-      showShareHelp: false
+      showShareHelp: false,
+      pmdInfo: ""
     }
   },
   components: {
@@ -103,6 +107,21 @@ export default {
         return
       }
 
+    },
+    // 用于获取跑马灯的内容数据
+    async getBruinPMD () {
+      try {
+        const activityID = 1
+        const res = await axios.get(`${API.BRUIN_PMD}?activity_id=${activityID}`)
+        if(!res.status) {
+          console.log(res.info)
+          return 
+        }
+        this.pmdInfo = res.data
+      } catch (err) {
+          console.log(res)
+          return
+      }
     }
   },
   created () {
@@ -111,6 +130,7 @@ export default {
   mounted () {
     this.$refs['toast'].showLoadingToast()
     this.wxShare()
+    this.getBruinPMD()
   }
 }
 </script>
@@ -125,8 +145,19 @@ export default {
     height: 100%;
     background: url("../../assets/bruin/img/home_page.png");
     background-size: 100%;
+    .home-marquee {
+      height: 50px;
+      width: 100%;
+      background:rgba(0,0,0,1);
+      opacity:0.5;
+      font-size:28px;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+      text-align: center;
+      padding-top: 5px;
+    }
     .home-header {
-      padding-top: 87px;
+      padding-top: 37px;
       display: flex;
       align-items: center;
       justify-content: space-between;

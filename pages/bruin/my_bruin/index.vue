@@ -1,6 +1,9 @@
 <template>
   <div id="bruin">
     <div class="bruin-background">
+      <div class="bruin-marquee">
+        恭喜用户xxxxxxxxxxx获得勇敢熊一只
+      </div>
       <div class="bruin-header">
         <img class="bruin-header-ways" src="../../../assets/bruin/img/ways.png" @click="goToRule" />
         <img class="bruin-header-work" src="../../../assets/bruin/img/work.png" />
@@ -143,10 +146,26 @@ export default {
         return
       }
       
+    },
+    // 用于获取跑马灯的内容数据
+    async getBruinPMD () {
+      try {
+        const activityID = 1
+        const res = await axios.get(`${API.BRUIN_PMD}?activity_id=${activityID}`)
+        if(!res.status) {
+          console.log(res.info)
+          return 
+        }
+        this.pmdInfo = res.data
+      } catch (err) {
+          console.log(res)
+          return
+      }
     }
   },
   created(){
     this.getMyBruinData()
+    this.getBruinPMD()
   }
 }
 </script>
@@ -161,6 +180,17 @@ export default {
   .bruin-background {
     background: url("../../../assets/bruin/img/bruin_background.png") no-repeat;
     background-size: 100%;
+    .bruin-marquee {
+      height: 50px;
+      width: 100%;
+      background:rgba(0,0,0,1);
+      opacity:0.5;
+      font-size:28px;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+      text-align: center;
+      padding-top: 5px;
+    }
     .bruin-header {
       padding-top: 87px;
       display: flex;
