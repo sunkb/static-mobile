@@ -107,7 +107,7 @@ export default {
     submitInfo() {
       this.modelShow = false;
       this.p_date_string = this.getDateDay();
-      //this.chooseImage();
+      this.chooseImage();
     },
     // 选择相册或者拍照
     chooseImage() {
