@@ -100,9 +100,6 @@ export default {
       this.timeParam = 1
       this.nameAndButtonShow = false
       this.$emit('fcancelShow')
-    },
-    ssss () {
-
     }
   },
   watch: {

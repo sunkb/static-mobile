@@ -2,7 +2,7 @@
   <div id="bruin">
     <div class="bruin-background">
       <div class="bruin-marquee">
-        恭喜用户xxxxxxxxxxx获得勇敢熊一只
+        {{pmdInfo}}
       </div>
       <div class="bruin-header">
         <img class="bruin-header-ways" src="../../../assets/bruin/img/ways.png" @click="goToRule" />
@@ -75,7 +75,8 @@ export default {
       secondDiv: [],
       abstractShow: false,
       awardChange: 0, // 可以抓熊的次数
-      awardBruinNumber: 1 // 点击抓熊按钮后，出现的熊的编号
+      awardBruinNumber: 1, // 点击抓熊按钮后，出现的熊的编号
+      pmdInfo: '' // 跑马灯内容
     }
   },
   components: {
@@ -85,11 +86,11 @@ export default {
   methods: {
     // 跳转规则页面
     goToRule () {
-      window.location = `http://192.168.216.37:50209/bruin/rule/`
+      window.location = `${process.env.BASE_URL}/bruin/rule/`
     },
     // 跳转至首页
     goToHome (){
-      window.location = `http://192.168.216.37:50209/bruin/`
+      window.location = `${process.env.BASE_URL}/bruin/`
     },
     async abstractAction () {
       if(!this.awardChange) {
@@ -104,8 +105,8 @@ export default {
           console.log(res.info)
           return 
         }
-        // this.awardBruinNumber = res.data
-        this.awardBruinNumber = 1
+        this.awardBruinNumber = res.data
+        // this.awardBruinNumber = 1
       } catch (err) {
         console.log(err) 
         return 
@@ -113,49 +114,48 @@ export default {
     },
     cancelShow () {
       this.abstractShow = false
-      window.location = `http://192.168.216.37:50209/bruin/my_bruin`
+      window.location = `${process.env.BASE_URL}/bruin/my_bruin`
     },
     // 我的熊包的数据请求
     async getMyBruinData () {
       const activityID = 1
       try {
-        // const res = await axios.get(`${API.MY_BRUIN}?activity_id=${activityID}`)
-        // if(!res.status) {
-        //   console.log(res.info)
-        //   return
-        // }
-        // this.awardChange = res.data.lucky_num
-        this.awardChange = 1
-        this.myBruinData = {
-          cards: [
-            {
-              card_no: 1,
-              num: 1,
-              name: '乐学熊'
-            },
-            {
-              card_no: 2,
-              num: 0,
-              name: '聪慧熊'
-            },
-            {
-              card_no: 3,
-              num: 4,
-              name: '健康熊'
-            },
-            {
-              card_no: 4,
-              num: 1,
-              name: '勤奋熊'
-            },
-            {
-              card_no: 5,
-              num: 1,
-              name: '勇敢熊'
-            }
-          ],
-          is_enable: false
+        const res = await axios.get(`${API.MY_BRUIN}?activity_id=${activityID}`)
+        if(!res.status) {
+          console.log(res.info)
+          return
         }
+        this.awardChange = res.data.lucky_num
+        // this.myBruinData = {
+        //   cards: [
+        //     {
+        //       card_no: 1,
+        //       num: 1,
+        //       name: '乐学熊'
+        //     },
+        //     {
+        //       card_no: 2,
+        //       num: 0,
+        //       name: '聪慧熊'
+        //     },
+        //     {
+        //       card_no: 3,
+        //       num: 4,
+        //       name: '健康熊'
+        //     },
+        //     {
+        //       card_no: 4,
+        //       num: 1,
+        //       name: '勤奋熊'
+        //     },
+        //     {
+        //       card_no: 5,
+        //       num: 1,
+        //       name: '勇敢熊'
+        //     }
+        //   ],
+        //   is_enable: false
+        // }
         this.myBruinData.cards.forEach((element, index) => {
           if(index > 2) {
             this.secondDiv.push(element)
@@ -178,7 +178,7 @@ export default {
           console.log(res.info)
           return 
         }
-        this.pmdInfo = res.data
+        this.pmdInfo = res.data || '0人已集齐，2019年1月1日18：00开奖'
       } catch (err) {
           console.log(res)
           return

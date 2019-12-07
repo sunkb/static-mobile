@@ -2,7 +2,7 @@
   <div class="home">
     <div class="home-background">
       <div class="home-marquee">
-        恭喜用户xxxxxxxxxxx获得勇敢熊一只
+        {{pmdInfo}}
       </div>
       <div class="home-header">
         <img class="home-header-ways" src="../../assets/bruin/img/ways.png" @click="goToRule" />
@@ -69,11 +69,11 @@ export default {
   methods: {
     // 跳转规则页面
     goToRule () {
-      window.location = `http://192.168.216.37:50209/bruin/rule/`
+      window.location = `${process.env.BASE_URL}/bruin/rule/`
     },
     // 跳转到我的熊库
     goToMyBruin () {
-      window.location = `http://192.168.216.37:50209/bruin/my_bruin/`
+      window.location = `${process.env.BASE_URL}/bruin/my_bruin/`
     },
     // 邀请好友
     inviteAction () {
@@ -129,7 +129,7 @@ export default {
           console.log(res.info)
           return 
         }
-        this.pmdInfo = res.data
+        this.pmdInfo = res.data || '0人已集齐，2019年1月1日18：00开奖'
       } catch (err) {
           console.log(res)
           return
