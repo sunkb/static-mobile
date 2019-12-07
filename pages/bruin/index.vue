@@ -194,6 +194,7 @@ export default {
   created () {
     const login = new Login();
     const res = login.autoLogin();
+    console.log(res)
     if(!res.status) {
       console.log(res.info)
       return 
