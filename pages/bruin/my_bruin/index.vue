@@ -71,8 +71,35 @@ export default {
   },
   data () {
     return {
-      firstDiv: [],
-      secondDiv: [],
+      firstDiv: [
+        {
+          card_no: 1,
+          num: 0,
+          name: '乐学熊'
+        },
+        {
+          card_no: 2,
+          num: 0,
+          name: '聪慧熊'
+        },
+        {
+          card_no: 3,
+          num: 0,
+          name: '健康熊'
+        },
+      ],
+      secondDiv: [
+        {
+          card_no: 4,
+          num: 0,
+          name: '勤奋熊'
+        },
+        {
+          card_no: 5,
+          num: 0,
+          name: '勇敢熊'
+        },
+      ],
       abstractShow: false,
       awardChange: 0, // 可以抓熊的次数
       awardBruinNumber: 1, // 点击抓熊按钮后，出现的熊的编号
@@ -156,6 +183,8 @@ export default {
         //   ],
         //   is_enable: false
         // }
+        this.secondDiv = []
+        this.firstDiv = []
         this.myBruinData.cards.forEach((element, index) => {
           if(index > 2) {
             this.secondDiv.push(element)
