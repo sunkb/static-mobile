@@ -11,7 +11,7 @@ export default {
   methods: {
   },
   mounted() {
-    // eruda.init();
+    eruda.init();
   },
 }
 </script>
