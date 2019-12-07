@@ -50,7 +50,16 @@ export default {
     return {
       showShareHelp: false,
       pmdInfo: "",
-      loginRegistModal: false
+      loginRegistModal: false,
+      activityData: {
+        is_enable: true,
+        id: 1,
+        name: '',
+        start_time: '',
+        end_time: '',
+        is_buy: false,
+        invite_num: 0
+      }
     }
   },
   components: {
@@ -60,11 +69,11 @@ export default {
   methods: {
     // 跳转规则页面
     goToRule () {
-      window.location = `http://192.168.216.37:54972/bruin/rule/`
+      window.location = `http://192.168.216.37:50209/bruin/rule/`
     },
     // 跳转到我的熊库
     goToMyBruin () {
-      window.location = `http://192.168.216.37:54972/bruin/my_bruin/`
+      window.location = `http://192.168.216.37:50209/bruin/my_bruin/`
     },
     // 邀请好友
     inviteAction () {
@@ -158,6 +167,29 @@ export default {
         return
       }
     },
+    // 活动详情的接口数据
+    async getActivityDetail() {
+      try {
+        const activityId = 1
+        const res = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityId}`)
+        if(!res.status) {
+          console.log(res.info)
+          return
+        }
+        this.activityData = {
+          is_enable: res.data.is_enable || '',
+          id: res.data.id || 1,
+          name: res.data.name || '',
+          start_time: res.data.start_time || '',
+          end_time: res.data.end_time || '',
+          is_buy: res.data.is_buy || false,
+          invite_num: res.data.invite_num || 0
+        }
+      } catch (err) {
+        console.log(err)
+        return
+      }
+    }
   },
   created () {
     const login = new Login();
@@ -166,8 +198,9 @@ export default {
   async mounted () {
     this.$refs['toast'].showLoadingToast()
     await this.login()
-    await this.wxShare()
-    await this.getBruinPMD()
+    this.wxShare()
+    this.getBruinPMD()
+    this.getActivityDetail()
     this.$refs['toast'].hideLoadingToast()
   }
 }

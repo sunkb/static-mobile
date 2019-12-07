@@ -82,11 +82,11 @@ export default {
   methods: {
     // 跳转规则页面
     goToRule () {
-      window.location = `http://192.168.216.37:54972/bruin/rule/`
+      window.location = `http://192.168.216.37:50209/bruin/rule/`
     },
     // 跳转至首页
     goToHome (){
-      window.location = `http://192.168.216.37:54972/bruin/`
+      window.location = `http://192.168.216.37:50209/bruin/`
     },
     async abstractAction () {
       this.abstractShow = true
