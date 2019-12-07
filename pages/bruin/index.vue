@@ -195,6 +195,7 @@ export default {
     const login = new Login();
     const res = login.autoLogin();
     console.log(res)
+    console.log(121212121)
     if(!res.status) {
       console.log(res.info)
       return 
