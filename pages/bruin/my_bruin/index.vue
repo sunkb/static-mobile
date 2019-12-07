@@ -15,7 +15,7 @@
             <div v-if="item.num > 0 ? false : true " class="bruin-first-name-content1">{{item.name}}</div>
           </div>
           <img class="bruin-first-img" src="../../../assets/bruin/img/bruin_div.png" />
-          <img v-if="item.num > 0 ? false : true" class="bruin-first-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
+          <img v-if="item.num > 0 ? false : true" class="bruin-first-view" :src="'../../../assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
           <div v-if="item.num > 0 ? true : false" class="bruin-first-own">
             <img class="bruin-first-own-light" src="../../../assets/bruin/img/light.png" />
             <div :id="'bruin-keys' + item.card_no"></div>
@@ -29,7 +29,7 @@
             <div v-if="item.num > 0 ? false : true " class="bruin-second-name-content1">{{item.name}}</div>
           </div>
           <img class="bruin-second-img" src="../../../assets/bruin/img/bruin_div.png" />
-          <img v-if="item.num > 0 ? false : true" class="bruin-second-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
+          <img v-if="item.num > 0 ? false : true" class="bruin-second-view" :src="'../../../assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
           <div v-if="item.num > 0 ? true : false" class="bruin-second-own">
             <img class="bruin-second-own-light" src="../../../assets/bruin/img/light.png" />
             <div :id="'bruin-keys' + item.card_no"></div>
