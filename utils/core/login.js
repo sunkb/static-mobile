@@ -37,6 +37,7 @@ export class Login {
  * 微信自动登录
  */
 function wxAutoLogin() {
+    console.log(22222)
     if (process.client) {
         const code = getQueryString('code');
         if (!code) {
@@ -52,7 +53,8 @@ function wxAutoLogin() {
 
         //调用后台接口登录
         const url = 'Mobile/StudentActivity/login';
-        cons.log(code)
+        console.log(111111)
+        console.log(code)
         const params = {
             code,
         }
