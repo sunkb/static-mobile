@@ -141,8 +141,10 @@ export default {
       redirect_url = removeParam('code',redirect_url);
       redirect_url = removeParam('state',redirect_url);
       redirect_url = encodeURIComponent(redirect_url);
-      if(mode === "login") {
-        window.location = process.env.ENV_API+'/mobile/Login#/register';
+      if(mode === "register") {
+        const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login?redirect_url='+redirect_url;
+        window.location = loginUrl;
+        return
       }
     },
     // 活动详情的接口数据
