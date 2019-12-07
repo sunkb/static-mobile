@@ -5,7 +5,7 @@
         {{pmdInfo}}
       </div>
       <div class="home-header">
-        <!-- <img class="home-header-ways" src="../../assets/bruin/img/ways.png" @click="goToRule" /> -->
+        <img class="home-header-ways" src="../../assets/bruin/img/ways.png" @click="goToRule" />
         <img
           class="home-header-work"
           src="../../assets/bruin/img/home_bruin.png"
