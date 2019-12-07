@@ -50,7 +50,6 @@ async function wxAutoLogin () {
 
     //调用后台接口登录
     const url = 'Mobile/StudentActivity/login'
-    console.log(code)
     const params = {
       code
     }
