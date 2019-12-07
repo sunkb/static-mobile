@@ -42,7 +42,7 @@ import { API } from '~/pages/bruin/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 import { initWX } from '~/pages/presentation/wx'
-import {Login} from '~/utils/core/login'
+import {Login} from '~/utils/core/logins'
 import { PosterModal } from '~/components/presentation'
 export default {
   name: "home",

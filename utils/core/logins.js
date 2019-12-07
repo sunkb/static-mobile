@@ -32,7 +32,7 @@ export class Login {
 /**
  * 微信自动登录
  */
-function wxAutoLogin () {
+async function wxAutoLogin () {
   if (process.client) {
     const code = getQueryString('code')
     if (!code) {
@@ -49,20 +49,20 @@ function wxAutoLogin () {
     }
 
     //调用后台接口登录
-    const url = 'Mobile/StudentActivity/login'
-    console.log(code)
+    const url = '/Mobile/JiXiongActivity/login'
     const params = {
       code
     }
-    
-    axios
-      .get(url, { params })
-      .then(res => {
-        console.log('code登录', res)
-      })
-      .catch(err => {
-        console.log('错误', err)
-      })
+    const res = await axios.get(url, { params })
+    return res
+    // axios
+    //   .get(url, { params })
+    //   .then(res => {
+    //     console.log('code登录', res)
+    //   })
+    //   .catch(err => {
+    //     console.log('错误', err)
+    //   })
   }
 }
 
