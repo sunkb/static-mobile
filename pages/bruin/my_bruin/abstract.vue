@@ -1,10 +1,12 @@
 <template>
   <div class="abstract" v-show="abstractShow">
-    <div class="abstract-background" @click="cancelShow"></div>
+    <div class="abstract-background"></div>
 
     <div class="abstract-stage">
-      <div class="abstract-stage-button">
-        <div class="abstract-stage-button-swipe">
+      <div v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-name wrapper' : 'abstract-stage-name'">
+        <img class="abstract-stage-name-img" src="../../../assets/bruin/img/bruin_name/1.png"/>
+      </div>
+      <div class="abstract-stage-swipe">
           <van-swipe :autoplay="swipeTime" :show-indicators="indicators">
             <van-swipe-item>
               <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
@@ -48,7 +50,8 @@
             </van-swipe-item>
           </van-swipe>
         </div>
-        <div class="abstract-stage-button-content" @click="ssss">放入熊库</div>
+      <div @click="cancelShow" class="abstract-stage-button" v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-button-content wrapper' : 'abstract-stage-button-content'">
+        <div>放入熊库</div>
       </div>
     </div>
   </div>
@@ -74,7 +77,8 @@ export default {
       indicators: false, // 指示器显隐
       swipeTime: 300,
       swipeObj: null,
-      timeParam: 1
+      timeParam: 1,
+      nameAndButtonShow: false
     }
   },
   components: {
@@ -82,24 +86,38 @@ export default {
     'van-swipe-item': SwipeItem
   },
   created () {},
-  mounted () {
-    this.swipeObj = setInterval(() => {
-      if (this.swipeTime > 2601) {
-        clearInterval(this.swipeObj)
-        this.timeParam = 300000
-      }
-      this.swipeTime = this.swipeTime + (this.timeParam++) * 75
-      console.log(this.swipeTime)
-    }, 2000)
-  },
+  mounted () {},
   methods: {
     cancelShow () {
       clearInterval(this.swipeObj)
       this.swipeTime = 300
+      this.timeParam = 1
+      this.nameAndButtonShow = false
       this.$emit('fcancelShow')
     },
     ssss () {
 
+    }
+  },
+  watch: {
+    abstractShow(value) {
+      if(value) {
+        this.swipeObj = setInterval(() => {
+          if (this.swipeTime > 2601) {
+            clearInterval(this.swipeObj)
+            this.swipeTime = 300
+            this.timeParam = 300000
+            this.nameAndButtonShow = true
+          }
+          this.swipeTime = this.swipeTime + (this.timeParam++) * 75
+          console.log(this.swipeTime)
+        }, 2000)
+      } else {
+        clearInterval(this.swipeObj)
+        this.swipeTime = 300
+        this.timeParam = 1
+        this.nameAndButtonShow = false
+      }
     }
   }
 }
@@ -130,6 +148,25 @@ export default {
     left: 50%;
     margin-left: -296px;
     z-index: 1000;
+    &-name {
+      width: 304px;
+      height: 58px;
+      position: absolute;
+      left: 50%;
+      margin-left: -152px;
+      top: 20px;
+      &-img {
+        width: 304px;
+        height: 58px;
+      }
+    }
+    &-swipe {
+      width: 592px;
+      height: 300px;
+      position: absolute;
+      top: 250px;
+      z-index: 2000;
+    }
     &-button {
       width: 314px;
       height: 99px;
@@ -143,13 +180,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      &-swipe {
-        width: 592px;
-        height: 300px;
-        position: absolute;
-        top: -430px;
-        z-index: 10000;
-      }
+      z-index: 3000;
       &-content {
         font-size: 44px;
         font-family: PingFang SC;
@@ -160,4 +191,19 @@ export default {
     }
   }
 }
+@keyframes fade-in {  
+    0% {opacity: 0;}/*初始状态 透明度为0*/  
+    40% {opacity: 0;}/*过渡状态 透明度为0*/  
+    100% {opacity: 1;}/*结束状态 透明度为1*/  
+}  
+@-webkit-keyframes fade-in {/*针对webkit内核*/  
+    0% {opacity: 0;}  
+    40% {opacity: 0;}  
+    100% {opacity: 1;}  
+}
+.wrapper {    
+    animation: fade-in;/*动画名称*/  
+    animation-duration: 2s;/*动画持续时间*/  
+    -webkit-animation:fade-in 2s;/*针对webkit内核*/  
+} 
 </style>

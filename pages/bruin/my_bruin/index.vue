@@ -112,6 +112,7 @@ export default {
     },
     cancelShow () {
       this.abstractShow = false
+      window.location = `http://192.168.216.37:50209/bruin/my_bruin`
     },
     // 我的熊包的数据请求
     async getMyBruinData () {
