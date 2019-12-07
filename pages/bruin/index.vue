@@ -135,36 +135,14 @@ export default {
           return
       }
     },
-    // 判断登录成功或则失败
-    async login() {
-      try{
-        const res = await axios.get(API.BRUIN_LOGIN)
-        if(!res.status) {
-          console.log(res.info)
-          return 
-        }
-        if(res.data.is_login) {
-          console.log('登录成功')
-        } else {
-          this.loginRegistModal = true
-        }
-      } catch (err) {
-        console.log(err)
-        return 
-      }
-      
-    },
     //登录或者注册模式选择
     async gotoLoginRegister(mode) {
       let redirect_url = window.location.href;
       redirect_url = removeParam('code',redirect_url);
       redirect_url = removeParam('state',redirect_url);
       redirect_url = encodeURIComponent(redirect_url);
-      if(mode === "register") {
-        window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#注册并参与#btn点击--来自活动外化']); // 百度统计
-        const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login?redirect_url='+redirect_url;
-        window.location = loginUrl;
-        return
+      if(mode === "login") {
+        window.location = process.env.ENV_API+'/mobile/Login#/register';
       }
     },
     // 活动详情的接口数据
