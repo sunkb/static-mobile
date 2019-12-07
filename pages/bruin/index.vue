@@ -50,7 +50,7 @@ export default {
     return {
       showShareHelp: false,
       pmdInfo: "",
-      loginRegistModal: false,
+      loginRegistModal: true,
       activityData: {
         is_enable: true,
         id: 1,
