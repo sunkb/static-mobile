@@ -6,7 +6,7 @@
       </div>
       <div class="bruin-header">
         <img class="bruin-header-ways" src="../../../assets/bruin/img/ways.png" @click="goToRule" />
-        <img class="bruin-header-work" src="../../../assets/bruin/img/work.png" />
+        <img class="bruin-header-work" src="../../../assets/bruin/img/work.png" @click="goToHome"/>
       </div>
       <div class="bruin-first">
         <div class="bruin-first-div" v-for="(item, index) in firstDiv" :key="index">
@@ -15,7 +15,7 @@
             <div v-if="item.num > 0 ? false : true " class="bruin-first-name-content1">{{item.name}}</div>
           </div>
           <img class="bruin-first-img" src="../../../assets/bruin/img/bruin_div.png" />
-          <img v-if="item.num > 0 ? false : true" class="bruin-first-view" :src="'../../../assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
+          <img v-if="item.num > 0 ? false : true" class="bruin-first-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
           <div v-if="item.num > 0 ? true : false" class="bruin-first-own">
             <img class="bruin-first-own-light" src="../../../assets/bruin/img/light.png" />
             <div :id="'bruin-keys' + item.card_no"></div>
@@ -48,7 +48,7 @@
           <div :class="awardChange > 0 ? 'abstract-time-content1' : 'abstract-time-content'">{{awardChange}}</div>次
         </div>
       </div>
-      <div class="rule-content">
+      <div class="rule-content" @click="goToRule">
         <img class="rule-content-img" src="https://qn-static.landi.com/uploadtoole21f9199f510f8d0e6035c6c7389d24d.png" />
       </div>
     </div>
@@ -265,11 +265,12 @@ export default {
           height: 331px;
         }
         .bruin-first-view {
-          width: 165px;
+          width: 175px;
           height: 248px;
           position: absolute;
           top: 30px;
-          left: 15px;
+          left: 50%;
+          margin-left: -87px;
         }
         .bruin-first-own {
           &-light {
@@ -319,11 +320,12 @@ export default {
           height: 331px;
         }
         .bruin-second-view {
-          width: 165px;
+          width: 175px;
           height: 248px;
           position: absolute;
           top: 30px;
-          left: 15px;
+          left: 50%;
+          margin-left: -87px;
         }
         .bruin-second-own {
           &-light {
