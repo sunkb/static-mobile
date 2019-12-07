@@ -37,7 +37,6 @@ export class Login {
  * 微信自动登录
  */
 function wxAutoLogin() {
-    console.log(22222)
     if (process.client) {
         const code = getQueryString('code');
         if (!code) {
@@ -53,12 +52,12 @@ function wxAutoLogin() {
 
         //调用后台接口登录
         const url = 'Mobile/StudentActivity/login';
-        console.log(111111)
         console.log(code)
         const params = {
             code,
         }
         axios.get(url,{params}).then(res=>{
+            return res
             console.log('code登录',res)
         }).catch(err=>{
             console.log('错误',err);
