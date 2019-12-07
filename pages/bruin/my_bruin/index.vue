@@ -183,8 +183,8 @@ export default {
         //   ],
         //   is_enable: false
         // }
-        this.secondDiv = []
-        this.firstDiv = []
+        // this.secondDiv = []
+        // this.firstDiv = []
         this.myBruinData.cards.forEach((element, index) => {
           if(index > 2) {
             this.secondDiv.push(element)
