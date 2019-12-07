@@ -52,6 +52,7 @@
         <img class="rule-content-img" src="../../../assets/bruin/img/activity_rule.png" />
       </div>
     </div>
+    <toast ref="toast"></toast>
     <Abstract :awardBruinNumber="awardBruinNumber" :abstractShow="abstractShow" @fcancelShow="cancelShow"></Abstract>
   </div>
 </template>
@@ -59,6 +60,7 @@
 import Abstract from './abstract'
 import { API } from '~/pages/bruin/consts'
 import axios from '~/utils/axios'
+import Toast from '~/components/Toast'
 export default {
   name: 'myBruin',
   head () {
@@ -77,7 +79,8 @@ export default {
     }
   },
   components: {
-    'Abstract': Abstract
+    'Abstract': Abstract,
+    'toast': Toast
   },
   methods: {
     // 跳转规则页面
@@ -89,6 +92,10 @@ export default {
       window.location = `http://192.168.216.37:50209/bruin/`
     },
     async abstractAction () {
+      if(!this.awardChange) {
+        this.$refs['toast'].showToast('您当前可抽取次数为0！')
+        return
+      }
       this.abstractShow = true
       try {
         const activityId = 1
@@ -116,7 +123,7 @@ export default {
         //   return
         // }
         // this.awardChange = res.data.lucky_num
-        this.awardChange = 1
+        this.awardChange = 0
         this.myBruinData = {
           cards: [
             {

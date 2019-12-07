@@ -21,11 +21,11 @@ export default {
   methods: {
     // 跳转至首页
     goToHome (){
-      window.location = `http://192.168.216.37:54972/bruin/`
+      window.location = `http://192.168.216.37:50209/bruin/`
     },
     // 跳转到我的熊库
     goToMyBruin () {
-      window.location = `http://192.168.216.37:54972/bruin/my_bruin/`
+      window.location = `http://192.168.216.37:50209/bruin/my_bruin/`
     },
   },
   created () { }
