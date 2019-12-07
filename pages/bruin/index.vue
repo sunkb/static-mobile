@@ -191,11 +191,12 @@ export default {
       }
     }
   },
-  created () {},
+  created () {
+    const login = new Login();
+    login.autoLogin();
+  },
   async mounted () {
     this.$refs['toast'].showLoadingToast()
-    const login = new Login();
-    await login.autoLogin();
     this.wxShare()
     this.getBruinPMD()
     this.getActivityDetail()
