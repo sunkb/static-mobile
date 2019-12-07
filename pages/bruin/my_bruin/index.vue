@@ -427,6 +427,8 @@ export default {
   position: absolute;
   top: 40px;
   left: 10px;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 #bruin-keys2 {
   animation-name: rainbow2;
@@ -437,6 +439,8 @@ export default {
   position: absolute;
   top: 40px;
   left: 10px;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 #bruin-keys3 {
   animation-name: rainbow3;
@@ -447,6 +451,8 @@ export default {
   position: absolute;
   top: 40px;
   left: 10px;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 #bruin-keys4 {
   animation-name: rainbow4;
@@ -457,6 +463,8 @@ export default {
   position: absolute;
   top: 40px;
   left: 10px;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 #bruin-keys5 {
   animation-name: rainbow5;
@@ -467,114 +475,116 @@ export default {
   position: absolute;
   top: 40px;
   left: 10px;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 @keyframes rainbow1 {
   0% {
-    background: url("../../../assets/bruin/img/keys/11.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/11.png");
     background-size: 100%;
   }
   25% {
-    background: url("../../../assets/bruin/img/keys/12.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/12.png");
     background-size: 100%;
   }
   50% {
-    background: url("../../../assets/bruin/img/keys/13.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/13.png");
     background-size: 100%;
   }
   75% {
-    background: url("../../../assets/bruin/img/keys/12.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/12.png");
     background-size: 100%;
   }
   100% {
-    background: url("../../../assets/bruin/img/keys/11.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/11.png");
     background-size: 100%;
   }
 }
 @keyframes rainbow2 {
   0% {
-    background: url("../../../assets/bruin/img/keys/21.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/21.png");
     background-size: 100%;
   }
   25% {
-    background: url("../../../assets/bruin/img/keys/22.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/22.png");
     background-size: 100%;
   }
   50% {
-    background: url("../../../assets/bruin/img/keys/23.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/23.png");
     background-size: 100%;
   }
   75% {
-    background: url("../../../assets/bruin/img/keys/22.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/22.png");
     background-size: 100%;
   }
   100% {
-    background: url("../../../assets/bruin/img/keys/21.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/21.png");
     background-size: 100%;
   }
 }
 @keyframes rainbow3 {
   0% {
-    background: url("../../../assets/bruin/img/keys/31.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/31.png");
     background-size: 100%;
   }
   25% {
-    background: url("../../../assets/bruin/img/keys/32.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/32.png");
     background-size: 100%;
   }
   50% {
-    background: url("../../../assets/bruin/img/keys/33.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/33.png");
     background-size: 100%;
   }
   75% {
-    background: url("../../../assets/bruin/img/keys/32.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/32.png");
     background-size: 100%;
   }
   100% {
-    background: url("../../../assets/bruin/img/keys/31.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/31.png");
     background-size: 100%;
   }
 }
 @keyframes rainbow4 {
   0% {
-    background: url("../../../assets/bruin/img/keys/41.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/41.png");
     background-size: 100%;
   }
   25% {
-    background: url("../../../assets/bruin/img/keys/42.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/42.png");
     background-size: 100%;
   }
   50% {
-    background: url("../../../assets/bruin/img/keys/43.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/43.png");
     background-size: 100%;
   }
   75% {
-    background: url("../../../assets/bruin/img/keys/42.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/42.png");
     background-size: 100%;
   }
   100% {
-    background: url("../../../assets/bruin/img/keys/41.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/41.png");
     background-size: 100%;
   }
 }
 @keyframes rainbow5 {
   0% {
-    background: url("../../../assets/bruin/img/keys/51.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/51.png");
     background-size: 100%;
   }
   25% {
-    background: url("../../../assets/bruin/img/keys/52.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/52.png");
     background-size: 100%;
   }
   50% {
-    background: url("../../../assets/bruin/img/keys/53.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/53.png");
     background-size: 100%;
   }
   75% {
-    background: url("../../../assets/bruin/img/keys/52.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/52.png");
     background-size: 100%;
   }
   100% {
-    background: url("../../../assets/bruin/img/keys/51.png") no-repeat;
+    background: url("../../../assets/bruin/img/keys/51.png");
     background-size: 100%;
   }
 }
