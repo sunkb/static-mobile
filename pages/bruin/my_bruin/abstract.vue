@@ -81,8 +81,7 @@ export default {
     'van-swipe': Swipe,
     'van-swipe-item': SwipeItem
   },
-  created () {
-  },
+  created () {},
   mounted () {
     this.swipeObj = setInterval(() => {
       if (this.swipeTime > 2601) {
@@ -124,7 +123,7 @@ export default {
   &-stage {
     width: 592px;
     height: 800px;
-    background: url("../../../assets/bruin/img/abstract.png") no-repeat;
+    background: url("https://qn-static.landi.com/uploadtool43e9e7eef83e79229aec4f7f0b62a0bf.png") no-repeat;
     background-size: 100%;
     position: fixed;
     top: 131px;

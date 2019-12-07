@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="rule-content">
-        <img class="rule-content-img" src="../../../assets/bruin/img/activity_rule.png" />
+        <img class="rule-content-img" src="https://qn-static.landi.com/uploadtoole21f9199f510f8d0e6035c6c7389d24d.png" />
       </div>
     </div>
     <toast ref="toast"></toast>
@@ -123,7 +123,7 @@ export default {
         //   return
         // }
         // this.awardChange = res.data.lucky_num
-        this.awardChange = 0
+        this.awardChange = 1
         this.myBruinData = {
           cards: [
             {
@@ -195,11 +195,13 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-color: #500083;
   .bruin-background {
-    background: url("../../../assets/bruin/img/bruin_background.png") no-repeat;
+    background: url("https://qn-static.landi.com/uploadtool02540214a454a3b9a0809a71a3b9d453.png") no-repeat;
     background-size: 100%;
+    width: 100vw;
+    height: 100%;
     .bruin-marquee {
       height: 50px;
       width: 100%;

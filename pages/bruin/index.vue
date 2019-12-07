@@ -214,7 +214,7 @@ export default {
   .home-background {
     width: 100vw;
     height: 100%;
-    background: url("../../assets/bruin/img/home_page.png");
+    background: url("https://qn-static.landi.com/uploadtool255b71e4dcde88786f4dd94d1bf5f779.png");
     background-size: 100%;
     .home-marquee {
       height: 50px;
