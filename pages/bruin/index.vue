@@ -33,6 +33,7 @@
         <img class="sharehelp-img" :src="require('~/assets/presentation/img/share-help.png')" />
       </div>
       <toast ref="toast"></toast>
+      <poster-modal v-model="loginRegistModal" @click="gotoLoginRegister" :poster="2"></poster-modal>
     </div>
   </div>
 </template>
@@ -41,16 +42,20 @@ import { API } from '~/pages/bruin/consts'
 import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 import { initWX } from '~/pages/presentation/wx'
+import {Login} from '~/utils/core/login'
+import { PosterModal } from '~/components/presentation'
 export default {
   name: "home",
   data () {
     return {
       showShareHelp: false,
-      pmdInfo: ""
+      pmdInfo: "",
+      loginRegistModal: false
     }
   },
   components: {
-    'toast': Toast
+    'toast': Toast,
+    'poster-modal': PosterModal,
   },
   methods: {
     // 跳转规则页面
@@ -100,8 +105,6 @@ export default {
             console.log(res);
           });
         })
-        this.$refs['toast'].hideLoadingToast()
-        console.log(res.data)
       } catch (err) {
         console.log(err)
         return
@@ -122,15 +125,50 @@ export default {
           console.log(res)
           return
       }
-    }
+    },
+    // 判断登录成功或则失败
+    async login() {
+      try{
+        const res = await axios.get(API.BRUIN_LOGIN)
+        if(!res.status) {
+          console.log(res.info)
+          return 
+        }
+        if(res.data.is_login) {
+          console.log('登录成功')
+        } else {
+          this.loginRegistModal = true
+        }
+      } catch (err) {
+        console.log(err)
+        return 
+      }
+      
+    },
+    //登录或者注册模式选择
+    async gotoLoginRegister(mode) {
+      let redirect_url = window.location.href;
+      redirect_url = removeParam('code',redirect_url);
+      redirect_url = removeParam('state',redirect_url);
+      redirect_url = encodeURIComponent(redirect_url);
+      if(mode === "register") {
+        window._hmt && window._hmt.push(['_trackEvent', 'div', 'click', '#注册并参与#btn点击--来自活动外化']); // 百度统计
+        const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login?redirect_url='+redirect_url;
+        window.location = loginUrl;
+        return
+      }
+    },
   },
   created () {
-
+    const login = new Login();
+    login.autoLogin();
   },
-  mounted () {
+  async mounted () {
     this.$refs['toast'].showLoadingToast()
-    this.wxShare()
-    this.getBruinPMD()
+    await this.login()
+    await this.wxShare()
+    await this.getBruinPMD()
+    this.$refs['toast'].hideLoadingToast()
   }
 }
 </script>
