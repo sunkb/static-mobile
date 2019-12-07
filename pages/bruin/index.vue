@@ -172,17 +172,6 @@ export default {
   created () {
     const login = new Login();
     const res = login.autoLogin();
-    console.log(res)
-    console.log(121212121)
-    // if(!res.status) {
-    //   console.log(res.info)
-    //   return 
-    // }
-    // if(res.data.is_login) {
-    //   console.log('登录成功')
-    // } else {
-    //   this.loginRegistModal = true
-    // }
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()
