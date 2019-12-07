@@ -75,7 +75,7 @@ export default {
       secondDiv: [],
       abstractShow: false,
       awardChange: 0, // 可以抓熊的次数
-      awardBruinNumber: 0 // 点击抓熊按钮后，出现的熊的编号
+      awardBruinNumber: 1 // 点击抓熊按钮后，出现的熊的编号
     }
   },
   components: {
@@ -104,7 +104,8 @@ export default {
           console.log(res.info)
           return 
         }
-        this.awardBruinNumber = res.data
+        // this.awardBruinNumber = res.data
+        this.awardBruinNumber = 1
       } catch (err) {
         console.log(err) 
         return 
@@ -134,7 +135,7 @@ export default {
             },
             {
               card_no: 2,
-              num: 1,
+              num: 0,
               name: '聪慧熊'
             },
             {
@@ -423,7 +424,7 @@ export default {
   animation-duration: 1s;
   animation-iteration-count: infinite;
   width: 197px;
-  height: 268px;
+  height: 228px;
   position: absolute;
   top: 40px;
   left: 10px;
@@ -435,7 +436,7 @@ export default {
   animation-duration: 1s;
   animation-iteration-count: infinite;
   width: 197px;
-  height: 268px;
+  height: 228px;
   position: absolute;
   top: 40px;
   left: 10px;
@@ -447,7 +448,7 @@ export default {
   animation-duration: 1s;
   animation-iteration-count: infinite;
   width: 197px;
-  height: 268px;
+  height: 228px;
   position: absolute;
   top: 40px;
   left: 10px;
@@ -459,7 +460,7 @@ export default {
   animation-duration: 1s;
   animation-iteration-count: infinite;
   width: 197px;
-  height: 268px;
+  height: 228px;
   position: absolute;
   top: 40px;
   left: 10px;
@@ -471,7 +472,7 @@ export default {
   animation-duration: 0.75s;
   animation-iteration-count: infinite;
   width: 197px;
-  height: 268px;
+  height: 228px;
   position: absolute;
   top: 40px;
   left: 10px;

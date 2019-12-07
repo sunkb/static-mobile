@@ -6,50 +6,53 @@
       <div v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-name wrapper' : 'abstract-stage-name'">
         <img class="abstract-stage-name-img" src="../../../assets/bruin/img/bruin_name/1.png"/>
       </div>
-      <div class="abstract-stage-swipe">
-          <van-swipe :autoplay="swipeTime" :show-indicators="indicators">
-            <van-swipe-item>
-              <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-                <img
-                  style="width: 139px;height: 150px;"
-                  src="../../../assets/bruin/img/bruin_view/1.png"
-                />
-              </div>
-            </van-swipe-item>
-            <van-swipe-item>
-              <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-                <img
-                  style="width: 139px;height: 150px;"
-                  src="../../../assets/bruin/img/bruin_view/2.png"
-                />
-              </div>
-            </van-swipe-item>
-            <van-swipe-item>
-              <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-                <img
-                  style="width: 139px;height: 150px;"
-                  src="../../../assets/bruin/img/bruin_view/3.png"
-                />
-              </div>
-            </van-swipe-item>
-            <van-swipe-item>
-              <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-                <img
-                  style="width: 139px;height: 150px;"
-                  src="../../../assets/bruin/img/bruin_view/4.png"
-                />
-              </div>
-            </van-swipe-item>
-            <van-swipe-item>
-              <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-                <img
-                  style="width: 139px;height: 150px;"
-                  src="../../../assets/bruin/img/bruin_view/5.png"
-                />
-              </div>
-            </van-swipe-item>
-          </van-swipe>
-        </div>
+      <div v-show="!nameAndButtonShow" :class="abstractShow ? 'abstract-stage-swipe' : 'abstract-stage-swipe wrapper'">
+        <van-swipe :autoplay="swipeTime" :show-indicators="indicators">
+          <van-swipe-item>
+            <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
+              <img
+                style="width: 139px;height: 150px;"
+                src="../../../assets/bruin/img/bruin_view/1.png"
+              />
+            </div>
+          </van-swipe-item>
+          <van-swipe-item>
+            <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
+              <img
+                style="width: 139px;height: 150px;"
+                src="../../../assets/bruin/img/bruin_view/2.png"
+              />
+            </div>
+          </van-swipe-item>
+          <van-swipe-item>
+            <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
+              <img
+                style="width: 139px;height: 150px;"
+                src="../../../assets/bruin/img/bruin_view/3.png"
+              />
+            </div>
+          </van-swipe-item>
+          <van-swipe-item>
+            <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
+              <img
+                style="width: 139px;height: 150px;"
+                src="../../../assets/bruin/img/bruin_view/4.png"
+              />
+            </div>
+          </van-swipe-item>
+          <van-swipe-item>
+            <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
+              <img
+                style="width: 139px;height: 150px;"
+                src="../../../assets/bruin/img/bruin_view/5.png"
+              />
+            </div>
+          </van-swipe-item>
+        </van-swipe>
+      </div>
+      <div v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-result wrapper' : 'abstract-stage-result'">
+        <img class="abstract-stage-result-img" :src="'/_nuxt/assets/bruin/img/keys/'+ awardBruinNumber +'2.png'" />
+      </div>
       <div @click="cancelShow" class="abstract-stage-button" v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-button-content wrapper' : 'abstract-stage-button-content'">
         <div>放入熊库</div>
       </div>
@@ -68,7 +71,7 @@ export default {
     },
     awardBruinNumber: {
       type: Number,
-      default: 0
+      default: 1
     }
   },
   data () {
@@ -86,7 +89,10 @@ export default {
     'van-swipe-item': SwipeItem
   },
   created () {},
-  mounted () {},
+  mounted () {
+    this.swipeTime = 300
+    this.timeParam = 1
+  },
   methods: {
     cancelShow () {
       clearInterval(this.swipeObj)
@@ -104,12 +110,14 @@ export default {
       if(value) {
         this.swipeObj = setInterval(() => {
           if (this.swipeTime > 2601) {
+            console.log('chenjiafan')
             clearInterval(this.swipeObj)
             this.swipeTime = 300
             this.timeParam = 300000
             this.nameAndButtonShow = true
           }
-          this.swipeTime = this.swipeTime + (this.timeParam++) * 75
+          this.swipeTime = this.swipeTime + (this.timeParam) * 75
+          this.timeParam = this.timeParam + 2
           console.log(this.swipeTime)
         }, 2000)
       } else {
@@ -187,6 +195,19 @@ export default {
         font-weight: 600;
         color: rgba(255, 255, 255, 1);
         line-height: 24px;
+      }
+    }
+    &-result {
+      width: 247px;
+      height: 346px;
+      z-index: 40000;
+      position: absolute;
+      left: 50%;
+      margin-left: -154px;
+      top: 180px;
+      &-img {
+        width: 247px;
+        height: 346px;
       }
     }
   }
