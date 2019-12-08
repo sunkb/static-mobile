@@ -165,7 +165,6 @@ export default {
         console.log(err)
         return
       }
-      
     },
     // 用于获取跑马灯的内容数据
     async getBruinPMD () {

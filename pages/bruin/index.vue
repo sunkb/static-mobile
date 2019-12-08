@@ -6,11 +6,14 @@
       </div>
       <div class="home-header">
         <img class="home-header-ways" src="../../assets/bruin/img/ways.png" @click="goToRule" />
-        <img
-          class="home-header-work"
-          src="../../assets/bruin/img/home_bruin.png"
-          @click="goToMyBruin"
-        />
+        <div class="home-header-right">
+          <img
+            class="home-header-right-work"
+            src="../../assets/bruin/img/home_bruin.png"
+            @click="goToMyBruin"
+          />
+          <div class="home-header-right-times"><div>{{curAwardBruinNum}}</div></div>
+        </div>
       </div>
       <div class="home-pitch">
         <div class="home-pitch-first">
@@ -59,7 +62,8 @@ export default {
         end_time: '',
         is_buy: false,
         invite_num: 0
-      }
+      },
+      curAwardBruinNum: 0
     }
   },
   components: {
@@ -169,7 +173,22 @@ export default {
         console.log(err)
         return
       }
-    }
+    },
+    // 我的熊包的数据请求
+    async getMyBruinData () {
+      const activityID = 1
+      try {
+        const res = await axios.get(`${API.MY_BRUIN}?activity_id=${activityID}`)
+        if(!res.status) {
+          console.log(res.info)
+          return
+        }
+        this.curAwardBruinNum = res.data ？res.data.lucky_num : 0
+      } catch (err) {
+        console.log(err)
+        return
+      }
+    },
   },
   created () {
     const login = new Login();
@@ -180,6 +199,7 @@ export default {
     this.wxShare()
     this.getBruinPMD()
     this.getActivityDetail()
+    this.getMyBruinData()
     this.$refs['toast'].hideLoadingToast()
   }
 }
@@ -232,10 +252,29 @@ function removeParam(key, sourceURL) {
         width: 112px;
         height: 71px;
       }
-      &-work {
-        width: 96px;
-        height: 94px;
-        margin-right: 18px;
+      &-right {
+        display: flex;
+        position: relative;
+        &-work {
+          width: 96px;
+          height: 94px;
+          margin-right: 18px;
+        }
+        &-times {
+          width:26px;
+          height:26px;
+          font-size:18px;
+          background:rgba(255,54,0,1);
+          border:2px solid rgba(255, 255, 255, 1);
+          box-shadow:0px -5px 4px 0px rgba(0, 0, 0, 0.38);
+          border-radius:50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          top: 40px;
+          left: 70px;
+        }
       }
     }
     .home-pitch {
