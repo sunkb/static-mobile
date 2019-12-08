@@ -12,7 +12,7 @@
             <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
               <img
                 style="width: 139px;height: 150px;"
-                src="../../../assets/bruin/img/bruin_view/1.png"
+                src="../../../assets/bruin/img/1.png"
               />
             </div>
           </van-swipe-item>
@@ -20,7 +20,7 @@
             <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
               <img
                 style="width: 139px;height: 150px;"
-                src="../../../assets/bruin/img/bruin_view/2.png"
+                src="../../../assets/bruin/img/2.png"
               />
             </div>
           </van-swipe-item>
@@ -28,7 +28,7 @@
             <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
               <img
                 style="width: 139px;height: 150px;"
-                src="../../../assets/bruin/img/bruin_view/3.png"
+                src="../../../assets/bruin/img/3.png"
               />
             </div>
           </van-swipe-item>
@@ -36,7 +36,7 @@
             <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
               <img
                 style="width: 139px;height: 150px;"
-                src="../../../assets/bruin/img/bruin_view/4.png"
+                src="../../../assets/bruin/img/4.png"
               />
             </div>
           </van-swipe-item>
@@ -44,7 +44,7 @@
             <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
               <img
                 style="width: 139px;height: 150px;"
-                src="../../../assets/bruin/img/bruin_view/5.png"
+                src="../../../assets/bruin/img/5.png"
               />
             </div>
           </van-swipe-item>
