@@ -127,7 +127,7 @@ export default {
       this.abstractShow = true
       try {
         const activityId = 1
-        const res = await axios.post(API.MY_BRUIN, {activity_id: activityId})
+        const res = await axios.post(API.GRAD_BRUIN, {activity_id: activityId})
         if (!res.status) {
           console.log(res.info)
           return 
