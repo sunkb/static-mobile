@@ -510,23 +510,23 @@ export default {
 }
 @keyframes rainbow1 {
   0% {
-    background: url("/_nuxt/assets/bruin/img/keys/11.png");
+    background: url("../../../assets/bruin/img/keys/11.png");
     background-size: 100%;
   }
   25% {
-    background: url("/_nuxt/assets/bruin/img/keys/12.png");
+    background: url("../../../assets/bruin/img/keys/12.png");
     background-size: 100%;
   }
   50% {
-    background: url("/_nuxt/assets/bruin/img/keys/13.png");
+    background: url("../../../assets/bruin/img/keys/13.png");
     background-size: 100%;
   }
   75% {
-    background: url("/_nuxt/assets/bruin/img/keys/12.png");
+    background: url("../../../assets/bruin/img/keys/12.png");
     background-size: 100%;
   }
   100% {
-    background: url("/_nuxt/assets/bruin/img/keys/11.png");
+    background: url("../../../assets/bruin/img/keys/11.png");
     background-size: 100%;
   }
 }

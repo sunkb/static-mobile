@@ -7,48 +7,7 @@
         <img class="abstract-stage-name-img" src="../../../assets/bruin/img/bruin_name/1.png"/>
       </div>
       <div v-show="!nameAndButtonShow" :class="abstractShow ? 'abstract-stage-swipe' : 'abstract-stage-swipe wrapper'">
-        <van-swipe :autoplay="swipeTime" :show-indicators="indicators">
-          <van-swipe-item>
-            <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-              <img
-                style="width: 139px;height: 150px;"
-                src="../../../assets/bruin/img/bruin_view/1.png"
-              />
-            </div>
-          </van-swipe-item>
-          <van-swipe-item>
-            <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-              <img
-                style="width: 139px;height: 150px;"
-                src="../../../assets/bruin/img/bruin_view/2.png"
-              />
-            </div>
-          </van-swipe-item>
-          <van-swipe-item>
-            <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-              <img
-                style="width: 139px;height: 150px;"
-                src="../../../assets/bruin/img/bruin_view/3.png"
-              />
-            </div>
-          </van-swipe-item>
-          <van-swipe-item>
-            <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-              <img
-                style="width: 139px;height: 150px;"
-                src="../../../assets/bruin/img/bruin_view/4.png"
-              />
-            </div>
-          </van-swipe-item>
-          <van-swipe-item>
-            <div style="width: 591px;height: 302px;display:flex;margin-left:96px;">
-              <img
-                style="width: 139px;height: 150px;"
-                src="../../../assets/bruin/img/bruin_view/5.png"
-              />
-            </div>
-          </van-swipe-item>
-        </van-swipe>
+        <slide :slides="slides" :inv="swipeTime" :style="styleObject" :name="transitionName1" :target="target"></slide>
       </div>
       <div v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-result wrapper' : 'abstract-stage-result'">
         <img class="abstract-stage-result-img" :src="'../../..//assets/bruin/img/keys/'+ awardBruinNumber +'2.png'" />
@@ -60,7 +19,7 @@
   </div>
 </template>
 <script>
-import { Swipe, SwipeItem } from 'vant';
+import slide from '~/components/slide/slide.vue'
 import "vant/lib/index.css";
 export default {
   name: 'abstract',
@@ -81,12 +40,40 @@ export default {
       swipeTime: 300,
       swipeObj: null,
       timeParam: 1,
-      nameAndButtonShow: false
+      nameAndButtonShow: false,
+      slides: [
+        {
+          src: 'https://qn-static.landi.com/uploadtool4f6c2142f18d9a0feccacbd73c7c1ed0.png',
+          href: ''
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool98d52df665c24b5e29b8bb1e030af934.png',
+          href: ''
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtoolcdb18852e43ed742d245e496dca2483e.png',
+          href: ''
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool57cfdb371c7f82c0fd3d6319ca52eb3f.png',
+          href: ''
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool6425ca67c5dc62ee4c4cc80a0267cd29.png',
+          href: ''
+        }
+      ],
+      styleObject: {
+        width: '139px',
+        height: '150px'
+      },
+      transitionName1: 'move',
+      transitionName2: 'fade',
+      target: '_blank'
     }
   },
   components: {
-    'van-swipe': Swipe,
-    'van-swipe-item': SwipeItem
+    'slide': slide
   },
   created () {},
   mounted () {
@@ -171,6 +158,8 @@ export default {
       position: absolute;
       top: 250px;
       z-index: 2000;
+      display: flex;
+      justify-content: center;
     }
     &-button {
       width: 314px;
