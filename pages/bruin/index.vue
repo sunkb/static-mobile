@@ -284,7 +284,7 @@ function removeParam(key, sourceURL) {
       position: relative;
       &-first {
         width: 343px;
-        height: 95px;
+        height: 100px;
         .hot {
           height: 61px;
           width: 42px;
@@ -294,15 +294,15 @@ function removeParam(key, sourceURL) {
         }
         &-img {
           width: 343px;
-          height: 95px;
+          height: 100px;
         }
       }
       &-second {
         width: 343px;
-        height: 95px;
+        height: 100px;
         &-img {
           width: 343px;
-          height: 95px;
+          height: 100px;
         }
       }
     }
