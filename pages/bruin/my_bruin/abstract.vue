@@ -7,7 +7,7 @@
         <img class="abstract-stage-name-img" src="../../../assets/bruin/img/bruin_name/1.png"/>
       </div>
       <div v-show="!nameAndButtonShow" :class="abstractShow ? 'abstract-stage-swipe' : 'abstract-stage-swipe wrapper'">
-        <slide :slides="slides" :inv="swipeTime" :style="styleObject" :name="transitionName1" :target="target"></slide>
+        <slide class="abstract-stage-swipe-div" :slides="slides" :inv="swipeTime" :name="transitionName1" :target="target"></slide>
       </div>
       <div v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-result wrapper' : 'abstract-stage-result'">
         <img class="abstract-stage-result-img" :src="'../../..//assets/bruin/img/keys/'+ awardBruinNumber +'2.png'" />
@@ -36,39 +36,28 @@ export default {
   data () {
     return {
       isShowIndicators: false,
-      indicators: false, // 指示器显隐
       swipeTime: 300,
       swipeObj: null,
       timeParam: 1,
       nameAndButtonShow: false,
       slides: [
         {
-          src: 'https://qn-static.landi.com/uploadtool4f6c2142f18d9a0feccacbd73c7c1ed0.png',
-          href: ''
+          src: 'https://qn-static.landi.com/uploadtool4f6c2142f18d9a0feccacbd73c7c1ed0.png'
         },
         {
-          src: 'https://qn-static.landi.com/uploadtool98d52df665c24b5e29b8bb1e030af934.png',
-          href: ''
+          src: 'https://qn-static.landi.com/uploadtool98d52df665c24b5e29b8bb1e030af934.png'
         },
         {
-          src: 'https://qn-static.landi.com/uploadtoolcdb18852e43ed742d245e496dca2483e.png',
-          href: ''
+          src: 'https://qn-static.landi.com/uploadtoolcdb18852e43ed742d245e496dca2483e.png'
         },
         {
-          src: 'https://qn-static.landi.com/uploadtool57cfdb371c7f82c0fd3d6319ca52eb3f.png',
-          href: ''
+          src: 'https://qn-static.landi.com/uploadtool57cfdb371c7f82c0fd3d6319ca52eb3f.png'
         },
         {
-          src: 'https://qn-static.landi.com/uploadtool6425ca67c5dc62ee4c4cc80a0267cd29.png',
-          href: ''
+          src: 'https://qn-static.landi.com/uploadtool6425ca67c5dc62ee4c4cc80a0267cd29.png'
         }
       ],
-      styleObject: {
-        width: '139px',
-        height: '150px'
-      },
       transitionName1: 'move',
-      transitionName2: 'fade',
       target: '_blank'
     }
   },
@@ -93,15 +82,14 @@ export default {
     abstractShow(value) {
       if(value) {
         this.swipeObj = setInterval(() => {
-          if (this.swipeTime > 2601) {
+          if (this.swipeTime > 1400) {
             console.log('chenjiafan')
             clearInterval(this.swipeObj)
             this.swipeTime = 300
             this.timeParam = 300000
             this.nameAndButtonShow = true
           }
-          this.swipeTime = this.swipeTime + (this.timeParam) * 75
-          this.timeParam = this.timeParam + 2
+          this.swipeTime = this.swipeTime + (this.timeParam ++) * 75
           console.log(this.swipeTime)
         }, 2000)
       } else {
@@ -160,6 +148,10 @@ export default {
       z-index: 2000;
       display: flex;
       justify-content: center;
+      &-div {
+        width: 246px;
+        height: 380px;
+      }
     }
     &-button {
       width: 314px;
