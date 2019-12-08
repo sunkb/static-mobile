@@ -20,6 +20,8 @@
 </template>
 <script>
 import slide from '~/components/slide/slide.vue'
+import { API } from '~/pages/bruin/consts'
+import axios from '~/utils/axios'
 import "vant/lib/index.css";
 export default {
   name: 'abstract',
@@ -27,10 +29,6 @@ export default {
     abstractShow: {
       type: Boolean,
       default: false
-    },
-    awardBruinNumber: {
-      type: Number,
-      default: 1
     }
   },
   data () {
@@ -58,7 +56,9 @@ export default {
         }
       ],
       transitionName1: 'move',
-      target: '_blank'
+      target: '_blank',
+      swipeObj: null,
+      awardBruinNumber: 0  // 点击抓熊按钮后，出现的熊的编号
     }
   },
   components: {
@@ -79,7 +79,7 @@ export default {
     }
   },
   watch: {
-    abstractShow(value) {
+    async abstractShow(value) {
       if(value) {
         this.swipeObj = setInterval(() => {
           if (this.swipeTime > 1400) {
@@ -92,6 +92,18 @@ export default {
           this.swipeTime = this.swipeTime + (this.timeParam ++) * 75
           console.log(this.swipeTime)
         }, 2000)
+        try {
+          const activityId = 1
+          const res = await axios.post(API.GRAD_BRUIN, {activity_id: activityId})
+          if (!res.status) {
+            console.log(res.info)
+            return 
+          }
+          this.awardBruinNumber = res.data
+        } catch (err) {
+          console.log(err) 
+          return 
+        }
       } else {
         clearInterval(this.swipeObj)
         this.swipeTime = 300

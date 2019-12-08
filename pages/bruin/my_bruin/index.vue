@@ -53,7 +53,7 @@
       </div>
     </div>
     <toast ref="toast"></toast>
-    <Abstract :awardBruinNumber="awardBruinNumber" :abstractShow="abstractShow" @fcancelShow="cancelShow"></Abstract>
+    <Abstract :abstractShow="abstractShow" @fcancelShow="cancelShow"></Abstract>
   </div>
 </template>
 <script>
@@ -102,7 +102,6 @@ export default {
       ],
       abstractShow: false,
       awardChange: 0, // 可以抓熊的次数
-      awardBruinNumber: 1, // 点击抓熊按钮后，出现的熊的编号
       pmdInfo: '' // 跑马灯内容
     }
   },
@@ -125,18 +124,6 @@ export default {
         return
       }
       this.abstractShow = true
-      try {
-        const activityId = 1
-        const res = await axios.post(API.GRAD_BRUIN, {activity_id: activityId})
-        if (!res.status) {
-          console.log(res.info)
-          return 
-        }
-        this.awardBruinNumber = res.data
-      } catch (err) {
-        console.log(err) 
-        return 
-      }
     },
     cancelShow () {
       this.abstractShow = false
