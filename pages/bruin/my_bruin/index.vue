@@ -79,24 +79,24 @@ export default {
         },
         {
           card_no: 2,
-          num: 0,
+          num: 1,
           name: '聪慧熊'
         },
         {
           card_no: 3,
-          num: 0,
+          num: 1,
           name: '健康熊'
         },
       ],
       secondDiv: [
         {
           card_no: 4,
-          num: 0,
+          num: 1,
           name: '勤奋熊'
         },
         {
           card_no: 5,
-          num: 0,
+          num: 1,
           name: '勇敢熊'
         },
       ],
@@ -133,7 +133,6 @@ export default {
           return 
         }
         this.awardBruinNumber = res.data
-        // this.awardBruinNumber = 1
       } catch (err) {
         console.log(err) 
         return 
@@ -153,36 +152,6 @@ export default {
           return
         }
         this.awardChange = res.data.lucky_num
-        // this.myBruinData = {
-        //   cards: [
-        //     {
-        //       card_no: 1,
-        //       num: 1,
-        //       name: '乐学熊'
-        //     },
-        //     {
-        //       card_no: 2,
-        //       num: 0,
-        //       name: '聪慧熊'
-        //     },
-        //     {
-        //       card_no: 3,
-        //       num: 4,
-        //       name: '健康熊'
-        //     },
-        //     {
-        //       card_no: 4,
-        //       num: 1,
-        //       name: '勤奋熊'
-        //     },
-        //     {
-        //       card_no: 5,
-        //       num: 1,
-        //       name: '勇敢熊'
-        //     }
-        //   ],
-        //   is_enable: false
-        // }
         // this.secondDiv = []
         // this.firstDiv = []
         this.myBruinData.cards.forEach((element, index) => {
