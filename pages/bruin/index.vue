@@ -69,11 +69,11 @@ export default {
   methods: {
     // 跳转规则页面
     goToRule () {
-      window.location = `http://192.168.216.37:60012/bruin/rule/`
+      window.location = `${process.env.BASE_URL}/bruin/rule/`
     },
     // 跳转到我的熊库
     goToMyBruin () {
-      window.location = `http://192.168.216.37:60012/bruin/my_bruin/`
+      window.location = `${process.env.BASE_URL}/bruin/my_bruin/`
     },
     // 邀请好友
     inviteAction () {
