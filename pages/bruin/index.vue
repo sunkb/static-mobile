@@ -229,7 +229,7 @@ function removeParam(key, sourceURL) {
   height: 123vh;
   .home-background {
     width: 100vw;
-    height: 100%;
+    height: 123vh;
     background: url("https://qn-static.landi.com/uploadtool255b71e4dcde88786f4dd94d1bf5f779.png");
     background-size: 100%;
     .home-marquee {
