@@ -183,7 +183,7 @@ export default {
           console.log(res.info)
           return
         }
-        this.curAwardBruinNum = res.data ？res.data.lucky_num : 0
+        this.curAwardBruinNum = res.data ? res.data.lucky_num : 0
       } catch (err) {
         console.log(err)
         return

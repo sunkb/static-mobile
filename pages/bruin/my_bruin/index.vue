@@ -120,7 +120,7 @@ export default {
       window.location = `${process.env.BASE_URL}/bruin/`
     },
     async abstractAction () {
-      if(!this.awardChange) {
+      if(!Number(this.awardChange)) {
         this.$refs['toast'].showToast('您当前可抽取次数为0！')
         return
       }
