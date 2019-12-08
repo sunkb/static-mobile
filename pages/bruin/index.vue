@@ -226,7 +226,7 @@ function removeParam(key, sourceURL) {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
-  height: 123vh;
+  height: 133vh;
   .home-background {
     width: 100vw;
     height: 123vh;
