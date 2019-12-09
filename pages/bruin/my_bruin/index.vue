@@ -48,8 +48,9 @@
           <div :class="awardChange > 0 ? 'abstract-time-content1' : 'abstract-time-content'">{{awardChange}}</div><div>次</div>
         </div>
       </div>
-      <div class="rule-content" @click="goToRule">
-        <img class="rule-content-img" src="https://qn-static.landi.com/uploadtoole21f9199f510f8d0e6035c6c7389d24d.png" />
+      <div class="rule-content">
+        <img class="rule-content-img" src="https://qn-static.landi.com/uploadtool51dc78a12a233403690780d3cd48c421.png" />
+        <img @click="goToRule" class="rule-content-button" src="../../../assets/bruin/img/rule_button.png" />
       </div>
     </div>
     <toast ref="toast"></toast>
@@ -136,10 +137,10 @@ export default {
       window.location = `${process.env.BASE_URL}/bruin/`
     },
     async abstractAction () {
-      // if(!Number(this.awardChange)) {
-      //   this.$refs['toast'].showToast('您当前可抽取次数为0！')
-      //   return
-      // }
+      if(!Number(this.awardChange)) {
+        this.$refs['toast'].showToast('您当前可抽取次数为0！')
+        return
+      }
       this.abstractShow = true
     },
     cancelShow () {
@@ -202,7 +203,7 @@ export default {
   -webkit-overflow-scrolling: auto;
   width: 100vw;
   height: 100%;
-  background-color: #500083;
+  // background-color: #500083;
   .bruin-background {
     background: url("https://qn-static.landi.com/uploadtool02540214a454a3b9a0809a71a3b9d453.png") no-repeat;
     background-size: 100%;
@@ -220,7 +221,7 @@ export default {
       padding-top: 5px;
     }
     .bruin-header {
-      padding-top: 87px;
+      padding-top: 37px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -418,9 +419,17 @@ export default {
       height: 775px;
       margin: 0 auto;
       margin-top: 71px;
+      position: relative;
       .rule-content-img {
         width: 682px;
         height: 775px;
+      }
+      .rule-content-button {
+        position: absolute;
+        width: 294px;
+        height: 24px;
+        bottom: 30px;
+        right: 34px;
       }
     }
   }

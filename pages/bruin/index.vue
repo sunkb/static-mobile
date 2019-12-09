@@ -25,11 +25,15 @@
         </div>
       </div>
       <div class="home-entrance">
+        <div class="home-entrance-new" @click="goToMyBruin">
+          <img class="home-entrance-new-img" src="../../assets/bruin/img/first_use.png" />
+        </div>
         <div class="home-entrance-invite" @click="inviteAction">
           <img class="home-entrance-invite-img" src="../../assets/bruin/img/invite_button.png" />
+          <div class="home-entrance-invite-num"><div>已邀请</div><div class="home-entrance-invite-num-color">{{activityData.invite_num}}</div><div>人</div></div>
         </div>
         <div class="home-entrance-renew">
-          <img class="home-entrance-renew-img" src="../../assets/bruin/img/renew_button.png" />
+          <img class="home-entrance-renew-img" src="../../assets/bruin/img/buy_course.png" />
           <img v-if="activityData.is_buy ? true : false" class="home-entrance-renew-finsh-img" src="../../assets/bruin/img/finsh.png"/>
           <img v-if="activityData.is_buy ? false : true" class="home-entrance-renew-unfinsh-img" src="../../assets/bruin/img/unfinsh.png"/>
         </div>
@@ -321,12 +325,33 @@ function removeParam(key, sourceURL) {
       display: flex;
       flex-direction: column;
       align-items: center;
-      &-invite {
+      &-new {
         width: 630px;
         height: 241px;
         &-img {
           width: 630px;
           height: 241px;
+        }
+      }
+      &-invite {
+        width: 630px;
+        height: 241px;
+        position: relative;
+        &-img {
+          width: 630px;
+          height: 241px;
+        }
+        &-num {
+          display: flex;
+          align-items: center;
+          font-size:20px;
+          color:rgba(117,117,117,1);
+          position: absolute;
+          bottom: 30px;
+          left: 310px;
+          &-color {
+            color: red;
+          }
         }
       }
       &-renew {
@@ -342,14 +367,14 @@ function removeParam(key, sourceURL) {
           height: 90px;
           position: absolute;
           right: 38px;
-          top: 76px;
+          top: 36px;
         }
         &-unfinsh-img {
           width: 90px;
           height: 90px;
           position: absolute;
           right: 38px;
-          top: 76px;
+          top: 36px;
         }
       }
     }
