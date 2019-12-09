@@ -188,7 +188,7 @@ export default {
   async created () {
     const login = new Login();
     const res = await login.autoLogin();
-    console.log('第一次测试')
+    console.log('第二次测试')
     if (!res.status) {
       console.log(res.info)
       this.gotoLoginRegister()
