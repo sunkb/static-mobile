@@ -188,14 +188,15 @@ export default {
   async created () {
     const login = new Login();
     const res = await login.autoLogin();
-    // if (!res.status) {
-    //   console.log(res.info)
-    //   this.gotoLoginRegister()
-    //   return 
-    // }
-    // if(res.data.is_login !== 1) {
-    //   this.gotoLoginRegister()
-    // }
+    console.log('第一次测试')
+    if (!res.status) {
+      console.log(res.info)
+      this.gotoLoginRegister()
+      return 
+    }
+    if(res.data.is_login !== 1) {
+      this.gotoLoginRegister()
+    }
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()

@@ -180,6 +180,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "~/assets/bruin/css/main.scss";
+* {
+  border: 0px;
+}
 #bruin {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
@@ -262,6 +265,7 @@ export default {
           margin-left: -87px;
         }
         .bruin-first-own {
+          border: 0px;
           &-light {
             width: 228px;
             height: 340px;
@@ -317,6 +321,7 @@ export default {
           margin-left: -87px;
         }
         .bruin-second-own {
+          border: 0px;
           &-light {
             width: 228px;
             height: 340px;
