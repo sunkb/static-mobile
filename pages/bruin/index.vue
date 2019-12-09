@@ -30,6 +30,8 @@
         </div>
         <div class="home-entrance-renew">
           <img class="home-entrance-renew-img" src="../../assets/bruin/img/renew_button.png" />
+          <img v-if="activityData.is_buy ? true : false" class="home-entrance-renew-finsh-img" src="../../assets/bruin/img/finsh.png"/>
+          <img v-if="activityData.is_buy ? false : true" class="home-entrance-renew-unfinsh-img" src="../../assets/bruin/img/unfinsh.png"/>
         </div>
       </div>
       <div class="sharehelp" v-show="showShareHelp" @click="() => { showShareHelp = false }">
@@ -61,7 +63,8 @@ export default {
         is_buy: false,
         invite_num: 0
       },
-      curAwardBruinNum: 0
+      curAwardBruinNum: 0,
+      isBuy: false
     }
   },
   components: {
@@ -95,7 +98,7 @@ export default {
         const wxConfig = res.data.wx_config;
         const wx_data = res.data.wx_data;
         const wx = initWX({
-          appId: 'wx9632cb5f0990954d',
+          appId: wxConfig.appId,
           timestamp: wxConfig.timestamp,
           nonceStr: wxConfig.nonceStr,
           signature: wxConfig.signature,
@@ -329,9 +332,24 @@ function removeParam(key, sourceURL) {
       &-renew {
         width: 630px;
         height: 241px;
+        position: relative;
         &-img {
           width: 630px;
           height: 241px;
+        }
+        &-finsh-img {
+          width: 90px;
+          height: 90px;
+          position: absolute;
+          right: 38px;
+          top: 76px;
+        }
+        &-unfinsh-img {
+          width: 90px;
+          height: 90px;
+          position: absolute;
+          right: 38px;
+          top: 76px;
         }
       }
     }
