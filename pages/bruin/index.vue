@@ -192,11 +192,14 @@ export default {
     if (!res.status) {
       console.log(res.info)
       this.gotoLoginRegister()
+      console.log(111111)
       return 
     }
     if(res.data.is_login !== 1) {
       this.gotoLoginRegister()
+      console.log(2222)
     }
+    console.log(33333)
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()
