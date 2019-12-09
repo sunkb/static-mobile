@@ -145,7 +145,8 @@ export default {
     },
     cancelShow () {
       this.abstractShow = false
-      window.location = `${process.env.BASE_URL}/bruin/my_bruin`
+      // window.location = `${process.env.BASE_URL}/bruin/my_bruin`
+      this.getMyBruinData()
     },
     // 我的熊包的数据请求
     async getMyBruinData () {
