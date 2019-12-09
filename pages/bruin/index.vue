@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="sharehelp" v-show="showShareHelp" @click="() => { showShareHelp = false }">
-        <img class="sharehelp-img" :src="require('~/assets/presentation/img/share-help.png')" />
+        <img class="sharehelp-img" :src="require('~/assets/bruin/img/share_help.png')" />
       </div>
       <toast ref="toast"></toast>
     </div>

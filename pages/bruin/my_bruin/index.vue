@@ -14,10 +14,10 @@
             <div v-if="Number(item.num) > 0 ? true : false" class="bruin-first-name-content">{{item.name + " x" + item.num}}</div>
             <div v-if="Number(item.num) > 0 ? false : true " class="bruin-first-name-content1">{{item.name}}</div>
           </div>
-          <img class="bruin-first-img" src="../../../assets/bruin/img/bruin_div.png" />
+          <img class="bruin-first-img" src="https://qn-static.landi.com/uploadtool543d8258ed2c2579eb63b890d7207056.png" />
           <img v-if="Number(item.num) > 0 ? false : true" class="bruin-first-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
           <div v-if="Number(item.num) > 0 ? true : false" class="bruin-first-own">
-            <img class="bruin-first-own-light" src="/_nuxt/assets/bruin/img/light.png" />
+            <img class="bruin-first-own-light" src="https://qn-static.landi.com/uploadtool1fe0c9c2ae04dae40e2d23643afd82eb.png" />
             <div :id="'bruin-keys' + item.card_no"></div>
           </div>
         </div>
@@ -28,10 +28,10 @@
             <div v-if="Number(item.num) > 0 ? true : false" class="bruin-second-name-content">{{item.name + " x" + item.num}}</div>
             <div v-if="Number(item.num) > 0 ? false : true " class="bruin-second-name-content1">{{item.name}}</div>
           </div>
-          <img class="bruin-second-img" src="../../../assets/bruin/img/bruin_div.png" />
+          <img class="bruin-second-img" src="https://qn-static.landi.com/uploadtool543d8258ed2c2579eb63b890d7207056.png" />
           <img v-if="Number(item.num) > 0 ? false : true" class="bruin-second-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
           <div v-if="Number(item.num) > 0 ? true : false" class="bruin-second-own">
-            <img class="bruin-second-own-light" src="../../../assets/bruin/img/light.png" />
+            <img class="bruin-second-own-light" src="https://qn-static.landi.com/uploadtool1fe0c9c2ae04dae40e2d23643afd82eb.png" />
             <div :id="'bruin-keys' + item.card_no"></div>
           </div>
         </div>
