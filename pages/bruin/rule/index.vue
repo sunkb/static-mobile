@@ -5,11 +5,18 @@
     </div>
     <img
       class="bruin-rule-img"
-      src="https://qn-static.landi.com/uploadtool268ec3eea4bf92331eeea6314e4b4df3.png"
+      src="https://qn-static.landi.com/uploadtool89f13157aed87a54c5eea0730f71a67b.png"
     />
     <div class="home-header">
       <img class="home-header-back" src="../../../assets/bruin/img/back_home_button.png" @click="goToHome"/>
-      <img class="home-header-work" src="../../../assets/bruin/img/home_bruin.png" @click="goToMyBruin"/>
+      <div class="home-header-right">
+        <img
+          class="home-header-right-work"
+          src="../../../assets/bruin/img/home_bruin.png"
+          @click="goToMyBruin"
+        />
+        <div class="home-header-right-times"><div>{{curAwardBruinNum}}</div></div>
+      </div>
     </div>
   </div>
 </template>
@@ -20,7 +27,8 @@ export default {
   name: 'rule',
   data () {
     return {
-      pmdInfo: ''
+      pmdInfo: '',
+      curAwardBruinNum: 0
     }
   },
   methods: {
@@ -46,11 +54,27 @@ export default {
           console.log(res)
           return
       }
+    },
+    // 我的熊包的数据请求
+    async getMyBruinData () {
+      const activityID = 1
+      try {
+        const res = await axios.get(`${API.MY_BRUIN}?activity_id=${activityID}`)
+        if(!res.status) {
+          console.log(res.info)
+          return
+        }
+        this.curAwardBruinNum = res.data ? res.data.lucky_num : 0
+      } catch (err) {
+        console.log(err)
+        return
+      }
     }
   },
   created () {},
   mounted () {
     this.getBruinPMD()
+    this.getMyBruinData()
   }
 }
 </script>
@@ -88,10 +112,28 @@ export default {
       width: 112px;
       height: 71px;
     }
-    &-work {
-      width: 96px;
-      height: 94px;
-      margin-right: 18px;
+    &-right {
+      display: flex;
+      position: relative;
+      &-work {
+        width: 96px;
+        height: 94px;
+        margin-right: 18px;
+      }
+      &-times {
+        width:30px;
+        height:30px;
+        background:rgba(255,54,0,1);
+        border-radius:50%;
+        font-weight:600;
+        color:rgba(255,255,255,1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -6px;
+        right: 20px;
+      }
     }
   }
 }

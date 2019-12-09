@@ -198,21 +198,21 @@ export default {
         console.log(err)
         return
       }
-    },
+    }
   },
   async created () {
     const login = new Login();
     const res = await login.autoLogin();
-    if (!res.status) {
-      console.log(11111)
-      this.gotoLoginRegister()
-      return 
-    }
-    if(res.data.is_login !== 1) {
-      console.log(22222)
-      this.gotoLoginRegister()
-      return 
-    }
+    // if (!res.status) {
+    //   console.log(11111)
+    //   this.gotoLoginRegister()
+    //   return 
+    // }
+    // if(res.data.is_login !== 1) {
+    //   console.log(22222)
+    //   this.gotoLoginRegister()
+    //   return 
+    // }
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()
@@ -282,19 +282,18 @@ function removeParam(key, sourceURL) {
           margin-right: 18px;
         }
         &-times {
-          width:26px;
-          height:26px;
-          font-size:18px;
+          width:30px;
+          height:30px;
           background:rgba(255,54,0,1);
-          border:2px solid rgba(255, 255, 255, 1);
-          box-shadow:0px -5px 4px 0px rgba(0, 0, 0, 0.38);
           border-radius:50%;
+          font-weight:600;
+          color:rgba(255,255,255,1);
           display: flex;
           align-items: center;
           justify-content: center;
           position: absolute;
-          top: 40px;
-          left: 70px;
+          top: -6px;
+          right: 20px;
         }
       }
     }
