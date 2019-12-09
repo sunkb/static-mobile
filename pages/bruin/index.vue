@@ -202,21 +202,17 @@ export default {
   },
   async created () {
     const login = new Login();
-    try {
-      const res = await login.autoLogin();
-      console.log('第二次测试', res)
-      if(res.data.is_login !== 1) {
-        console.log(11111)
-        this.gotoLoginRegister()
-      }
-    } catch (err) {
-      if(error.response.status === 401){ // 用于判断是否登录过
-        console.log(22222)
-        this.gotoLoginRegister()
-      }
-    }
     const res = await login.autoLogin();
-    console.log('第二次测试', res)
+    if (!res.status) {
+      console.log(11111)
+      this.gotoLoginRegister()
+      return 
+    }
+    if(res.data.is_login !== 1) {
+      console.log(22222)
+      this.gotoLoginRegister()
+      return 
+    }
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()

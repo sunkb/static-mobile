@@ -54,9 +54,21 @@ async function wxAutoLogin () {
     const params = {
       code
     }
-    const res = await axios.get(url, { params })
-    console.log('code登录', res)
-    return res
+
+    // const res = await axios.get(url, { params })
+    // console.log('code登录', res)
+    try {
+      const res = await login.autoLogin();
+      console.log('第二次测试', res)
+      return res
+    } catch (err) {
+      if(error.response.status === 401){ // 用于判断是否登录过
+        const res = {
+          status: false
+        }
+        return res
+      }
+    }
     // axios
     //   .get(url, { params })
     //   .then(res => {
