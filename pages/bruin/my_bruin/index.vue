@@ -11,12 +11,12 @@
       <div class="bruin-first">
         <div class="bruin-first-div" v-for="(item, index) in firstDiv" :key="index">
           <div class="bruin-first-name">
-            <div v-if="item.num > 0 ? true : false" class="bruin-first-name-content">{{item.name + " x" + item.num}}</div>
-            <div v-if="item.num > 0 ? false : true " class="bruin-first-name-content1">{{item.name}}</div>
+            <div v-if="Number(item.num) > 0 ? true : false" class="bruin-first-name-content">{{item.name + " x" + item.num}}</div>
+            <div v-if="Number(item.num) > 0 ? false : true " class="bruin-first-name-content1">{{item.name}}</div>
           </div>
           <img class="bruin-first-img" src="../../../assets/bruin/img/bruin_div.png" />
-          <img v-if="item.num > 0 ? false : true" class="bruin-first-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
-          <div v-if="item.num > 0 ? true : false" class="bruin-first-own">
+          <img v-if="Number(item.num) > 0 ? false : true" class="bruin-first-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
+          <div v-if="Number(item.num) > 0 ? true : false" class="bruin-first-own">
             <img class="bruin-first-own-light" src="/_nuxt/assets/bruin/img/light.png" />
             <div :id="'bruin-keys' + item.card_no"></div>
           </div>
@@ -25,12 +25,12 @@
       <div class="bruin-second">
         <div class="bruin-second-div" v-for="(item, index) in secondDiv" :key="index">
           <div class="bruin-second-name">
-            <div v-if="item.num > 0 ? true : false" class="bruin-second-name-content">{{item.name + " x" + item.num}}</div>
-            <div v-if="item.num > 0 ? false : true " class="bruin-second-name-content1">{{item.name}}</div>
+            <div v-if="Number(item.num) > 0 ? true : false" class="bruin-second-name-content">{{item.name + " x" + item.num}}</div>
+            <div v-if="Number(item.num) > 0 ? false : true " class="bruin-second-name-content1">{{item.name}}</div>
           </div>
           <img class="bruin-second-img" src="../../../assets/bruin/img/bruin_div.png" />
-          <img v-if="item.num > 0 ? false : true" class="bruin-second-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
-          <div v-if="item.num > 0 ? true : false" class="bruin-second-own">
+          <img v-if="Number(item.num) > 0 ? false : true" class="bruin-second-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
+          <div v-if="Number(item.num) > 0 ? true : false" class="bruin-second-own">
             <img class="bruin-second-own-light" src="../../../assets/bruin/img/light.png" />
             <div :id="'bruin-keys' + item.card_no"></div>
           </div>
@@ -44,8 +44,8 @@
           <div class="button-div-second-content">开始抽取</div>
         </div>
         <div class="abstract-time">
-          当前可抽取
-          <div :class="awardChange > 0 ? 'abstract-time-content1' : 'abstract-time-content'">{{awardChange}}</div>次
+          <div>当前可抽取</div>
+          <div :class="awardChange > 0 ? 'abstract-time-content1' : 'abstract-time-content'">{{awardChange}}</div><div>次</div>
         </div>
       </div>
       <div class="rule-content" @click="goToRule">
@@ -141,13 +141,16 @@ export default {
         this.awardChange = res.data.lucky_num
         this.secondDiv = []
         this.firstDiv = []
-        this.myBruinData.cards.forEach((element, index) => {
+        const cards = res.data.cards || []
+        cards.forEach((element, index) => {
           if(index > 2) {
             this.secondDiv.push(element)
           } else {
             this.firstDiv.push(element)
           }
         })
+        console.log(this.secondDiv)
+        console.log(this.firstDiv)
       } catch (err) {
         console.log(err)
         return
@@ -365,18 +368,20 @@ export default {
         }
       }
       .abstract-time {
-        width: 196px;
-        height: 58px;
+        width: 216px;
+        height: 65px;
         position: absolute;
-        top: -58px;
+        top: -63px;
         right: 30px;
         background: url("../../../assets/bruin/img/abstract_time.png") no-repeat;
         background-size: 100%;
         display: flex;
         align-items: center;
+        justify-content: center;
         font-size: 28px;
         font-weight: 600;
         color: rgba(125, 125, 125, 1);
+        
         &-content {
           font-size: 28px;
           font-weight: 600;
