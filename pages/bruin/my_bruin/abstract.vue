@@ -4,13 +4,13 @@
 
     <div class="abstract-stage">
       <div v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-name wrapper' : 'abstract-stage-name'">
-        <img class="abstract-stage-name-img" src="../../../assets/bruin/img/bruin_name/1.png"/>
+        <img class="abstract-stage-name-img" :src="'../../../assets/bruin/img/bruin_name/'+ awardBruinNumber +'.png'"/>
       </div>
       <div v-show="!nameAndButtonShow" :class="abstractShow ? 'abstract-stage-swipe' : 'abstract-stage-swipe wrapper'">
         <slide class="abstract-stage-swipe-div" :slides="slides" :inv="swipeTime" :name="transitionName1" :target="target"></slide>
       </div>
       <div v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-result wrapper' : 'abstract-stage-result'">
-        <img class="abstract-stage-result-img" :src="'../../..//assets/bruin/img/keys/'+ awardBruinNumber +'2.png'" />
+        <img class="abstract-stage-result-img" :src="'../../../assets/bruin/img/keys/'+ awardBruinNumber +'2.png'" />
       </div>
       <div @click="cancelShow" class="abstract-stage-button" v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-button-content wrapper' : 'abstract-stage-button-content'">
         <div>放入熊库</div>
