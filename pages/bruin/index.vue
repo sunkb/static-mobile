@@ -87,6 +87,7 @@ export default {
       const activityID = 1
       try {
         const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
+        console.log(res.data.wx_data)
         if (!res.status) {
           this.$refs['toast'].hideLoadingToast()
           this.$refs['toast'].showToast(res.info)
@@ -189,17 +190,17 @@ export default {
     const login = new Login();
     const res = await login.autoLogin();
     console.log('第二次测试', res)
-    if (!res.status) {
-      console.log(res.info)
-      this.gotoLoginRegister()
-      console.log(111111)
-      return 
-    }
-    if(res.data.is_login !== 1) {
-      this.gotoLoginRegister()
-      console.log(2222)
-    }
-    console.log(33333)
+    // if (!res.status) {
+    //   console.log(res.info)
+    //   this.gotoLoginRegister()
+    //   console.log(111111)
+    //   return 
+    // }
+    // if(res.data.is_login !== 1) {
+    //   this.gotoLoginRegister()
+    //   console.log(2222)
+    // }
+    // console.log(33333)
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()

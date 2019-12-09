@@ -222,15 +222,15 @@ export default {
       }
     }
     &-result {
-      width: 247px;
+      width: 267px;
       height: 346px;
       z-index: 40000;
       position: absolute;
       left: 50%;
-      margin-left: -114px;
+      margin-left: -135px;
       top: 180px;
       &-img {
-        width: 247px;
+        width: 267px;
         height: 346px;
       }
     }
