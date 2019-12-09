@@ -419,6 +419,7 @@ export default {
   left: 10px;
   background-size: 100%;
   background-repeat: no-repeat;
+  border: 0px;
 }
 #bruin-keys2 {
   animation-name: rainbow2;
@@ -431,6 +432,7 @@ export default {
   left: 10px;
   background-size: 100%;
   background-repeat: no-repeat;
+  border: 0px;
 }
 #bruin-keys3 {
   animation-name: rainbow3;
@@ -443,6 +445,7 @@ export default {
   left: 10px;
   background-size: 100%;
   background-repeat: no-repeat;
+  border: 0px;
 }
 #bruin-keys4 {
   animation-name: rainbow4;
@@ -455,6 +458,7 @@ export default {
   left: 10px;
   background-size: 100%;
   background-repeat: no-repeat;
+  border: 0px;
 }
 #bruin-keys5 {
   animation-name: rainbow5;
@@ -467,6 +471,7 @@ export default {
   left: 10px;
   background-size: 100%;
   background-repeat: no-repeat;
+  border: 0px;
 }
 @keyframes rainbow1 {
   0% {
