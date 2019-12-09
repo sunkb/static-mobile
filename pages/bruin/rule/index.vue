@@ -5,7 +5,7 @@
     </div>
     <img
       class="bruin-rule-img"
-      src="https://qn-static.landi.com/uploadtool89f13157aed87a54c5eea0730f71a67b.png"
+      src="https://qn-static.landi.com/uploadtoolb262a0e0a49df29417106c9db65b63c7.png"
     />
     <div class="home-header">
       <img class="home-header-back" src="../../../assets/bruin/img/back_home_button.png" @click="goToHome"/>

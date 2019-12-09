@@ -38,10 +38,11 @@
       </div>
       <div class="button-div">
         <div class="button-div-first">
-          <div class="button-div-first-content" @click="goToHome">获取熊卡</div>
+          <div v-show="!isOpen" class="button-div-first-content" @click="goToHome"><div class="button-div-first-content-name">获取熊卡</div></div>
+          <div v-show="isOpen" class="button-div-first-open" @click="openInfo"></div>
         </div>
         <div class="button-div-second" @click="abstractAction">
-          <div class="button-div-second-content">开始抽取</div>
+          <div class="button-div-second-content"><div class="button-div-second-content-name">开始抽取</div></div>
         </div>
         <div class="abstract-time">
           <div class="abstract-time-div">
@@ -126,7 +127,8 @@ export default {
         {
           src: 'https://qn-static.landi.com/uploadtool6425ca67c5dc62ee4c4cc80a0267cd29.png' // 勇敢
         }
-      ]
+      ],
+      isOpen: true // 判断五只熊都有的情况
     }
   },
   components: {
@@ -141,6 +143,11 @@ export default {
     // 跳转至首页
     goToHome (){
       window.location = `${process.env.BASE_URL}/bruin/`
+    },
+    // 提示开奖时间
+    openInfo () {
+      this.$refs['toast'].showToast('2020年1月1日 18:00开奖')
+      return 
     },
     async abstractAction () {
       if(!Number(this.awardChange)) {
@@ -168,6 +175,9 @@ export default {
         this.firstDiv = []
         const cards = res.data.cards || []
         cards.forEach((element, index) => {
+          if (element.num == 0) {
+            this.isOpen = false 
+          }
           if(index > 2) {
             this.secondDiv.push(element)
           } else {
@@ -358,20 +368,30 @@ export default {
       position: relative;
       .button-div-first {
         width: 314px;
-        height: 99px;
-        background: rgba(20, 200, 210, 1);
-        box-shadow: 0px 10px 0px 0px rgba(12, 129, 135, 1);
-        border-radius: 24px;
+        height: 110px;
         margin-right: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
         &-content {
-          font-size: 44px;
-          font-family: PingFang SC;
-          font-weight: 600;
-          color: rgba(255, 255, 255, 1);
-          line-height: 24px;
+          width: 314px;
+          height: 110px;
+          background: url("https://qn-static.landi.com/uploadtool6187279bc8421bac5aa6da1c706a87b8.png") no-repeat;
+          background-size: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &-name {
+            font-size: 44px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 1);
+          }
+        }
+        &-open {
+          width: 314px;
+          height: 110px;
+          background: url("https://qn-static.landi.com/uploadtoold7a831022e62afcba74c6492f706b518.png") no-repeat;
+          background-size: 100%;  
         }
       }
       .button-div-second {
@@ -384,11 +404,14 @@ export default {
         align-items: center;
         justify-content: center;
         &-content {
-          font-size: 44px;
-          font-family: PingFang SC;
-          font-weight: 600;
-          color: rgba(255, 255, 255, 1);
-          line-height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &-name {
+            font-size: 44px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 1);
+          }
         }
       }
       .abstract-time {
