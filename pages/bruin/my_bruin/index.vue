@@ -72,11 +72,6 @@ export default {
       title: "集五熊，赢千万课时"
     }
   },
-  head () {
-    return {
-      myBruinData: {}
-    }
-  },
   data () {
     return {
       firstDiv: [
