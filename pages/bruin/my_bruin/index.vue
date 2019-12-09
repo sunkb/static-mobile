@@ -202,13 +202,12 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
-  height: 100%;
-  // background-color: #500083;
+  height: 2062px;
   .bruin-background {
-    background: url("https://qn-static.landi.com/uploadtool02540214a454a3b9a0809a71a3b9d453.png") no-repeat;
+    background: url("https://qn-static.landi.com/uploadtoolbf48b4285e482a65331d63a35874cd7b.png") no-repeat;
     background-size: 100%;
     width: 100vw;
-    height: 100%;
+    height: 2062px;
     .bruin-marquee {
       height: 50px;
       width: 100%;

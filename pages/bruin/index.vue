@@ -204,17 +204,17 @@ export default {
     const login = new Login();
     const res = await login.autoLogin();
     console.log('第二次测试', res)
-    // if (!res.status) {
-    //   console.log(res.info)
-    //   this.gotoLoginRegister()
-    //   console.log(111111)
-    //   return 
-    // }
-    // if(res.data.is_login !== 1) {
-    //   this.gotoLoginRegister()
-    //   console.log(2222)
-    // }
-    // console.log(33333)
+    if (res.status == 'false') {
+      console.log(res.info)
+      this.gotoLoginRegister()
+      console.log(111111)
+      return 
+    }
+    if(res.data.is_login !== 1) {
+      this.gotoLoginRegister()
+      console.log(2222)
+    }
+    console.log(33333)
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()
@@ -249,10 +249,10 @@ function removeParam(key, sourceURL) {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
-  height: 123vh;
+  height: 1495px;
   .home-background {
     width: 100vw;
-    height: 123vh;
+    height: 1495px;
     background: url("https://qn-static.landi.com/uploadtool255b71e4dcde88786f4dd94d1bf5f779.png");
     background-size: 100%;
     .home-marquee {
