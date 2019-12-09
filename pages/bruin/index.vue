@@ -204,7 +204,7 @@ export default {
     const login = new Login();
     const res = await login.autoLogin();
     console.log('第二次测试', res)
-    if (res.status == 'false') {
+    if (!res.status) {
       console.log(res.info)
       this.gotoLoginRegister()
       console.log(111111)

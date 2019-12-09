@@ -38,7 +38,7 @@
       </div>
       <div class="button-div">
         <div class="button-div-first">
-          <div class="button-div-first-content" @click="goToHome">获取小熊</div>
+          <div class="button-div-first-content" @click="goToHome">获取熊卡</div>
         </div>
         <div class="button-div-second" @click="abstractAction">
           <div class="button-div-second-content">开始抽取</div>
@@ -426,9 +426,9 @@ export default {
       .rule-content-button {
         position: absolute;
         width: 294px;
-        height: 24px;
-        bottom: 30px;
-        right: 34px;
+        height: 28px;
+        bottom: 50px;
+        right: 40px;
       }
     }
   }
