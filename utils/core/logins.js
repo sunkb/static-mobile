@@ -55,7 +55,7 @@ async function wxAutoLogin () {
       code
     }
     const res = await axios.get(url, { params })
-    console.log(res)
+    console.log('code登录', res)
     return res
     // axios
     //   .get(url, { params })
