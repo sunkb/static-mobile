@@ -100,12 +100,11 @@ export default {
   },
   created () {},
   mounted () {
-    this.swipeTime = 300
+    this.swipeTime = 180
     this.timeParam = 1
   },
   methods: {
     cancelShow () {
-      clearInterval(this.swipeObj)
       this.swipeTime = 300
       this.timeParam = 1
       this.nameAndButtonShow = false
@@ -115,17 +114,10 @@ export default {
   watch: {
     async abstractShow(value) {
       if(value) {
-        this.swipeObj = setInterval(() => {
-          if (this.swipeTime > 1400) {
-            console.log('chenjiafan')
-            clearInterval(this.swipeObj)
-            this.swipeTime = 300
-            this.timeParam = 300000
-            this.nameAndButtonShow = true
-          }
-          this.swipeTime = this.swipeTime + (this.timeParam ++) * 75
-          console.log(this.swipeTime)
-        }, 2000)
+        this.swipeObj = setTimeout(() => {
+          this.swipeTime = 3000000
+          this.nameAndButtonShow = true
+        }, 4000)
         try {
           const activityId = 1
           const res = await axios.post(API.GRAD_BRUIN, {activity_id: activityId})
@@ -139,7 +131,7 @@ export default {
           return 
         }
       } else {
-        clearInterval(this.swipeObj)
+        // clearInterval(this.swipeObj)
         this.swipeTime = 300
         this.timeParam = 1
         this.nameAndButtonShow = false

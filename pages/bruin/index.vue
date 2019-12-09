@@ -101,10 +101,10 @@ export default {
           signature: wxConfig.signature,
         })
         const shareObj = {
-          title: wx_data.share_title,
-          desc: wx_data.share_desc,
-          link: wx_data.share_link,
-          imgUrl: wx_data.share_img_url,
+          title: res.data.wx_data.share_title,
+          desc: res.data.wx_data.share_desc,
+          link: res.data.wx_data.share_link,
+          imgUrl: res.data.wx_data.share_img_url,
         }
         console.log(shareObj)
         wx.ready(() => {
@@ -233,7 +233,7 @@ function removeParam(key, sourceURL) {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
   width: 100vw;
-  height: 133vh;
+  height: 123vh;
   .home-background {
     width: 100vw;
     height: 123vh;
