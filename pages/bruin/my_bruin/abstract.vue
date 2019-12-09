@@ -4,13 +4,13 @@
 
     <div class="abstract-stage">
       <div v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-name wrapper' : 'abstract-stage-name'">
-        <img class="abstract-stage-name-img" :src="'../../../assets/bruin/img/bruin_name/'+ awardBruinNumber +'.png'"/>
+        <img class="abstract-stage-name-img" :src="bruinName[awardBruinNumber - 1].src" />
       </div>
       <div v-show="!nameAndButtonShow" :class="abstractShow ? 'abstract-stage-swipe' : 'abstract-stage-swipe wrapper'">
         <slide class="abstract-stage-swipe-div" :slides="slides" :inv="swipeTime" :name="transitionName1" :target="target"></slide>
       </div>
       <div v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-result wrapper' : 'abstract-stage-result'">
-        <img class="abstract-stage-result-img" :src="'../../../assets/bruin/img/keys/'+ awardBruinNumber +'2.png'" />
+        <img class="abstract-stage-result-img" :src="bruinResult[awardBruinNumber - 1].src" />
       </div>
       <div @click="cancelShow" class="abstract-stage-button" v-show="nameAndButtonShow" :class="abstractShow ? 'abstract-stage-button-content wrapper' : 'abstract-stage-button-content'">
         <div>放入熊库</div>
@@ -55,10 +55,44 @@ export default {
           src: 'https://qn-static.landi.com/uploadtool6425ca67c5dc62ee4c4cc80a0267cd29.png'
         }
       ],
+      bruinName: [
+        {
+          src: 'https://qn-static.landi.com/uploadtoolb9c1ec278872b7404fc6a66e02b40a7d.png' // 乐学
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool35f628547667cc5bc6b418c807682b02.png' // 聪慧
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool8bdd328f9c8a7cdb33d4ee74713e4bdf.png' // 健康
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool52d8102aa7e04b6048d155eff313c2f8.png' // 勤奋
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool570e028a322ed1035d954d79bd197518.png' // 勇敢
+        }
+      ],
+      bruinResult: [
+        {
+          src: 'https://qn-static.landi.com/uploadtoolf1c9c56c723ca8b49ac30e9d91f363fc.png' // 乐学
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool2e783b008fb670950ac337f8439512b0.png' // 聪慧
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool9e4f71ef5a28b872315dc775cdd2a7af.png' // 健康
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtoolc6d0c31facd904eef2bb2dec5c99faaa.png' // 勤奋
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool0abba42258b5d7a7cf89eaf7d98603e3.png' // 勇敢
+        }
+      ],
       transitionName1: 'move',
       target: '_blank',
       swipeObj: null,
-      awardBruinNumber: 0  // 点击抓熊按钮后，出现的熊的编号
+      awardBruinNumber: 1  // 点击抓熊按钮后，出现的熊的编号
     }
   },
   components: {
@@ -193,7 +227,7 @@ export default {
       z-index: 40000;
       position: absolute;
       left: 50%;
-      margin-left: -154px;
+      margin-left: -114px;
       top: 180px;
       &-img {
         width: 247px;
