@@ -74,29 +74,29 @@ export default {
       firstDiv: [
         {
           card_no: 1,
-          num: 1,
+          num: 0,
           name: '乐学熊'
         },
         {
           card_no: 2,
-          num: 1,
+          num: 0,
           name: '聪慧熊'
         },
         {
           card_no: 3,
-          num: 1,
+          num: 0,
           name: '健康熊'
         },
       ],
       secondDiv: [
         {
           card_no: 4,
-          num: 1,
+          num: 0,
           name: '勤奋熊'
         },
         {
           card_no: 5,
-          num: 1,
+          num: 0,
           name: '勇敢熊'
         },
       ],
