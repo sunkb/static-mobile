@@ -15,7 +15,7 @@
             <div v-if="Number(item.num) > 0 ? false : true " class="bruin-first-name-content1">{{item.name}}</div>
           </div>
           <img class="bruin-first-img" src="https://qn-static.landi.com/uploadtool543d8258ed2c2579eb63b890d7207056.png" />
-          <img v-show="Number(item.num) > 0 ? false : true" class="bruin-first-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
+          <img v-show="Number(item.num) > 0 ? false : true" class="bruin-first-view" :src="slidesView[item.card_no - 1].src" />
           <div v-show="Number(item.num) > 0 ? true : false" class="bruin-first-own">
             <img class="bruin-first-own-light" src="https://qn-static.landi.com/uploadtool1fe0c9c2ae04dae40e2d23643afd82eb.png" />
             <div :id="'bruin-keys' + item.card_no"></div>
@@ -29,7 +29,7 @@
             <div v-if="Number(item.num) > 0 ? false : true " class="bruin-second-name-content1">{{item.name}}</div>
           </div>
           <img class="bruin-second-img" src="https://qn-static.landi.com/uploadtool543d8258ed2c2579eb63b890d7207056.png" />
-          <img v-show="Number(item.num) > 0 ? false : true" class="bruin-second-view" :src="'/_nuxt/assets/bruin/img/bruin_view/'+ item.card_no +'.png'" />
+          <img v-show="Number(item.num) > 0 ? false : true" class="bruin-second-view" :src="slidesView[item.card_no - 1].src" />
           <div v-show="Number(item.num) > 0 ? true : false" class="bruin-second-own">
             <img class="bruin-second-own-light" src="https://qn-static.landi.com/uploadtool1fe0c9c2ae04dae40e2d23643afd82eb.png" />
             <div :id="'bruin-keys' + item.card_no"></div>
@@ -102,7 +102,24 @@ export default {
       ],
       abstractShow: false,
       awardChange: 0, // 可以抓熊的次数
-      pmdInfo: '' // 跑马灯内容
+      pmdInfo: '', // 跑马灯内容
+      slidesView: [
+        {
+          src: 'https://qn-static.landi.com/uploadtool4f6c2142f18d9a0feccacbd73c7c1ed0.png'
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool98d52df665c24b5e29b8bb1e030af934.png'
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtoolcdb18852e43ed742d245e496dca2483e.png'
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool57cfdb371c7f82c0fd3d6319ca52eb3f.png'
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool6425ca67c5dc62ee4c4cc80a0267cd29.png'
+        }
+      ],
     }
   },
   components: {
@@ -180,9 +197,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "~/assets/bruin/css/main.scss";
-* {
-  border: 0px;
-}
 #bruin {
   overflow: auto;
   -webkit-overflow-scrolling: auto;
@@ -265,7 +279,6 @@ export default {
           margin-left: -87px;
         }
         .bruin-first-own {
-          border: 0px;
           &-light {
             width: 228px;
             height: 340px;
@@ -321,7 +334,6 @@ export default {
           margin-left: -87px;
         }
         .bruin-second-own {
-          border: 0px;
           &-light {
             width: 228px;
             height: 340px;
@@ -424,7 +436,6 @@ export default {
   left: 10px;
   background-size: 100%;
   background-repeat: no-repeat;
-  border: 0px;
 }
 #bruin-keys2 {
   animation-name: rainbow2;
@@ -437,7 +448,6 @@ export default {
   left: 10px;
   background-size: 100%;
   background-repeat: no-repeat;
-  border: 0px;
 }
 #bruin-keys3 {
   animation-name: rainbow3;
@@ -450,7 +460,6 @@ export default {
   left: 10px;
   background-size: 100%;
   background-repeat: no-repeat;
-  border: 0px;
 }
 #bruin-keys4 {
   animation-name: rainbow4;
@@ -463,7 +472,6 @@ export default {
   left: 10px;
   background-size: 100%;
   background-repeat: no-repeat;
-  border: 0px;
 }
 #bruin-keys5 {
   animation-name: rainbow5;
@@ -476,7 +484,6 @@ export default {
   left: 10px;
   background-size: 100%;
   background-repeat: no-repeat;
-  border: 0px;
 }
 @keyframes rainbow1 {
   0% {
