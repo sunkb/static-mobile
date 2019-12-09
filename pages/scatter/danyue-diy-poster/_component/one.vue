@@ -97,7 +97,7 @@ export default {
       console.log('this.p_date',this.p_date)
       const date = new Date(this.p_date);
       console.log("p_date", date);
-      const today = new Date();
+      const today = new Date('2019-12-12');
       console.log("today", today);
       var diff = Math.abs(today.getTime() - date.getTime());
       console.log("diff", diff);
