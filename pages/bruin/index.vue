@@ -95,16 +95,16 @@ export default {
         const wxConfig = res.data.wx_config;
         const wx_data = res.data.wx_data;
         const wx = initWX({
-          appId: wxConfig.appId,
+          appId: 'wx9632cb5f0990954d',
           timestamp: wxConfig.timestamp,
           nonceStr: wxConfig.nonceStr,
           signature: wxConfig.signature,
         })
         const shareObj = {
-          title: res.data.wx_data.share_title,
-          desc: res.data.wx_data.share_desc,
-          link: res.data.wx_data.share_link,
-          imgUrl: res.data.wx_data.share_img_url,
+          title: wx_data.share_title,
+          desc: wx_data.share_desc,
+          link: wx_data.share_link,
+          imgUrl: wx_data.share_img_url,
         }
         console.log(shareObj)
         wx.ready(() => {
@@ -112,7 +112,7 @@ export default {
           wx.updateTimelineShareData(shareObj)
           wx.onMenuShareAppMessage(shareObj);
           wx.onMenuShareTimeline(shareObj);
-          wx.error(function (res) {
+          wx.error(function(res){
             console.log(res);
           });
         })
