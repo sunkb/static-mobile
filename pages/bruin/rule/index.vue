@@ -25,6 +25,11 @@ import { API } from '~/pages/bruin/consts'
 import axios from '~/utils/axios'
 export default {
   name: 'rule',
+  head() {
+    return {
+      title: "集五熊，赢千万课时"
+    }
+  },
   data () {
     return {
       pmdInfo: '',

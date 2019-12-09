@@ -54,6 +54,11 @@ import {Login} from '~/utils/core/logins'
 import { PosterModal } from '~/components/presentation'
 export default {
   name: "home",
+  head() {
+    return {
+      title: "集五熊，赢千万课时"
+    }
+  },
   data () {
     return {
       showShareHelp: false,

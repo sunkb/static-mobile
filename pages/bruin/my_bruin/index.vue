@@ -66,9 +66,13 @@ import axios from '~/utils/axios'
 import Toast from '~/components/Toast'
 export default {
   name: 'myBruin',
+  head() {
+    return {
+      title: "集五熊，赢千万课时"
+    }
+  },
   head () {
     return {
-      titile: '集五熊，赢千万课时',
       myBruinData: {}
     }
   },
