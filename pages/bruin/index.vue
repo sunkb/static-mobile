@@ -53,7 +53,7 @@ export default {
     return {
       showShareHelp: false,
       pmdInfo: "",
-      loginRegistModal: true,
+      loginRegistModal: false,
       activityData: {
         is_enable: true,
         id: 1,
@@ -193,7 +193,16 @@ export default {
   async created () {
     const login = new Login();
     const res = await login.autoLogin();
-    console.log(res)
+    if (!res.status) {
+      console.log(res.info)
+      this.loginRegistModal = true
+      return 
+    }
+    if(res.data.is_login == 1) {
+      this.loginRegistModal = false
+    } else {
+      this.loginRegistModal = true
+    }
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()
