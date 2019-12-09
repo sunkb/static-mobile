@@ -15,7 +15,7 @@
           src="../../../assets/bruin/img/home_bruin.png"
           @click="goToMyBruin"
         />
-        <div class="home-header-right-times"><div>{{curAwardBruinNum}}</div></div>
+        <div v-show="curAwardBruinNum == 0 ? false : true" class="home-header-right-times"><div>{{curAwardBruinNum}}</div></div>
       </div>
     </div>
   </div>
