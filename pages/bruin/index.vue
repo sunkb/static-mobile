@@ -190,9 +190,10 @@ export default {
       }
     },
   },
-  created () {
+  async created () {
     const login = new Login();
-    const res = login.autoLogin();
+    const res = await login.autoLogin();
+    console.log(res)
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()
