@@ -34,8 +34,8 @@
         </div>
         <div class="home-entrance-renew">
           <img class="home-entrance-renew-img" src="../../assets/bruin/img/buy_course.png" />
-          <img v-if="activityData.is_buy ? true : false" class="home-entrance-renew-finsh-img" src="../../assets/bruin/img/finsh.png"/>
-          <img v-if="activityData.is_buy ? false : true" class="home-entrance-renew-unfinsh-img" src="../../assets/bruin/img/unfinsh.png"/>
+          <img v-show="activityData.is_buy ? true : false" class="home-entrance-renew-finsh-img" src="../../assets/bruin/img/finsh.png"/>
+          <img v-show="activityData.is_buy ? false : true" class="home-entrance-renew-unfinsh-img" src="../../assets/bruin/img/unfinsh.png"/>
         </div>
       </div>
       <div class="sharehelp" v-show="showShareHelp" @click="() => { showShareHelp = false }">
@@ -202,19 +202,19 @@ export default {
   },
   async created () {
     const login = new Login();
+    try {
+      const res = await login.autoLogin();
+      console.log('第二次测试', res)
+      if(res.data.is_login !== 1) {
+        this.gotoLoginRegister()
+      }
+    } catch (err) {
+      if(error.response.status === 401){ // 用于判断是否登录过
+        this.gotoLoginRegister()
+      }
+    }
     const res = await login.autoLogin();
     console.log('第二次测试', res)
-    if (!res.status) {
-      console.log(res.info)
-      this.gotoLoginRegister()
-      console.log(111111)
-      return 
-    }
-    if(res.data.is_login !== 1) {
-      this.gotoLoginRegister()
-      console.log(2222)
-    }
-    console.log(33333)
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()
@@ -395,7 +395,7 @@ function removeParam(key, sourceURL) {
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba($color: #000000, $alpha: 0.6);
+  background: rgba($color: #000000, $alpha: 0.8);
 
   &-img {
     width: 540px;
