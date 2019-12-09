@@ -44,8 +44,10 @@
           <div class="button-div-second-content">开始抽取</div>
         </div>
         <div class="abstract-time">
-          <div>当前可抽取</div>
-          <div :class="awardChange > 0 ? 'abstract-time-content1' : 'abstract-time-content'">{{awardChange}}</div><div>次</div>
+          <div class="abstract-time-div">
+            <div>当前可抽取</div>
+            <div :class="awardChange > 0 ? 'abstract-time-div-content1' : 'abstract-time-div-content'">{{awardChange}}</div><div>次</div>
+          </div>
         </div>
       </div>
       <div class="rule-content">
@@ -393,24 +395,26 @@ export default {
         right: 30px;
         background: url("../../../assets/bruin/img/abstract_time.png") no-repeat;
         background-size: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-        font-weight: 600;
-        color: rgba(125, 125, 125, 1);
-        
-        &-content {
+        &-div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           font-size: 28px;
           font-weight: 600;
-          color: red;
-          text-align: center;
-        }
-        &-content1 {
-          font-size: 28px;
-          font-weight: 600;
-          color: green;
-          text-align: center;
+          color: rgba(125, 125, 125, 1);
+          margin-top: 6px;
+          &-content {
+            font-size: 28px;
+            font-weight: 600;
+            color: red;
+            text-align: center;
+          }
+          &-content1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: green;
+            text-align: center;
+          }
         }
       }
     }
