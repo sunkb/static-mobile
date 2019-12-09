@@ -185,7 +185,8 @@ export default {
       }
     },
   },
-  async created () {
+  created () {},
+  async beforeMount () {
     const login = new Login();
     const res = await login.autoLogin();
     if (!res.status) {
