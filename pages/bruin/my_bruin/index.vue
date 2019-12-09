@@ -105,21 +105,21 @@ export default {
       pmdInfo: '', // 跑马灯内容
       slidesView: [
         {
-          src: 'https://qn-static.landi.com/uploadtool4f6c2142f18d9a0feccacbd73c7c1ed0.png'
+          src: 'https://qn-static.landi.com/uploadtoolcdb18852e43ed742d245e496dca2483e.png' // 乐学
         },
         {
-          src: 'https://qn-static.landi.com/uploadtool98d52df665c24b5e29b8bb1e030af934.png'
+          src: 'https://qn-static.landi.com/uploadtool4f6c2142f18d9a0feccacbd73c7c1ed0.png' // 聪慧
         },
         {
-          src: 'https://qn-static.landi.com/uploadtoolcdb18852e43ed742d245e496dca2483e.png'
+          src: 'https://qn-static.landi.com/uploadtool98d52df665c24b5e29b8bb1e030af934.png' // 健康
         },
         {
-          src: 'https://qn-static.landi.com/uploadtool57cfdb371c7f82c0fd3d6319ca52eb3f.png'
+          src: 'https://qn-static.landi.com/uploadtool57cfdb371c7f82c0fd3d6319ca52eb3f.png' // 勤奋
         },
         {
-          src: 'https://qn-static.landi.com/uploadtool6425ca67c5dc62ee4c4cc80a0267cd29.png'
+          src: 'https://qn-static.landi.com/uploadtool6425ca67c5dc62ee4c4cc80a0267cd29.png' // 勇敢
         }
-      ],
+      ]
     }
   },
   components: {

@@ -83,11 +83,9 @@ export default {
     // 用于微信分享的数据的接口请求
     async wxShare () {
       const curUrl = encodeURIComponent(window.location.href)
-      console.log(curUrl)
       const activityID = 1
       try {
         const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
-        console.log(res.data.wx_data)
         if (!res.status) {
           this.$refs['toast'].hideLoadingToast()
           this.$refs['toast'].showToast(res.info)
@@ -108,6 +106,7 @@ export default {
           link: wx_data.share_link,
           imgUrl: wx_data.share_img_url,
         }
+        console.log(shareObj)
         wx.ready(() => {
           wx.updateAppMessageShareData(shareObj)
           wx.updateTimelineShareData(shareObj)
