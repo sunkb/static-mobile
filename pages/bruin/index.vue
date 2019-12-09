@@ -156,13 +156,6 @@ export default {
     },
     // 活动详情的接口数据
     async getActivityDetail() {
-      const firstChooseResult = localStorage.getItem("firstChoose")
-      if (firstChooseResult) {
-        this.firstChoose = false
-      } else {
-        this.firstChoose = true
-        localStorage.setItem("firstChoose", true);
-      }
       try {
         const activityId = 1
         const res = await axios.get(`${API.ACTIVITY_DETAIL}?activity_id=${activityId}`)
@@ -178,6 +171,13 @@ export default {
           end_time: res.data.end_time || '',
           is_buy: res.data.is_buy || false,
           invite_num: res.data.invite_num || 0
+        }
+        const firstChooseResult = localStorage.getItem("firstChoose")
+        if (firstChooseResult) {
+          this.firstChoose = false
+        } else {
+          this.firstChoose = true
+          localStorage.setItem("firstChoose", true);
         }
       } catch (err) {
         console.log(err)
