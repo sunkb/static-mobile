@@ -36,18 +36,18 @@ export class Login {
 async function wxAutoLogin () {
   if (process.client) {
     const code = getQueryString('code')
-    // if (!code) {
-    //   //如果没有code则执行微信跳转获取code
-    //   const urlData = {
-    //     appid: process.env.APP_ID,
-    //     redirect_uri: encodeURIComponent(window.location.href),
-    //     response_type: 'code',
-    //     scope: 'snsapi_base'
-    //   }
-    //   window.location.replace(
-    //     `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${urlData.appid}&redirect_uri=${urlData.redirect_uri}&response_type=${urlData.response_type}&scope=${urlData.scope}&state=1#wechat_redirect`
-    //   )
-    // }
+    if (!code) {
+      //如果没有code则执行微信跳转获取code
+      const urlData = {
+        appid: process.env.APP_ID,
+        redirect_uri: encodeURIComponent(window.location.href),
+        response_type: 'code',
+        scope: 'snsapi_base'
+      }
+      window.location.replace(
+        `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${urlData.appid}&redirect_uri=${urlData.redirect_uri}&response_type=${urlData.response_type}&scope=${urlData.scope}&state=1#wechat_redirect`
+      )
+    }
 
     //调用后台接口登录
     const url = '/Mobile/JiXiongActivity/login'

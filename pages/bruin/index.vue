@@ -36,7 +36,6 @@
         <img class="sharehelp-img" :src="require('~/assets/presentation/img/share-help.png')" />
       </div>
       <toast ref="toast"></toast>
-      <poster-modal v-model="loginRegistModal" @click="gotoLoginRegister" :poster="2"></poster-modal>
     </div>
   </div>
 </template>
@@ -53,7 +52,6 @@ export default {
     return {
       showShareHelp: false,
       pmdInfo: "",
-      loginRegistModal: false,
       activityData: {
         is_enable: true,
         id: 1,
@@ -67,8 +65,7 @@ export default {
     }
   },
   components: {
-    'toast': Toast,
-    'poster-modal': PosterModal,
+    'toast': Toast
   },
   methods: {
     // 跳转规则页面
@@ -86,11 +83,9 @@ export default {
     // 用于微信分享的数据的接口请求
     async wxShare () {
       const curUrl = encodeURIComponent(window.location.href)
-      console.log(curUrl)
       const activityID = 1
       try {
         const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
-        console.log(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
         if (!res.status) {
           this.$refs['toast'].hideLoadingToast()
           this.$refs['toast'].showToast(res.info)
@@ -147,11 +142,8 @@ export default {
       redirect_url = removeParam('code',redirect_url);
       redirect_url = removeParam('state',redirect_url);
       redirect_url = encodeURIComponent(redirect_url);
-      if(mode === "register") {
-        const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login?redirect_url='+redirect_url;
-        window.location = loginUrl;
-        return
-      }
+      const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login?redirect_url='+redirect_url;
+      window.location = loginUrl;
     },
     // 活动详情的接口数据
     async getActivityDetail() {
@@ -197,13 +189,11 @@ export default {
     const res = await login.autoLogin();
     if (!res.status) {
       console.log(res.info)
-      this.loginRegistModal = true
+      this.gotoLoginRegister()
       return 
     }
-    if(res.data.is_login == 1) {
-      this.loginRegistModal = false
-    } else {
-      this.loginRegistModal = true
+    if(res.data.is_login !== 1) {
+      this.gotoLoginRegister()
     }
   },
   async mounted () {
