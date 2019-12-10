@@ -98,7 +98,11 @@ export default {
       try {
         const curUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname)
         const activityID = 1
-        const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
+        const params = {
+          activity_id: 1,
+          url: curUrl
+        }
+        const res = await axios.post(API.WX_SHARE, params)
         if (!res.status) {
           this.$refs['toast'].hideLoadingToast()
           this.$refs['toast'].showToast(res.info)
