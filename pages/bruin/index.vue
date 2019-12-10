@@ -95,10 +95,10 @@ export default {
     },
     // 用于微信分享的数据的接口请求
     async wxShare () {
-      const curUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname)
-      console.log('第一次进入', curUrl)
-      const activityID = 1
       try {
+        const curUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname)
+        console.log('第一次进入', curUrl)
+        const activityID = 1
         const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
         if (!res.status) {
           this.$refs['toast'].hideLoadingToast()
