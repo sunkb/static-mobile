@@ -1,7 +1,7 @@
 <template>
   <div class="slide-show">
     <transition-group tag="ul" class='slide-ul' :name="name">
-      <li v-for="(item , index ) in slides" :key="index" v-show="index===nowIndex">
+      <li v-for="(item , index ) in slides" :key="index+1" v-show="index===nowIndex">
         <div class="slide-div">
           <img style="background-size:100%;" :src="item.src" alt="">
         </div>

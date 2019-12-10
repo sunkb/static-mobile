@@ -95,45 +95,45 @@ export default {
     },
     // 用于微信分享的数据的接口请求
     async wxShare () {
-      try {
-        const curUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname)
-        console.log('第一次进入', curUrl)
-        const activityID = 1
-        const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
-        if (!res.status) {
-          this.$refs['toast'].hideLoadingToast()
-          this.$refs['toast'].showToast(res.info)
-          console.log(res.info)
-          return
-        }
-        const wxConfig = res.data.wx_config;
-        const wx_data = res.data.wx_data;
-        const wx = initWX({
-          appId: wxConfig.appId,
-          timestamp: wxConfig.timestamp,
-          nonceStr: wxConfig.nonceStr,
-          signature: wxConfig.signature,
-        })
-        const shareObj = {
-          title: wx_data.share_title,
-          desc: wx_data.share_desc,
-          link: wx_data.share_link,
-          imgUrl: wx_data.share_img_url,
-        }
-        console.log(shareObj)
-        wx.ready(() => {
-          wx.updateAppMessageShareData(shareObj)
-          wx.updateTimelineShareData(shareObj)
-          wx.onMenuShareAppMessage(shareObj);
-          wx.onMenuShareTimeline(shareObj);
-          wx.error(function(res){
-            console.log(res);
-          });
-        })
-      } catch (err) {
-        console.log(err)
-        return
-      }
+      // try {
+      //   const curUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname)
+      //   console.log('第一次进入', curUrl)
+      //   const activityID = 1
+      //   const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
+      //   if (!res.status) {
+      //     this.$refs['toast'].hideLoadingToast()
+      //     this.$refs['toast'].showToast(res.info)
+      //     console.log(res.info)
+      //     return
+      //   }
+      //   const wxConfig = res.data.wx_config;
+      //   const wx_data = res.data.wx_data;
+      //   const wx = initWX({
+      //     appId: wxConfig.appId,
+      //     timestamp: wxConfig.timestamp,
+      //     nonceStr: wxConfig.nonceStr,
+      //     signature: wxConfig.signature,
+      //   })
+      //   const shareObj = {
+      //     title: wx_data.share_title,
+      //     desc: wx_data.share_desc,
+      //     link: wx_data.share_link,
+      //     imgUrl: wx_data.share_img_url,
+      //   }
+      //   console.log(shareObj)
+      //   wx.ready(() => {
+      //     wx.updateAppMessageShareData(shareObj)
+      //     wx.updateTimelineShareData(shareObj)
+      //     wx.onMenuShareAppMessage(shareObj);
+      //     wx.onMenuShareTimeline(shareObj);
+      //     wx.error(function(res){
+      //       console.log(res);
+      //     });
+      //   })
+      // } catch (err) {
+      //   console.log(err)
+      //   return
+      // }
 
     },
     // 用于获取跑马灯的内容数据
