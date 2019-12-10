@@ -11,9 +11,9 @@
           preload="auto"
           class="videoWin"
           id="appearance1"
-          :poster="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'"
+          poster="https://qn-static.landi.com/uploadtool631412028f21ac676ff7d8924b7bec4c.mp4?vframe/jpg/offset/2/h/960/'"
           controls
-          :src="detailData.video_url"
+          src="https://qn-static.landi.com/uploadtool631412028f21ac676ff7d8924b7bec4c.mp4"
         />
         <!-- <div class="appearance-video-item" @click="playFn('appearance1')">
           <img class="videoWin" :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'" />
