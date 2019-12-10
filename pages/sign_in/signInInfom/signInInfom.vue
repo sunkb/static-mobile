@@ -344,13 +344,13 @@ export default {
           no-repeat;
       }
       .videoWin {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding-right: 30px;
-        // width: 630px;
-        height: 355px;
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-50%, -50%);
+        // padding-right: 30px;
+        width: 630px;
+        //height: 355px;
       }
     }
   }
