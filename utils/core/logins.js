@@ -47,6 +47,7 @@ async function wxAutoLogin () {
       window.location.replace(
         `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${urlData.appid}&redirect_uri=${urlData.redirect_uri}&response_type=${urlData.response_type}&scope=${urlData.scope}&state=1#wechat_redirect`
       )
+      return
     }
 
     //调用后台接口登录
