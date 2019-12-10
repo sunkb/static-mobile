@@ -10,16 +10,15 @@
         <video
           preload="auto"
           class="videoWin"
-          style="display: none;"
           id="appearance1"
+          :poster="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'"
           controls
           :src="detailData.video_url"
         />
-        <div class="appearance-video-item" @click="playFn('appearance1')">
+        <!-- <div class="appearance-video-item" @click="playFn('appearance1')">
           <img class="videoWin" :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'" />
           <div class="videoPlay"></div>
-          <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
-        </div>
+        </div> -->
       </div>
       <div class="videoScore">
         <div class="scoreTitle">得分</div>
