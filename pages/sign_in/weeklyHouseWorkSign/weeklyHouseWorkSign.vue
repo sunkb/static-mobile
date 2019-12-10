@@ -582,9 +582,9 @@ export default {
             color: #999999;
           }
           .video {
-            margin-left: 30px;
-            margin-bottom: 30px;
-            width: 600px;
+            // margin-left: 30px;
+            // margin-bottom: 30px;
+            // width: 600px;
             height: 355px;
             position: relative;
             //  background-color: black;
@@ -606,7 +606,7 @@ export default {
               top: 50%;
               left: 50%;
               transform: translate(-50%, -50%);
-              padding-right: 30px;
+              // padding-right: 30px;
               // width: 600px;
               height: 355px;
             }

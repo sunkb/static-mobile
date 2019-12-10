@@ -2,7 +2,7 @@
   <div class="signInInfom">
     <div class="myVideo">
       <div class="videoTitle">
-        {{detailData.work_time}}作业666666
+        {{detailData.work_time}}作业
         <div class="videoTitleTime">第{{detailData.rank}}次打卡</div>
       </div>
       <div class="submissionTime">提交时间:{{detailData.submit_time}}</div>
@@ -327,12 +327,14 @@ export default {
       padding-bottom: 20px;
     }
     .studentVideo {
-      width: 600px;
+      // width: 600px;
       height: 355px;
-      margin-left: 30px;
+      // margin-left: 30px;
       // margin-right: 30px;
-      margin-bottom: 30px;
+      // margin-bottom: 30px;
       position: relative;
+      display: flex;
+      justify-content: center;
       .videoPlay {
         position: absolute;
         top: 50%;
@@ -344,13 +346,14 @@ export default {
           no-repeat;
       }
       .videoWin {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding-right: 30px;
-        // width: 630px;
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-50%, -50%);
+        // padding-right: 30px;
+        // width: 330px;
         height: 355px;
+        width: 622px;
       }
     }
   }
