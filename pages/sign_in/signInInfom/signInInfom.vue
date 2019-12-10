@@ -2,7 +2,7 @@
   <div class="signInInfom">
     <div class="myVideo">
       <div class="videoTitle">
-        {{detailData.work_time}}作业666666
+        {{detailData.work_time}}作业
         <div class="videoTitleTime">第{{detailData.rank}}次打卡</div>
       </div>
       <div class="submissionTime">提交时间:{{detailData.submit_time}}</div>
@@ -11,9 +11,9 @@
           preload="auto"
           class="videoWin"
           id="appearance1"
-          poster="https://qn-static.landi.com/uploadtool631412028f21ac676ff7d8924b7bec4c.mp4?vframe/jpg/offset/2/h/960/'"
+          :poster="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'"
           controls
-          src="https://qn-static.landi.com/uploadtool631412028f21ac676ff7d8924b7bec4c.mp4"
+          :src="detailData.video_url"
         />
         <!-- <div class="appearance-video-item" @click="playFn('appearance1')">
           <img class="videoWin" :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'" />
