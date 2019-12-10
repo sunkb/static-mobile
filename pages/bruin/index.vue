@@ -97,7 +97,7 @@ export default {
     async wxShare () {
       try {
         const curUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname)
-        console.log('第一次进入', curUrl)
+        alert('第一次进入', curUrl)
         const activityID = 1
         const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
         if (!res.status) {
