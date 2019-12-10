@@ -63,7 +63,7 @@ async function wxAutoLogin () {
       return res
     } catch (err) {
       const res = {
-        status: error.response.status
+        status: err.response.status
       }
       return res
     }
