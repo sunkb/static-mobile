@@ -33,43 +33,37 @@ export class Login {
 /**
  * 微信自动登录
  */
-async function wxAutoLogin () {
+function wxAutoLogin () {
   if (process.client) {
     const code = getQueryString('code')
     if (!code) {
-      const url = '/Mobile/JiXiongActivity/login'
-      const res = await axios.get(url, { params })
-      if(res.status && res.data.is_login == 1) {
-        return res
-      } else {
-        //如果没有code则执行微信跳转获取code
-        const urlData = {
-          appid: process.env.APP_ID,
-          redirect_uri: encodeURIComponent(window.location.href),
-          response_type: 'code',
-          scope: 'snsapi_base'
-        }
-        window.location.replace(
-          `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${urlData.appid}&redirect_uri=${urlData.redirect_uri}&response_type=${urlData.response_type}&scope=${urlData.scope}&state=1#wechat_redirect`
-        )
+      //如果没有code则执行微信跳转获取code
+      const urlData = {
+        appid: process.env.APP_ID,
+        redirect_uri: encodeURIComponent(window.location.href),
+        response_type: 'code',
+        scope: 'snsapi_base'
       }
+      window.location.replace(
+        `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${urlData.appid}&redirect_uri=${urlData.redirect_uri}&response_type=${urlData.response_type}&scope=${urlData.scope}&state=1#wechat_redirect`
+      )
     }
 
-    try {
-      //调用后台接口登录
-      const url = '/Mobile/JiXiongActivity/login'
-      const params = {
-        code
-      }
-      const res = await axios.get(url, { params })
-      console.log('第三次测试', res)
-      return res
-    } catch (err) {
-      const res = {
-        status: err.response.status
-      }
-      return res
+    //调用后台接口登录
+    const url = '/Mobile/JiXiongActivity/login'
+    console.log(code)
+    const params = {
+      code
     }
+    
+    axios
+      .get(url, { params })
+      .then(res => {
+        console.log('code登录', res)
+      })
+      .catch(err => {
+        console.log('错误', err)
+      })
   }
 }
 
