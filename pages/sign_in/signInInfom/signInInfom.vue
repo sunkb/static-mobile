@@ -2,7 +2,7 @@
   <div class="signInInfom">
     <div class="myVideo">
       <div class="videoTitle">
-        {{detailData.work_time}}作业
+        {{detailData.work_time}}作业666666
         <div class="videoTitleTime">第{{detailData.rank}}次打卡</div>
       </div>
       <div class="submissionTime">提交时间:{{detailData.submit_time}}</div>
@@ -10,16 +10,15 @@
         <video
           preload="auto"
           class="videoWin"
-          style="display: none;"
           id="appearance1"
+          :poster="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'"
           controls
           :src="detailData.video_url"
         />
-        <div class="appearance-video-item" @click="playFn('appearance1')">
+        <!-- <div class="appearance-video-item" @click="playFn('appearance1')">
           <img class="videoWin" :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'" />
           <div class="videoPlay"></div>
-          <!-- :src="goodWorkData.video_url + '?vframe/jpg/offset/2/h/960/'" -->
-        </div>
+        </div> -->
       </div>
       <div class="videoScore">
         <div class="scoreTitle">得分</div>
