@@ -96,11 +96,11 @@ export default {
     // 用于微信分享的数据的接口请求
     async wxShare () {
       try {
-        const curUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname)
+        // const curUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname)
         const activityID = 1
         const params = {
           activity_id: 1,
-          url: curUrl
+          url: window.location.href.split('#')[0]
         }
         const res = await axios.post(API.WX_SHARE, params)
         if (!res.status) {
@@ -209,7 +209,7 @@ export default {
       }
     }
   },
-  created () {
+  async created () {
     // const login = new Login();
     // const res = await login.autoLogin();
     // if (!res.status) {
