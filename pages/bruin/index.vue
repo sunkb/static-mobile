@@ -222,16 +222,23 @@ export default {
     //   this.gotoLoginRegister()
     //   return 
     // }
-    const login = new Login();
-    const res = await login.autoLogin();
   },
   async mounted () {
     this.$refs['toast'].showLoadingToast()
-    this.wxShare()
-    this.getBruinPMD()
-    this.getActivityDetail()
-    this.getMyBruinData()
-    this.$refs['toast'].hideLoadingToast() 
+    const login = new Login();
+    const res = await login.autoLogin();
+    if (!res.status) {
+      console.log(11111)
+      this.gotoLoginRegister()
+    }
+    if( res.status && res.data.is_login == 1) {
+      this.wxShare()
+      this.getBruinPMD()
+      this.getActivityDetail()
+      this.getMyBruinData()
+      this.$refs['toast'].hideLoadingToast() 
+    }
+
   }
 }
 function removeParam(key, sourceURL) {
