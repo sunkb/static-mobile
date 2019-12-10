@@ -59,7 +59,7 @@ async function wxAutoLogin () {
     // console.log('code登录', res)
     try {
       const res = await axios.get(url, { params })
-      console.log('第二次测试', res)
+      console.log('第三次测试', res)
       return res
     } catch (err) {
       const res = {
