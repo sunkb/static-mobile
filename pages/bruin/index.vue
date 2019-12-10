@@ -209,7 +209,22 @@ export default {
       }
     }
   },
-  async created () {
+  created () {
+    // const login = new Login();
+    // const res = await login.autoLogin();
+    // if (!res.status) {
+    //   console.log(11111)
+    //   this.gotoLoginRegister()
+    //   return 
+    // }
+    // if(res.data.is_login !== 1) {
+    //   console.log(22222)
+    //   this.gotoLoginRegister()
+    //   return 
+    // }
+  },
+  async mounted () {
+    this.$refs['toast'].showLoadingToast()
     const login = new Login();
     const res = await login.autoLogin();
     if (!res.status) {
@@ -222,9 +237,6 @@ export default {
       this.gotoLoginRegister()
       return 
     }
-  },
-  async mounted () {
-    this.$refs['toast'].showLoadingToast()
     this.wxShare()
     this.getBruinPMD()
     this.getActivityDetail()
