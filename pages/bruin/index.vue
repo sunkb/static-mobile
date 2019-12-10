@@ -95,7 +95,7 @@ export default {
     },
     // 用于微信分享的数据的接口请求
     async wxShare () {
-      const curUrl = encodeURIComponent(window.location.href)
+      const curUrl = encodeURIComponent(window.location.host)
       const activityID = 1
       try {
         const res = await axios.get(`${API.WX_SHARE}?activity_id=${activityID}&url=${curUrl}`)
