@@ -227,7 +227,7 @@ export default {
     this.$refs['toast'].showLoadingToast()
     const login = new Login();
     const res = await login.autoLogin();
-    if (!res.status) {
+    if (!res.status || res.status === 401) {
       console.log(11111)
       this.gotoLoginRegister()
     }

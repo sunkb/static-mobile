@@ -62,9 +62,9 @@ async function wxAutoLogin () {
       console.log('第三次测试', res)
       return res
     } catch (err) {
-      // const res = {
-      //   status: false
-      // }
+      const res = {
+        status: error.response.status
+      }
       return res
     }
     // axios
