@@ -175,7 +175,7 @@ export default {
       title: "周作业打卡"
     };
   },
-  async created () {
+  created () {
     console.log("我是首页的");
   },
   components: {
@@ -183,10 +183,10 @@ export default {
     "mt-loadmore": Loadmore,
     toast: Toast
   },
-  mounted () {
-    this.submit();
-    this.history();
-    console.log(this.$refs)
+  async mounted () {
+    await this.postToken()
+    await this.submit()
+    await this.history()
     // this.centerActionBottom = this.$refs.centerAction.getBoundingClientRect().bottom
     window.addEventListener('scroll', this.handleScroll)
   },
@@ -217,6 +217,15 @@ export default {
     };
   },
   methods: {
+    async postToken() {
+      const token = this.$route.query.token || '';
+      const url = `/mobile/public/verifyToken?token=${token}`;
+      const res = await axios.get(url);
+      if(!res.success) {
+        console.log(res.msg)
+        return
+      }
+    },
     /**
      * 两个去打卡跳转按钮
      */
@@ -304,20 +313,26 @@ export default {
         this.showFloatAction = false
       }
     },
-    async verifyToken (token) {
-      // const token = md5(`${mobile}Jw*gjw12sp>Dd$2s`);
-      const url = `/mobile/public/verifyToken?token=${token}`;
-      const res = await axios.get(url);
-      return res;
-    }
+    // async verifyToken (token) {
+    //   // const token = md5(`${mobile}Jw*gjw12sp>Dd$2s`);
+    //   const url = `/mobile/public/verifyToken?token=${token}`;
+    //   const res = await axios.get(url);
+    //   return res;
+    // }
   },
-  beforeRouteEnter (to, from, next) {
-    const token = to.query.token || '';
-    this.verifyToken(token).then((d) => {
-      if (!d.success) return alert(d.msg);
-      next();
-    });
-  }
+  // async beforeRouteEnter (to, from, next) {
+  //   const token = to.query.token || '';
+  //   const url = `/mobile/public/verifyToken?token=${token}`;
+  //   const res = await axios.get(url);
+  //   // if(!res.success) {
+  //   //   return
+  //   // }
+  //   next();
+  //   // this.verifyToken(token).then((d) => {
+  //   //   if (!d.success) return alert(d.msg);
+  //     // next();
+  //   // });
+  // }
 };
 </script>
 
