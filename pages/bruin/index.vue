@@ -237,10 +237,10 @@ export default {
       this.getMyBruinData()
       this.$refs['toast'].hideLoadingToast()
     } catch (err) {
-      console.log(error)
-      if(error.response.status === 401){ // 用于判断是否登录过
+      console.log(err)
+      if(err.response.status === 401){ // 用于判断是否登录过
         this.gotoLoginRegister()
-        console.log(error.response.info)
+        console.log(err.response.info)
       }
     }
   }
