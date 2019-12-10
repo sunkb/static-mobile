@@ -385,7 +385,7 @@ export default {
         &-open {
           width: 314px;
           height: 110px;
-          background: url("https://qn-static.landi.com/uploadtoold7a831022e62afcba74c6492f706b518.png") no-repeat;
+          background: url("https://qn-static.landi.com/uploadtool58e8e59ece8939ea1acd4a468e6425d2.png") no-repeat;
           background-size: 100%;  
         }
       }
