@@ -155,7 +155,7 @@ export default {
       }
     },
     //登录或者注册模式选择
-    async gotoLoginRegister(mode) {
+    async gotoLoginRegister() {
       let redirect_url = window.location.href;
       redirect_url = removeParam('code',redirect_url);
       redirect_url = removeParam('state',redirect_url);
@@ -209,9 +209,9 @@ export default {
       }
     }
   },
-  async created () {
-    // const login = new Login();
-    // const res = await login.autoLogin();
+  created () {
+    const login = new Login();
+    login.autoLogin();
     // if (!res.status) {
     //   console.log(11111)
     //   this.gotoLoginRegister()
@@ -224,21 +224,25 @@ export default {
     // }
   },
   async mounted () {
-    this.$refs['toast'].showLoadingToast()
-    const login = new Login();
-    const res = await login.autoLogin();
-    if (!res.status || res.status === 401) {
-      console.log(11111)
-      this.gotoLoginRegister()
-    }
-    if( res.status && res.data.is_login == 1) {
+    try {
+      const activityID = 1
+      const res = await axios.get(`${API.BRUIN_PMD}?activity_id=${activityID}`)
+      if(!res.status) {
+        console.log(res.info)
+        return 
+      }
+      this.pmdInfo = res.data || '0人已集齐，2019年1月1日18：00开奖'
       this.wxShare()
-      this.getBruinPMD()
       this.getActivityDetail()
       this.getMyBruinData()
-      this.$refs['toast'].hideLoadingToast() 
+      this.$refs['toast'].hideLoadingToast()
+    } catch (err) {
+      console.log(error)
+      if(error.response.status === 401){ // 用于判断是否登录过
+        this.gotoLoginRegister()
+        console.log(error.response.info)
+      }
     }
-
   }
 }
 function removeParam(key, sourceURL) {
