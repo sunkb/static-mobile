@@ -100,7 +100,7 @@ export default {
         const activityID = 1
         const params = {
           activity_id: 1,
-          url: location.protocol + '//' + location.host + location.pathname
+          url: window.location.href.split('#')[0]
         }
         const res = await axios.post(API.WX_SHARE, params)
         if (!res.status) {
@@ -230,18 +230,15 @@ export default {
     if (!res.status) {
       console.log(11111)
       this.gotoLoginRegister()
-      return 
     }
-    if(res.data.is_login !== 1) {
-      console.log(22222)
-      this.gotoLoginRegister()
-      return 
+    if( res.status && res.data.is_login == 1) {
+      this.wxShare()
+      this.getBruinPMD()
+      this.getActivityDetail()
+      this.getMyBruinData()
+      this.$refs['toast'].hideLoadingToast() 
     }
-    this.wxShare()
-    this.getBruinPMD()
-    this.getActivityDetail()
-    this.getMyBruinData()
-    this.$refs['toast'].hideLoadingToast()
+
   }
 }
 function removeParam(key, sourceURL) {
