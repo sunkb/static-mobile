@@ -13,15 +13,32 @@ const TYPE = {
       "application/vnd.rn-realmedia-vbr"
     ],
     limit: 300
+  },
+  'video2':{
+    mimeType: [
+      "video/mp4",
+      "video/mpeg",
+      "video/quicktime",
+      "video/x-msvideo",
+      "video/ogg",
+      "video/webm",
+      "application/vnd.rn-realmedia-vbr"
+    ],
+    limit: 100
   }
 }
 const FILE_TYPE = {
-  VIDEO: 'video'
+  VIDEO: 'video',
+  VIDEO2:'video2'
 }
 
 export default class FileUploader {
-  async init() {
-    const res = await axios.get(`/Mobile/StudentActivity/token`)
+  async init(type) { // type类型为1，表示周作业打卡所使用的七牛接口地址
+    let qiniuApi = '/Mobile/StudentActivity/token'
+    if(type === 1) {
+      qiniuApi = '/mobile/StudentWeekHomework/token'
+    }
+    const res = await axios.get(qiniuApi)
     if (res.status) {
       this.domain = res.data.domain
       this.token = res.data.uptoken

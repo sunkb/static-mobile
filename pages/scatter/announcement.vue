@@ -3,7 +3,7 @@
     <div class="announcement-div">
       <img
         class="announcement-div-img"
-        src="https://qn-static.landi.com/uploadtool4bbb0792acda4d949fc50c5847ba6c20.png"
+        src="https://qn-static.landi.com/uploadtool0ac56dc8d97e66477c6b860ef6acf344.png"
       />
     </div>
   </div>

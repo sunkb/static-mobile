@@ -23,11 +23,6 @@ export default {
       {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1, minimum-scale=1.0,maximum-scale=1.0, user-scalable=no'
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || ''
       }
     ],
     link: [{
@@ -117,7 +112,7 @@ export default {
       require('postcss-pxtorem')({
         rootValue: 75,
         unitPrecision: 5,
-        propList: ['*', '!border-bottom', '!border', '!border-width', '!border-top', '!border-right', '!border-left', '!border-top-width', '!border-right-width', '!border-left-width', '!border-bottom-width'],
+        propList: ['*', '!border-bottom', '!border', '!border-width', '!border-top', '!border-right', '!border-left', '!border-top-width', '!border-right-width', '!border-left-width', '!border-bottom-width', '!stroke-dashoffset'],
       })
     ],
     vendor: ['axios'] //防止重复打包
