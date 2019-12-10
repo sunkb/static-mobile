@@ -95,7 +95,8 @@ export default {
     },
     // 用于微信分享的数据的接口请求
     async wxShare () {
-      const curUrl = encodeURIComponent(window.location.host)
+      const curUrl = encodeURIComponent(window.location.href)
+      curUrl = curUrl.split('?')[0]
       console.log(11111,curUrl)
       const activityID = 1
       try {
@@ -226,7 +227,6 @@ export default {
     this.getBruinPMD()
     this.getActivityDetail()
     this.getMyBruinData()
-    
     this.$refs['toast'].hideLoadingToast()
   }
 }
