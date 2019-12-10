@@ -12,7 +12,6 @@
         ref="videoUploadInput"
         @change="videoUpload"
         style="display:none"
-        mutiple="mutiple" capture="camera"
       />
       <!-- <video src=""></video> -->
       <div class="videoRules">视频要求:10秒≤视频时长,视频大小≤100M</div>
