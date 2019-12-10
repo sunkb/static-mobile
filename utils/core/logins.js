@@ -62,10 +62,10 @@ async function wxAutoLogin () {
       console.log('第三次测试', res)
       return res
     } catch (err) {
-      const res = {
-        status: false
-      }
-      return res
+      // const res = {
+      //   status: false
+      // }
+      return err
     }
     // axios
     //   .get(url, { params })
