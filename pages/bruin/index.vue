@@ -100,7 +100,7 @@ export default {
         const activityID = 1
         const params = {
           activity_id: 1,
-          url: window.location.href.split('#')[0]
+          url: location.protocol + '//' + location.host + location.pathname
         }
         const res = await axios.post(API.WX_SHARE, params)
         if (!res.status) {
