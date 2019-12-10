@@ -59,8 +59,15 @@ async function wxAutoLogin () {
     // console.log('code登录', res)
     try {
       const res = await axios.get(url, { params })
+      if(!res.status) {
+        let redirect_url = window.location.href;
+        redirect_url = removeParam('code',redirect_url);
+        redirect_url = removeParam('state',redirect_url);
+        redirect_url = encodeURIComponent(redirect_url);
+        const loginUrl = process.env.ENV_API+'/mobile/login/index/#/login?redirect_url='+redirect_url;
+        window.location = loginUrl;
+      }
       console.log('第三次测试', res)
-      return res
     } catch (err) {
       // const res = {
       //   status: false
