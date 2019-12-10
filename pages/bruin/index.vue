@@ -97,7 +97,6 @@ export default {
     async wxShare () {
       try {
         // const curUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname)
-        const activityID = 1
         const params = {
           activity_id: 1,
           url: window.location.href.split('#')[0]
