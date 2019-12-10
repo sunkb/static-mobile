@@ -11,9 +11,9 @@
           preload="auto"
           class="videoWin"
           id="appearance1"
-          :poster="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'"
+          poster="https://qn-static.landi.com/2433e2e3-6db6-48c1-b3a7-ee08e4c63ceb.MOV+ '?vframe/jpg/offset/2/h/960/'"
           controls
-          :src="detailData.video_url"
+          src="https://qn-static.landi.com/2433e2e3-6db6-48c1-b3a7-ee08e4c63ceb.MOV"
         />
         <!-- <div class="appearance-video-item" @click="playFn('appearance1')">
           <img class="videoWin" :src="detailData.video_url+ '?vframe/jpg/offset/2/h/960/'" />
@@ -327,12 +327,14 @@ export default {
       padding-bottom: 20px;
     }
     .studentVideo {
-      width: 600px;
+      // width: 600px;
       height: 355px;
-      margin-left: 30px;
+      // margin-left: 30px;
       // margin-right: 30px;
-      margin-bottom: 30px;
+      // margin-bottom: 30px;
       position: relative;
+      display: flex;
+      justify-content: center;
       .videoPlay {
         position: absolute;
         top: 50%;
@@ -349,8 +351,9 @@ export default {
         // left: 50%;
         // transform: translate(-50%, -50%);
         // padding-right: 30px;
-        width: 630px;
-        //height: 355px;
+        // width: 330px;
+        height: 355px;
+        width: 622px;
       }
     }
   }
