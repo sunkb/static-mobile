@@ -2,7 +2,7 @@
   <div class="signInInfom">
     <div class="myVideo">
       <div class="videoTitle">
-        {{detailData.work_time}}作业
+        {{detailData.work_time}}作业666666
         <div class="videoTitleTime">第{{detailData.rank}}次打卡</div>
       </div>
       <div class="submissionTime">提交时间:{{detailData.submit_time}}</div>
