@@ -170,7 +170,7 @@ export default {
         this.firstDiv = []
         const cards = res.data.cards || []
         cards.forEach((element, index) => {
-          if (element.num == 0) {
+          if (Number(element.num) == 0) {
             this.isOpen = false 
           }
           if(index > 2) {
