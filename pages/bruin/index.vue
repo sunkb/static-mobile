@@ -211,16 +211,6 @@ export default {
   created () {
     const login = new Login();
     login.autoLogin();
-    // if (!res.status) {
-    //   console.log(11111)
-    //   this.gotoLoginRegister()
-    //   return 
-    // }
-    // if(res.data.is_login !== 1) {
-    //   console.log(22222)
-    //   this.gotoLoginRegister()
-    //   return 
-    // }
   },
   async mounted () {
     try {
