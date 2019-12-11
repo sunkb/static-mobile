@@ -48,6 +48,7 @@ export default {
     async videoUpload() {
       // this.myVid=document.getElementById("video-upload-input");
       // console.log('myVid',this.myVid.duration)
+      console.log(212121212)
       this.$refs["toast"].showLoadingToast();
       const fileUploader = new FileUploader();
       await fileUploader.init(1);
@@ -65,8 +66,6 @@ export default {
         return;
       }
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADING;
-
-
     },
     fileUploadNext(res) {
       console.log(this.videoStatus,'this.video')
