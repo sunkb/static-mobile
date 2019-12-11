@@ -39,6 +39,7 @@
       <img v-if="!isShow" class="videoWin" :src="videoFirstImg + '?vframe/jpg/offset/2/h/960/'" />
     </div>
     <button class="release" id="release" @click="videoOK" :disabled="btnDisabled">发布</button>
+    <!-- <button class="release1" @click="forbidback">返回至首页</button> -->
     <toast class="toast" ref="toast"></toast>
     <dialog-bar
       v-model="sendVal"
@@ -89,51 +90,50 @@ export default {
     this.videoFirstImg = window.localStorage.getItem("videoFirstImg")
     //监测回退
     history.pushState(null, null, document.URL);
-    console.log("我是history", history);
     let get = localStorage.getItem("videoUrl");
-    console.log(get, "localStorage.getItem");
     window.addEventListener("popstate", this.forbidback);
     if (this.videoUrl) {
-      console.log("this.hasBeenVideos2", this.hasBeenVideos);
       this.isShow = false;
       this.btnDisabled = false;
+      this.hasBeenVideos = window.localStorage.getItem("videoUrl")
       document.getElementById("release").style.backgroundColor = "#FFD750";
     } else {
-      console.log("this.hasBeenVideos1", this.hasBeenVideos);
       document.getElementById("release").style.backgroundColor = "#EEEEEE";
       this.btnDisabled = true;
       this.isShow = true;
     }
   },
-  // beforeDestroy(){
-  //         //销毁
-  //         window.removeEventListener('popstate',this.forbidback);
-  // },
+  beforeDestroy(){
+    //销毁
+    window.removeEventListener('popstate',this.forbidback);
+  },
   methods: {
     forbidback (index) {
-      console.log("1", this.hasBeenVideos);
-      if (!this.hasBeenVideos) {
-        this.sendVal = true;
-        this.isShow = true;
-      } else {
-        window.location =
-          `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/`;
-      }
-
       //回退按钮点击处理
+      if (window.history && window.history.pushState) {
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', ()=>{
+          if (this.hasBeenVideos) {
+            this.sendVal = true;
+          } else {
+            window.location =
+              `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/`;
+          }
+        }, false);
+      }
     },
+    // forbidback (index) {
+    //   this.sendVal = true;
+    // },
     clickCancel () {
-      console.log("我是取消的");
+      this.sendVal = false;
     },
     clickDanger (textArea) {
-      // window.location = `${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
       window.location =`${process.env.BASE_URL}/sign_in/weeklyHouseWorkSign/weeklyHouseWorkSign/`;
-      console.log("我是点了确定的");
     },
     hasBeenVideo () {
       console.log("this.hasBeenVideos1", this.hasBeenVideos);
       this.btnDisabled = false;
-      this.hasBeenVideos = "+";
       this.videoUpload();
     },
     async videoUpload () {
@@ -153,6 +153,7 @@ export default {
       }
       this.videoStatus = VIDEO_STATUS_TYPE.UPLOADING;
       localStorage.setItem("videoUrl", this.videoUrl);
+      this.hasBeenVideos = window.localStorage.getItem("videoUrl");
     },
     fileUploadNext (res) {
       console.log(this.videoStatus, 'this.video')
@@ -173,9 +174,8 @@ export default {
       window.location = `${process.env.BASE_URL}/sign_in/addComments/addComments/?homeworkId=${this.homeworkId}`
     },
     btn () {
-      this.hasBeenVideos = "+";
       this.btnDisabled = true;
-      this.hasBeenVideos = "+";
+      this.hasBeenVideos = "";
       this.isShow = true;
       document.getElementById("release").style.backgroundColor = "#EEEEEE";
     },
@@ -277,6 +277,14 @@ export default {
     width: 690px;
     height: 80px;
     background-color: #eeeeee;
+    font-size: 28px;
+  }
+  .release1 {
+    margin-top: 20px;
+    margin-left: 30px;
+    width: 690px;
+    height: 80px;
+    background-color: #ffd750;
     font-size: 28px;
   }
 }
