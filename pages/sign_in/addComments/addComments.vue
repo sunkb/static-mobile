@@ -89,8 +89,19 @@ export default {
     this.videoUrl = window.localStorage.getItem("videoUrl")
     this.videoFirstImg = window.localStorage.getItem("videoFirstImg")
     //监测回退
-    history.pushState(null, null, document.URL);
     let get = localStorage.getItem("videoUrl");
+    if (window.history && window.history.pushState) {
+      history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', ()=>{
+        if (this.hasBeenVideos) {
+          this.sendVal = true;
+        } else {
+          window.location =
+            `${process.env.BASE_URL}/sign_in/upLoadVideo/upLoadVideo/`;
+        }
+      }, false);
+    }
+    history.pushState(null, null, document.URL);
     window.addEventListener("popstate", this.forbidback);
     if (this.videoUrl) {
       this.isShow = false;
@@ -122,9 +133,6 @@ export default {
         }, false);
       }
     },
-    // forbidback (index) {
-    //   this.sendVal = true;
-    // },
     clickCancel () {
       this.sendVal = false;
     },
