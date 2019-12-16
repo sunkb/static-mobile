@@ -34,20 +34,32 @@
           class="free-title-left"
           src="../../../assets/scatter/official_website/img/title_left.png"
         />
-        <img
-          class="free-title-content"
-          src="../../../assets/scatter/official_website/img/class_name.png"
-        />
+        <div class="free-title-content">领取将免费获得</div>
         <img
           class="free-title-right"
           src="../../../assets/scatter/official_website/img/title_right.png"
         />
+      </div>
+      <div>
+        <!-- <div v-for="item in ">
+          <div>
+        </div> -->
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
+  name: 'official',
+  data() {
+    return {
+      freeData: [
+        {
+          src: ''
+        }
+      ]
+    }
+  }
 
 }
 </script>
@@ -131,6 +143,32 @@ export default {
         font-weight: 600;
         color: rgba(255, 255, 255, 1);
         line-height: 48px;
+      }
+    }
+  }
+  .free {
+    margin-top: 430px;
+    &-title {
+      width: 100%;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &-left {
+        width: 18px;
+        height: 16px;
+      }
+      &-content {
+        font-size: 34px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: rgba(51, 51, 51, 1);
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      &-right {
+        width: 18px;
+        height: 16px;
       }
     }
   }
