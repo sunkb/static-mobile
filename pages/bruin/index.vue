@@ -261,7 +261,7 @@ function removeParam(key, sourceURL) {
   .home-background {
     width: 100vw;
     height: 1495px;
-    background: url("https://qn-static.landi.com/uploadtool255b71e4dcde88786f4dd94d1bf5f779.png");
+    background: url("https://qn-static.landi.com/uploadtool9b81a286bff56fe0a012a2d881e92761.png");
     background-size: 100%;
     .home-marquee {
       height: 50px;
