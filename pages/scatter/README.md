@@ -1,0 +1,5 @@
+# PAGES
+
+scatter目录放零碎的一些需求页面
+
+announcement页面是一个图片公告页面，通过aid页面参数来控制展示哪个公告
