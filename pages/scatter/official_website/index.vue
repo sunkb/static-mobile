@@ -20,9 +20,14 @@
       </div>
       <div class="acquire-input">
         <div class="acquire-input-mobile">
-          <!-- <input /> -->
+          <input class="acquire-input-mobile-style" placeholder="请输入您的手机号码" />
         </div>
-        <div class="acquire-input-yzm"></div>
+        <div class="acquire-input-yzm">
+          <input class="acquire-input-yzm-style" placeholder="请输入验证码" />
+          <div class="acquire-input-yzm-button">
+            <div class="acquire-input-yzm-button-text">获取验证码</div>
+          </div>
+        </div>
       </div>
       <div class="acquire-button">
         <div class="acquire-button-text">立即领取</div>
@@ -310,6 +315,27 @@ export default {
         height: 90px;
         background: rgba(249, 249, 249, 1);
         border-radius: 8px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        &-style {
+          width: 380px;
+          height: 60px;
+          background: rgba(249, 249, 249, 1);
+          margin-left: 30px;
+        }
+        &-style::-moz-placeholder {
+          font-size: 28px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(153, 153, 153, 1);
+        }
+        &-style::-webkit-input-placeholder {
+          font-size: 28px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(153, 153, 153, 1);
+        }
       }
       &-yzm {
         width: 630px;
@@ -317,6 +343,42 @@ export default {
         background: rgba(249, 249, 249, 1);
         border-radius: 8px;
         margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &-style {
+          width: 380px;
+          height: 60px;
+          background: rgba(249, 249, 249, 1);
+          margin-left: 30px;
+        }
+        &-style::-moz-placeholder {
+          font-size: 28px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(153, 153, 153, 1);
+        }
+        &-style::-webkit-input-placeholder {
+          font-size: 28px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(153, 153, 153, 1);
+        }
+        &-button {
+          width: 150px;
+          height: 70px;
+          background: rgba(20, 200, 210, 1);
+          border-radius: 8px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 10px;
+          &-text {
+            font-size: 24px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+          }
+        }
       }
     }
     &-button {
