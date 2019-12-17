@@ -177,6 +177,26 @@
           <img class="promise-img" src="../../../assets/scatter/official_website/img/promise/1.png" />
         </div>
       </div>
+      <div class="promise-info">
+        <div class="promise-info-div" v-for="(item, index) in promisrInfo" :key="index">
+          <div class="promise-info-div-title">优选师资</div>
+          <div class="promise-info-div-content">老师来自“英美加” 等英语为母语的国家，爱孩子，懂教育</div>
+        </div>
+      </div>
+    </div>
+    <div class="award">
+      <div class="award-button">
+        <img
+          class="award-button-info"
+          src="../../../assets/scatter/official_website/img/free_logo.png"
+        />
+        <div class="award-button-click">
+          <img
+            class="award-button-click-img"
+            src="../../../assets/scatter/official_website/img/award.png"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -206,12 +226,16 @@ export default {
       ],
       firstImages: [1, 2, 3],
       optimizationImg: [1, 2, 3],
-      promiseImg: [1, 2, 3]
+      promiseImg: [1, 2, 3],
+      promisrInfo: [1, 2, 3]
     }
   },
   components: {
     'mt-swipe': Swipe,
     'mt-swipe-item': SwipeItem
+  },
+  methods: {
+
   }
 
 }
@@ -524,6 +548,75 @@ export default {
       .promise-img {
         width: 120px;
         height: 130px;
+      }
+    }
+    &-info {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 30px;
+      margin-bottom: 50px;
+      &-div {
+        width: 222px;
+        height: 244px;
+        background: rgba(249, 249, 249, 1);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &-title {
+          font-size: 28px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: rgba(51, 51, 51, 1);
+          text-align: center;
+        }
+        &-content {
+          width: 194px;
+          font-size: 24px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(102, 102, 102, 1);
+        }
+      }
+    }
+  }
+  .award {
+    height: 150px;
+    width: 100%;
+    background: white;
+    position: fixed;
+    bottom: 0px;
+    &-button {
+      width: 690px;
+      height: 100px;
+      background: rgba(20, 200, 210, 1);
+      border-radius: 50px;
+      margin: 0 auto;
+      display: flex;
+      position: relative;
+      &-info {
+        width: 396px;
+        height: 41px;
+        margin-left: 60px;
+        margin-top: 30px;
+      }
+      &-click {
+        width: 202px;
+        height: 100px;
+        background: rgba(255, 217, 86, 1);
+        border-radius: 50px;
+        position: absolute;
+        right: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &-img {
+          width: 144px;
+          height: 41px;
+        }
       }
     }
   }
