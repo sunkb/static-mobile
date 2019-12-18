@@ -4,6 +4,7 @@
       <div class="home-marquee">{{pmdInfo}}</div>
       <div class="home-header">
         <img class="home-header-ways" src="../../assets/bruin/img/ways.png" @click="goToRule" />
+        <img v-show="isAllBruin" class="home-header-check" src="../../assets/bruin/img/check_award.png"/>
         <div class="home-header-right">
           <img
             class="home-header-right-work"
@@ -70,10 +71,10 @@
         </div>
       </div>
       <div class="home-entrance2" v-show="!chooseButton">
-        <div class="home-entrance2-coin">
+        <div class="home-entrance2-coin" @click="goToCoin">
           <img class="home-entrance2-coin-img" src="https://qn-static.landi.com/uploadtool5e03034915263870097a2e4a2d42d2c8.png" />
         </div>
-        <div class="home-entrance2-gua">
+        <div class="home-entrance2-gua" @click="goToCoin">
           <img class="home-entrance2-gua-img" src="https://qn-static.landi.com/uploadtool7e2338631adc37e4217a4053e1404dc2.png" />
         </div>
       </div>
@@ -114,7 +115,8 @@ export default {
       curAwardBruinNum: 0,
       isBuy: false,
       firstChoose: false,
-      chooseButton: true  // 用于首页的第一波熊和第二波熊的按钮切换
+      chooseButton: true,  // 用于首页的第一波熊和第二波熊的按钮切换
+      isAllBruin: false // 用于判断是否已经集齐了五只熊
     }
   },
   components: {
@@ -242,6 +244,18 @@ export default {
           return
         }
         this.curAwardBruinNum = res.data ? res.data.lucky_num : 0
+        let flag = true
+        if (res.data && res.data.cards) {
+          const cards = res.data.cards
+          cards.forEach(element => {
+            if(element.num == 0) {
+              flag = false
+            }
+          })
+        }
+        if (flag) {
+          this.isAllBruin = true
+        }
       } catch (err) {
         console.log(err)
         return
@@ -254,6 +268,10 @@ export default {
         return
       }
       this.chooseButton = false
+    },
+    // 跳转至金币商城
+    goToCoin () {
+      console.log(11111111)
     }
   },
   created () {
@@ -330,6 +348,11 @@ function removeParam (key, sourceURL) {
       &-ways {
         width: 112px;
         height: 71px;
+      }
+      &-check {
+        width: 100px;
+        height: 105px;
+        margin-left: 380px;
       }
       &-right {
         display: flex;
