@@ -271,7 +271,7 @@ export default {
     },
     // 跳转至金币商城
     goToCoin () {
-      console.log(11111111)
+      window.location = 'http://www.landi.com/Mobile/Login/mall'
     },
     // 查看奖励
     checkAward () {
