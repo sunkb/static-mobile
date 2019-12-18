@@ -4,7 +4,7 @@
       <div class="home-marquee">{{pmdInfo}}</div>
       <div class="home-header">
         <img class="home-header-ways" src="../../assets/bruin/img/ways.png" @click="goToRule" />
-        <img v-show="isAllBruin" class="home-header-check" src="../../assets/bruin/img/check_award.png"/>
+        <img v-show="isAllBruin" @click="checkAward" class="home-header-check" src="../../assets/bruin/img/check_award.png"/>
         <div class="home-header-right">
           <img
             class="home-header-right-work"
@@ -272,6 +272,10 @@ export default {
     // 跳转至金币商城
     goToCoin () {
       console.log(11111111)
+    },
+    // 查看奖励
+    checkAward () {
+      this.$refs['toast'].showToast('2020年1月1日 18:00开奖')
     }
   },
   created () {
