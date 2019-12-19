@@ -285,9 +285,8 @@ export default {
       window.location = 'http://www.landi.com/Mobile/Login/mall'
     },
     // 跳转至金币刮刮乐
-    async goToGua () {
-      const res = await axios.get(`/Mobile/PointMall/toActivity?act=wwj1&item=3202434`)
-      // window.location = 'http://www.landi.com/Mobile/Login/gotoHdtool'
+    goToGua () {
+      window.location = 'http://www.landi.com/Mobile/PointMall/toActivity?act=ggl'
     },
     // 查看奖励
     checkAward () {
