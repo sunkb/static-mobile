@@ -165,8 +165,9 @@
         </div>
       </div>
     </div>
-    <div class="award">
-      <div class="award-button">
+    <div class="empty"></div>
+    <div class="award" v-show="showFloatAction">
+      <div class="award-button" @click="awardAction">
         <img
           class="award-button-info"
           src="../../../assets/scatter/official_website/img/free_logo.png"
@@ -229,7 +230,7 @@ export default {
           src: 'https://qn-static.landi.com/uploadtool9962dabeacb5478d59f95199c19310ff.png',
           times: '一份',
           intr: '英语学习报告'
-        }, 
+        },
         {
           src: 'https://qn-static.landi.com/uploadtooled80485f2bf616397e864b4a672af1c0.png',
           times: '一份',
@@ -293,7 +294,9 @@ export default {
       verification: {
         mobile: '', // 手机号码
         is_reg: 1
-      }
+      },
+      showFloatAction: false,
+      centerActionBottom: 250
     }
   },
   components: {
@@ -314,11 +317,24 @@ export default {
       } else {
         this.$refs['toast'].showToast('请输入正确的手机号码!')
       }
+    },
+    // 处理滑动
+    handleScroll () {
+      if (window.scrollY > this.centerActionBottom) {
+        this.showFloatAction = true
+      } else {
+        this.showFloatAction = false
+      }
+    },
+    // 滚动条点击领取跳转至顶端
+    awardAction () {
+      window.scrollTo(0,0)
     }
   },
   created () { },
   mounted () {
     verification.init(this)
+    window.addEventListener('scroll', this.handleScroll)
   }
 
 }
@@ -690,12 +706,20 @@ export default {
       }
     }
   }
+  .empty {
+    width: 100%;
+    height: 145px;
+  }
   .award {
-    height: 150px;
+    height: 140px;
     width: 100%;
     background: white;
     position: fixed;
     bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
     &-button {
       width: 690px;
       height: 100px;
