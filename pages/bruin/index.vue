@@ -79,13 +79,13 @@
         <div class="home-entrance2-coin" @click="goToCoin">
           <img
             class="home-entrance2-coin-img"
-            src="https://qn-static.landi.com/uploadtool5e03034915263870097a2e4a2d42d2c8.png"
+            src="https://qn-static.landi.com/uploadtoolb03cbde0945a6bffda545ca618ef08cd.png"
           />
         </div>
         <div class="home-entrance2-gua" @click="goToGua">
           <img
             class="home-entrance2-gua-img"
-            src="https://qn-static.landi.com/uploadtool7e2338631adc37e4217a4053e1404dc2.png"
+            src="https://qn-static.landi.com/uploadtool420501adee55e23d7b01f9fac22a6105.png"
           />
         </div>
       </div>
@@ -126,7 +126,7 @@ export default {
       curAwardBruinNum: 0,
       isBuy: false,
       firstChoose: false,
-      chooseButton: true,  // 用于首页的第一波熊和第二波熊的按钮切换
+      chooseButton: false,  // 用于首页的第一波熊和第二波熊的按钮切换
       isAllBruin: false // 用于判断是否已经集齐了五只熊
     }
   },
