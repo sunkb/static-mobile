@@ -20,11 +20,11 @@
       </div>
       <div class="acquire-input">
         <div class="acquire-input-mobile">
-          <input class="acquire-input-mobile-style" placeholder="请输入您的手机号码" />
+          <input v-model="verification.mobile" class="acquire-input-mobile-style" placeholder="请输入您的手机号码" />
         </div>
         <div class="acquire-input-yzm">
           <input class="acquire-input-yzm-style" placeholder="请输入验证码" />
-          <div class="acquire-input-yzm-button">
+          <div class="acquire-input-yzm-button" @click="awardCode">
             <div class="acquire-input-yzm-button-text">获取验证码</div>
           </div>
         </div>
@@ -203,11 +203,17 @@
         </div>
       </div>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 <script>
 import Swipe from '~/components/swipe/Swipe';
 import SwipeItem from '~/components/swipe/SwipeItem';
+import axios from '~/utils/axios';
+import verification from '~/utils/verification';
+import { isPoneAvailable } from '~/utils/util';
+import Toast from '~/components/Toast'
+
 export default {
   name: 'official',
   data () {
@@ -232,15 +238,37 @@ export default {
       firstImages: [1, 2, 3],
       optimizationImg: [1, 2, 3],
       promiseImg: [1, 2, 3],
-      promisrInfo: [1, 2, 3]
+      promisrInfo: [1, 2, 3],
+      captchaObj: null,
+      verification: {
+        mobile: '', // 手机号码
+        is_reg: 1
+      }
     }
   },
   components: {
     'mt-swipe': Swipe,
-    'mt-swipe-item': SwipeItem
+    'mt-swipe-item': SwipeItem,
+    'toast': Toast
   },
   methods: {
-
+    // 获取验证码
+    awardCode () {
+      if (this.verification.mobile.replace(/\s*/g,"") === '') {
+        this.$refs['toast'].showToast('手机号码不能为空!')
+        return
+      }
+      if (isPoneAvailable(this.verification.mobile)) {
+        const captchaObj = this.captchaObj;
+        captchaObj.verify();
+      } else {
+        this.$refs['toast'].showToast('请输入正确的手机号码!')
+      }
+    }
+  },
+  created () { },
+  mounted () {
+    verification.init(this)
   }
 
 }
