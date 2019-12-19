@@ -51,11 +51,8 @@
       </div>
       <div class="free-intr">
         <div class="free-intr-div" v-for="(item, index) in freeData" :key="index">
-          <img
-            class="free-intr-div-img"
-            src="../../../assets/scatter/official_website/img/free/1.png"
-          />
-          <div class="free-intr-div-num">1节</div>
+          <img class="free-intr-div-img" :src="item.src" />
+          <div class="free-intr-div-num">{{item.times}}</div>
           <div class="free-intr-div-intr">{{item.intr}}</div>
         </div>
       </div>
@@ -100,7 +97,13 @@
       </div>
       <div class="ways-text">强化互动性，学习更科学高效</div>
       <img class="ways-img" src="../../../assets/scatter/official_website/img/tech_model.png" />
-      <div class="ways-video"></div>
+      <div class="ways-video">
+        <video
+          controls="controls"
+          class="ways-video-div"
+          src="https://qn-static-landi.abc360.cn/uploadtoolae9051c14c1f2be89d46b7aee64d3c9f.mp4"
+        />
+      </div>
       <div class="ways-title">专家观点</div>
       <div
         class="ways-intr1"
@@ -152,7 +155,7 @@
       <div class="promise-text">树立行业标准 打消用户顾虑</div>
       <div class="promise-icon">
         <div v-for="(item, index) in promiseImg" :key="index">
-          <img class="promise-img" src="../../../assets/scatter/official_website/img/promise/1.png" />
+          <img class="promise-img" :src="item.src" />
         </div>
       </div>
       <div class="promise-info">
@@ -213,18 +216,23 @@ export default {
       ],
       freeData: [
         {
-          src: '../../../assets/scatter/official_website/img/free/1.png',
+          src: 'https://qn-static.landi.com/uploadtoolef99fec4ae4265479cebba957c243abc.png',
+          times: '一节',
           intr: '1对2同伴外教课'
         },
         {
-          src: '../../../assets/scatter/official_website/img/free/2.png',
+          src: 'https://qn-static.landi.com/uploadtoold140c1b0a4b69d8ef264b5332cc11ccd.png',
+          times: '一次',
           intr: '英语能力测评'
         },
         {
-          src: '../../../assets/scatter/official_website/img/free/3.png',
+          src: 'https://qn-static.landi.com/uploadtool9962dabeacb5478d59f95199c19310ff.png',
+          times: '一份',
           intr: '英语学习报告'
-        }, {
-          src: '../../../assets/scatter/official_website/img/free/4.png',
+        }, 
+        {
+          src: 'https://qn-static.landi.com/uploadtooled80485f2bf616397e864b4a672af1c0.png',
+          times: '一份',
           intr: '个性化学习方案'
         }
       ],
@@ -257,7 +265,17 @@ export default {
         }
       ],
       optimizationImg: [1, 2, 3],
-      promiseImg: [1, 2, 3],
+      promiseImg: [
+        {
+          src: 'https://qn-static.landi.com/uploadtool74d8f22909eed7b553b53dea0c24ab3b.png' // 第一张
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool98a0bb31665c828bfa280436c50d4e79.png' // 第二张
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool5a7a3a45018f04a891470b232c95d313.png' // 第三张
+        },
+      ],
       promisrInfo: [1, 2, 3],
       captchaObj: null,
       verification: {
@@ -509,7 +527,7 @@ export default {
     margin-top: 100px;
     &-img {
       width: 750px;
-      height: 848px;
+      height: 820px;
     }
   }
   .ways {
@@ -532,7 +550,10 @@ export default {
     &-video {
       width: 690px;
       height: 388px;
-      border: 1px solid black;
+      &-div {
+        width: 690px;
+        height: 388px;
+      }
     }
     &-title {
       width: 690px;
