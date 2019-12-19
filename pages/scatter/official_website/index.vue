@@ -1,7 +1,7 @@
 <template>
   <div id="official">
     <div class="header">
-      <img class="header-img" :src="headerImgs[0].src" />
+      <img class="header-img" :src="headerImgs[flag].src" />
     </div>
     <div class="acquire">
       <div class="acquire-title">
@@ -195,6 +195,7 @@ export default {
   name: 'official',
   data () {
     return {
+      flag: 0,
       headerImgs: [
         {
           src: 'https://qn-static.landi.com/uploadtoolc2a96f8695246149f007638f7b560bde.png' // CEO严选真人外教
@@ -364,9 +365,34 @@ export default {
       } else {
         this.$refs['toast'].showToast('请输入正确的手机号码!')
       }
+    },
+    // 通过路由判断切换头部图像
+    cutHeaderImg () {
+      const headerFlag = this.$route.query.flag || ''
+      switch (headerFlag) {
+        case 'general2':
+          this.flag = 1;
+          break;
+        case 'teacher':
+          this.flag = 2;
+          break;
+        case 'general3':
+          this.flag = 3;
+          break;
+        case 'material':
+          this.flag = 4;
+          break;
+        case 'general4':
+          this.flag = 5;
+          break;
+        default: 
+          this.flag = 0;
+      }
     }
   },
-  created () { },
+  created () { 
+    this.cutHeaderImg()
+  },
   mounted () {
     verification.init(this)
     window.addEventListener('scroll', this.handleScroll)
