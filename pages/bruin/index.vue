@@ -4,7 +4,12 @@
       <div class="home-marquee">{{pmdInfo}}</div>
       <div class="home-header">
         <img class="home-header-ways" src="../../assets/bruin/img/ways.png" @click="goToRule" />
-        <img v-show="isAllBruin" @click="checkAward" class="home-header-check" src="../../assets/bruin/img/check_award.png"/>
+        <!-- <img
+          v-show="isAllBruin"
+          @click="checkAward"
+          class="home-header-check"
+          src="../../assets/bruin/img/check_award.png"
+        /> -->
         <div class="home-header-right">
           <img
             class="home-header-right-work"
@@ -72,10 +77,16 @@
       </div>
       <div class="home-entrance2" v-show="!chooseButton">
         <div class="home-entrance2-coin" @click="goToCoin">
-          <img class="home-entrance2-coin-img" src="https://qn-static.landi.com/uploadtool5e03034915263870097a2e4a2d42d2c8.png" />
+          <img
+            class="home-entrance2-coin-img"
+            src="https://qn-static.landi.com/uploadtool5e03034915263870097a2e4a2d42d2c8.png"
+          />
         </div>
-        <div class="home-entrance2-gua" @click="goToCoin">
-          <img class="home-entrance2-gua-img" src="https://qn-static.landi.com/uploadtool7e2338631adc37e4217a4053e1404dc2.png" />
+        <div class="home-entrance2-gua" @click="goToGua">
+          <img
+            class="home-entrance2-gua-img"
+            src="https://qn-static.landi.com/uploadtool7e2338631adc37e4217a4053e1404dc2.png"
+          />
         </div>
       </div>
       <div class="sharehelp" v-show="showShareHelp" @click="() => { showShareHelp = false }">
@@ -248,7 +259,7 @@ export default {
         if (res.data && res.data.cards) {
           const cards = res.data.cards
           cards.forEach(element => {
-            if(element.num == 0) {
+            if (element.num == 0) {
               flag = false
             }
           })
@@ -272,6 +283,10 @@ export default {
     // 跳转至金币商城
     goToCoin () {
       window.location = 'http://www.landi.com/Mobile/Login/mall'
+    },
+    // 跳转至金币刮刮乐
+    goToGua () {
+      window.location = 'http://www.landi.com/Mobile/PointMall/toActivity?act=1&item=3202434'
     },
     // 查看奖励
     checkAward () {
