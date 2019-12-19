@@ -1,7 +1,7 @@
 <template>
   <div id="official">
     <div class="header">
-      <img class="header-img" src="../../../assets/scatter/official_website/img/head/1.png" />
+      <img class="header-img" :src="headerImgs[0].src" />
     </div>
     <div class="acquire">
       <div class="acquire-title">
@@ -20,7 +20,11 @@
       </div>
       <div class="acquire-input">
         <div class="acquire-input-mobile">
-          <input v-model="verification.mobile" class="acquire-input-mobile-style" placeholder="请输入您的手机号码" />
+          <input
+            v-model="verification.mobile"
+            class="acquire-input-mobile-style"
+            placeholder="请输入您的手机号码"
+          />
         </div>
         <div class="acquire-input-yzm">
           <input class="acquire-input-yzm-style" placeholder="请输入验证码" />
@@ -71,37 +75,16 @@
       <div class="choose-swipe">
         <mt-swipe trigger="click" height="150px">
           <mt-swipe-item v-for="(item, index) in firstImages" :key="index">
-            <img
-              class="choose-swipe-img"
-              src="../../../assets/scatter/official_website/img/middle_swipe/1.png"
-            />
+            <img class="choose-swipe-img" :src="item.src" />
           </mt-swipe-item>
         </mt-swipe>
       </div>
     </div>
     <div class="optimization">
-      <div class="common-title">
-        <img
-          class="common-title-left"
-          src="../../../assets/scatter/official_website/img/title_left.png"
-        />
-        <div class="common-title-content">兰迪优选-优质外教</div>
-        <img
-          class="common-title-right"
-          src="../../../assets/scatter/official_website/img/title_right.png"
-        />
-      </div>
-      <div class="optimization-text">兰迪少儿英语采用严格的外教录用标准，精心挑选有教育经验、纯正英文口音的外教，保证孩子在课堂上学习更高效</div>
-      <div class="optimization-div" v-for="(item, index) in optimizationImg" :key="index">
-        <img
-          class="optimization-div-img"
-          src="../../../assets/scatter/official_website/img/optimization/1.png"
-        />
-        <div class="optimization-div-content">
-          <div class="optimization-div-content-title">6000+真人外教</div>
-          <div class="optimization-div-content-intr">TESOL国际教师资格认证</div>
-        </div>
-      </div>
+      <img
+        class="optimization-img"
+        src="https://qn-static.landi.com/uploadtool2a2b4552691ad92fbfddda1fef074d1f.png"
+      />
     </div>
     <div class="ways">
       <div class="common-title">
@@ -122,23 +105,16 @@
       <div
         class="ways-intr1"
       >美国哈佛大学Eric教授认为，通过和同伴一起学习、讨论、交流， 帮助孩子主动习得知识，而不是被动地接受老师的传授， 这样的学习方式更符合孩子学习天性。</div>
-      <div class="ways-title">同伴课优势</div>
-      <div class="ways-intr2"></div>
+      <img
+        class="ways-intr2"
+        src="https://qn-static.landi.com/uploadtool5ccfa17032a7c253f7294c9604614cde.png"
+      />
     </div>
     <div class="system">
-      <div class="common-title">
-        <img
-          class="common-title-left"
-          src="../../../assets/scatter/official_website/img/title_left.png"
-        />
-        <div class="common-title-content">自研+牛津-科学课程体系</div>
-        <img
-          class="common-title-right"
-          src="../../../assets/scatter/official_website/img/title_right.png"
-        />
-      </div>
-      <div class="system-text">入门级别课程丰富多彩，基础级别以上课程科学系统</div>
-      <div class="system-intr"></div>
+      <img
+        class="system-intr"
+        src="https://qn-static.landi.com/uploadtool75fb471b0cf8ce7665be7abc610e938a.png"
+      />
     </div>
     <div class="industry">
       <div class="common-title">
@@ -155,11 +131,8 @@
       <div class="industry-text">兰迪少儿英语成功入选CCTV大国品牌，作为国内领先的在线外教小班课品牌，一直致力于成为有温度的国民教育品牌。</div>
       <div class="industry-swipe">
         <mt-swipe trigger="click" height="150px">
-          <mt-swipe-item v-for="(item, index) in firstImages" :key="index">
-            <img
-              class="industry-swipe-img"
-              src="../../../assets/scatter/official_website/img/middle_swipe/1.png"
-            />
+          <mt-swipe-item v-for="(item, index) in secondImages" :key="index">
+            <img class="industry-swipe-img" :src="item.src" />
           </mt-swipe-item>
         </mt-swipe>
       </div>
@@ -218,6 +191,26 @@ export default {
   name: 'official',
   data () {
     return {
+      headerImgs: [
+        {
+          src: 'https://qn-static.landi.com/uploadtoolc2a96f8695246149f007638f7b560bde.png' // CEO严选真人外教
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool8fd9051c20148c608268e60f9711952f.png' // 首个入选CCTV
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool79aceea0df4a5e283f5f724c2a9287af.png' // 每天25分钟
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool4a733c2a8b878ad431d049eb3c0e3a24.png' // 引入’同伴学习‘
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtoold5f4317890b93f81a86584ee0dfe7465.png' // 牛津原版
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtoolb13bc3d115e1ef98e3477bae7a027328.png' // 60元/课起
+        }
+      ],
       freeData: [
         {
           src: '../../../assets/scatter/official_website/img/free/1.png',
@@ -235,7 +228,34 @@ export default {
           intr: '个性化学习方案'
         }
       ],
-      firstImages: [1, 2, 3],
+      firstImages: [ // 第一个轮播
+        {
+          src: 'https://qn-static.landi.com/uploadtoolf07ee9e693bceb641d090baa048b3357.png' // 真人外教授课
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtoolf730b49abb949de5b188573829b6d9d7.png' // 1对2
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtoola80a4dc49f011983980ae3bbeb688a75.png' // 自主研发
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtoola12f9401bdc4630655343a5c7952bd27.png' // 三固定
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool28dd02f5e6b57ce41a87cdce1b0354f3.png' // 学习闭环
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool6545337919b146196f3ead516d6e78f7.png' // 增值服务
+        }
+      ],
+      secondImages: [ // 第二个轮播图
+        {
+          src: 'https://qn-static.landi.com/uploadtoolfe0620e79bc522fc522b48ecf7bfabf2.png' // 腾讯教育
+        },
+        {
+          src: 'https://qn-static.landi.com/uploadtool2021ba0ec19027af25ad925580d66f66.png' // 新浪
+        }
+      ],
       optimizationImg: [1, 2, 3],
       promiseImg: [1, 2, 3],
       promisrInfo: [1, 2, 3],
@@ -254,7 +274,7 @@ export default {
   methods: {
     // 获取验证码
     awardCode () {
-      if (this.verification.mobile.replace(/\s*/g,"") === '') {
+      if (this.verification.mobile.replace(/\s*/g, "") === '') {
         this.$refs['toast'].showToast('手机号码不能为空!')
         return
       }
@@ -474,60 +494,26 @@ export default {
     margin-top: 140px;
     &-swipe {
       width: 690px;
-      height: 300px;
+      height: 428px;
       margin-left: 30px;
       &-img {
         width: 690px;
-        height: 300px;
+        height: 428px;
       }
     }
   }
   .optimization {
-    margin-top: 150px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    &-text {
-      width: 690px;
-      font-size: 24px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      color: rgba(102, 102, 102, 1);
-      letter-spacing: 2px;
-    }
-    &-div {
-      width: 690px;
-      height: 150px;
-      background: rgba(249, 249, 249, 1);
-      border-radius: 8px;
-      margin-top: 30px;
-      display: flex;
-      &-img {
-        width: 210px;
-        height: 148px;
-      }
-      &-content {
-        margin-left: 30px;
-        &-title {
-          font-size: 28px;
-          font-family: PingFangSC-Semibold, PingFang SC;
-          font-weight: 600;
-          color: rgba(51, 51, 51, 1);
-          margin-top: 33px;
-          margin-bottom: 12px;
-        }
-        &-intr {
-          font-size: 24px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: rgba(102, 102, 102, 1);
-        }
-      }
+    margin-top: 100px;
+    &-img {
+      width: 750px;
+      height: 848px;
     }
   }
   .ways {
-    margin-top: 140px;
+    margin-top: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -563,13 +549,12 @@ export default {
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
-      margin-bottom: 100px;
+      margin-bottom: 20px;
     }
     &-intr2 {
-      width: 690px;
-      height: 550px;
-      border: 1px solid black;
-      margin-bottom: 140px;
+      width: 745px;
+      height: 800px;
+      // margin-bottom: 40px;
     }
   }
   .system {
@@ -585,10 +570,9 @@ export default {
       text-align: center;
     }
     &-intr {
-      width: 690px;
-      height: 716px;
-      border: 1px solid black;
-      margin-bottom: 140px;
+      width: 750px;
+      height: 940px;
+      margin-bottom: 60px;
     }
   }
   .industry {
@@ -607,11 +591,11 @@ export default {
     }
     &-swipe {
       width: 690px;
-      height: 300px;
+      height: 540px;
       margin-bottom: 140px;
       &-img {
         width: 690px;
-        height: 300px;
+        height: 540px;
       }
     }
   }
