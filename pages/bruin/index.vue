@@ -282,7 +282,7 @@ export default {
     },
     // 跳转至金币商城
     goToCoin () {
-      window.location = 'http://www.landi.com/Mobile/Login/mall'
+      window.location = 'http://www.landi.com/Mobile/PointMall/index?type=2&item=actbear05'
     },
     // 跳转至金币刮刮乐
     goToGua () {
