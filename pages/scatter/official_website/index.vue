@@ -21,19 +21,19 @@
       <div class="acquire-input">
         <div class="acquire-input-mobile">
           <input
-            v-model="verification.mobile"
+            v-model="verificationData.mobile"
             class="acquire-input-mobile-style"
             placeholder="请输入您的手机号码"
           />
         </div>
         <div class="acquire-input-yzm">
-          <input class="acquire-input-yzm-style" placeholder="请输入验证码" />
+          <input v-model="verificationCode" class="acquire-input-yzm-style" placeholder="请输入验证码" />
           <div class="acquire-input-yzm-button" @click="awardCode">
             <div class="acquire-input-yzm-button-text">获取验证码</div>
           </div>
         </div>
       </div>
-      <div class="acquire-button">
+      <div class="acquire-button" @click="immediateAward">
         <div class="acquire-button-text">立即领取</div>
       </div>
     </div>
@@ -291,12 +291,14 @@ export default {
         }
       ],
       captchaObj: null,
-      verification: {
+      verificationData: {
         mobile: '', // 手机号码
         is_reg: 1
       },
+      verificationCode: '', // 验证码
       showFloatAction: false,
-      centerActionBottom: 250
+      centerActionBottom: 250,
+      loginApi: '/Mobile/Public/getVerifyCode'
     }
   },
   components: {
@@ -306,17 +308,24 @@ export default {
   },
   methods: {
     // 获取验证码
-    awardCode () {
-      if (this.verification.mobile.replace(/\s*/g, "") === '') {
+    async awardCode () {
+      if (this.verificationData.mobile.replace(/\s*/g, "") === '') {
         this.$refs['toast'].showToast('手机号码不能为空!')
         return
       }
-      if (isPoneAvailable(this.verification.mobile)) {
+      if (isPoneAvailable(this.verificationData.mobile)) {
         const captchaObj = this.captchaObj;
-        captchaObj.verify();
+        const res = await captchaObj.verify();
       } else {
         this.$refs['toast'].showToast('请输入正确的手机号码!')
       }
+    },
+    handleVerification (res) {
+      if (res && !res.status) {
+        this.$refs['toast'].showToast(res.info)
+        return
+      }
+      this.$refs['toast'].showToast(res.info)
     },
     // 处理滑动
     handleScroll () {
@@ -328,7 +337,33 @@ export default {
     },
     // 滚动条点击领取跳转至顶端
     awardAction () {
-      window.scrollTo(0,0)
+      window.scrollTo(0, 0)
+    },
+    // 立即领取
+    async immediateAward () {
+      if (this.verificationData.mobile.replace(/\s*/g, "") === '') {
+        this.$refs['toast'].showToast('手机号码不能为空!')
+        return
+      }
+      if (isPoneAvailable(this.verificationData.mobile)) {
+        if (/^\d{6}$/.test(this.verificationCode)) {
+          try {
+            const params = {
+              mobile: String(this.verificationData.mobile),
+              code: String(this.verificationCode)
+            }
+            const resultData = await axios.post(`mobile/Appointment/register`, params)
+            this.$refs['toast'].showToast(resultData.msg)
+          } catch (err) {
+            console.log(err)
+            this.$refs['toast'].showToast('验证码错误!')
+          }
+        } else {
+          this.$refs['toast'].showToast('请输入合法的验证码!')
+        }
+      } else {
+        this.$refs['toast'].showToast('请输入正确的手机号码!')
+      }
     }
   },
   created () { },

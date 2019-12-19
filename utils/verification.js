@@ -1,7 +1,9 @@
+/**
+ * 
+ */
 import axios from '~/utils/axios'
 
 const initObj = {
-  res: null,
   init (curObj) {
     var handler = cObj => {
       curObj.captchaObj = cObj
@@ -12,10 +14,10 @@ const initObj = {
           geetest_validate: result.geetest_validate,
           geetest_seccode: result.geetest_seccode
         }
-        Object.assign(data, curObj.verification)
-        axios.post('/Mobile/Public/getVerifyCode', data).then(res => {
+        Object.assign(data, curObj.verificationData)
+        axios.post(curObj.loginApi, data).then(res => {
           console.log('登录结果', res)
-          initObj.res = res
+          curObj.handleVerification(res)
         })
       })
     }
