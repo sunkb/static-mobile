@@ -160,8 +160,8 @@
       </div>
       <div class="promise-info">
         <div class="promise-info-div" v-for="(item, index) in promisrInfo" :key="index">
-          <div class="promise-info-div-title">优选师资</div>
-          <div class="promise-info-div-content">老师来自“英美加” 等英语为母语的国家，爱孩子，懂教育</div>
+          <div class="promise-info-div-title">{{item.title}}</div>
+          <div class="promise-info-div-content">{{item.content}}</div>
         </div>
       </div>
     </div>
@@ -264,7 +264,6 @@ export default {
           src: 'https://qn-static.landi.com/uploadtool2021ba0ec19027af25ad925580d66f66.png' // 新浪
         }
       ],
-      optimizationImg: [1, 2, 3],
       promiseImg: [
         {
           src: 'https://qn-static.landi.com/uploadtool74d8f22909eed7b553b53dea0c24ab3b.png' // 第一张
@@ -276,7 +275,20 @@ export default {
           src: 'https://qn-static.landi.com/uploadtool5a7a3a45018f04a891470b232c95d313.png' // 第三张
         },
       ],
-      promisrInfo: [1, 2, 3],
+      promisrInfo: [
+        {
+          title: '优选师资',
+          content: '老师来自“英美加” 等英语为母语的国家，爱孩子，懂教育'
+        },
+        {
+          title: '安心保障',
+          content: '若对效果或服务不满意，可随时根据合同退费'
+        },
+        {
+          title: '服务承诺',
+          content: '专业班主任老师，课堂内外全程贴心辅导'
+        }
+      ],
       captchaObj: null,
       verification: {
         mobile: '', // 手机号码
