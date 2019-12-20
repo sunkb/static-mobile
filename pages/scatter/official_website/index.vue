@@ -195,7 +195,7 @@ export default {
   name: 'official',
   head() {
     return {
-      title: "兰迪少儿英语"
+      title: "兰迪少儿英语" // title
     }
   },
   data () {
