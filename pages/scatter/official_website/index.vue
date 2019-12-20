@@ -193,6 +193,11 @@ import Toast from '~/components/Toast'
 
 export default {
   name: 'official',
+  head() {
+    return {
+      title: "兰迪少儿英语"
+    }
+  },
   data () {
     return {
       flag: 0,
@@ -495,12 +500,14 @@ export default {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
+          transform: translate(0, 10px);
         }
         &-style::-webkit-input-placeholder {
           font-size: 28px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
+          transform: translate(0, 10px);
         }
       }
       &-yzm {
@@ -524,12 +531,14 @@ export default {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
+          transform: translate(0, 10px);
         }
         &-style::-webkit-input-placeholder {
           font-size: 28px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
+          transform: translate(0, 10px);
         }
         &-button {
           width: 150px;
