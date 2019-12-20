@@ -353,7 +353,14 @@ export default {
               mobile: String(this.verificationData.mobile),
               code: String(this.verificationCode)
             }
-            const resultData = await axios.post(`mobile/Appointment/register`, params)
+            const resultData = await axios.post(`mobile/Appointment/register`, JSON.stringify(params), {
+              headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+              transformRequest: [
+                function (data) {
+                  return data
+                }
+              ],
+            })
             this.$refs['toast'].showToast(resultData.msg)
           } catch (err) {
             console.log(err)
@@ -385,12 +392,12 @@ export default {
         case 'general4':
           this.flag = 5;
           break;
-        default: 
+        default:
           this.flag = 0;
       }
     }
   },
-  created () { 
+  created () {
     this.cutHeaderImg()
   },
   mounted () {
