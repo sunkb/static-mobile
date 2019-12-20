@@ -377,6 +377,9 @@ export default {
     cutHeaderImg () {
       const headerFlag = this.$route.query.flag || ''
       switch (headerFlag) {
+        case 'general1':
+          this.flag = 0;
+          break;
         case 'general2':
           this.flag = 1;
           break;
