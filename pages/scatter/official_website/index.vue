@@ -485,6 +485,7 @@ export default {
           height: 60px;
           background: rgba(249, 249, 249, 1);
           margin-left: 30px;
+          font-size: 40px;
         }
         &-style::-moz-placeholder {
           font-size: 28px;
@@ -513,6 +514,7 @@ export default {
           height: 60px;
           background: rgba(249, 249, 249, 1);
           margin-left: 30px;
+          font-size: 40px;
         }
         &-style::-moz-placeholder {
           font-size: 28px;
