@@ -369,8 +369,11 @@ export default {
                 }
               ],
             })
-            if (resultData.status)
-            this.$refs['toast'].showToast(resultData.msg)
+            if (resultData.code == 0) {
+              this.$refs['toast'].showToast('领取成功！')
+              return 
+            }
+            this.$refs['toast'].showToast('领取失败')
           } catch (err) {
             console.log(err)
             this.$refs['toast'].showToast('验证码错误!')
