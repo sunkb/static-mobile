@@ -346,7 +346,7 @@ export default {
       this.timeObj = setInterval(()=> {
         if(this.countDown === 0) {
           clearInterval(this.timeObj)
-          this.countDown=59
+          this.countDown=60
           this.isShowCountDown= true
         }
         this.countDown--;
@@ -374,7 +374,7 @@ export default {
         if (/^\d{6}$/.test(this.verificationCode)) {
           try {
             clearInterval(this.timeObj)
-            this.countDown=59
+            this.countDown=60
             this.isShowCountDown= true
             const params = {
               mobile: String(this.verificationData.mobile),
@@ -902,7 +902,7 @@ export default {
   }
   &-content {
     font-size: 34px;
-    font-weight: 600;
+    font-weight: 800;
     color: rgba(51, 51, 51, 1);
     padding-left: 20px;
     padding-right: 20px;
