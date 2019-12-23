@@ -206,7 +206,7 @@ export default {
   },
   data () {
     return {
-      abstractShow: true,
+      abstractShow: false,
       swipeTime: 3000,
       target: '_blank',
       transitionName1: 'move',
