@@ -45,7 +45,7 @@
         />
         <div class="common-title-content">领取将免费获得</div>
         <img
-          class="frcommonee-title-right"
+          class="common-title-right"
           src="../../../assets/scatter/official_website/img/title_right.png"
         />
       </div>
@@ -70,11 +70,7 @@
         />
       </div>
       <div class="choose-swipe">
-        <mt-swipe trigger="click" height="150px">
-          <mt-swipe-item v-for="(item, index) in firstImages" :key="index">
-            <img class="choose-swipe-img" :src="item.src" />
-          </mt-swipe-item>
-        </mt-swipe>
+        <slide class="choose-swipe-img" :slides="firstImages" :inv="swipeTime" :name="transitionName1" :target="target"></slide>
       </div>
     </div>
     <div class="optimization">
@@ -99,10 +95,19 @@
       <img class="ways-img" src="../../../assets/scatter/official_website/img/tech_model.png" />
       <div class="ways-video">
         <video
+          preload="auto"
+          style="display: none;"
+          id="video1"
           controls="controls"
-          class="ways-video-div"
           src="https://qn-static-landi.abc360.cn/uploadtoolae9051c14c1f2be89d46b7aee64d3c9f.mp4"
         />
+        <div class="ways-video-div" @click="playFn('video1')">
+          <div class="ways-video-div-play"></div>
+          <img
+            class="ways-video-div-pic"
+            src="https://qn-static-landi.abc360.cn/uploadtoolae9051c14c1f2be89d46b7aee64d3c9f.mp4?vframe/jpg/offset/2/h/960/"
+          />
+        </div>
       </div>
       <div class="ways-title">专家观点</div>
       <div
@@ -133,11 +138,7 @@
       </div>
       <div class="industry-text">兰迪少儿英语成功入选CCTV大国品牌，作为国内领先的在线外教小班课品牌，一直致力于成为有温度的国民教育品牌。</div>
       <div class="industry-swipe">
-        <mt-swipe trigger="click" height="150px">
-          <mt-swipe-item v-for="(item, index) in secondImages" :key="index">
-            <img class="industry-swipe-img" :src="item.src" />
-          </mt-swipe-item>
-        </mt-swipe>
+        <slide class="industry-swipe-img" :slides="secondImages" :inv="swipeTime" :name="transitionName1" :target="target"></slide>
       </div>
     </div>
     <div class="promise">
@@ -184,22 +185,25 @@
   </div>
 </template>
 <script>
-import Swipe from '~/components/swipe/Swipe';
-import SwipeItem from '~/components/swipe/SwipeItem';
 import axios from '~/utils/axios';
 import verification from '~/utils/verification';
 import { isPoneAvailable } from '~/utils/util';
 import Toast from '~/components/Toast'
+import { videoPlayerEvent } from '~/utils/videoPlay';
+import slide from '~/components/swipe/swipe.vue';
 
 export default {
   name: 'official',
-  head() {
+  head () {
     return {
       title: "兰迪少儿英语" // title
     }
   },
   data () {
     return {
+      swipeTime: 3000,
+      target: '_blank',
+      transitionName1: 'move',
       flag: 0,
       headerImgs: [
         {
@@ -224,22 +228,22 @@ export default {
       freeData: [
         {
           src: 'https://qn-static.landi.com/uploadtoolef99fec4ae4265479cebba957c243abc.png',
-          times: '一节',
+          times: '1节',
           intr: '1对2同伴外教课'
         },
         {
           src: 'https://qn-static.landi.com/uploadtoold140c1b0a4b69d8ef264b5332cc11ccd.png',
-          times: '一次',
+          times: '1次',
           intr: '英语能力测评'
         },
         {
           src: 'https://qn-static.landi.com/uploadtool9962dabeacb5478d59f95199c19310ff.png',
-          times: '一份',
+          times: '1份',
           intr: '英语学习报告'
         },
         {
           src: 'https://qn-static.landi.com/uploadtooled80485f2bf616397e864b4a672af1c0.png',
-          times: '一份',
+          times: '1份',
           intr: '个性化学习方案'
         }
       ],
@@ -308,9 +312,8 @@ export default {
     }
   },
   components: {
-    'mt-swipe': Swipe,
-    'mt-swipe-item': SwipeItem,
-    'toast': Toast
+    'toast': Toast,
+    'slide': slide
   },
   methods: {
     // 获取验证码
@@ -403,6 +406,10 @@ export default {
         default:
           this.flag = 0;
       }
+    },
+    playFn(name){
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
     }
   },
   created () {
@@ -430,6 +437,9 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+.mint-swipe-indicators {
+  bottom: 3px!important;
 }
 #official {
   overflow: auto;
@@ -491,23 +501,19 @@ export default {
         &-style {
           width: 380px;
           height: 60px;
+          font-size: 28px;
           background: rgba(249, 249, 249, 1);
           margin-left: 30px;
-          font-size: 40px;
         }
         &-style::-moz-placeholder {
-          font-size: 28px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
+          font-size: 28px;
           color: rgba(153, 153, 153, 1);
-          transform: translate(0, 10px);
         }
         &-style::-webkit-input-placeholder {
-          font-size: 28px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
+          font-size: 28px;
           color: rgba(153, 153, 153, 1);
-          transform: translate(0, 10px);
         }
       }
       &-yzm {
@@ -524,21 +530,17 @@ export default {
           height: 60px;
           background: rgba(249, 249, 249, 1);
           margin-left: 30px;
-          font-size: 40px;
+          font-size: 28px;
         }
         &-style::-moz-placeholder {
           font-size: 28px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
-          transform: translate(0, 10px);
         }
         &-style::-webkit-input-placeholder {
           font-size: 28px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
-          transform: translate(0, 10px);
         }
         &-button {
           width: 150px;
@@ -569,7 +571,6 @@ export default {
       align-items: center;
       &-text {
         font-size: 34px;
-        font-family: PingFangSC-Semibold, PingFang SC;
         font-weight: 600;
         color: rgba(255, 255, 255, 1);
         line-height: 48px;
@@ -600,7 +601,6 @@ export default {
         }
         &-num {
           font-size: 28px;
-          font-family: PingFangSC-Semibold, PingFang SC;
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
           text-align: center;
@@ -609,7 +609,6 @@ export default {
         }
         &-intr {
           font-size: 22px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 30px;
@@ -637,7 +636,7 @@ export default {
     margin-top: 100px;
     &-img {
       width: 750px;
-      height: 820px;
+      height: 780px;
     }
   }
   .ways {
@@ -648,7 +647,6 @@ export default {
     align-items: center;
     &-text {
       font-size: 24px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       text-align: center;
@@ -656,19 +654,35 @@ export default {
     &-img {
       width: 750px;
       height: 277px;
+      margin-top: 30px;
     }
     &-video {
       width: 690px;
       height: 388px;
+      margin-top: 10px;
+      position: relative;
       &-div {
         width: 690px;
         height: 388px;
+        &-play {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 76px;
+          height: 76px;
+          background: url("~assets/presentation/img/playbtn.png") 50% 50% /
+            contain no-repeat;
+        }
+        &-pic {
+          width: inherit;
+          height: inherit;
+        }
       }
     }
     &-title {
       width: 690px;
       font-size: 28px;
-      font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
       margin-top: 20px;
@@ -677,7 +691,6 @@ export default {
     &-intr1 {
       width: 690px;
       font-size: 28px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       margin-bottom: 20px;
@@ -695,7 +708,6 @@ export default {
     align-items: center;
     &-text {
       font-size: 24px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       text-align: center;
@@ -714,7 +726,6 @@ export default {
     &-text {
       width: 690px;
       font-size: 24px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       text-align: center;
@@ -738,7 +749,6 @@ export default {
     &-text {
       width: 690px;
       font-size: 24px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       text-align: center;
@@ -762,6 +772,7 @@ export default {
       align-items: center;
       padding: 0 30px;
       margin-bottom: 50px;
+      margin-top: -8px;
       &-div {
         width: 222px;
         height: 244px;
@@ -769,20 +780,19 @@ export default {
         border-radius: 8px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         &-title {
           font-size: 28px;
-          font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
+          margin-top: 30px;
           color: rgba(51, 51, 51, 1);
           text-align: center;
         }
         &-content {
           width: 194px;
           font-size: 24px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
+          margin-top: 12px;
           color: rgba(102, 102, 102, 1);
         }
       }
@@ -846,7 +856,6 @@ export default {
   }
   &-content {
     font-size: 34px;
-    font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     padding-left: 20px;
