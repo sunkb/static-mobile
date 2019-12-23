@@ -156,7 +156,7 @@
       <div class="promise-text">树立行业标准 打消用户顾虑</div>
       <div class="promise-icon">
         <div v-for="(item, index) in promiseImg" :key="index">
-          <img class="promise-img" :src="item.src" />
+          <img :class="'promise-img'+ index" :src="item.src" />
         </div>
       </div>
       <div class="promise-info">
@@ -369,6 +369,7 @@ export default {
                 }
               ],
             })
+            if (resultData.status)
             this.$refs['toast'].showToast(resultData.msg)
           } catch (err) {
             console.log(err)
@@ -474,7 +475,7 @@ export default {
         height: 16px;
       }
       &-content {
-        width: 352px;
+        width: 372px;
         height: 36px;
         padding-left: 20px;
         padding-right: 20px;
@@ -760,8 +761,16 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      .promise-img {
+      .promise-img0 {
         width: 120px;
+        height: 130px;
+      }
+      .promise-img1 {
+        width: 147px;
+        height: 130px;
+      }
+      .promise-img2 {
+        width: 116px;
         height: 130px;
       }
     }
