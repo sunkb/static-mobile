@@ -28,8 +28,11 @@
         </div>
         <div class="acquire-input-yzm">
           <input v-model="verificationCode" class="acquire-input-yzm-style" placeholder="请输入验证码" />
-          <div class="acquire-input-yzm-button" @click="awardCode">
+          <div v-show="isShowCountDown ? true : false" class="acquire-input-yzm-button" @click="awardCode">
             <div class="acquire-input-yzm-button-text">获取验证码</div>
+          </div>
+          <div v-show="isShowCountDown ? false : true" class="acquire-input-yzm-down">
+            <div class="acquire-input-yzm-down-text">{{countDown}}</div>
           </div>
         </div>
       </div>
@@ -156,7 +159,7 @@
       <div class="promise-text">树立行业标准 打消用户顾虑</div>
       <div class="promise-icon">
         <div v-for="(item, index) in promiseImg" :key="index">
-          <img class="promise-img" :src="item.src" />
+          <img :class="'promise-img'+ index" :src="item.src" />
         </div>
       </div>
       <div class="promise-info">
@@ -182,6 +185,7 @@
       </div>
     </div>
     <toast ref="toast"></toast>
+    <postModal :abstractShow="abstractShow" @fcancelShow="fcancelShow"></postModal>
   </div>
 </template>
 <script>
@@ -191,6 +195,7 @@ import { isPoneAvailable } from '~/utils/util';
 import Toast from '~/components/Toast'
 import { videoPlayerEvent } from '~/utils/videoPlay';
 import slide from '~/components/swipe/swipe.vue';
+import postModal from './postModal';
 
 export default {
   name: 'official',
@@ -201,6 +206,7 @@ export default {
   },
   data () {
     return {
+      abstractShow: true,
       swipeTime: 3000,
       target: '_blank',
       transitionName1: 'move',
@@ -308,12 +314,16 @@ export default {
       verificationCode: '', // 验证码
       showFloatAction: false,
       centerActionBottom: 250,
-      loginApi: '/Mobile/Public/getVerifyCode'
+      loginApi: '/Mobile/Public/getVerifyCode',
+      countDown: 60,
+      isShowCountDown: true,
+      timeObj: null
     }
   },
   components: {
     'toast': Toast,
-    'slide': slide
+    'slide': slide,
+    'postModal': postModal
   },
   methods: {
     // 获取验证码
@@ -322,6 +332,7 @@ export default {
         this.$refs['toast'].showToast('手机号码不能为空!')
         return
       }
+      clearInterval(this.timeObj)
       if (isPoneAvailable(this.verificationData.mobile)) {
         const captchaObj = this.captchaObj;
         const res = await captchaObj.verify();
@@ -335,6 +346,15 @@ export default {
         return
       }
       this.$refs['toast'].showToast(res.info)
+      this.isShowCountDown = false
+      this.timeObj = setInterval(()=> {
+        if(this.countDown === 0) {
+          clearInterval(this.timeObj)
+          this.countDown=60
+          this.isShowCountDown= true
+        }
+        this.countDown--;
+      },1000)
     },
     // 处理滑动
     handleScroll () {
@@ -357,6 +377,9 @@ export default {
       if (isPoneAvailable(this.verificationData.mobile)) {
         if (/^\d{6}$/.test(this.verificationCode)) {
           try {
+            clearInterval(this.timeObj)
+            this.countDown=60
+            this.isShowCountDown= true
             const params = {
               mobile: String(this.verificationData.mobile),
               code: String(this.verificationCode)
@@ -369,7 +392,11 @@ export default {
                 }
               ],
             })
-            this.$refs['toast'].showToast(resultData.msg)
+            if (resultData.code == 0) {
+              this.abstractShow=true
+              return 
+            }
+            this.$refs['toast'].showToast('领取失败')
           } catch (err) {
             console.log(err)
             this.$refs['toast'].showToast('验证码错误!')
@@ -410,6 +437,9 @@ export default {
     playFn(name){
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
+    },
+    fcancelShow() {
+      this.abstractShow = false
     }
   },
   created () {
@@ -474,7 +504,7 @@ export default {
         height: 16px;
       }
       &-content {
-        width: 352px;
+        width: 372px;
         height: 36px;
         padding-left: 20px;
         padding-right: 20px;
@@ -499,7 +529,7 @@ export default {
         justify-content: flex-start;
         align-items: center;
         &-style {
-          width: 380px;
+          width: 580px;
           height: 60px;
           font-size: 28px;
           background: rgba(249, 249, 249, 1);
@@ -526,7 +556,7 @@ export default {
         justify-content: space-between;
         align-items: center;
         &-style {
-          width: 380px;
+          width: 410px;
           height: 60px;
           background: rgba(249, 249, 249, 1);
           margin-left: 30px;
@@ -547,6 +577,21 @@ export default {
           height: 70px;
           background: rgba(20, 200, 210, 1);
           border-radius: 8px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 10px;
+          &-text {
+            font-size: 24px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+          }
+        }
+        &-down {
+          width: 150px;
+          height: 70px;
+          background: #e1e1e1;
+          border-radius: 40px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -683,7 +728,7 @@ export default {
     &-title {
       width: 690px;
       font-size: 28px;
-      font-weight: 600;
+      font-weight: 800;
       color: rgba(51, 51, 51, 1);
       margin-top: 20px;
       margin-bottom: 12px;
@@ -760,8 +805,16 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      .promise-img {
+      .promise-img0 {
         width: 120px;
+        height: 130px;
+      }
+      .promise-img1 {
+        width: 147px;
+        height: 130px;
+      }
+      .promise-img2 {
+        width: 116px;
         height: 130px;
       }
     }
@@ -856,7 +909,7 @@ export default {
   }
   &-content {
     font-size: 34px;
-    font-weight: 600;
+    font-weight: 800;
     color: rgba(51, 51, 51, 1);
     padding-left: 20px;
     padding-right: 20px;
