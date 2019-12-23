@@ -45,7 +45,7 @@
         />
         <div class="common-title-content">领取将免费获得</div>
         <img
-          class="frcommonee-title-right"
+          class="common-title-right"
           src="../../../assets/scatter/official_website/img/title_right.png"
         />
       </div>
@@ -133,7 +133,7 @@
       </div>
       <div class="industry-text">兰迪少儿英语成功入选CCTV大国品牌，作为国内领先的在线外教小班课品牌，一直致力于成为有温度的国民教育品牌。</div>
       <div class="industry-swipe">
-        <mt-swipe trigger="click" height="150px">
+        <mt-swipe trigger="click" height="150px" indicator-position="outside">
           <mt-swipe-item v-for="(item, index) in secondImages" :key="index">
             <img class="industry-swipe-img" :src="item.src" />
           </mt-swipe-item>
@@ -224,22 +224,22 @@ export default {
       freeData: [
         {
           src: 'https://qn-static.landi.com/uploadtoolef99fec4ae4265479cebba957c243abc.png',
-          times: '一节',
+          times: '1节',
           intr: '1对2同伴外教课'
         },
         {
           src: 'https://qn-static.landi.com/uploadtoold140c1b0a4b69d8ef264b5332cc11ccd.png',
-          times: '一次',
+          times: '1次',
           intr: '英语能力测评'
         },
         {
           src: 'https://qn-static.landi.com/uploadtool9962dabeacb5478d59f95199c19310ff.png',
-          times: '一份',
+          times: '1份',
           intr: '英语学习报告'
         },
         {
           src: 'https://qn-static.landi.com/uploadtooled80485f2bf616397e864b4a672af1c0.png',
-          times: '一份',
+          times: '1份',
           intr: '个性化学习方案'
         }
       ],
@@ -497,14 +497,12 @@ export default {
         }
         &-style::-moz-placeholder {
           font-size: 28px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           transform: translate(0, 10px);
         }
         &-style::-webkit-input-placeholder {
           font-size: 28px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           transform: translate(0, 10px);
@@ -528,14 +526,12 @@ export default {
         }
         &-style::-moz-placeholder {
           font-size: 28px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           transform: translate(0, 10px);
         }
         &-style::-webkit-input-placeholder {
           font-size: 28px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           transform: translate(0, 10px);
@@ -569,7 +565,6 @@ export default {
       align-items: center;
       &-text {
         font-size: 34px;
-        font-family: PingFangSC-Semibold, PingFang SC;
         font-weight: 600;
         color: rgba(255, 255, 255, 1);
         line-height: 48px;
@@ -600,7 +595,6 @@ export default {
         }
         &-num {
           font-size: 28px;
-          font-family: PingFangSC-Semibold, PingFang SC;
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
           text-align: center;
@@ -609,7 +603,6 @@ export default {
         }
         &-intr {
           font-size: 22px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 30px;
@@ -637,7 +630,7 @@ export default {
     margin-top: 100px;
     &-img {
       width: 750px;
-      height: 820px;
+      height: 780px;
     }
   }
   .ways {
@@ -648,7 +641,6 @@ export default {
     align-items: center;
     &-text {
       font-size: 24px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       text-align: center;
@@ -656,10 +648,12 @@ export default {
     &-img {
       width: 750px;
       height: 277px;
+      margin-top: 30px;
     }
     &-video {
       width: 690px;
       height: 388px;
+      margin-top: 10px;
       &-div {
         width: 690px;
         height: 388px;
@@ -668,7 +662,6 @@ export default {
     &-title {
       width: 690px;
       font-size: 28px;
-      font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
       margin-top: 20px;
@@ -677,7 +670,6 @@ export default {
     &-intr1 {
       width: 690px;
       font-size: 28px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       margin-bottom: 20px;
@@ -695,7 +687,6 @@ export default {
     align-items: center;
     &-text {
       font-size: 24px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       text-align: center;
@@ -714,7 +705,6 @@ export default {
     &-text {
       width: 690px;
       font-size: 24px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       text-align: center;
@@ -738,7 +728,6 @@ export default {
     &-text {
       width: 690px;
       font-size: 24px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       text-align: center;
@@ -769,20 +758,19 @@ export default {
         border-radius: 8px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         &-title {
           font-size: 28px;
-          font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
+          margin-top: 30px;
           color: rgba(51, 51, 51, 1);
           text-align: center;
         }
         &-content {
           width: 194px;
           font-size: 24px;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
+          margin-top: 12px;
           color: rgba(102, 102, 102, 1);
         }
       }
@@ -846,7 +834,6 @@ export default {
   }
   &-content {
     font-size: 34px;
-    font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     padding-left: 20px;
