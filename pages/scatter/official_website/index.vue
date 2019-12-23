@@ -73,6 +73,7 @@
         <mt-swipe trigger="click" height="150px">
           <mt-swipe-item v-for="(item, index) in firstImages" :key="index">
             <img class="choose-swipe-img" :src="item.src" />
+            <!-- <img class="choose-swipe-img" v-lazy="item" alt="" :key="item.src" :src="item.src"> -->
           </mt-swipe-item>
         </mt-swipe>
       </div>
@@ -99,10 +100,19 @@
       <img class="ways-img" src="../../../assets/scatter/official_website/img/tech_model.png" />
       <div class="ways-video">
         <video
+          preload="auto"
+          style="display: none;"
+          id="video1"
           controls="controls"
-          class="ways-video-div"
           src="https://qn-static-landi.abc360.cn/uploadtoolae9051c14c1f2be89d46b7aee64d3c9f.mp4"
         />
+        <div class="ways-video-div" @click="playFn('video1')">
+          <div class="ways-video-div-play"></div>
+          <img
+            class="ways-video-div-pic"
+            src="https://qn-static-landi.abc360.cn/uploadtoolae9051c14c1f2be89d46b7aee64d3c9f.mp4?vframe/jpg/offset/2/h/960/"
+          />
+        </div>
       </div>
       <div class="ways-title">专家观点</div>
       <div
@@ -190,10 +200,11 @@ import axios from '~/utils/axios';
 import verification from '~/utils/verification';
 import { isPoneAvailable } from '~/utils/util';
 import Toast from '~/components/Toast'
+import { videoPlayerEvent } from '~/utils/videoPlay'
 
 export default {
   name: 'official',
-  head() {
+  head () {
     return {
       title: "兰迪少儿英语" // title
     }
@@ -403,6 +414,10 @@ export default {
         default:
           this.flag = 0;
       }
+    },
+    playFn(name){
+      let video1 = document.getElementById(name)
+      videoPlayerEvent(video1)
     }
   },
   created () {
@@ -491,21 +506,19 @@ export default {
         &-style {
           width: 380px;
           height: 60px;
+          font-size: 28px;
           background: rgba(249, 249, 249, 1);
           margin-left: 30px;
-          font-size: 40px;
         }
         &-style::-moz-placeholder {
-          font-size: 28px;
           font-weight: 400;
+          font-size: 28px;
           color: rgba(153, 153, 153, 1);
-          transform: translate(0, 10px);
         }
         &-style::-webkit-input-placeholder {
-          font-size: 28px;
           font-weight: 400;
+          font-size: 28px;
           color: rgba(153, 153, 153, 1);
-          transform: translate(0, 10px);
         }
       }
       &-yzm {
@@ -522,19 +535,17 @@ export default {
           height: 60px;
           background: rgba(249, 249, 249, 1);
           margin-left: 30px;
-          font-size: 40px;
+          font-size: 28px;
         }
         &-style::-moz-placeholder {
           font-size: 28px;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
-          transform: translate(0, 10px);
         }
         &-style::-webkit-input-placeholder {
           font-size: 28px;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
-          transform: translate(0, 10px);
         }
         &-button {
           width: 150px;
@@ -654,9 +665,24 @@ export default {
       width: 690px;
       height: 388px;
       margin-top: 10px;
+      position: relative;
       &-div {
         width: 690px;
         height: 388px;
+        &-play {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 76px;
+          height: 76px;
+          background: url("~assets/presentation/img/playbtn.png") 50% 50% /
+            contain no-repeat;
+        }
+        &-pic {
+          width: inherit;
+          height: inherit;
+        }
       }
     }
     &-title {
@@ -751,6 +777,7 @@ export default {
       align-items: center;
       padding: 0 30px;
       margin-bottom: 50px;
+      margin-top: -8px;
       &-div {
         width: 222px;
         height: 244px;
