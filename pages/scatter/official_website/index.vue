@@ -185,6 +185,7 @@
       </div>
     </div>
     <toast ref="toast"></toast>
+    <postModal :abstractShow="abstractShow" @fcancelShow="fcancelShow"></postModal>
   </div>
 </template>
 <script>
@@ -194,6 +195,7 @@ import { isPoneAvailable } from '~/utils/util';
 import Toast from '~/components/Toast'
 import { videoPlayerEvent } from '~/utils/videoPlay';
 import slide from '~/components/swipe/swipe.vue';
+import postModal from './postModal';
 
 export default {
   name: 'official',
@@ -204,6 +206,7 @@ export default {
   },
   data () {
     return {
+      abstractShow: false,
       swipeTime: 3000,
       target: '_blank',
       transitionName1: 'move',
@@ -319,7 +322,8 @@ export default {
   },
   components: {
     'toast': Toast,
-    'slide': slide
+    'slide': slide,
+    'postModal': postModal
   },
   methods: {
     // 获取验证码
@@ -389,7 +393,7 @@ export default {
               ],
             })
             if (resultData.code == 0) {
-              this.$refs['toast'].showToast('领取成功！')
+              this.abstractShow=true
               return 
             }
             this.$refs['toast'].showToast('领取失败')
@@ -433,6 +437,9 @@ export default {
     playFn(name){
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
+    },
+    fcancelShow() {
+      this.abstractShow = false
     }
   },
   created () {
@@ -522,7 +529,7 @@ export default {
         justify-content: flex-start;
         align-items: center;
         &-style {
-          width: 380px;
+          width: 580px;
           height: 60px;
           font-size: 28px;
           background: rgba(249, 249, 249, 1);
@@ -549,7 +556,7 @@ export default {
         justify-content: space-between;
         align-items: center;
         &-style {
-          width: 380px;
+          width: 410px;
           height: 60px;
           background: rgba(249, 249, 249, 1);
           margin-left: 30px;
@@ -721,7 +728,7 @@ export default {
     &-title {
       width: 690px;
       font-size: 28px;
-      font-weight: 600;
+      font-weight: 800;
       color: rgba(51, 51, 51, 1);
       margin-top: 20px;
       margin-bottom: 12px;
