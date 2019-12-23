@@ -38,7 +38,8 @@ export default {
   -webkit-overflow-scrolling: auto;
   width: 100vw;
   height: 100vh;
-  position: relative;
+  position: fixed;
+  top: 0;
   &-background {
     width: 100vw;
     height: 100vh;
