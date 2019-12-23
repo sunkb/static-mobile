@@ -70,12 +70,7 @@
         />
       </div>
       <div class="choose-swipe">
-        <mt-swipe trigger="click" height="150px">
-          <mt-swipe-item v-for="(item, index) in firstImages" :key="index">
-            <img class="choose-swipe-img" :src="item.src" />
-            <!-- <img class="choose-swipe-img" v-lazy="item" alt="" :key="item.src" :src="item.src"> -->
-          </mt-swipe-item>
-        </mt-swipe>
+        <slide class="choose-swipe-img" :slides="firstImages" :inv="swipeTime" :name="transitionName1" :target="target"></slide>
       </div>
     </div>
     <div class="optimization">
@@ -143,11 +138,7 @@
       </div>
       <div class="industry-text">兰迪少儿英语成功入选CCTV大国品牌，作为国内领先的在线外教小班课品牌，一直致力于成为有温度的国民教育品牌。</div>
       <div class="industry-swipe">
-        <mt-swipe trigger="click" height="150px" indicator-position="outside">
-          <mt-swipe-item v-for="(item, index) in secondImages" :key="index">
-            <img class="industry-swipe-img" :src="item.src" />
-          </mt-swipe-item>
-        </mt-swipe>
+        <slide class="industry-swipe-img" :slides="secondImages" :inv="swipeTime" :name="transitionName1" :target="target"></slide>
       </div>
     </div>
     <div class="promise">
@@ -194,13 +185,12 @@
   </div>
 </template>
 <script>
-import Swipe from '~/components/swipe/Swipe';
-import SwipeItem from '~/components/swipe/SwipeItem';
 import axios from '~/utils/axios';
 import verification from '~/utils/verification';
 import { isPoneAvailable } from '~/utils/util';
 import Toast from '~/components/Toast'
-import { videoPlayerEvent } from '~/utils/videoPlay'
+import { videoPlayerEvent } from '~/utils/videoPlay';
+import slide from '~/components/swipe/swipe.vue';
 
 export default {
   name: 'official',
@@ -211,6 +201,9 @@ export default {
   },
   data () {
     return {
+      swipeTime: 3000,
+      target: '_blank',
+      transitionName1: 'move',
       flag: 0,
       headerImgs: [
         {
@@ -319,9 +312,8 @@ export default {
     }
   },
   components: {
-    'mt-swipe': Swipe,
-    'mt-swipe-item': SwipeItem,
-    'toast': Toast
+    'toast': Toast,
+    'slide': slide
   },
   methods: {
     // 获取验证码
@@ -445,6 +437,9 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+.mint-swipe-indicators {
+  bottom: 3px!important;
 }
 #official {
   overflow: auto;
