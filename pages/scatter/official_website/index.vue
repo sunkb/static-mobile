@@ -28,8 +28,11 @@
         </div>
         <div class="acquire-input-yzm">
           <input v-model="verificationCode" class="acquire-input-yzm-style" placeholder="请输入验证码" />
-          <div class="acquire-input-yzm-button" @click="awardCode">
+          <div v-show="isShowCountDown ? true : false" class="acquire-input-yzm-button" @click="awardCode">
             <div class="acquire-input-yzm-button-text">获取验证码</div>
+          </div>
+          <div v-show="isShowCountDown ? false : true" class="acquire-input-yzm-down">
+            <div class="acquire-input-yzm-down-text">{{countDown}}</div>
           </div>
         </div>
       </div>
@@ -308,7 +311,10 @@ export default {
       verificationCode: '', // 验证码
       showFloatAction: false,
       centerActionBottom: 250,
-      loginApi: '/Mobile/Public/getVerifyCode'
+      loginApi: '/Mobile/Public/getVerifyCode',
+      countDown: 60,
+      isShowCountDown: true,
+      timeObj: null
     }
   },
   components: {
@@ -322,6 +328,7 @@ export default {
         this.$refs['toast'].showToast('手机号码不能为空!')
         return
       }
+      clearInterval(this.timeObj)
       if (isPoneAvailable(this.verificationData.mobile)) {
         const captchaObj = this.captchaObj;
         const res = await captchaObj.verify();
@@ -335,6 +342,15 @@ export default {
         return
       }
       this.$refs['toast'].showToast(res.info)
+      this.isShowCountDown = false
+      this.timeObj = setInterval(()=> {
+        if(this.countDown === 0) {
+          clearInterval(this.timeObj)
+          this.countDown=59
+          this.isShowCountDown= true
+        }
+        this.countDown--;
+      },1000)
     },
     // 处理滑动
     handleScroll () {
@@ -357,6 +373,9 @@ export default {
       if (isPoneAvailable(this.verificationData.mobile)) {
         if (/^\d{6}$/.test(this.verificationCode)) {
           try {
+            clearInterval(this.timeObj)
+            this.countDown=59
+            this.isShowCountDown= true
             const params = {
               mobile: String(this.verificationData.mobile),
               code: String(this.verificationCode)
@@ -551,6 +570,21 @@ export default {
           height: 70px;
           background: rgba(20, 200, 210, 1);
           border-radius: 8px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 10px;
+          &-text {
+            font-size: 24px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+          }
+        }
+        &-down {
+          width: 150px;
+          height: 70px;
+          background: #e1e1e1;
+          border-radius: 40px;
           display: flex;
           justify-content: center;
           align-items: center;
