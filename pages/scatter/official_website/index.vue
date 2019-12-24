@@ -678,7 +678,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 90px;
     &-img {
       width: 750px;
       height: 780px;
@@ -779,7 +779,7 @@ export default {
     &-swipe {
       width: 690px;
       height: 540px;
-      margin-bottom: 140px;
+      margin-bottom: 120px;
       &-img {
         width: 690px;
         height: 540px;
