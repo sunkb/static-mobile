@@ -446,6 +446,7 @@ export default {
   },
   created () {},
   mounted () {
+    console.log(111111111111)
     this.cutHeaderImg()
     verification.init(this)
     window.addEventListener('scroll', this.handleScroll)
