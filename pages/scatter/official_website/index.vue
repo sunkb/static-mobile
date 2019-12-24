@@ -194,7 +194,7 @@ import verification from '~/utils/verification';
 import { isPoneAvailable } from '~/utils/util';
 import Toast from '~/components/Toast'
 import { videoPlayerEvent } from '~/utils/videoPlay';
-import slide from '~/components/swipe/swipe';
+import slide from '~/components/swipe/Swipe';
 import postModal from './postModal';
 
 export default {
