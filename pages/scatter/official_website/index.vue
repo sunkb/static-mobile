@@ -410,6 +410,7 @@ export default {
     },
     // 通过路由判断切换头部图像
     cutHeaderImg () {
+      console.log(this.$route.query.flag)
       const headerFlag = this.$route.query.flag || ''
       switch (headerFlag) {
         case 'general1':
