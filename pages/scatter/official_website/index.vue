@@ -28,7 +28,11 @@
         </div>
         <div class="acquire-input-yzm">
           <input v-model="verificationCode" class="acquire-input-yzm-style" placeholder="请输入验证码" />
-          <div v-show="isShowCountDown ? true : false" class="acquire-input-yzm-button" @click="awardCode">
+          <div
+            v-show="isShowCountDown ? true : false"
+            class="acquire-input-yzm-button"
+            @click="awardCode"
+          >
             <div class="acquire-input-yzm-button-text">获取验证码</div>
           </div>
           <div v-show="isShowCountDown ? false : true" class="acquire-input-yzm-down">
@@ -73,7 +77,13 @@
         />
       </div>
       <div class="choose-swipe">
-        <slide class="choose-swipe-img" :slides="firstImages" :inv="swipeTime" :name="transitionName1" :target="target"></slide>
+        <slide
+          class="choose-swipe-img"
+          :slides="firstImages"
+          :inv="swipeTime"
+          :name="transitionName1"
+          :target="target"
+        ></slide>
       </div>
     </div>
     <div class="optimization">
@@ -141,7 +151,13 @@
       </div>
       <div class="industry-text">兰迪少儿英语成功入选CCTV大国品牌，作为国内领先的在线外教小班课品牌，一直致力于成为有温度的国民教育品牌。</div>
       <div class="industry-swipe">
-        <slide class="industry-swipe-img" :slides="secondImages" :inv="swipeTime" :name="transitionName1" :target="target"></slide>
+        <slide
+          class="industry-swipe-img"
+          :slides="secondImages"
+          :inv="swipeTime"
+          :name="transitionName1"
+          :target="target"
+        ></slide>
       </div>
     </div>
     <div class="promise">
@@ -210,7 +226,7 @@ export default {
       swipeTime: 3000,
       target: '_blank',
       transitionName1: 'move',
-      flag: 0,
+      flag: 6,
       headerImgs: [
         {
           src: 'https://qn-static.landi.com/uploadtoolc2a96f8695246149f007638f7b560bde.png' // CEO严选真人外教
@@ -347,14 +363,14 @@ export default {
       }
       this.$refs['toast'].showToast(res.info)
       this.isShowCountDown = false
-      this.timeObj = setInterval(()=> {
-        if(this.countDown === 0) {
+      this.timeObj = setInterval(() => {
+        if (this.countDown === 0) {
           clearInterval(this.timeObj)
-          this.countDown=60
-          this.isShowCountDown= true
+          this.countDown = 60
+          this.isShowCountDown = true
         }
         this.countDown--;
-      },1000)
+      }, 1000)
     },
     // 处理滑动
     handleScroll () {
@@ -378,8 +394,8 @@ export default {
         if (/^\d{6}$/.test(this.verificationCode)) {
           try {
             clearInterval(this.timeObj)
-            this.countDown=60
-            this.isShowCountDown= true
+            this.countDown = 60
+            this.isShowCountDown = true
             const params = {
               mobile: String(this.verificationData.mobile),
               code: String(this.verificationCode)
@@ -393,8 +409,8 @@ export default {
               ],
             })
             if (resultData.code == 0) {
-              this.abstractShow=true
-              return 
+              this.abstractShow = true
+              return
             }
             this.$refs['toast'].showToast('领取失败')
           } catch (err) {
@@ -410,7 +426,6 @@ export default {
     },
     // 通过路由判断切换头部图像
     cutHeaderImg () {
-      console.log(12121212)
       const headerFlag = this.$route.query.flag || ''
       switch (headerFlag) {
         case 'general1':
@@ -435,16 +450,38 @@ export default {
           this.flag = 0;
       }
     },
-    playFn(name){
+    playFn (name) {
       let video1 = document.getElementById(name)
       videoPlayerEvent(video1)
     },
-    fcancelShow() {
+    fcancelShow () {
       this.abstractShow = false
     }
   },
   created () {
-    this.cutHeaderImg()
+    const headerFlag = this.$route.query.flag || ''
+    switch (headerFlag) {
+      case 'general1':
+        this.flag = 0;
+        break;
+      case 'general2':
+        this.flag = 1;
+        break;
+      case 'teacher':
+        this.flag = 2;
+        break;
+      case 'general3':
+        this.flag = 3;
+        break;
+      case 'material':
+        this.flag = 4;
+        break;
+      case 'general4':
+        this.flag = 5;
+        break;
+      default:
+        this.flag = 0;
+    }
   },
   mounted () {
     // this.cutHeaderImg()
@@ -471,7 +508,7 @@ export default {
   background-color: #d3dce6;
 }
 .mint-swipe-indicators {
-  bottom: 3px!important;
+  bottom: 3px !important;
 }
 #official {
   overflow: auto;
