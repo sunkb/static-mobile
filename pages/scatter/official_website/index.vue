@@ -1,7 +1,8 @@
 <template>
   <div id="official">
     <div class="header">
-      <img class="header-img" :src="headerImgs[flag].src" />
+      <img class="header-img" v-if="flag != 6 ? true : false" :src="headerImgs[flag].src" />
+      <div class="header-div" v-if="flag == 6 ? true : false"></div>
     </div>
     <div class="acquire">
       <div class="acquire-title">
@@ -245,6 +246,9 @@ export default {
         },
         {
           src: 'https://qn-static.landi.com/uploadtoolb13bc3d115e1ef98e3477bae7a027328.png' // 60元/课起
+        },
+        {
+          src: ''
         }
       ],
       freeData: [
@@ -458,33 +462,9 @@ export default {
       this.abstractShow = false
     }
   },
-  created () {
-    const headerFlag = this.$route.query.flag || ''
-    switch (headerFlag) {
-      case 'general1':
-        this.flag = 0;
-        break;
-      case 'general2':
-        this.flag = 1;
-        break;
-      case 'teacher':
-        this.flag = 2;
-        break;
-      case 'general3':
-        this.flag = 3;
-        break;
-      case 'material':
-        this.flag = 4;
-        break;
-      case 'general4':
-        this.flag = 5;
-        break;
-      default:
-        this.flag = 0;
-    }
-  },
+  created () { },
   mounted () {
-    // this.cutHeaderImg()
+    this.cutHeaderImg()
     verification.init(this)
     window.addEventListener('scroll', this.handleScroll)
   }
@@ -518,6 +498,10 @@ export default {
     width: 100vw;
     height: 450px;
     &-img {
+      width: 100vw;
+      height: 450px;
+    }
+    &-div {
       width: 100vw;
       height: 450px;
     }
