@@ -194,7 +194,7 @@ import verification from '~/utils/verification';
 import { isPoneAvailable } from '~/utils/util';
 import Toast from '~/components/Toast'
 import { videoPlayerEvent } from '~/utils/videoPlay';
-import slide from '~/components/swipe/swipe.vue';
+import slide from '~/components/swipe/swipe';
 import postModal from './postModal';
 
 export default {
@@ -410,6 +410,7 @@ export default {
     },
     // 通过路由判断切换头部图像
     cutHeaderImg () {
+      console.log(this.$route.query.flag)
       const headerFlag = this.$route.query.flag || ''
       switch (headerFlag) {
         case 'general1':
@@ -678,7 +679,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 90px;
     &-img {
       width: 750px;
       height: 780px;
@@ -779,7 +780,7 @@ export default {
     &-swipe {
       width: 690px;
       height: 540px;
-      margin-bottom: 140px;
+      margin-bottom: 120px;
       &-img {
         width: 690px;
         height: 540px;
