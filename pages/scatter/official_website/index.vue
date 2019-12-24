@@ -686,7 +686,7 @@ export default {
     }
   }
   .choose {
-    margin-top: 140px;
+    margin-top: 90px;
     &-swipe {
       width: 690px;
       height: 428px;
@@ -708,7 +708,7 @@ export default {
     }
   }
   .ways {
-    margin-top: 80px;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -802,7 +802,7 @@ export default {
     &-swipe {
       width: 690px;
       height: 540px;
-      margin-bottom: 120px;
+      margin-bottom: 90px;
       &-img {
         width: 690px;
         height: 540px;
