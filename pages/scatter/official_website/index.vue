@@ -443,10 +443,9 @@ export default {
       this.abstractShow = false
     }
   },
-  created () {
-    this.cutHeaderImg()
-  },
+  created () {},
   mounted () {
+    this.cutHeaderImg()
     verification.init(this)
     window.addEventListener('scroll', this.handleScroll)
   }
