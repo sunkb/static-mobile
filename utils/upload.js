@@ -24,7 +24,7 @@ const TYPE = {
       "video/webm",
       "application/vnd.rn-realmedia-vbr"
     ],
-    limit: 100
+    limit: 300
   }
 }
 const FILE_TYPE = {

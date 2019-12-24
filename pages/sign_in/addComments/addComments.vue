@@ -150,7 +150,7 @@ export default {
       this.videoSrc = fileUploader.domain;
       const uploadReturn = fileUploader.upload(
         this.$refs["videoUploadInput"].files[0],
-        FILE_TYPE.VIDEO,
+        FILE_TYPE.VIDEO2,
         this.fileUploadNext,
         this.fileUploadError,
         this.fileUploadComplete
