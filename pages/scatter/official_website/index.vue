@@ -410,8 +410,7 @@ export default {
     },
     // 通过路由判断切换头部图像
     cutHeaderImg () {
-      console.log(22222222222222)
-      console.log(this.$route.query.flag)
+      console.log(12121212)
       const headerFlag = this.$route.query.flag || ''
       switch (headerFlag) {
         case 'general1':
@@ -444,10 +443,11 @@ export default {
       this.abstractShow = false
     }
   },
-  created () {},
-  mounted () {
-    console.log(111111111111)
+  created () {
     this.cutHeaderImg()
+  },
+  mounted () {
+    // this.cutHeaderImg()
     verification.init(this)
     window.addEventListener('scroll', this.handleScroll)
   }
