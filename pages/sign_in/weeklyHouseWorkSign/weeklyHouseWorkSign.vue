@@ -109,7 +109,7 @@
               />
               <div v-if="item.is_sync == 0 ? true : false" class="teacherNoScore">老师尚未评分哦</div>
               <div class="teacherComment">
-                {{'评论('+ item.comment.length +')'}}
+                <div class="teacherComment-title"><div>{{'评论('+ item.comment.length +')'}}</div><div style="font-size:12px;color:rgba(153,153,153,1);" @click="watchMore(item)">{{item.moreFlag ? '收起隐藏' : ''}}</div></div>
                 <div class :class="item.moreFlag ? 'watchMore': 'watchSingle' ">
                   <div
                     class="commentMsg"
@@ -117,16 +117,16 @@
                     :key="commentItem.id"
                   >
                     <div class="singleComment">
-                      <p class="singleComment2">
+                      <p :class="singleComment2">
                         <span class="commentName">{{commentItem.name + "："}}</span>
                         <span class="commentContent">{{commentItem.content}}</span>
                       </p>
                       <div v-if="index === 0">
                         <div
-                          @click="watchMore(item)"
+                          @click="watchMore(item, 'open')"
                           style="position:absolute;right:24px;font-size:12px;color:rgba(153,153,153,1);"
                           v-if="(item.comment.length == 1 && commentItem.content.lenght>8) || item.comment.length > 1 "
-                        >{{item.moreFlag ? '收起隐藏' : '... 显示更多'}}</div>
+                        >{{item.moreFlag ? '' : '... 显示更多'}}</div>
                       </div>
                     </div>
                   </div>
@@ -213,7 +213,8 @@ export default {
       dialogShow: false,
       curCommentId: "", // 当前的评论id
       showFloatAction: false,
-      centerActionBottom: 250
+      centerActionBottom: 250,
+      singleComment2: 'singleComment2'
     };
   },
   methods: {
@@ -244,7 +245,7 @@ export default {
       //   path: "/sign_in/signInInfom/signInInfom",
       //   query: { id: studentId ,homework_Id: itemObj.id }
       // });
-      window.location = `${process.env.BASE_URL}/sign_in/signInInfom/signInInfom/?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
+      window.location = `http://192.168.216.37:3000/sign_in/signInInfom/signInInfom/?id=${studentId}&homework_Id=${itemObj.id}`; // 此路由需要设置
     },
     // 下拉加载数据
     onLoad () {
@@ -303,8 +304,13 @@ export default {
       }
     },
     //查看和隐藏更多评论
-    watchMore (itemObj) {
+    watchMore (itemObj, type) {
       itemObj.moreFlag = !itemObj.moreFlag;
+      if (type == 'open'){
+        this.singleComment2 = 'singleComment2 singleComment2Spe'
+      } else {
+        this.singleComment2 = 'singleComment2'
+      }
     },
     handleScroll () {
       if (window.scrollY > this.centerActionBottom) {
@@ -630,10 +636,13 @@ export default {
           .teacherComment {
             margin-top: 30px;
             margin-left: 30px;
-            font-size: 28px;
-            font-weight: 600;
-            color: #333333;
-
+            &-title {
+              font-size: 28px;
+              font-weight: 600;
+              display: flex;
+              justify-content: space-between;
+              margin-right: 40px;
+            }
             .commentMsg {
               padding-top: 10px;
               color: #666666;
@@ -653,9 +662,6 @@ export default {
                     color: rgba(102, 102, 102, 1);
                     font-size: 28px;
                   }
-                  // overflow: hidden;
-                  // white-space: nowrap;
-                  // text-overflow: ellipsis;
                 }
               }
             }
@@ -709,5 +715,8 @@ export default {
 .watchSingle {
   max-height: 45px;
   overflow: hidden;
+}
+.singleComment2Spe {
+  width: 610px !important;
 }
 </style>
